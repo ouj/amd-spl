@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     unsigned int tsize = 64; 
 
     int *p = new int[tsize];
-    amdspl::bitonicSort(p, tsize);
+    amdspl::SPLSort::bitonicSort(p, tsize);
 
     delete [] p;
 	return 0;

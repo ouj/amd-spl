@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\src\include"
+				AdditionalIncludeDirectories="..\..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,9 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amd-spl.lib"
+				AdditionalDependencies="amd-spl.lib brook_d.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\..\bin\win32\$(ConfigurationName)"
+				AdditionalLibraryDirectories="&quot;..\..\..\bin\win32\$(ConfigurationName)&quot;;&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\src\include"
+				AdditionalIncludeDirectories="..\..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -137,9 +137,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amd-spl.lib"
+				AdditionalDependencies="amd-spl.lib brook.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\..\bin\win32\$(ConfigurationName)"
+				AdditionalLibraryDirectories="&quot;..\..\..\bin\win32\$(ConfigurationName)&quot;;&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -181,7 +181,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\splSort.cpp"
+				RelativePath=".\Main.cpp"
 				>
 			</File>
 		</Filter>

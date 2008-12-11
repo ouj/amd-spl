@@ -4,8 +4,10 @@
 
 namespace amdspl
 {
-    void bitonicSort(int *ptr, unsigned int _size)
+
+    void SPLSort::bitonicSort(int *ptr, unsigned int _size)
     {
-        
+
     }
+
 }
