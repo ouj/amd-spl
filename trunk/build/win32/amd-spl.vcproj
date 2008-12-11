@@ -39,6 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -58,6 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -111,6 +113,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				WarningLevel="3"
@@ -128,6 +131,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -167,6 +171,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\src\splSort.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -174,11 +182,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\src\include\Sort.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\include\SortDef.h"
+				RelativePath="..\..\src\include\splSort.h"
 				>
 			</File>
 		</Filter>
