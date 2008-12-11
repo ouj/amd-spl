@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -59,7 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
+				AdditionalDependencies="brook_d.lib"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -113,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				WarningLevel="3"
@@ -131,7 +132,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
+				AdditionalDependencies="brook.lib"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -183,6 +185,10 @@
 			>
 			<File
 				RelativePath="..\..\src\include\splSort.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\include\splSortDef.h"
 				>
 			</File>
 		</Filter>

@@ -2,15 +2,25 @@
 #define _SPL_SORT_H_
 
 #ifdef AMD_SPL_EXPORT
-#define EXPORT __declspec(dllexport)
+#define SPL_EXPORT __declspec(dllexport)
 #else
-#define EXPORT
+#define SPL_EXPORT
 #endif
+
+#include "brook\brook.h"
 
 namespace amdspl
 {
-    void EXPORT bitonicSort(int *ptr, unsigned int _size);
-    void EXPORT bitonicSort(void *ptr, unsigned int _size, unsigned int stride);
+    class SPL_EXPORT SPLSort
+    {
+    public:
+        static void bitonicSort(int *ptr, unsigned int _size);
+        static void bitonicSort(void *ptr, unsigned int _size, unsigned int stride);
+        template<class T> static
+        void bitonicSort(::brook::Stream<T>);
+    };
 }
+
+#include "splSortDef.h"
 
 #endif
