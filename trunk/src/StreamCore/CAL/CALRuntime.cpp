@@ -1,44 +1,10 @@
-/****************************************************************************
-
-Copyright (c) 2008, Advanced Micro Devices, Inc.
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice,
-this list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice,
-this list of conditions and the following disclaimer in the documentation
-and/or other materials provided with the distribution.
-
-* Neither the name of Advanced Micro Devices, Inc nor the names of its contributors
-may be used to endorse or promote products derived from this software
-without specific prior written permission.
-
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-
-****************************************************************************/
-
+#include <iostream>
+#include <vector>
 #include "CALBase.h"
 #include "CALRuntime.h"
 #include "CALDevice.h"
-//#include "CALBufferMgr.h"
-//#include "CALExecMgr.h"
-//#include "CALStreamOracle.h"
-//#include "CALKernelOracle.h"
+#include <assert.h>
+
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -48,8 +14,25 @@ POSSIBILITY OF SUCH DAMAGE.
 namespace amdspl
 {
 
-    CALRuntime::CALRuntime() 
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Constructor
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    SPLCalRuntime::SPLCalRuntime() :_numDevices(0)
     {
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Destructor
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    SPLCalRuntime::~SPLCalRuntime()
+    {
+        calShutdown();
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -59,14 +42,13 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    CALRuntime*
-        CALRuntime::create()
+    SPLCalRuntime*
+        SPLCalRuntime::create()
     {
-        CALRuntime* runtime = new CALRuntime();
+        SPLCalRuntime* runtime = new SPLCalRuntime();
         if(!runtime->initialize())
         {
             delete runtime;
-
             return NULL;
         }
 
@@ -82,7 +64,7 @@ namespace amdspl
     ////////////////////////////////////////////////////////////////////////////////
 
     bool
-        CALRuntime::initialize()
+        SPLCalRuntime::initialize()
     {
         CALresult result;
 
@@ -103,44 +85,115 @@ namespace amdspl
         if ((adapterEnv = getenv("AMDPL_ADAPTER")))
             which_device = atoi(adapterEnv);
 
-        CALDevice* device = new CALDevice(which_device);
+        SPLCalDevice* device = new SPLCalDevice(which_device);
         if(!device->initialize())
         {
             delete device;
-
             return false;
         }
-        _devices.push_back(device);
-
-        //_bufferMgrs.push_back(new CALBufferMgr(device));
-        //_execMgrs.push_back(new CALExecMgr(device));
-        //_streamOracles.push_back(new CALStreamOracle(device));
-        //_kernelOracles.push_back(new CALKernelOracle(device));
+        _devices = device;
 
         return true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
     //!
-    //! \brief Destructor
+    //! \brief Default handler that is used in case user has not provided any hadler
+    //! Gives a warning and throws bad_alloc exception. So the user gets opportunity 
+    //! to handle this exception in case he has not provided a callback.
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    CALRuntime::~CALRuntime()
+    void defaultHandler()
     {
-        calShutdown();
+        std::cout << "Failed to allocate memory.\n";
+        throw std::bad_alloc();
     }
 
     ////////////////////////////////////////////////////////////////////////////////
     //!
-    //! \brief return the runtime needed. Needed by Kernel Oracle to decide the 
-    //! correct kernelDesc
+    //! \brief Function to set memory handle
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    const char* 
-        CALRuntime::getRuntimeString() const
+
+    void setMemoryHandle(MemoryHandler handler)
     {
-        return "cal";
+        std::set_new_handler(handler);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Function regestered in atexit call
+    //!
+    //! A friend function that calls runtime destructor.
+    //! This function is called as soon as application exits.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    void cleanup()
+    {
+        SPLCalRuntime*& runtime = SPLCalRuntime::_runtime;
+        if (runtime != NULL)
+        {
+            delete runtime;
+            runtime = NULL;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Static instance of singleton class
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    SPLCalRuntime* SPLCalRuntime::_runtime = NULL;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Static method to get Runtime Instance.
+    //!
+    //! Calls Create method on backend runtime if instance is NULL.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    SPLCalRuntime* SPLCalRuntime::getInstance()
+    {
+        if (_runtime == NULL)
+        {
+            MemoryHandler oldHandle = std::set_new_handler(defaultHandler);
+            if(oldHandle)
+            {
+                std::set_new_handler(oldHandle);
+            }
+
+            _runtime = SPLCalRuntime::create();
+
+            if(_runtime == NULL)
+            {
+                if(_runtime == NULL)
+                {
+                    std::cout << "Failed to initialize the runtime. Application exiting\n";
+                    exit(1);
+                }
+            }
+
+            // Register the callback for application exit
+            // to make sure we cleanup everything
+            atexit(cleanup);
+        }
+        return _runtime;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Get backend specifc ResourceManager
+    //!
+    //! \return Device specifc ResourceManager handle
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    SPLCalResourceManager* SPLCalRuntime::getResourceManager() const
+    {
+        assert(_resourceMgr);
+        return _resourceMgr;
+    }
 }

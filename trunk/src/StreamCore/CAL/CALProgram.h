@@ -1,5 +1,5 @@
-#ifndef _CALPROGRAM_H_
-#define _CALPROGRAM_H_
+#ifndef _AMDSPL_CALPROGRAM_H_
+#define _AMDSPL_CALPROGRAM_H_
 
 /****************************************************************************
 
@@ -10,15 +10,15 @@ Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
 * Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
+this list of conditions and the following disclaimer.
 
 * Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
 
 * Neither the name of Advanced Micro Devices, Inc nor the names of its contributors
-  may be used to endorse or promote products derived from this software
-  without specific prior written permission.
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
 
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
@@ -44,10 +44,10 @@ POSSIBILITY OF SUCH DAMAGE.
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
-#include "Program.h"
 #include <vector>
+#include "KernelDesc.h"
 
-class CALDevice;
+class SPLCalDevice;
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -56,11 +56,13 @@ class CALDevice;
 //! \brief CAL backend specific implementation for Program
 //!
 ////////////////////////////////////////////////////////////////////////////////
-
-class CALProgram : public Program
+namespace amdspl
 {
+
+    class SPLCalProgram
+    {
     public:
-        CALProgram(Pass& pass, Device* device);
+        SPLCalProgram(Pass& pass, SPLCalDevice* device);
         bool initialize();
 
         CALname getConstName(unsigned short i) const;
@@ -68,8 +70,17 @@ class CALProgram : public Program
         CALname getOutputName(unsigned short i) const;
         inline const CALfunc getFunction() const;
 
-        ~CALProgram();
+        ~SPLCalProgram();
 
+        inline const Pass* getPass() const;
+
+
+    protected:
+        //! \brief Contains the information of Pass that this program corresponds to
+        Pass _pass;
+
+        //! \brief contains Device information for Loading pass on a specific device
+        SPLCalDevice* _device;
 
     private:
 
@@ -88,19 +99,29 @@ class CALProgram : public Program
         //! \brief CAL module handle
         CALmodule _module;
 
-};
+    };
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \brief Get the CAL funtion handle
-//!
-////////////////////////////////////////////////////////////////////////////////
+    inline const
+        Pass*
+        SPLCalProgram::getPass() const
+    {
+        return &_pass;
+    }
 
-inline const
-CALfunc
-CALProgram::getFunction() const
-{
-    return _func;
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Get the CAL funtion handle
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    inline const
+        CALfunc
+        SPLCalProgram::getFunction() const
+    {
+        return _func;
+    }
+
 }
-
 #endif //_CALPROGRAM_H_
+
+

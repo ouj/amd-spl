@@ -1,5 +1,5 @@
-#ifndef _CALDEVICE_H_
-#define _CALDEVICE_H_
+#ifndef _AMDSPL_CALDEVICE_H_
+#define _AMDSPL_CALDEVICE_H_
 
 /****************************************************************************
 
@@ -46,7 +46,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <cstdio>
 
 #include "cal.h"
-#include "Device.h"
+#include "CalDevice.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -57,18 +57,20 @@ POSSIBILITY OF SUCH DAMAGE.
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-class CALDevice : public Device
+class SPLCalDevice
 {
     public:
-
-        explicit CALDevice(unsigned short id);
+        explicit SPLCalDevice(unsigned short id);
         bool initialize();
         inline CALdevice getDevice() const;
         inline CALdeviceinfo getInfo() const;
         inline CALdeviceattribs getAttribs() const;
         inline CALcontext getContext() const;
-        ~CALDevice();
+        ~SPLCalDevice();
 
+protected:
+    //! \brief User ID of the device
+    unsigned short _id;
     private:
 
         //! \brief CALdevice handle
@@ -87,28 +89,28 @@ class CALDevice : public Device
 
 inline
 CALdevice
-CALDevice::getDevice() const
+SPLCalDevice::getDevice() const
 {
     return _calDevice;
 }
 
 inline
 CALdeviceinfo
-CALDevice::getInfo() const
+SPLCalDevice::getInfo() const
 {
   return _calDeviceInfo;
 }
 
 inline
 CALdeviceattribs
-CALDevice::getAttribs() const
+SPLCalDevice::getAttribs() const
 {
   return _calDeviceAttribs;
 }
 
 inline
 CALcontext
-CALDevice::getContext() const
+SPLCalDevice::getContext() const
 {
   return _calContext;
 }

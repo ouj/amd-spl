@@ -1,5 +1,5 @@
-#ifndef _CALBUFFER_H_
-#define _CALBUFFER_H_
+#ifndef _AMDSPL_CALBUFFER_H_
+#define _AMDSPL_CALBUFFER_H_
 
 /****************************************************************************
 
@@ -44,9 +44,8 @@ POSSIBILITY OF SUCH DAMAGE.
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
-#include "Buffer.h"
 
-class CALDevice;
+class SPLCalDevice;
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -85,13 +84,13 @@ enum BufferPool
 //! 
 ///////////////////////////////////////////////////////////////////////////////
 
-class CALBuffer : public Buffer
+class SPLCalBuffer
 {
     public:
 
-        CALBuffer(unsigned short rank, unsigned int* dimansions,
+        SPLCalBuffer(unsigned short rank, unsigned int* dimansions,
                     CALformat format, BufferPool bufferPool, CALuint flag,
-                    Device* device);
+                    SPLCalDevice* device);
         bool initialize();
         bool flush();
 
@@ -102,11 +101,11 @@ class CALBuffer : public Buffer
         void* getBufferPointerCPU(CALuint& pitch);
         void freeBufferPointerCPU();
 
-        bool copyAsync(CALBuffer* srcBuffer, CALevent* event) const;
+        bool copyAsync(SPLCalBuffer* srcBuffer, CALevent* event) const;
         unsigned short getElementBytes() const;
 
         void unref();
-        ~CALBuffer();
+        ~SPLCalBuffer();
 
         void waitCopyEvent();
         void waitInputEvent();
@@ -163,21 +162,21 @@ class CALBuffer : public Buffer
 
 inline const 
 CALmem 
-CALBuffer::getMemHandle() const
+SPLCalBuffer::getMemHandle() const
 {
     return _mem;
 }
 
 inline const 
 CALformat
-CALBuffer::getFormat() const
+SPLCalBuffer::getFormat() const
 {
     return _dataFormat;
 }
 
 inline const
 CALevent
-CALBuffer::getCopyEvent() const
+SPLCalBuffer::getCopyEvent() const
 {
     if(_copyEvent)
     {
@@ -189,7 +188,7 @@ CALBuffer::getCopyEvent() const
 
 inline const
 CALevent
-CALBuffer::getInputEvent() const
+SPLCalBuffer::getInputEvent() const
 {
     if(_inputEvent)
     {
@@ -201,7 +200,7 @@ CALBuffer::getInputEvent() const
 
 inline const
 CALevent
-CALBuffer::getOutputEvent() const
+SPLCalBuffer::getOutputEvent() const
 {
     if(_outputEvent)
     {

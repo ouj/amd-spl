@@ -50,7 +50,7 @@ POSSIBILITY OF SUCH DAMAGE.
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-CALBuffer::CALBuffer(unsigned short rank, unsigned int* dimensions, 
+SPLCalBuffer::SPLCalBuffer(unsigned short rank, unsigned int* dimensions, 
                      CALformat format, BufferPool bufferPool, CALuint flag,
                      Device* device)
                      : Buffer(rank, dimensions, device),
@@ -69,9 +69,9 @@ CALBuffer::CALBuffer(unsigned short rank, unsigned int* dimensions,
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-CALBuffer::initialize()
+SPLCalBuffer::initialize()
 {
-    CALDevice* device = static_cast<CALDevice*>(_device);
+    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
     CALdevice calDevice = device->getDevice();
     CALresult result;
     if(1 == _rank)
@@ -117,7 +117,7 @@ CALBuffer::initialize()
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-CALBuffer::flush()
+SPLCalBuffer::flush()
 {
     waitCopyEvent();
     waitInputEvent();
@@ -133,7 +133,7 @@ CALBuffer::flush()
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-CALBuffer::_isEqual(const Buffer& other) const
+SPLCalBuffer::_isEqual(const Buffer& other) const
 {
     // Is base class properties same?
     bool flag = Buffer::_isEqual(other);
@@ -141,7 +141,7 @@ CALBuffer::_isEqual(const Buffer& other) const
     // Check for data format equality if base class properties are same
     if(flag)
     {
-        const CALBuffer& buffer = static_cast<const CALBuffer&>(other);
+        const SPLCalBuffer& buffer = static_cast<const SPLCalBuffer&>(other);
 
         return (_dataFormat == buffer.getFormat());
     }
@@ -159,7 +159,7 @@ CALBuffer::_isEqual(const Buffer& other) const
 ////////////////////////////////////////////////////////////////////////////////
 
 void*
-CALBuffer::getBufferPointerCPU(CALuint& pitch)
+SPLCalBuffer::getBufferPointerCPU(CALuint& pitch)
 {
     void* bufferPtr;
     CALresult result = calResMap(&bufferPtr, &pitch, _res, 0);
@@ -182,7 +182,7 @@ CALBuffer::getBufferPointerCPU(CALuint& pitch)
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::freeBufferPointerCPU()
+SPLCalBuffer::freeBufferPointerCPU()
 {
     CALresult result = calResUnmap(_res);
     CAL_RESULT_LOG(result, "Failed to unmap resource \n");
@@ -195,7 +195,7 @@ CALBuffer::freeBufferPointerCPU()
 ////////////////////////////////////////////////////////////////////////////////
 
 unsigned int
-CALBuffer::getPitch()
+SPLCalBuffer::getPitch()
 {
     if(!_pitch)
     {
@@ -220,9 +220,9 @@ CALBuffer::getPitch()
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-CALBuffer::copyAsync(CALBuffer* srcBuffer, CALevent* event) const
+SPLCalBuffer::copyAsync(SPLCalBuffer* srcBuffer, CALevent* event) const
 {
-    CALDevice* device = static_cast<CALDevice*>(_device);
+    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
     CALcontext ctx = device->getContext();
     CALresult result = calMemCopy(event, ctx, 
                                     srcBuffer->getMemHandle(), 
@@ -243,7 +243,7 @@ CALBuffer::copyAsync(CALBuffer* srcBuffer, CALevent* event) const
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::unref()
+SPLCalBuffer::unref()
 {
     assert(_refCount > 0);
 
@@ -266,9 +266,9 @@ CALBuffer::unref()
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-CALBuffer::~CALBuffer()
+SPLCalBuffer::~SPLCalBuffer()
 {
-    CALDevice* device = static_cast<CALDevice*>(_device);
+    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
 
     // Destroy resource and release mem handle
     if(_res)
@@ -289,9 +289,9 @@ CALBuffer::~CALBuffer()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::waitCopyEvent()
+SPLCalBuffer::waitCopyEvent()
 {
-    CALDevice* device = static_cast<CALDevice*>(_device);
+    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
     if(_copyEvent)
     {
         if(*_copyEvent != 0)
@@ -311,9 +311,9 @@ CALBuffer::waitCopyEvent()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::waitInputEvent()
+SPLCalBuffer::waitInputEvent()
 {
-    CALDevice* device = static_cast<CALDevice*>(_device);
+    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
     if(_inputEvent)
     {
         if(*_inputEvent != 0)
@@ -333,9 +333,9 @@ CALBuffer::waitInputEvent()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::waitOutputEvent()
+SPLCalBuffer::waitOutputEvent()
 {
-    CALDevice* device = static_cast<CALDevice*>(_device);
+    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
     if(_outputEvent)
     {
         if(*_outputEvent != 0)
@@ -355,7 +355,7 @@ CALBuffer::waitOutputEvent()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::setCopyEvent(CALevent* value)
+SPLCalBuffer::setCopyEvent(CALevent* value)
 {
     _copyEvent = value;
 }
@@ -367,7 +367,7 @@ CALBuffer::setCopyEvent(CALevent* value)
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::setInputEvent(CALevent* value)
+SPLCalBuffer::setInputEvent(CALevent* value)
 {
     _inputEvent = value;
 }
@@ -379,7 +379,7 @@ CALBuffer::setInputEvent(CALevent* value)
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALBuffer::setOutputEvent(CALevent* value)
+SPLCalBuffer::setOutputEvent(CALevent* value)
 {
     _outputEvent = value;
 }
@@ -391,7 +391,7 @@ CALBuffer::setOutputEvent(CALevent* value)
 ////////////////////////////////////////////////////////////////////////////////
 
 unsigned short 
-CALBuffer::getElementBytes()const
+SPLCalBuffer::getElementBytes()const
 {
     unsigned short numComponents = 0;
     unsigned short bytes = 0;

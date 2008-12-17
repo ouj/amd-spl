@@ -42,7 +42,7 @@ POSSIBILITY OF SUCH DAMAGE.
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-CALDevice::CALDevice(unsigned short id) : Device(id), _calDevice(0),
+SPLCalDevice::SPLCalDevice(unsigned short id) : _id(id), _calDevice(0),
                                           _calContext(0)
 {
 }
@@ -56,7 +56,7 @@ CALDevice::CALDevice(unsigned short id) : Device(id), _calDevice(0),
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-CALDevice::initialize()
+SPLCalDevice::initialize()
 {
     //All the device specifc initialization
     CALresult result;
@@ -84,7 +84,7 @@ CALDevice::initialize()
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-CALDevice::~CALDevice()
+SPLCalDevice::~SPLCalDevice()
 {
     // Cleanup of context and Device handle
     if(_calContext)
@@ -97,4 +97,3 @@ CALDevice::~CALDevice()
         calDeviceClose(_calDevice);
     }
 }
-
