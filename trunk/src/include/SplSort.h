@@ -21,6 +21,6 @@ namespace amdspl
     };
 }
 
-#include "splSortDef.h"
+#include "SplSortDef.h"
 
 #endif

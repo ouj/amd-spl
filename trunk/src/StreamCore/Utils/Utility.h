@@ -1,5 +1,5 @@
-#ifndef _UTILITY_H_
-#define _UTILITY_H_
+#ifndef _AMDSPL_UTILITY_H_
+#define _AMDSPL_UTILITY_H_
 
 /****************************************************************************
 

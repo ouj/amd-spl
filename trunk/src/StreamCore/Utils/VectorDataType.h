@@ -1,5 +1,5 @@
-#ifndef VECTORDATATYPE_HPP_
-#define VECTORDATATYPE_HPP_
+#ifndef _AMDSPL_VECTORDATATYPE_
+#define _AMDSPL_VECTORDATATYPE_
 
 /****************************************************************************
 

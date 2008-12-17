@@ -1,5 +1,5 @@
-#ifndef _FORMATS_H_
-#define _FORMATS_H_
+#ifndef _AMDSPL_FORMATS_H_
+#define _AMDSPL_FORMATS_H_
 
 #include "VectorDataType.h"
 
