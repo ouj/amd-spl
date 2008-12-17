@@ -1,5 +1,5 @@
-#ifndef _CALBASE_H_
-#define _CALBASE_H_
+#ifndef _AMDSPL_CALBASE_H_
+#define _AMDSPL_CALBASE_H_
 
 /****************************************************************************
 
