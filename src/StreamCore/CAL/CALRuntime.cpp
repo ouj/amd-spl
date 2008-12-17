@@ -13,14 +13,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-
     ////////////////////////////////////////////////////////////////////////////////
     //!
     //! \brief Constructor
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    SPLCalRuntime::SPLCalRuntime() :_numDevices(0)
+    CalRuntime::CalRuntime() :_numDevices(0)
     {
     }
 
@@ -30,7 +29,7 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    SPLCalRuntime::~SPLCalRuntime()
+    CalRuntime::~CalRuntime()
     {
         calShutdown();
     }
@@ -42,10 +41,10 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    SPLCalRuntime*
-        SPLCalRuntime::create()
+    CalRuntime*
+        CalRuntime::create()
     {
-        SPLCalRuntime* runtime = new SPLCalRuntime();
+        CalRuntime* runtime = new CalRuntime();
         if(!runtime->initialize())
         {
             delete runtime;
@@ -64,7 +63,7 @@ namespace amdspl
     ////////////////////////////////////////////////////////////////////////////////
 
     bool
-        SPLCalRuntime::initialize()
+        CalRuntime::initialize()
     {
         CALresult result;
 
@@ -85,7 +84,7 @@ namespace amdspl
         if ((adapterEnv = getenv("AMDPL_ADAPTER")))
             which_device = atoi(adapterEnv);
 
-        SPLCalDevice* device = new SPLCalDevice(which_device);
+        CalDevice* device = new CalDevice(which_device);
         if(!device->initialize())
         {
             delete device;
@@ -132,7 +131,7 @@ namespace amdspl
 
     void cleanup()
     {
-        SPLCalRuntime*& runtime = SPLCalRuntime::_runtime;
+        CalRuntime*& runtime = CalRuntime::_runtime;
         if (runtime != NULL)
         {
             delete runtime;
@@ -146,7 +145,7 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    SPLCalRuntime* SPLCalRuntime::_runtime = NULL;
+    CalRuntime* CalRuntime::_runtime = NULL;
 
     ////////////////////////////////////////////////////////////////////////////////
     //!
@@ -156,7 +155,7 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    SPLCalRuntime* SPLCalRuntime::getInstance()
+    CalRuntime* CalRuntime::getInstance()
     {
         if (_runtime == NULL)
         {
@@ -166,7 +165,7 @@ namespace amdspl
                 std::set_new_handler(oldHandle);
             }
 
-            _runtime = SPLCalRuntime::create();
+            _runtime = CalRuntime::create();
 
             if(_runtime == NULL)
             {
@@ -191,7 +190,7 @@ namespace amdspl
     //! \return Device specifc ResourceManager handle
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    SPLCalResourceManager* SPLCalRuntime::getResourceManager() const
+    CalResourceManager* CalRuntime::getResourceManager() const
     {
         assert(_resourceMgr);
         return _resourceMgr;

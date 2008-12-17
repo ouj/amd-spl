@@ -3,19 +3,19 @@
 
 #pragma once
 
-class SPLCalDevice;
-class SPLCalBuffer;
+class CalDevice;
+class CalBuffer;
 
 namespace amdspl
 {
-    class SPLCalResourceManager
+    class CalResourceManager
     {
     public:
-        SPLCalResourceManager(void);
-        virtual ~SPLCalResourceManager(void);
+        CalResourceManager(void);
+        virtual ~CalResourceManager(void);
 
-        SPLCalBuffer*  createBuffer(unsigned short rank, unsigned int* dimensions, SPLCalDevice* device);
-        void        destroyBuffer(SPLCalBuffer* buffer);
+        CalBuffer*  createBuffer(unsigned short rank, unsigned int* dimensions, CalDevice* device);
+        void        destroyBuffer(CalBuffer* buffer);
     };
 }
 

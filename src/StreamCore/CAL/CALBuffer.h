@@ -45,7 +45,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "cal.h"
 
-class SPLCalDevice;
+class CalDevice;
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -84,13 +84,13 @@ enum BufferPool
 //! 
 ///////////////////////////////////////////////////////////////////////////////
 
-class SPLCalBuffer
+class CalBuffer
 {
     public:
 
-        SPLCalBuffer(unsigned short rank, unsigned int* dimansions,
+        CalBuffer(unsigned short rank, unsigned int* dimansions,
                     CALformat format, BufferPool bufferPool, CALuint flag,
-                    SPLCalDevice* device);
+                    CalDevice* device);
         bool initialize();
         bool flush();
 
@@ -101,11 +101,14 @@ class SPLCalBuffer
         void* getBufferPointerCPU(CALuint& pitch);
         void freeBufferPointerCPU();
 
-        bool copyAsync(SPLCalBuffer* srcBuffer, CALevent* event) const;
+        bool copyAsync(CalBuffer* srcBuffer, CALevent* event) const;
+        inline const unsigned short getRank() const;
+        inline unsigned int* getDimensions() const;
         unsigned short getElementBytes() const;
 
+        void ref();
         void unref();
-        ~SPLCalBuffer();
+        ~CalBuffer();
 
         void waitCopyEvent();
         void waitInputEvent();
@@ -119,9 +122,24 @@ class SPLCalBuffer
         void setInputEvent(CALevent* value);
         void setOutputEvent(CALevent* value);
 
+        bool operator==(const CalBuffer& other) const;
     protected:
 
-        bool _isEqual(const Buffer& other) const;
+        bool _isEqual(const CalBuffer& other) const;
+
+    protected:
+
+        //! \brief number of refernce to this buffer
+        unsigned int _refCount;
+
+        //! \brief Rank of Buffer
+        unsigned short _rank;
+
+        //! \brief Dimensions of Buffer
+        unsigned int* _dimensions;
+
+        //! \brief Device information as each GPU local memory is specific to a device
+        CalDevice* _device;
 
     private:
 
@@ -160,23 +178,38 @@ class SPLCalBuffer
 
 };
 
+inline const
+unsigned short
+CalBuffer::getRank() const
+{
+    return _rank;
+}
+
+inline
+unsigned int*
+CalBuffer::getDimensions() const
+{
+    return _dimensions;
+}
+
+
 inline const 
 CALmem 
-SPLCalBuffer::getMemHandle() const
+CalBuffer::getMemHandle() const
 {
     return _mem;
 }
 
 inline const 
 CALformat
-SPLCalBuffer::getFormat() const
+CalBuffer::getFormat() const
 {
     return _dataFormat;
 }
 
 inline const
 CALevent
-SPLCalBuffer::getCopyEvent() const
+CalBuffer::getCopyEvent() const
 {
     if(_copyEvent)
     {
@@ -188,7 +221,7 @@ SPLCalBuffer::getCopyEvent() const
 
 inline const
 CALevent
-SPLCalBuffer::getInputEvent() const
+CalBuffer::getInputEvent() const
 {
     if(_inputEvent)
     {
@@ -200,7 +233,7 @@ SPLCalBuffer::getInputEvent() const
 
 inline const
 CALevent
-SPLCalBuffer::getOutputEvent() const
+CalBuffer::getOutputEvent() const
 {
     if(_outputEvent)
     {

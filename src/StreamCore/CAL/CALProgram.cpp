@@ -52,7 +52,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-    SPLCalProgram::SPLCalProgram(Pass& pass, SPLCalDevice* device)
+    CalProgram::CalProgram(Pass& pass, CalDevice* device)
         : _pass(pass), _device(device), _func(0), _module(0)
     {
     }
@@ -65,9 +65,9 @@ namespace amdspl
     ////////////////////////////////////////////////////////////////////////////////
 
     bool
-        SPLCalProgram::initialize()
+        CalProgram::initialize()
     {
-        SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+        CalDevice* device = static_cast<CalDevice*>(_device);
         CALdeviceinfo info = device->getInfo();
         CALcontext ctx = device->getContext();
 
@@ -163,7 +163,7 @@ namespace amdspl
     ////////////////////////////////////////////////////////////////////////////////
 
     CALname
-        SPLCalProgram::getConstName(unsigned short i) const
+        CalProgram::getConstName(unsigned short i) const
     {
         return _constNames[i];
     }
@@ -177,7 +177,7 @@ namespace amdspl
     ////////////////////////////////////////////////////////////////////////////////
 
     CALname
-        SPLCalProgram::getInputName(unsigned short i) const
+        CalProgram::getInputName(unsigned short i) const
     {
         return _inputNames[i];
     }
@@ -191,7 +191,7 @@ namespace amdspl
     ////////////////////////////////////////////////////////////////////////////////
 
     CALname
-        SPLCalProgram::getOutputName(unsigned short i) const
+        CalProgram::getOutputName(unsigned short i) const
     {
         return _outputNames[i];
     }
@@ -202,9 +202,9 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    SPLCalProgram::~SPLCalProgram()
+    CalProgram::~CalProgram()
     {
-        SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+        CalDevice* device = static_cast<CalDevice*>(_device);
         CALcontext ctx = device->getContext();
 
         // Destroy the module

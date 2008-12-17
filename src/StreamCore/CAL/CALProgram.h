@@ -47,7 +47,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include "KernelDesc.h"
 
-class SPLCalDevice;
+class CalDevice;
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -59,10 +59,10 @@ class SPLCalDevice;
 namespace amdspl
 {
 
-    class SPLCalProgram
+    class CalProgram
     {
     public:
-        SPLCalProgram(Pass& pass, SPLCalDevice* device);
+        CalProgram(Pass& pass, CalDevice* device);
         bool initialize();
 
         CALname getConstName(unsigned short i) const;
@@ -70,7 +70,7 @@ namespace amdspl
         CALname getOutputName(unsigned short i) const;
         inline const CALfunc getFunction() const;
 
-        ~SPLCalProgram();
+        ~CalProgram();
 
         inline const Pass* getPass() const;
 
@@ -80,7 +80,7 @@ namespace amdspl
         Pass _pass;
 
         //! \brief contains Device information for Loading pass on a specific device
-        SPLCalDevice* _device;
+        CalDevice* _device;
 
     private:
 
@@ -103,7 +103,7 @@ namespace amdspl
 
     inline const
         Pass*
-        SPLCalProgram::getPass() const
+        CalProgram::getPass() const
     {
         return &_pass;
     }
@@ -116,7 +116,7 @@ namespace amdspl
 
     inline const
         CALfunc
-        SPLCalProgram::getFunction() const
+        CalProgram::getFunction() const
     {
         return _func;
     }

@@ -24,7 +24,7 @@
 
 typedef void(*MemoryHandler)();
 
-class SPLCalDevice;
+class CalDevice;
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -35,23 +35,23 @@ class SPLCalDevice;
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-    class SPLCalRuntime
+    class CalRuntime
     {
     public:
-        static SPLCalRuntime* create();
-        static SPLCalRuntime* getInstance();
-        inline SPLCalResourceManager* getResourceManager() const;
+        static CalRuntime* create();
+        static CalRuntime* getInstance();
+        inline CalResourceManager* getResourceManager() const;
 
     protected:
-        SPLCalRuntime();
+        CalRuntime();
         bool initialize();
-        ~SPLCalRuntime();
+        ~CalRuntime();
 
     protected:
-        static SPLCalRuntime*      _runtime;
+        static CalRuntime*      _runtime;
         unsigned int            _numDevices;
-        SPLCalDevice*              _devices;
-        SPLCalResourceManager*     _resourceMgr;
+        CalDevice*              _devices;
+        CalResourceManager*     _resourceMgr;
 
     private:
         friend BRerror getError();
