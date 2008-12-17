@@ -2,11 +2,11 @@
 
 namespace amdspl
 {
-    SPLCalResourceManager::SPLCalResourceManager(void)
+    CalResourceManager::CalResourceManager(void)
     {
     }
 
-    SPLCalResourceManager::~SPLCalResourceManager(void)
+    CalResourceManager::~CalResourceManager(void)
     {
     }
 }

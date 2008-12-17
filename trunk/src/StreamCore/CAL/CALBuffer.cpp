@@ -35,8 +35,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "CALBase.h"
 #include "CALBuffer.h"
 #include "CALDevice.h"
-#include "Runtime.h"
-#include "BufferMgr.h"
+#include "CALRuntime.h"
+#include "CALResourceManager.h"
+#include <assert.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -50,14 +51,16 @@ POSSIBILITY OF SUCH DAMAGE.
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-SPLCalBuffer::SPLCalBuffer(unsigned short rank, unsigned int* dimensions, 
+CalBuffer::CalBuffer(unsigned short rank, unsigned int* dimensions, 
                      CALformat format, BufferPool bufferPool, CALuint flag,
-                     Device* device)
-                     : Buffer(rank, dimensions, device),
+                     CalDevice* device)
+                     :  _refCount(0), _rank (rank), _device(device),
                         _dataFormat(format), _res(0),
                         _mem(0), _bufferPool(bufferPool), _flag(flag), _pitch(0),
                         _copyEvent(NULL), _inputEvent(NULL), _outputEvent(NULL)
 {
+    _dimensions = new unsigned int[rank];
+    memcpy(_dimensions, dimensions, rank * sizeof(unsigned int));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,9 +72,9 @@ SPLCalBuffer::SPLCalBuffer(unsigned short rank, unsigned int* dimensions,
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-SPLCalBuffer::initialize()
+CalBuffer::initialize()
 {
-    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+    CalDevice* device = static_cast<CalDevice*>(_device);
     CALdevice calDevice = device->getDevice();
     CALresult result;
     if(1 == _rank)
@@ -117,7 +120,7 @@ SPLCalBuffer::initialize()
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-SPLCalBuffer::flush()
+CalBuffer::flush()
 {
     waitCopyEvent();
     waitInputEvent();
@@ -128,20 +131,41 @@ SPLCalBuffer::flush()
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
+//! \brief overloaded operator == 
+//! Check if format, rank and dimensions are same or not
+//!
+////////////////////////////////////////////////////////////////////////////////
+
+bool
+CalBuffer::operator==(const CalBuffer& other) const
+{
+    return _isEqual(other);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//!
 //! \brief Check the equality of two buffers
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-SPLCalBuffer::_isEqual(const Buffer& other) const
+CalBuffer::_isEqual(const CalBuffer& other) const
 {
-    // Is base class properties same?
-    bool flag = Buffer::_isEqual(other);
+    bool flag = _rank == other.getRank();
+
+    if(flag)
+    {
+        unsigned int* dimensions = other.getDimensions();
+        for(unsigned int i = 0; i < _rank; ++i)
+        {
+            flag = flag && (_dimensions[i] == dimensions[i]);
+        }
+    }
 
     // Check for data format equality if base class properties are same
     if(flag)
     {
-        const SPLCalBuffer& buffer = static_cast<const SPLCalBuffer&>(other);
+        const CalBuffer& buffer = static_cast<const CalBuffer&>(other);
 
         return (_dataFormat == buffer.getFormat());
     }
@@ -159,7 +183,7 @@ SPLCalBuffer::_isEqual(const Buffer& other) const
 ////////////////////////////////////////////////////////////////////////////////
 
 void*
-SPLCalBuffer::getBufferPointerCPU(CALuint& pitch)
+CalBuffer::getBufferPointerCPU(CALuint& pitch)
 {
     void* bufferPtr;
     CALresult result = calResMap(&bufferPtr, &pitch, _res, 0);
@@ -182,7 +206,7 @@ SPLCalBuffer::getBufferPointerCPU(CALuint& pitch)
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::freeBufferPointerCPU()
+CalBuffer::freeBufferPointerCPU()
 {
     CALresult result = calResUnmap(_res);
     CAL_RESULT_LOG(result, "Failed to unmap resource \n");
@@ -195,7 +219,7 @@ SPLCalBuffer::freeBufferPointerCPU()
 ////////////////////////////////////////////////////////////////////////////////
 
 unsigned int
-SPLCalBuffer::getPitch()
+CalBuffer::getPitch()
 {
     if(!_pitch)
     {
@@ -220,9 +244,9 @@ SPLCalBuffer::getPitch()
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-SPLCalBuffer::copyAsync(SPLCalBuffer* srcBuffer, CALevent* event) const
+CalBuffer::copyAsync(CalBuffer* srcBuffer, CALevent* event) const
 {
-    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+    CalDevice* device = static_cast<CalDevice*>(_device);
     CALcontext ctx = device->getContext();
     CALresult result = calMemCopy(event, ctx, 
                                     srcBuffer->getMemHandle(), 
@@ -234,6 +258,16 @@ SPLCalBuffer::copyAsync(SPLCalBuffer* srcBuffer, CALevent* event) const
 
     return true;
 }
+////////////////////////////////////////////////////////////////////////////////
+//!
+//! \brief Increase the ref count
+//!
+////////////////////////////////////////////////////////////////////////////////
+void
+CalBuffer::ref()
+{
+    ++_refCount;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -243,7 +277,7 @@ SPLCalBuffer::copyAsync(SPLCalBuffer* srcBuffer, CALevent* event) const
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::unref()
+CalBuffer::unref()
 {
     assert(_refCount > 0);
 
@@ -255,7 +289,7 @@ SPLCalBuffer::unref()
         // That bufferMap is only for local resource
         if(_bufferPool == BUFFER_LOCAL)
         {
-            ::brook::Runtime::getInstance()->getBufferMgr()->destroyBuffer(this);
+            ::amdspl::CalRuntime::getInstance()->getResourceManager()->destroyBuffer(this);
         }
     }
 }
@@ -266,9 +300,9 @@ SPLCalBuffer::unref()
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-SPLCalBuffer::~SPLCalBuffer()
+CalBuffer::~CalBuffer()
 {
-    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+    CalDevice* device = static_cast<CalDevice*>(_device);
 
     // Destroy resource and release mem handle
     if(_res)
@@ -280,6 +314,8 @@ SPLCalBuffer::~SPLCalBuffer()
     {
         calResFree(_res);
     }
+
+    delete[] _dimensions;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -289,9 +325,9 @@ SPLCalBuffer::~SPLCalBuffer()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::waitCopyEvent()
+CalBuffer::waitCopyEvent()
 {
-    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+    CalDevice* device = static_cast<CalDevice*>(_device);
     if(_copyEvent)
     {
         if(*_copyEvent != 0)
@@ -311,9 +347,9 @@ SPLCalBuffer::waitCopyEvent()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::waitInputEvent()
+CalBuffer::waitInputEvent()
 {
-    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+    CalDevice* device = static_cast<CalDevice*>(_device);
     if(_inputEvent)
     {
         if(*_inputEvent != 0)
@@ -333,9 +369,9 @@ SPLCalBuffer::waitInputEvent()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::waitOutputEvent()
+CalBuffer::waitOutputEvent()
 {
-    SPLCalDevice* device = static_cast<SPLCalDevice*>(_device);
+    CalDevice* device = static_cast<CalDevice*>(_device);
     if(_outputEvent)
     {
         if(*_outputEvent != 0)
@@ -355,7 +391,7 @@ SPLCalBuffer::waitOutputEvent()
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::setCopyEvent(CALevent* value)
+CalBuffer::setCopyEvent(CALevent* value)
 {
     _copyEvent = value;
 }
@@ -367,7 +403,7 @@ SPLCalBuffer::setCopyEvent(CALevent* value)
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::setInputEvent(CALevent* value)
+CalBuffer::setInputEvent(CALevent* value)
 {
     _inputEvent = value;
 }
@@ -379,7 +415,7 @@ SPLCalBuffer::setInputEvent(CALevent* value)
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-SPLCalBuffer::setOutputEvent(CALevent* value)
+CalBuffer::setOutputEvent(CALevent* value)
 {
     _outputEvent = value;
 }
@@ -391,7 +427,7 @@ SPLCalBuffer::setOutputEvent(CALevent* value)
 ////////////////////////////////////////////////////////////////////////////////
 
 unsigned short 
-SPLCalBuffer::getElementBytes()const
+CalBuffer::getElementBytes()const
 {
     unsigned short numComponents = 0;
     unsigned short bytes = 0;

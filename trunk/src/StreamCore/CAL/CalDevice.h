@@ -57,16 +57,16 @@ POSSIBILITY OF SUCH DAMAGE.
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-class SPLCalDevice
+class CalDevice
 {
     public:
-        explicit SPLCalDevice(unsigned short id);
+        explicit CalDevice(unsigned short id);
         bool initialize();
         inline CALdevice getDevice() const;
         inline CALdeviceinfo getInfo() const;
         inline CALdeviceattribs getAttribs() const;
         inline CALcontext getContext() const;
-        ~SPLCalDevice();
+        ~CalDevice();
 
 protected:
     //! \brief User ID of the device
@@ -89,28 +89,28 @@ protected:
 
 inline
 CALdevice
-SPLCalDevice::getDevice() const
+CalDevice::getDevice() const
 {
     return _calDevice;
 }
 
 inline
 CALdeviceinfo
-SPLCalDevice::getInfo() const
+CalDevice::getInfo() const
 {
   return _calDeviceInfo;
 }
 
 inline
 CALdeviceattribs
-SPLCalDevice::getAttribs() const
+CalDevice::getAttribs() const
 {
   return _calDeviceAttribs;
 }
 
 inline
 CALcontext
-SPLCalDevice::getContext() const
+CalDevice::getContext() const
 {
   return _calContext;
 }
