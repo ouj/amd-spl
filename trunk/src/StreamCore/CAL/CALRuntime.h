@@ -40,7 +40,7 @@ namespace amdspl
     public:
         static CalRuntime* create();
         static CalRuntime* getInstance();
-        inline CalResourceManager* getResourceManager() const;
+        CalResourceManager* getResourceManager() const;
 
     protected:
         CalRuntime();

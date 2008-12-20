@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="brook_d.lib"
+				AdditionalDependencies="brook_d.lib amdcalcl.lib amdcalrt.lib"
 				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -114,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				WarningLevel="3"
@@ -132,7 +132,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="brook.lib"
+				AdditionalDependencies="brook.lib amdcalcl.lib amdcalrt.lib"
 				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
@@ -169,34 +169,164 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="StreamCore"
 			>
-			<File
-				RelativePath="..\..\src\splSort.cpp"
+			<Filter
+				Name="CAL"
 				>
-			</File>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALBase.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALBuffer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALConstBuffer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CalDevice.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALProgram.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CalResourceManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALConstBuffer.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CalDevice.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALProgram.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CalResourceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="OpenCL"
+				>
+			</Filter>
+			<Filter
+				Name="Utils"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\CommonDefs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\ErrorCodes.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\Formats.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\Utility.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\VectorDataType.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Source Files"
+					>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\Utility.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			Name="Sorting"
 			>
-			<File
-				RelativePath="..\..\src\include\splSort.h"
+			<Filter
+				Name="Header Files"
+				Filter="h;hpp;hxx;hm;inl;inc;xsd"
+				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\include\splSortDef.h"
+				<File
+					RelativePath="..\..\src\include\splSort.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\include\splSortDef.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+				UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
+				<File
+					RelativePath="..\..\src\Sorting\splSort.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
