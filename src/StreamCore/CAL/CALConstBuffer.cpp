@@ -46,7 +46,7 @@ POSSIBILITY OF SUCH DAMAGE.
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-CALConstBuffer::CALConstBuffer(unsigned int* dimensions, Device* device, CALformat format)
+CALConstBuffer::CALConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format)
                               :CALBuffer(1, dimensions, format, BUFFER_HOST, 0, device),
                               _nBytes(0)
 {
