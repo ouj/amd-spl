@@ -87,6 +87,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -162,6 +163,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -222,7 +224,6 @@
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
-							ExcludedFromBuild="true"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -230,7 +231,6 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release|Win32"
-							ExcludedFromBuild="true"
 							>
 							<Tool
 								Name="VCCLCompilerTool"

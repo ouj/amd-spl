@@ -47,17 +47,18 @@ public:
     void            destroyBuffer(CalBuffer *buffer);
     void            clearUsedConstCache();
 
-    void            setBufferData(CalBuffer* stream, const void* ptr);
-    void            getBufferData(CalBuffer* stream, void* ptr);
-
     ~CalBufferMgr();
 
     CalBuffer* createHostBuffer(unsigned short rank, unsigned int* dimensions, 
         const CALformat & format);
-    CALevent* _getCopyEvent();
+    CALevent* getCopyEvent();
 
 private:
 
+    enum
+    {
+        TileSize = 256
+    };
     //! \brief A cache that keeps Buffer and their status.
     //! It is possible that a Stream exists but Buffer doesn't (Lazy creation of Buffer).
     //! It is also possible a Stream is deleted but a Buffer exists. 
