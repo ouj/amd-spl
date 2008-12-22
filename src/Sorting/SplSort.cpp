@@ -7,7 +7,7 @@ namespace amdspl
 
     void SPLSort::bitonicSort(int *ptr, unsigned int _size)
     {
-
+        
     }
 
 }
