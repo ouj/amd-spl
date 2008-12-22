@@ -249,7 +249,7 @@ CalBufferMgr::CalBufferMgr(CalDevice* device) :  _device(device)
 ////////////////////////////////////////////////////////////////////////////////
 
 CalBuffer*
-CalBufferMgr::createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat, unsigned int i)
+CalBufferMgr::createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat)
 {
     // Check if double precision is supported on the underlying hardware
     CALdeviceattribs attrib = _device->getAttribs();
@@ -905,4 +905,9 @@ CalBufferMgr::_getCopyEvent()
     _copyEvents.push_back(event);
 
     return event;
+}
+
+void CalBufferMgr::destroyBuffer(CalBuffer *buffer)
+{
+
 }

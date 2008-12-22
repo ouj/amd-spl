@@ -190,7 +190,7 @@ namespace amdspl
     //! \return Device specifc BufferManager handle
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    CalResourceManager* CalRuntime::getBufferManager() const
+    CalBufferMgr* CalRuntime::getBufferManager() const
     {
         assert(_bufferMgr);
         return _bufferMgr;

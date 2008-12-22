@@ -25,7 +25,6 @@ enum BufferPool
 {
     BUFFER_LOCAL,   //GPU local side Buffer
     BUFFER_HOST     //Host side Buffer. Creation through CAL API
-
 };
 
 
