@@ -7,8 +7,6 @@
 #define SPL_EXPORT
 #endif
 
-#include "brook\brook.h"
-
 namespace amdspl
 {
     class SPL_EXPORT SPLSort
@@ -16,8 +14,6 @@ namespace amdspl
     public:
         static void bitonicSort(int *ptr, unsigned int _size);
         static void bitonicSort(void *ptr, unsigned int _size, unsigned int stride);
-        template<class T> static
-        void bitonicSort(::brook::Stream<T>);
     };
 }
 

@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -59,8 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="brook_d.lib amdcalcl.lib amdcalrt.lib"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
+				AdditionalDependencies="amdcalcl.lib amdcalrt.lib"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -114,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;&quot;$(BROOKROOT)\sdk\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				WarningLevel="3"
@@ -132,8 +132,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="brook.lib amdcalcl.lib amdcalrt.lib"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
+				AdditionalDependencies="amdcalcl.lib amdcalrt.lib"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -186,6 +186,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALBufferMgr.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALConstBuffer.h"
 						>
 					</File>
@@ -198,10 +202,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CalResourceManager.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.h"
 						>
 					</File>
@@ -211,6 +211,10 @@
 					>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALBufferMgr.cpp"
 						>
 					</File>
 					<File
@@ -239,10 +243,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALProgram.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\StreamCore\CAL\CalResourceManager.cpp"
 						>
 					</File>
 					<File

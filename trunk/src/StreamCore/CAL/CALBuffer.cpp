@@ -255,7 +255,7 @@ CalBuffer::unref()
         // That bufferMap is only for local resource
         if(_bufferPool == BUFFER_LOCAL)
         {
-            ::amdspl::CalRuntime::getInstance()->getResourceManager()->destroyBuffer(this);
+            ::amdspl::CalRuntime::getInstance()->getBufferManager()->destroyBuffer(this);
         }
     }
 }

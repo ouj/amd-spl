@@ -187,12 +187,12 @@ namespace amdspl
     //!
     //! \brief Get backend specifc ResourceManager
     //!
-    //! \return Device specifc ResourceManager handle
+    //! \return Device specifc BufferManager handle
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    CalResourceManager* CalRuntime::getResourceManager() const
+    CalResourceManager* CalRuntime::getBufferManager() const
     {
-        assert(_resourceMgr);
-        return _resourceMgr;
+        assert(_bufferMgr);
+        return _bufferMgr;
     }
 }

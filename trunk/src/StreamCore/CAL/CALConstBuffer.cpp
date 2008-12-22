@@ -11,7 +11,7 @@
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-CALConstBuffer::CALConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format)
+CalConstBuffer::CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format)
                               :CALBuffer(1, dimensions, format, BUFFER_HOST, 0, device),
                               _nBytes(0)
 {
@@ -28,7 +28,7 @@ CALConstBuffer::CALConstBuffer(unsigned int* dimensions, CalDevice* device, CALf
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-CALConstBuffer::reuse()
+CalConstBuffer::reuse()
 {
     // Set the previous data to 0
     memset((void*)_data, 0, _nBytes);
@@ -41,7 +41,7 @@ CALConstBuffer::reuse()
 //!
 ////////////////////////////////////////////////////////////////////////////////
 void
-CALConstBuffer::pushConstant(void* data, BRformat format, unsigned int count)
+CalConstBuffer::pushConstant(void* data, BRformat format, unsigned int count)
 {
     unsigned short bytes = Utility::getElementBytes(format);
     unsigned short bufferBytes = getElementBytes();
@@ -69,7 +69,7 @@ CALConstBuffer::pushConstant(void* data, BRformat format, unsigned int count)
 ////////////////////////////////////////////////////////////////////////////////
 
 bool
-CALConstBuffer::setDataToBuffer()
+CalConstBuffer::setDataToBuffer()
 {
     CALuint pitch;
     void* data = getBufferPointerCPU(pitch);
@@ -90,7 +90,7 @@ CALConstBuffer::setDataToBuffer()
 //!
 ////////////////////////////////////////////////////////////////////////////////
 
-CALConstBuffer::~CALConstBuffer()
+CalConstBuffer::~CalConstBuffer()
 {
     delete[] _data;
 }

@@ -21,15 +21,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 using namespace amdspl;
 
-class CALConstBuffer
+class CalConstBuffer : public CalBuffer
 {
     public:
 
-        CALConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format);
+        CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format);
         void pushConstant(void* data, BRformat format, unsigned int count = 1);
         bool setDataToBuffer();
         void reuse();
-        ~CALConstBuffer();
+        ~CalConstBuffer();
 
     private:
         //! \brief CAL creates a buffer of multiple constants. 
