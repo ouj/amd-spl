@@ -40,7 +40,7 @@ namespace amdspl
     public:
         static CalRuntime* create();
         static CalRuntime* getInstance();
-        CalResourceManager* getResourceManager() const;
+        CalResourceManager* getBufferManager() const;
 
     protected:
         CalRuntime();
@@ -51,7 +51,7 @@ namespace amdspl
         static CalRuntime*      _runtime;
         unsigned int            _numDevices;
         CalDevice*              _devices;
-        CalResourceManager*     _resourceMgr;
+        CalResourceManager*     _bufferMgr;
 
     private:
         friend BRerror getError();
