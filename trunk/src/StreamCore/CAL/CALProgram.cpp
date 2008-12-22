@@ -33,9 +33,8 @@ namespace amdspl
     bool
         CalProgram::initialize()
     {
-        CalDevice* device = static_cast<CalDevice*>(_device);
-        CALdeviceinfo info = device->getInfo();
-        CALcontext ctx = device->getContext();
+        CALdeviceinfo info = _device->getInfo();
+        CALcontext ctx = _device->getContext();
 
         CALresult result;
 
@@ -170,8 +169,7 @@ namespace amdspl
 
     CalProgram::~CalProgram()
     {
-        CalDevice* device = static_cast<CalDevice*>(_device);
-        CALcontext ctx = device->getContext();
+        CALcontext ctx = _device->getContext();
 
         // Destroy the module
         if(_module)
