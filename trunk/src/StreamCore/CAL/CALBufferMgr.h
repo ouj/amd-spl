@@ -41,13 +41,14 @@ class CalBufferMgr
 {
 public:
 
-    explicit CalBufferMgr(CalDevice* device);
+    explicit        CalBufferMgr(CalDevice* device);
     CalConstBuffer* createConstBuffer(unsigned int numConstants, CALformat calFormat);
-    CalBuffer*      createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat, unsigned int i); 
+    CalBuffer*      createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat); 
+    void            destroyBuffer(CalBuffer *buffer);
     void            clearUsedConstCache();
 
-    void setBufferData(CalBuffer* stream, const void* ptr);
-    void getBufferData(CalBuffer* stream, void* ptr);
+    void            setBufferData(CalBuffer* stream, const void* ptr);
+    void            getBufferData(CalBuffer* stream, void* ptr);
 
     ~CalBufferMgr();
 

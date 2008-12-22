@@ -9,7 +9,7 @@ namespace amdspl
     void SPLSort::bitonicSort(int *ptr, unsigned int _size)
     {
         CalBuffer *buffer = 
-            amdspl::CalRuntime::getInstance()->getBufferManager()->createBuffer(1, NULL, NULL);
+            amdspl::CalRuntime::getInstance()->getBufferManager()->createBuffer(1, NULL, CAL_FORMAT_BYTE_1);
     }
 
 }

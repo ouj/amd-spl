@@ -2,7 +2,6 @@
 #include "CALBuffer.h"
 #include "CALDevice.h"
 #include "CALRuntime.h"
-#include "CALResourceManager.h"
 #include <assert.h>
 
 ////////////////////////////////////////////////////////////////////////////////

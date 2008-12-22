@@ -18,9 +18,9 @@
 
 #include <cstdio>
 #include <vector>
+#include "CALBufferMgr.h"
 
 #include "cal.h"
-#include "CalResourceManager.h"
 
 typedef void(*MemoryHandler)();
 
@@ -40,7 +40,7 @@ namespace amdspl
     public:
         static CalRuntime* create();
         static CalRuntime* getInstance();
-        CalResourceManager* getBufferManager() const;
+        CalBufferMgr*      getBufferManager() const;
 
     protected:
         CalRuntime();
@@ -51,7 +51,7 @@ namespace amdspl
         static CalRuntime*      _runtime;
         unsigned int            _numDevices;
         CalDevice*              _devices;
-        CalResourceManager*     _bufferMgr;
+        CalBufferMgr*           _bufferMgr;
 
     private:
         friend BRerror getError();
