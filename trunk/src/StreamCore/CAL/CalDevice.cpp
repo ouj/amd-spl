@@ -27,18 +27,18 @@ CalDevice::initialize()
     //All the device specifc initialization
     CALresult result;
     result = calDeviceOpen(&_calDevice, _id);
-    CHECK_CAL_RESULT(result, "Failed to open CAL device \n");
+    AMDSPL_CHECK_CAL_RESULT(result, "Failed to open CAL device \n");
 
     result = calDeviceGetInfo(&_calDeviceInfo, _id);
-    CHECK_CAL_RESULT(result, "Failed to get info on CAL device \n");
+    AMDSPL_CHECK_CAL_RESULT(result, "Failed to get info on CAL device \n");
 
     _calDeviceAttribs.struct_size = sizeof(CALdeviceattribs);
     result = calDeviceGetAttribs(&_calDeviceAttribs, _id);
-    CHECK_CAL_RESULT(result, "Failed to get CAL device attributes\n");
+    AMDSPL_CHECK_CAL_RESULT(result, "Failed to get CAL device attributes\n");
 
     // Create the device context
     result = calCtxCreate(&_calContext, _calDevice);
-    CHECK_CAL_RESULT(result, "Failed to create context on CAL device \n");
+    AMDSPL_CHECK_CAL_RESULT(result, "Failed to create context on CAL device \n");
 
     return true;
 }

@@ -59,6 +59,9 @@ class CalBuffer
         bool initialize();
         bool flush();
 
+        void readData(const void* appPtr);
+        void writeData(void *appPtr);
+
         inline const CALmem getMemHandle() const;
         inline const CALformat getFormat() const;
         unsigned int getPitch();

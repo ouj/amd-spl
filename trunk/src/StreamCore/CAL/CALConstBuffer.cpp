@@ -12,7 +12,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 CalConstBuffer::CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format)
-                              :CALBuffer(1, dimensions, format, BUFFER_HOST, 0, device),
+                              :CalBuffer(1, dimensions, format, BUFFER_HOST, 0, device),
                               _nBytes(0)
 {
     unsigned int bufferBytes = getElementBytes();
@@ -43,7 +43,7 @@ CalConstBuffer::reuse()
 void
 CalConstBuffer::pushConstant(void* data, BRformat format, unsigned int count)
 {
-    unsigned short bytes = Utility::getElementBytes(format);
+    unsigned short bytes = amdspl::utils::getElementBytes(format);
     unsigned short bufferBytes = getElementBytes();
 
     // initialize data and set number of bytes initialized

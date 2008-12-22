@@ -69,11 +69,11 @@ CalBuffer::initialize()
         }
     }
 
-    CHECK_CAL_RESULT(result, "Failed to allocate resource \n");
+    AMDSPL_CHECK_CAL_RESULT(result, "Failed to allocate resource \n");
 
     // Get the memory handle
     result = calCtxGetMem(&_mem, device->getContext(), _res);
-    CHECK_CAL_RESULT(result, "Failed to get memory handle \n");
+    AMDSPL_CHECK_CAL_RESULT(result, "Failed to get memory handle \n");
 
     return true;
 }
@@ -174,7 +174,7 @@ void
 CalBuffer::freeBufferPointerCPU()
 {
     CALresult result = calResUnmap(_res);
-    CAL_RESULT_LOG(result, "Failed to unmap resource \n");
+    AMDSPL_CAL_RESULT_LOG(result, "Failed to unmap resource \n");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +217,7 @@ CalBuffer::copyAsync(CalBuffer* srcBuffer, CALevent* event) const
                                     srcBuffer->getMemHandle(), 
                                     this->getMemHandle(), 0);
 
-    CAL_RESULT_ERROR(result, "Failed to copy data \n");
+    AMDSPL_CAL_RESULT_ERROR(result, "Failed to copy data \n");
 
     calCtxIsEventDone(ctx, *event);
 
@@ -254,7 +254,7 @@ CalBuffer::unref()
         // That bufferMap is only for local resource
         if(_bufferPool == BUFFER_LOCAL)
         {
-            ::amdspl::CalRuntime::getInstance()->getBufferManager()->destroyBuffer(this);
+            ::amdspl::CalRuntime::getInstance()->getBufferMgr()->destroyBuffer(this);
         }
     }
 }
@@ -448,4 +448,122 @@ CalBuffer::getElementBytes()const
     }
 
     return numComponents * bytes;
+}
+
+void CalBuffer::readData(const void* appPtr)
+{
+    unsigned int height = (_rank == 1) ? 1 : _dimensions[1];
+    unsigned int width = _dimensions[0];
+
+    unsigned short elementStride = getElementBytes();
+
+    CALuint pitch;
+    char* toPtr = (char*) getBufferPointerCPU(pitch);
+    char* fromPtr = (char*) appPtr;
+
+    unsigned int toRowStride = pitch * elementStride;
+    unsigned int fromRowStride = _dimensions[0] * elementStride;
+
+    unsigned int totalBytes = elementStride;
+    for(unsigned int i = 0; i < _rank; ++i)
+    {
+        totalBytes *= _dimensions[i];
+    }
+
+    char*& cpuPtr = fromPtr;
+
+    // Fast copy case when buffer pitch = stream width & when
+    // number of components in an elements are not different for stream and buffer 
+    if ((toRowStride == fromRowStride))
+    {
+        int numBytes = toRowStride * height;
+        int remainingBytes = totalBytes - (unsigned int)(cpuPtr - (char*)appPtr);
+
+        // For AT buffer elements might be more than stream elements
+        if(numBytes > remainingBytes)
+        {
+            numBytes = remainingBytes;
+        }
+        memcpy(toPtr, fromPtr, numBytes);
+    }
+    // pitch != width or tiled copy
+    else
+    {
+        for(unsigned int row = 0; row < height - 1; ++row)
+        {
+            memcpy(toPtr, fromPtr, fromRowStride);
+            toPtr += toRowStride;
+            fromPtr += fromRowStride;
+        }
+
+        int numBytes = fromRowStride;
+        int remainingBytes = totalBytes - (unsigned int)(cpuPtr - (char*)appPtr);
+        if(numBytes > remainingBytes)
+        {
+            numBytes = remainingBytes;
+        }
+        if(numBytes > 0)
+        {
+            memcpy(toPtr, fromPtr, numBytes);
+        }
+    }
+}
+
+void CalBuffer::writeData(void *appPtr)
+{
+    unsigned int height = (_rank == 1) ? 1 : _dimensions[1];
+    unsigned int width = _dimensions[0];
+
+    unsigned short elementStride = getElementBytes();
+
+    CALuint pitch;
+    char* fromPtr = (char*) getBufferPointerCPU(pitch);
+    char* toPtr = (char*) appPtr;
+
+    unsigned int toRowStride = pitch * elementStride;
+    unsigned int fromRowStride = _dimensions[0] * elementStride;
+
+    unsigned int totalBytes = elementStride;
+    for(unsigned int i = 0; i < _rank; ++i)
+    {
+        totalBytes *= _dimensions[i];
+    }
+
+    char*& cpuPtr = toPtr;
+
+    // Fast copy case when buffer pitch = stream width & when
+    // number of components in an elements are not different for stream and buffer 
+    if ((toRowStride == fromRowStride))
+    {
+        int numBytes = toRowStride * height;
+        int remainingBytes = totalBytes - (unsigned int)(cpuPtr - (char*)appPtr);
+
+        // For AT buffer elements might be more than stream elements
+        if(numBytes > remainingBytes)
+        {
+            numBytes = remainingBytes;
+        }
+        memcpy(toPtr, fromPtr, numBytes);
+    }
+    // pitch != width or tiled copy
+    else
+    {
+        for(unsigned int row = 0; row < height - 1; ++row)
+        {
+            memcpy(toPtr, fromPtr, fromRowStride);
+            toPtr += toRowStride;
+            fromPtr += fromRowStride;
+        }
+
+        int numBytes = fromRowStride;
+        int remainingBytes = totalBytes - (unsigned int)(cpuPtr - (char*)appPtr);
+        if(numBytes > remainingBytes)
+        {
+            numBytes = remainingBytes;
+        }
+        if(numBytes > 0)
+        {
+            memcpy(toPtr, fromPtr, numBytes);
+        }
+    }
 }

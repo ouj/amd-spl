@@ -4,6 +4,7 @@
 #include "CALRuntime.h"
 #include "CALDevice.h"
 #include <assert.h>
+#include "CALBufferMgr.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +70,7 @@ namespace amdspl
 
         // Initialize CAL
         result = calInit();
-        CHECK_CAL_RESULT(result, "Failed to initialize CAL \n");
+        AMDSPL_CHECK_CAL_RESULT(result, "Failed to initialize CAL \n");
 
         // Get device count and initialize them
         calDeviceGetCount(&_numDevices);
@@ -91,6 +92,7 @@ namespace amdspl
             return false;
         }
         _devices = device;
+        _bufferMgr = new CalBufferMgr(device);
 
         return true;
     }
@@ -190,7 +192,7 @@ namespace amdspl
     //! \return Device specifc BufferManager handle
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    CalBufferMgr* CalRuntime::getBufferManager() const
+    CalBufferMgr* CalRuntime::getBufferMgr() const
     {
         assert(_bufferMgr);
         return _bufferMgr;
