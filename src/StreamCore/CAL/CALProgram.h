@@ -11,9 +11,7 @@
 
 #include "cal.h"
 #include <vector>
-#include "KernelDesc.h"
-
-class CalDevice;
+#include "ILProgInfo.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -24,11 +22,11 @@ class CalDevice;
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-
+    class CalDevice;
     class CalProgram
     {
     public:
-        CalProgram(Pass& pass, CalDevice* device);
+        CalProgram(const ILProgInfo& pass, CalDevice* device);
         bool initialize();
 
         CALname getConstName(unsigned short i) const;
@@ -38,12 +36,12 @@ namespace amdspl
 
         ~CalProgram();
 
-        inline const Pass* getPass() const;
+        inline const ILProgInfo* getPass() const;
 
 
     protected:
         //! \brief Contains the information of Pass that this program corresponds to
-        Pass _pass;
+        ILProgInfo _pass;
 
         //! \brief contains Device information for Loading pass on a specific device
         CalDevice* _device;
@@ -68,7 +66,7 @@ namespace amdspl
     };
 
     inline const
-        Pass*
+        ILProgInfo*
         CalProgram::getPass() const
     {
         return &_pass;

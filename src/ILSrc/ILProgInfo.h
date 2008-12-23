@@ -103,21 +103,21 @@ namespace amdspl
     //! 
     ////////////////////////////////////////////////////////////////////////////////
 
-    class Pass 
+    class ILProgInfo 
     {
         public:
 
-            Pass(const Pass& p);
-            Pass(const char* name);
-            Pass& operator=(const Pass& p);
-            Pass& image(const char* image);
-            Pass& constArray(int argumentIndex, int usage);
-            Pass& constant(int argumentIndex, ConstUsage usage);
-            Pass& input(int argumentIndex, int usage, InputType type = INPUT_GATHER);
-            Pass& output(int argumentIndex, int usgae);
-            Pass& scatter(int argumentIndex, int usage);
+            ILProgInfo(const ILProgInfo& p);
+            ILProgInfo(const char* name);
+            ILProgInfo& operator=(const ILProgInfo& p);
+            ILProgInfo& image(const char* image);
+            ILProgInfo& constArray(int argumentIndex, int usage);
+            ILProgInfo& constant(int argumentIndex, ConstUsage usage);
+            ILProgInfo& input(int argumentIndex, int usage, InputType type = INPUT_GATHER);
+            ILProgInfo& output(int argumentIndex, int usgae);
+            ILProgInfo& scatter(int argumentIndex, int usage);
 
-            ~Pass();
+            ~ILProgInfo();
 
         public:
 

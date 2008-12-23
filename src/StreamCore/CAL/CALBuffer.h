@@ -10,52 +10,53 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
-
-class CalDevice;
-
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \enum BufferPool
-//!
-//! \brief Showing location of Buffer.
-//!
-////////////////////////////////////////////////////////////////////////////////
-
-enum BufferPool
+namespace amdspl
 {
-    BUFFER_LOCAL,   //GPU local side Buffer
-    BUFFER_HOST     //Host side Buffer. Creation through CAL API
-};
+    class CalDevice;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \enum BufferPool
+    //!
+    //! \brief Showing location of Buffer.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    enum BufferPool
+    {
+        BUFFER_LOCAL,   //GPU local side Buffer
+        BUFFER_HOST     //Host side Buffer. Creation through CAL API
+    };
 
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \class CALBuffer
-//!
-//! \brief CAL Backend specific implementation of Buffer.
-//! Represnt both GPU local side or host side Buffer.
-//! 
-//! Its a wrapper around all the functionalities provided by CAL resource.
-//! 
-//! It contains three events to make streamRead and KernelExecution asynchronous.
-//! 1. CopyEvent - Associated with streamRead. 
-//! Wait for it in streamWrite and kernelExecution.
-//! 2. InputEvent - Associated with Kernel execution when 
-//! the buffer is an input to kernel.
-//! Wait for it before streamRead.
-//! 3. OutputEvent - Associated with Kernel execution when 
-//! the buffer is an output to kernel.
-//! Wait for it before streamRead and streamWrite
-//! 
-///////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \class CALBuffer
+    //!
+    //! \brief CAL Backend specific implementation of Buffer.
+    //! Represnt both GPU local side or host side Buffer.
+    //! 
+    //! Its a wrapper around all the functionalities provided by CAL resource.
+    //! 
+    //! It contains three events to make streamRead and KernelExecution asynchronous.
+    //! 1. CopyEvent - Associated with streamRead. 
+    //! Wait for it in streamWrite and kernelExecution.
+    //! 2. InputEvent - Associated with Kernel execution when 
+    //! the buffer is an input to kernel.
+    //! Wait for it before streamRead.
+    //! 3. OutputEvent - Associated with Kernel execution when 
+    //! the buffer is an output to kernel.
+    //! Wait for it before streamRead and streamWrite
+    //! 
+    ///////////////////////////////////////////////////////////////////////////////
 
-class CalBuffer
-{
+    class CalBuffer
+    {
     public:
 
         CalBuffer(unsigned short rank, unsigned int* dimansions,
-                    CALformat format, BufferPool bufferPool, CALuint flag,
-                    CalDevice* device);
+            CALformat format, BufferPool bufferPool, CALuint flag,
+            CalDevice* device);
         bool initialize();
         bool flush();
 
@@ -144,71 +145,71 @@ class CalBuffer
         //! \brief Event associated to kernel execution if this buffer was output to the kernel.
         CALevent* _outputEvent;
 
-};
+    };
 
-inline const
-unsigned short
-CalBuffer::getRank() const
-{
-    return _rank;
-}
-
-inline
-unsigned int*
-CalBuffer::getDimensions() const
-{
-    return _dimensions;
-}
-
-
-inline const 
-CALmem 
-CalBuffer::getMemHandle() const
-{
-    return _mem;
-}
-
-inline const 
-CALformat
-CalBuffer::getFormat() const
-{
-    return _dataFormat;
-}
-
-inline const
-CALevent
-CalBuffer::getCopyEvent() const
-{
-    if(_copyEvent)
+    inline const
+        unsigned short
+        CalBuffer::getRank() const
     {
-        return *_copyEvent;
+        return _rank;
     }
 
-    return 0;
-}
-
-inline const
-CALevent
-CalBuffer::getInputEvent() const
-{
-    if(_inputEvent)
+    inline
+        unsigned int*
+        CalBuffer::getDimensions() const
     {
-        return *_inputEvent;
+        return _dimensions;
     }
 
-    return 0;
-}
 
-inline const
-CALevent
-CalBuffer::getOutputEvent() const
-{
-    if(_outputEvent)
+    inline const 
+        CALmem 
+        CalBuffer::getMemHandle() const
     {
-        return *_outputEvent;
+        return _mem;
     }
 
-    return 0;
-}
+    inline const 
+        CALformat
+        CalBuffer::getFormat() const
+    {
+        return _dataFormat;
+    }
 
+    inline const
+        CALevent
+        CalBuffer::getCopyEvent() const
+    {
+        if(_copyEvent)
+        {
+            return *_copyEvent;
+        }
+
+        return 0;
+    }
+
+    inline const
+        CALevent
+        CalBuffer::getInputEvent() const
+    {
+        if(_inputEvent)
+        {
+            return *_inputEvent;
+        }
+
+        return 0;
+    }
+
+    inline const
+        CALevent
+        CalBuffer::getOutputEvent() const
+    {
+        if(_outputEvent)
+        {
+            return *_outputEvent;
+        }
+
+        return 0;
+    }
+}
 #endif //_CALBUFFER_H_
