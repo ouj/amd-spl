@@ -41,7 +41,7 @@ namespace amdspl
 
     protected:
         //! \brief Contains the information of Pass that this program corresponds to
-        ILProgInfo _pass;
+        ILProgInfo _ilInfo;
 
         //! \brief contains Device information for Loading pass on a specific device
         CalDevice* _device;
@@ -69,7 +69,7 @@ namespace amdspl
         ILProgInfo*
         CalProgram::getPass() const
     {
-        return &_pass;
+        return &_ilInfo;
     }
 
     ////////////////////////////////////////////////////////////////////////////////

@@ -18,8 +18,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-    CalProgram::CalProgram(const ILProgInfo& pass, CalDevice* device)
-        : _pass(pass), _device(device), _func(0), _module(0)
+    CalProgram::CalProgram(const ILProgInfo& ilInfo, CalDevice* device)
+        : _ilInfo(ilInfo), _device(device), _func(0), _module(0)
     {
     }
 
@@ -41,7 +41,7 @@ namespace amdspl
         // Compiling program
         CALobject obj;
 
-        result = calclCompile(&obj, CAL_LANGUAGE_IL, _pass.Image, info.target);
+        result = calclCompile(&obj, CAL_LANGUAGE_IL, _ilInfo.Image, info.target);
         AMDSPL_CAL_RESULT_ERROR(result, "Failed to compile program\n");
 
         // Linking program
@@ -59,7 +59,7 @@ namespace amdspl
         AMDSPL_CAL_RESULT_ERROR(result, "Failed to get function handle\n");
 
         unsigned int i = 0;
-        for(i = 0; i < _pass.ConstArrays->size(); ++i)
+        for(i = 0; i < _ilInfo.ConstArrays->size(); ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -71,7 +71,7 @@ namespace amdspl
         }
 
         // Get constant name handle
-        if(_pass.Constants->size() > 0)
+        if(_ilInfo.Constants->size() > 0)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -83,7 +83,7 @@ namespace amdspl
         }
 
         // Get all the input name handles
-        for(unsigned int i = 0; i < _pass.Inputs->size(); ++i)
+        for(unsigned int i = 0; i < _ilInfo.Inputs->size(); ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -95,7 +95,7 @@ namespace amdspl
         }
 
         // Get all the output name handles
-        for(unsigned int i = 0; i < _pass.Outputs->size(); ++i)
+        for(unsigned int i = 0; i < _ilInfo.Outputs->size(); ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -107,7 +107,7 @@ namespace amdspl
         }
 
         // Get name handle for scatter stream
-        if(_pass.Scatters->size() > 0)
+        if(_ilInfo.Scatters->size() > 0)
         {
             CALname outputName;
             result = calModuleGetName(&outputName, ctx, _module, "g[]");

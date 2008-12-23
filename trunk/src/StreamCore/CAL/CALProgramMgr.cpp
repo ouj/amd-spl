@@ -22,7 +22,7 @@ namespace amdspl
     {
         if (_programs[idx] == NULL)
         {
-            CalProgram *program = new CalProgram(*ILProgInfos[idx], _device);
+            CalProgram *program = new CalProgram(ILInfoFuncs[idx](), _device);
             if(!program->initialize())
             {
                 SAFE_DELETE(program);
