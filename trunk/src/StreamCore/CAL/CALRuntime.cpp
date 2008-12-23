@@ -5,6 +5,7 @@
 #include "CALDevice.h"
 #include <assert.h>
 #include "CALBufferMgr.h"
+#include "CALProgramMgr.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -91,8 +92,10 @@ namespace amdspl
             delete device;
             return false;
         }
+
         _devices = device;
         _bufferMgr = new CalBufferMgr(device);
+        _programMgr = new CalProgramMgr(device);
 
         return true;
     }
@@ -183,18 +186,5 @@ namespace amdspl
             atexit(cleanup);
         }
         return _runtime;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Get backend specifc ResourceManager
-    //!
-    //! \return Device specifc BufferManager handle
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    CalBufferMgr* CalRuntime::getBufferMgr() const
-    {
-        assert(_bufferMgr);
-        return _bufferMgr;
     }
 }
