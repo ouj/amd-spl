@@ -1,21 +1,44 @@
 #include <iostream>
-#include "splSort.h"
+#include <vector>
+#include "BitonicSort.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-    unsigned int tsize = 64; 
+    BitonicSort bs(argv[0]);
+    int retVal = 0;
 
-    int *p = new int[tsize];
-    for (unsigned int i = 0; i < tsize; i++)
+    // Parse command line options
+    bs.ParseCommandLine(argc, argv);
+
+    // Allocate buffers
+    bs.allocateBuffer();
+
+    // Fill the input buffers with random values
+    bs.fillInputBuffer();
+
+    // Run GPU kernel
+    retVal = bs.run();
+
+    // Display timing informations
+    if(bs.info->Timing)
     {
-        p[i] = i;
+        bs.printTimeInfo();
     }
 
-    amdspl::SPLSort::bitonicSort(p, tsize);
+    // Verify result with CPU
+    if(bs.info->Verify)
+    {
+        bs.verifyResults();
+    }
 
-    delete [] p;
-	return 0;
+    // Compare performance with CPU
+    if(bs.info->Performance)
+    {
+        bs.comparePerformance();
+    }
+
+    return retVal;
 }
 

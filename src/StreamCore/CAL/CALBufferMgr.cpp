@@ -63,8 +63,16 @@ CalBufferMgr::createBuffer(unsigned short rank, unsigned int* dimensions, CALfor
         return NULL;
     }
 
-    return new CalBuffer(rank, dimensions, calFormat, 
+    CalBuffer* buffer = new CalBuffer(rank, dimensions, calFormat, 
         BUFFER_LOCAL, 0, _device);
+
+    if (!buffer->initialize())
+    {
+        SAFE_DELETE(buffer);
+        return NULL;
+    }
+    else
+        return buffer;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
