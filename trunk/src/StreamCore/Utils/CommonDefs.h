@@ -11,6 +11,13 @@ if (!(condition)) \
     return false; \
 }
 
+#define SAFE_DELETE(ptr) \
+if ((ptr) != NULL) \
+{ \
+    delete ptr; \
+    ptr = NULL; \
+}
+
 // An error
 #define SET_ERROR(msg) \
 

@@ -507,6 +507,8 @@ void CalBuffer::readData(const void* appPtr)
             memcpy(toPtr, fromPtr, numBytes);
         }
     }
+
+    freeBufferPointerCPU();
 }
 
 void CalBuffer::writeData(void *appPtr)
@@ -566,4 +568,5 @@ void CalBuffer::writeData(void *appPtr)
             memcpy(toPtr, fromPtr, numBytes);
         }
     }
+    freeBufferPointerCPU();
 }

@@ -3,6 +3,7 @@
 #include "calcl.h"
 #include "CALBuffer.h"
 #include "CALRuntime.h"
+#include <vector>
 
 namespace amdspl
 {
@@ -13,6 +14,11 @@ namespace amdspl
             amdspl::CalRuntime::getInstance()->getBufferMgr()->createBuffer(1, InputDim, CAL_FORMAT_INT_1);
         buffer->readData(ptr);
 
+        
+
+
+        std::vector<int> temp(_size);
+        buffer->writeData(&temp[0]);
     }
 
 }
