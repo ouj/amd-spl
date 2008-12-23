@@ -1,5 +1,5 @@
-#ifndef _AMDSPL_KERNELDESC_H_
-#define _AMDSPL_KERNELDESC_H_
+#ifndef _AMDSPL_CALPASS_H_
+#define _AMDSPL_CALPASS_H_
 
 #include <string>
 #include <vector>
@@ -144,64 +144,6 @@ namespace amdspl
             ArgDesc* Scatters;
 
     };
+}
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \class Technique
-    //!
-    //! \brief Contain different passes associated to a technique.
-    //! Contains technique properties.
-    //! The only property needed is whether technique is Address translated ot not.
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-
-    class Technique
-    {
-        public:
-            
-            Technique(const Technique& t);
-            Technique();
-            Technique& operator=(const Technique& t);
-            Technique& pass(Pass& p);
-            Technique& addressTranslation();
-
-            ~Technique();
-
-        public:
-
-            //! \brief Contains all the passes in a technique
-            std::vector<Pass>* Passes;
-
-            //! \brief Flag to indicate the case for addressTranslation.
-            bool AddressTranslation;
-    };
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \class KernelDesc
-    //!
-    //! \brief Class that contains different techniques.
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-
-    class KernelDesc 
-    {
-        public:
-            
-            KernelDesc(const KernelDesc& desc);
-            KernelDesc();
-            KernelDesc& operator=(const KernelDesc& desc);
-            KernelDesc& technique(Technique& t);
-            
-            ~KernelDesc();
-
-        public:
-
-            //! \brief Stores the technique information.
-            std::vector<Technique>* Techniques;
-
-    };
-
-} //end brook namespace
-
-#endif //_KERNELDESC_H_
+#endif

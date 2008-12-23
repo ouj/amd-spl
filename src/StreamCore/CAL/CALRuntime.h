@@ -18,13 +18,14 @@
 
 #include <cstdio>
 #include <vector>
-#include "CALBufferMgr.h"
 
 #include "cal.h"
 
 typedef void(*MemoryHandler)();
 
 class CalDevice;
+class CalBufferMgr;
+class CalProgramMgr;
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -38,9 +39,10 @@ namespace amdspl
     class CalRuntime
     {
     public:
-        static CalRuntime* create();
-        static CalRuntime* getInstance();
-        CalBufferMgr*      getBufferMgr() const;
+        static CalRuntime*      create();
+        static CalRuntime*      getInstance();
+        inline CalBufferMgr*    getBufferMgr() const;
+        inline CalProgramMgr*   getProgramMgr() const;
 
     protected:
         CalRuntime();
@@ -52,12 +54,39 @@ namespace amdspl
         unsigned int            _numDevices;
         CalDevice*              _devices;
         CalBufferMgr*           _bufferMgr;
+        CalProgramMgr*          _programMgr;
 
     private:
-        friend BRerror getError();
-        friend const char* getErrorLog();
+        friend BRerror          getError();
+        friend const char*      getErrorLog();
 
-        friend void cleanup();
+        friend void             cleanup();
     };
+
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Get back end specific buffer manager
+    //!
+    //! \return Device specific buffer manager handle
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    inline CalBufferMgr* CalRuntime::getBufferMgr() const
+    {
+        return _bufferMgr;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Get back end specific program manager
+    //!
+    //! \return Device specific program manage handle
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    inline CalProgramMgr* CalRuntime::getProgramMgr() const
+    {
+        return _programMgr;
+    }
 }
 #endif //_AMDSPL_CALRUNTIME_H_

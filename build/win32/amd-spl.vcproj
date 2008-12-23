@@ -196,7 +196,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CalDevice.h"
+						RelativePath="..\..\src\StreamCore\CAL\CALDevice.h"
 						>
 					</File>
 					<File
@@ -204,7 +204,15 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALProgramMgr.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.h"
 						>
 					</File>
 				</Filter>
@@ -231,7 +239,7 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CalDevice.cpp"
+						RelativePath="..\..\src\StreamCore\CAL\CALDevice.cpp"
 						>
 					</File>
 					<File
@@ -239,7 +247,33 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALProgramMgr.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.cpp"
 						>
 					</File>
 				</Filter>
@@ -267,10 +301,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\StreamCore\Utils\Utility.h"
 						>
 					</File>
@@ -282,10 +312,6 @@
 				<Filter
 					Name="Source Files"
 					>
-					<File
-						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.cpp"
-						>
-					</File>
 					<File
 						RelativePath="..\..\src\StreamCore\Utils\Utility.cpp"
 						>
@@ -302,11 +328,11 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
-					RelativePath="..\..\src\include\splSort.h"
+					RelativePath="..\..\src\include\SplSort.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\include\splSortDef.h"
+					RelativePath="..\..\src\include\SplSortDef.h"
 					>
 				</File>
 			</Filter>
@@ -316,7 +342,7 @@
 				UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 				>
 				<File
-					RelativePath="..\..\src\Sorting\splSort.cpp"
+					RelativePath="..\..\src\Sorting\SplSort.cpp"
 					>
 				</File>
 			</Filter>
