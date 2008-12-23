@@ -1,7 +1,7 @@
 #include "calcl.h"
 #include "CALProgram.h"
 #include "CALDevice.h"
-#include "KernelDesc.h"
+#include "ILProgInfo.h"
 #include "CALBase.h"
 
 #include <iostream>
@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-    CalProgram::CalProgram(Pass& pass, CalDevice* device)
+    CalProgram::CalProgram(const ILProgInfo& pass, CalDevice* device)
         : _pass(pass), _device(device), _func(0), _module(0)
     {
     }

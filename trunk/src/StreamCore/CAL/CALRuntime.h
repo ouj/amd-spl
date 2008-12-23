@@ -23,10 +23,6 @@
 
 typedef void(*MemoryHandler)();
 
-class CalDevice;
-class CalBufferMgr;
-class CalProgramMgr;
-
 ////////////////////////////////////////////////////////////////////////////////
 //!
 //! \class CALRuntime
@@ -36,6 +32,10 @@ class CalProgramMgr;
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
+    class CalDevice;
+    class CalBufferMgr;
+    class CalProgramMgr;
+
     class CalRuntime
     {
     public:
