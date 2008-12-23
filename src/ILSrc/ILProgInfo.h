@@ -78,7 +78,7 @@ namespace amdspl
         //! \brief Usage needed for different extra constant and struct support
         int Usage;
 
-        //! \brief Type needed to differenciate between gather and normal streams
+        //! \brief Type needed to differentiate between gather and normal streams
         // Brook semantics for stream resizing are different for gather and normal stream
         int Type;
     };

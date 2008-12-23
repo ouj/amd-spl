@@ -4,6 +4,9 @@
 #include "CALBuffer.h"
 #include "CALRuntime.h"
 #include "CALBufferMgr.h"
+#include "CALProgramMgr.h"
+#include "CALProgram.h"
+#include "ILPrograms.h"
 #include <vector>
 
 namespace amdspl
@@ -15,7 +18,7 @@ namespace amdspl
             amdspl::CalRuntime::getInstance()->getBufferMgr()->createBuffer(1, InputDim, CAL_FORMAT_INT_1);
         buffer->readData(ptr);
 
-        amdspl::CalRuntime::getInstance()->getProgramMgr();
+        const CalProgram *program = amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_IL);
 
 
         std::vector<int> temp(_size);

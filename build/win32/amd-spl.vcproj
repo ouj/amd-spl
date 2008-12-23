@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -115,7 +115,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				WarningLevel="3"
@@ -211,10 +211,6 @@
 						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.h"
 						>
 					</File>
-					<File
-						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Source Files"
@@ -230,13 +226,6 @@
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALConstBuffer.cpp"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALDevice.cpp"
@@ -249,31 +238,9 @@
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALProgramMgr.cpp"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								ObjectFile="$(IntDir)\$(InputName)1.obj"
-								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-							/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\StreamCore\Utils\KernelDesc.cpp"
 						>
 					</File>
 				</Filter>
@@ -343,6 +310,38 @@
 				>
 				<File
 					RelativePath="..\..\src\Sorting\SplSort.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="ILSrc"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\src\ILSrc\ILProgInfo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\ILSrc\ILPrograms.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\ILSrc\Sort_IL.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\src\ILSrc\ILProgInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ILPrograms.cpp"
 					>
 				</File>
 			</Filter>

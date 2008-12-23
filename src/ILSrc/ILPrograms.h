@@ -2,6 +2,7 @@
 #define _AMDSPL_IL_PROGRAMS_
 
 #include "ILProgInfo.h"
+
 namespace amdspl
 {
     enum ILPROGRAMS_INDEX
@@ -10,7 +11,9 @@ namespace amdspl
         ILPRGROGRAMS_NUM
     };
 
-    ILProgInfo* ILProgInfos[ILPRGROGRAMS_NUM];
+    typedef ILProgInfo (*ILInfoFunc)(void);
+
+    extern ILInfoFunc ILInfoFuncs[];
 };
 
 
