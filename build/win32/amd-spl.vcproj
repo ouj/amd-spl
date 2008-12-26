@@ -341,7 +341,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\ILPrograms.cpp"
+					RelativePath="..\..\src\ILSrc\ILPrograms.cpp"
 					>
 				</File>
 			</Filter>
