@@ -12,7 +12,7 @@
 #include <string>
 #include <map>
 
-#include "Formats.h"
+#include "cal.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
@@ -29,7 +29,7 @@ namespace amdspl
         unsigned int ceilPow (unsigned int num);
         unsigned int floorPow (unsigned int num);
         unsigned int lowestPrimeDivisor(unsigned int num);
-        unsigned short getElementBytes(BRformat dataFormat);
+        unsigned short getElementBytes(CALformat dataFormat);
     }
 }
 

@@ -44,7 +44,7 @@ namespace amdspl
     public:
 
         explicit        CalBufferMgr(CalDevice* device);
-        CalConstBuffer* createConstBuffer(unsigned int numConstants, CALformat calFormat);
+        CalConstBuffer* createConstBuffer(unsigned int numConstants, CALformat calFormat = CAL_FORMAT_FLOAT_4);
         CalBuffer*      createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat); 
         void            destroyBuffer(CalBuffer *buffer);
         void            clearUsedConstCache();
