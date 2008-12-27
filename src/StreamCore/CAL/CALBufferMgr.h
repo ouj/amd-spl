@@ -17,6 +17,7 @@
 namespace amdspl
 {
     class CALBuffer;
+    class CalConstArrayBuffer;
     class CalConstBuffer;
     class CALDevice;
 
@@ -44,6 +45,7 @@ namespace amdspl
     public:
 
         explicit        CalBufferMgr(CalDevice* device);
+        CalConstArrayBuffer* createConstArrayBuffer(unsigned int numConstants, CALformat calFormat = CAL_FORMAT_FLOAT_4);
         CalConstBuffer* createConstBuffer(unsigned int numConstants, CALformat calFormat = CAL_FORMAT_FLOAT_4);
         CalBuffer*      createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat); 
         void            destroyBuffer(CalBuffer *buffer);
@@ -79,10 +81,10 @@ namespace amdspl
         std::vector<CalBuffer*> _hostBufferCache;
 
         //! \brief Cache containg constant buffers
-        std::vector<CalConstBuffer*> _constBufferCache;
+        std::vector<CalConstArrayBuffer*> _constBufferCache;
 
         //! \brief constant buffers being used in the the same kernel
-        std::vector<CalConstBuffer*> _usedConstBuffers;
+        std::vector<CalConstArrayBuffer*> _usedConstBuffers;
     };
 }
 #endif //_AMDSPL_CALBUFFERMGR_H_

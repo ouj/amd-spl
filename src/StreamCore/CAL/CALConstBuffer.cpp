@@ -1,21 +1,13 @@
 #include "CALConstBuffer.h"
+#include "CALBase.h"
+#include "CALDevice.h"
 #include "Utility.h"
+
 namespace amdspl
 {
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Constructor
-    //!
-    //! \param dimensions dimension of the Buffer
-    //! \param device Device associated to CALBuffer
-    //! \param format 
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-
-    CalConstBuffer::CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format)
-        :CalBuffer(1, dimensions, format, BUFFER_HOST, 0, device),
-        _nBytes(0)
+    CalConstBuffer::CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format) : 
+        CalBuffer(1, dimensions, format, BUFFER_HOST, 0, device),
+        _nBytes(dimensions[0])
     {
         unsigned int bufferBytes = getElementBytes();
         unsigned int totalBytes = dimensions[0] * bufferBytes;
@@ -23,18 +15,11 @@ namespace amdspl
         memset((void*)_data, 0, totalBytes);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Method that tells const buffer that it is going to be reused
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
+    
 
-    void
-        CalConstBuffer::reuse()
+    CalConstBuffer::~CalConstBuffer()
     {
-        // Set the previous data to 0
-        memset((void*)_data, 0, _nBytes);
-        _nBytes = 0;
+        delete[] _data;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -43,25 +28,17 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
     void
-        CalConstBuffer::pushConstant(void* data, CALformat format, unsigned int count)
+        CalConstBuffer::setConstant(void* data, CALformat format, unsigned int i)
     {
+        if (i < 0 || i >= _nBytes)
+        {
+            return;
+        }
+
         unsigned short bytes = amdspl::utils::getElementBytes(format);
         unsigned short bufferBytes = getElementBytes();
 
-        // initialize data and set number of bytes initialized
-        if(bytes == bufferBytes)
-        {
-            memcpy(_data + _nBytes, data, bytes * count);
-            _nBytes += bufferBytes * count;
-        }
-        else
-        {
-            for(unsigned int i = 0; i < count; ++i)
-            {
-                memcpy(_data + _nBytes, (char*)data + i * bytes, bytes);
-                _nBytes += bufferBytes;
-            }
-        }
+        memcpy(_data + i * bufferBytes, data, bytes);
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -85,16 +62,4 @@ namespace amdspl
 
         return true;
     }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Destructor
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-
-    CalConstBuffer::~CalConstBuffer()
-    {
-        delete[] _data;
-    }
-
 }

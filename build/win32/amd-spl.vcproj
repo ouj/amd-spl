@@ -192,6 +192,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALConstArrayBuffer.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALConstBuffer.h"
 						>
 					</File>
@@ -224,8 +228,30 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALConstArrayBuffer.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALConstBuffer.cpp"
 						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								ObjectFile="$(IntDir)\$(InputName)1.obj"
+								XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALDevice.cpp"
