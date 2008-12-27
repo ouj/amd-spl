@@ -32,9 +32,9 @@ typedef void(*MemoryHandler)();
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-    class CalDevice;
     class CalBufferMgr;
     class CalProgramMgr;
+    class CalDevice;
 
     class CalRuntime
     {
@@ -43,6 +43,7 @@ namespace amdspl
         static CalRuntime*      getInstance();
         inline CalBufferMgr*    getBufferMgr() const;
         inline CalProgramMgr*   getProgramMgr() const;
+        inline CalDevice*       getDevice() const;
 
     protected:
         CalRuntime();
@@ -87,6 +88,18 @@ namespace amdspl
     inline CalProgramMgr* CalRuntime::getProgramMgr() const
     {
         return _programMgr;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief Get back end specific context
+    //!
+    //! \return Device Specific context
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    inline CalDevice* CalRuntime::getDevice() const
+    {
+        return _devices;
     }
 }
 #endif //_AMDSPL_CALRUNTIME_H_

@@ -27,7 +27,7 @@ namespace amdspl
     public:
 
         CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format);
-        void pushConstant(void* data, BRformat format, unsigned int count = 1);
+        void pushConstant(void* data, CALformat format, unsigned int count = 1);
         bool setDataToBuffer();
         void reuse();
         ~CalConstBuffer();

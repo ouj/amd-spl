@@ -12,7 +12,7 @@ namespace amdspl
     class SPL_EXPORT SPLSort
     {
     public:
-        static void bitonicSort(int *ptr, unsigned int _size);
+        static void bitonicSort(float *ptr, unsigned int _size);
         static void bitonicSort(void *ptr, unsigned int _size, unsigned int stride);
     };
 }

@@ -43,7 +43,7 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
     void
-        CalConstBuffer::pushConstant(void* data, BRformat format, unsigned int count)
+        CalConstBuffer::pushConstant(void* data, CALformat format, unsigned int count)
     {
         unsigned short bytes = amdspl::utils::getElementBytes(format);
         unsigned short bufferBytes = getElementBytes();

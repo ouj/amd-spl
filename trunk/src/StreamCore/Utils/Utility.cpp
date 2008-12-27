@@ -70,63 +70,52 @@ namespace amdspl
         ////////////////////////////////////////////////////////////////////////////////
 
         unsigned short 
-            getElementBytes(BRformat dataFormat)
+            getElementBytes(CALformat dataFormat)
         {
             unsigned short numComponents = 0;
             unsigned short bytes = 0;
 
             switch(dataFormat)
             {
-            case BR_FORMAT_FLOAT_1:
+            case CAL_FORMAT_FLOAT_1:
                 numComponents = 1;
                 bytes = sizeof(float);
                 break;
 
-            case BR_FORMAT_UINT_1:
-            case BR_FORMAT_INT_1:
+            case CAL_FORMAT_UINT_1:
+            case CAL_FORMAT_INT_1:
                 numComponents = 1;
                 bytes = sizeof(int);
                 break;
 
-            case BR_FORMAT_DOUBLE_1:
+            case CAL_FORMAT_DOUBLE_1:
                 numComponents = 1;
                 bytes = sizeof(double);
                 break;
 
-            case BR_FORMAT_FLOAT_2:
+            case CAL_FORMAT_FLOAT_2:
                 numComponents = 2;
                 bytes = sizeof(float);
                 break;
 
-            case BR_FORMAT_UINT_2:
-            case BR_FORMAT_INT_2:
+            case CAL_FORMAT_UINT_2:
+            case CAL_FORMAT_INT_2:
                 numComponents = 2;
                 bytes = sizeof(int);
                 break;
 
-            case BR_FORMAT_DOUBLE_2:
+            case CAL_FORMAT_DOUBLE_2:
                 numComponents = 2;
                 bytes = sizeof(double);
                 break;
 
-            case BR_FORMAT_FLOAT_3:
-                numComponents = 3;
-                bytes = sizeof(float);
-                break;
-
-            case BR_FORMAT_UINT_3:
-            case BR_FORMAT_INT_3:
-                numComponents = 3;
-                bytes = sizeof(int);
-                break;
-
-            case BR_FORMAT_FLOAT_4:
+            case CAL_FORMAT_FLOAT_4:
                 numComponents = 4;
                 bytes = sizeof(float);
                 break;
 
-            case BR_FORMAT_UINT_4:
-            case BR_FORMAT_INT_4:
+            case CAL_FORMAT_UINT_4:
+            case CAL_FORMAT_INT_4:
                 numComponents = 4;
                 bytes = sizeof(int);
                 break;
@@ -138,6 +127,5 @@ namespace amdspl
 
             return numComponents * bytes;
         }
-
     }
 }
