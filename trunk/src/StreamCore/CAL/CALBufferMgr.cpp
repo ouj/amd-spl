@@ -1,6 +1,7 @@
 #include "CALBase.h"
 #include "CALBufferMgr.h"
 #include "CALBuffer.h"
+#include "CALConstArrayBuffer.h"
 #include "CALConstBuffer.h"
 #include "CALDevice.h"
 #include "Utility.h"
@@ -188,8 +189,8 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    CalConstBuffer*
-        CalBufferMgr::createConstBuffer(unsigned int numConstants, CALformat calFormat)
+    CalConstArrayBuffer*
+        CalBufferMgr::createConstArrayBuffer(unsigned int numConstants, CALformat calFormat)
     {
         CALdeviceinfo info = _device->getInfo();
         if(numConstants > info.maxResource1DWidth)
@@ -209,13 +210,13 @@ namespace amdspl
         size = (size > 64) ? size : 64;
 
         unsigned int dimensions[] = {size};
-        CalConstBuffer* tmpBuffer;
+        CalConstArrayBuffer* tmpBuffer;
 
-        tmpBuffer = new CalConstBuffer(dimensions, _device, calFormat);
+        tmpBuffer = new CalConstArrayBuffer(dimensions, _device, calFormat);
 
         // Look into cache if a free resource exist of the same size
         unsigned int i = 0;
-        CalConstBuffer* sameSizedBuffer = NULL;
+        CalConstArrayBuffer* sameSizedBuffer = NULL;
         for(i = 0; i < _constBufferCache.size(); ++i)
         {
             // Is the size same?
@@ -268,7 +269,7 @@ namespace amdspl
                 // associated to host resouces to finish and delete them.
                 for(i = 0; i < _constBufferCache.size(); ++i)
                 {
-                    CalConstBuffer* buffer = _constBufferCache[i];
+                    CalConstArrayBuffer* buffer = _constBufferCache[i];
                     buffer->waitInputEvent();
 
                     delete buffer;
@@ -290,6 +291,29 @@ namespace amdspl
         _constBufferCache.push_back(tmpBuffer);
         _usedConstBuffers.push_back(tmpBuffer);
 
+        return tmpBuffer;
+    }
+
+    CalConstBuffer* CalBufferMgr::createConstBuffer(unsigned int numConstants, CALformat calFormat)
+    {
+        CALdeviceinfo info = _device->getInfo();
+        if(numConstants > info.maxResource1DWidth)
+        {
+            return NULL;
+        }
+
+        unsigned int dimensions[] = {numConstants};
+        CalConstBuffer* tmpBuffer;
+
+        tmpBuffer = new CalConstBuffer(dimensions, _device, calFormat);
+        // Try again to allocate resource after deallocating all the resources
+        if(!tmpBuffer->initialize())
+        {
+            SET_ERROR("Failed to create host cal resource for constant buffer\n");
+            delete tmpBuffer;
+
+            return NULL;
+        }
         return tmpBuffer;
     }
 
