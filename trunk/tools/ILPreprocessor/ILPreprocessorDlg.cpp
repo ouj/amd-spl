@@ -202,6 +202,8 @@ bool CILPreprocessorDlg::LoadILSource(CString filePath)
         cppILSrc += str;
         cppILSrc += TEXT("\\n\"\r\n");
     }
+    cppILSrc.Trim();
+    cppILSrc += TEXT(';');
     m_CppILSrcEdit.SetWindowText(cppILSrc);
 
     return true;
