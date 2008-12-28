@@ -40,26 +40,6 @@ namespace amdspl
 
     ////////////////////////////////////////////////////////////////////////////////
     //!
-    //! \enum InputType
-    //!
-    //! \brief Enum showing different input types
-    //! 
-    ////////////////////////////////////////////////////////////////////////////////
-
-    enum InputType
-    {
-        //! \brief Gather array
-        INPUT_GATHER = 0,
-
-        //! \brief Normal stream
-        INPUT_STREAM,
-
-        //! \brief force 32-bit size enum
-        INPUT_FORCE_DWORD    = 0x7fffffff
-    };
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
     //! \struct ArgumentDesc
     //!
     //! \brief Structure to contain the usage of input parameter and 
@@ -74,21 +54,12 @@ namespace amdspl
 
         //! \brief data showing argument index for different arguments.
         int Index;
-
-        //! \brief Usage needed for different extra constant and struct support
-        int Usage;
-
-        //! \brief Type needed to differentiate between gather and normal streams
-        // Brook semantics for stream resizing are different for gather and normal stream
-        int Type;
     };
 
     inline
     ArgumentDesc::ArgumentDesc(int index, int usage, int type)
     {
         Index = index;
-        Usage = usage;
-        Type = type;
     };
 
     typedef std::vector<ArgumentDesc> ArgDesc;
@@ -106,16 +77,13 @@ namespace amdspl
     class ILProgInfo 
     {
         public:
-
-            ILProgInfo(const ILProgInfo& p);
             ILProgInfo(const char* name);
-            ILProgInfo& operator=(const ILProgInfo& p);
             ILProgInfo& image(const char* image);
-            ILProgInfo& constArray(int argumentIndex, int usage);
-            ILProgInfo& constant(int argumentIndex, ConstUsage usage);
-            ILProgInfo& input(int argumentIndex, int usage, InputType type = INPUT_GATHER);
-            ILProgInfo& output(int argumentIndex, int usgae);
-            ILProgInfo& scatter(int argumentIndex, int usage);
+            ILProgInfo& constArray(int constArrayNum);
+            ILProgInfo& constant(int constantNum);
+            ILProgInfo& input(int inputNum);
+            ILProgInfo& output(int outputNum);
+            ILProgInfo& scatter(int scatterNum);
 
             ~ILProgInfo();
 
@@ -128,21 +96,20 @@ namespace amdspl
             //! \brief Generated device specific assembly
             const char* Image;
 
-            //! \brief Metadata of all the constant arrays.
-            ArgDesc* ConstArrays;
+            //! \brief The number of constant array 
+            unsigned int ConstArrayNum;
 
-            //! \brief Metadata of all the constants.
-            ArgDesc* Constants;
+            //! \brief The number of constants
+            unsigned int ConstantNum;
 
-            //! \brief Metadata of all the input streams.
-            ArgDesc* Inputs;
+            //! \brief The number of input stream.
+            unsigned int InputNum;
 
-            //! \brief Metadata of all the output streams.
-            ArgDesc* Outputs;
+            //! \brief The number of output stream
+            unsigned int OutputNum;
 
-            //! \brief Metadata of all the Scatter outputs
-            ArgDesc* Scatters;
-
+            //! \brief The number of scatter output stream
+            unsigned int ScatterNum;
     };
 }
 

@@ -59,7 +59,7 @@ namespace amdspl
         AMDSPL_CAL_RESULT_ERROR(result, "Failed to get function handle\n");
 
         unsigned int i = 0;
-        for(i = 0; i < _ilInfo.ConstArrays->size(); ++i)
+        for(i = 0; i < _ilInfo.ConstArrayNum; ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -71,7 +71,7 @@ namespace amdspl
         }
 
         // Get constant name handle
-        if(_ilInfo.Constants->size() > 0)
+        if(_ilInfo.ConstantNum > 0)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -83,7 +83,7 @@ namespace amdspl
         }
 
         // Get all the input name handles
-        for(unsigned int i = 0; i < _ilInfo.Inputs->size(); ++i)
+        for(unsigned int i = 0; i < _ilInfo.InputNum; ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -95,7 +95,7 @@ namespace amdspl
         }
 
         // Get all the output name handles
-        for(unsigned int i = 0; i < _ilInfo.Outputs->size(); ++i)
+        for(unsigned int i = 0; i < _ilInfo.OutputNum; ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -107,7 +107,7 @@ namespace amdspl
         }
 
         // Get name handle for scatter stream
-        if(_ilInfo.Scatters->size() > 0)
+        if(_ilInfo.ScatterNum > 0)
         {
             CALname outputName;
             result = calModuleGetName(&outputName, ctx, _module, "g[]");

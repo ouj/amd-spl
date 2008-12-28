@@ -7,10 +7,10 @@ namespace amdspl
 {
     CalConstBuffer::CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format) : 
         CalBuffer(1, dimensions, format, BUFFER_HOST, 0, device),
-        _nBytes(dimensions[0])
+        _nElements(dimensions[0])
     {
-        unsigned int bufferBytes = getElementBytes();
-        unsigned int totalBytes = dimensions[0] * bufferBytes;
+        _elementBytes = getElementBytes();
+        unsigned int totalBytes = dimensions[0] * _elementBytes;
         _data = new unsigned char[totalBytes];
         memset((void*)_data, 0, totalBytes);
     }
@@ -30,15 +30,14 @@ namespace amdspl
     void
         CalConstBuffer::setConstant(void* data, CALformat format, unsigned int i)
     {
-        if (i < 0 || i >= _nBytes)
+        if (i < 0 || i >= _nElements)
         {
             return;
         }
 
         unsigned short bytes = amdspl::utils::getElementBytes(format);
-        unsigned short bufferBytes = getElementBytes();
 
-        memcpy(_data + i * bufferBytes, data, bytes);
+        memcpy(_data + i * _elementBytes, data, bytes);
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +56,7 @@ namespace amdspl
             return false;
         }
 
-        memcpy(data, _data, _nBytes);
+        memcpy(data, _data, _elementBytes * _nElements);
         freeBufferPointerCPU();
 
         return true;

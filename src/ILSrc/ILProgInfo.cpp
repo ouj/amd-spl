@@ -4,59 +4,6 @@ namespace amdspl
 {
     ////////////////////////////////////////////////////////////////////////////////
     //!
-    //! \brief Overloded copyConstructor
-    //! \param pass the Pass object reference
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ILProgInfo::ILProgInfo(const ILProgInfo& p)
-    {
-        Name = p.Name;
-        Image = p.Image;
-
-        ConstArrays = new ArgDesc;
-        Constants = new ArgDesc;
-        Inputs = new ArgDesc;
-        Outputs = new ArgDesc;
-        Scatters = new ArgDesc;
-
-        *ConstArrays = *(p.ConstArrays);
-        *Constants = *(p.Constants);
-        *Inputs = *(p.Inputs);
-        *Outputs = *(p.Outputs);
-        *Scatters = *(p.Scatters);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Operator overloaded to provide support for the copy constructor
-    //! \param pass the Pass object reference
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ILProgInfo&
-    ILProgInfo::operator=(const ILProgInfo& p)
-    {
-        Name = p.Name;
-        Image = p.Image;
-
-        ConstArrays = new ArgDesc;
-        Constants = new ArgDesc;
-        Inputs = new ArgDesc;
-        Outputs = new ArgDesc;
-        Scatters = new ArgDesc;
-
-        *ConstArrays = *(p.ConstArrays);
-        *Constants = *(p.Constants);
-        *Inputs = *(p.Inputs);
-        *Outputs = *(p.Outputs);
-        *Scatters = *(p.Scatters);
-
-        return *this;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
     //! \brief Constructor.
     //! \param name Name of the pass.
     //!
@@ -64,11 +11,11 @@ namespace amdspl
 
     ILProgInfo::ILProgInfo(const char* name) : Name(name), Image(NULL)
     {
-        ConstArrays = new ArgDesc;
-        Constants = new ArgDesc;
-        Inputs = new ArgDesc;
-        Outputs = new ArgDesc;
-        Scatters = new ArgDesc;
+        ConstArrayNum = 0;
+        ConstantNum = 0;
+        InputNum = 0;
+        OutputNum = 0;
+        ScatterNum = 0;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -97,9 +44,9 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    ILProgInfo& ILProgInfo::constArray(int argumentIndex, int size)
+    ILProgInfo& ILProgInfo::constArray(int constArrayNum)
     {
-        ConstArrays->push_back(ArgumentDesc(argumentIndex, size));
+        ConstArrayNum = constArrayNum;
 
         return *this;
     }
@@ -114,9 +61,9 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    ILProgInfo& ILProgInfo::constant(int argumentIndex, ConstUsage usage)
+    ILProgInfo& ILProgInfo::constant(int constantNum)
     {
-        Constants->push_back(ArgumentDesc(argumentIndex, usage));
+        ConstantNum = constantNum;
 
         return *this;
     }
@@ -130,9 +77,9 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    ILProgInfo& ILProgInfo::input(int argumentIndex, int usage, InputType type)
+    ILProgInfo& ILProgInfo::input(int inputNum)
     {
-        Inputs->push_back(ArgumentDesc(argumentIndex, usage, type));
+        InputNum = inputNum;
 
         return *this;
     }
@@ -146,9 +93,9 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    ILProgInfo& ILProgInfo::output(int argumentIndex, int usage)
+    ILProgInfo& ILProgInfo::output(int outputNum)
     {
-        Outputs->push_back(ArgumentDesc(argumentIndex, usage));
+        OutputNum = outputNum;
 
         return *this;
     }
@@ -162,9 +109,9 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
     
-    ILProgInfo& ILProgInfo::scatter(int argumentIndex, int usage)
+    ILProgInfo& ILProgInfo::scatter(int scatterNum)
     {
-        Scatters->push_back(ArgumentDesc(argumentIndex, usage));
+        ScatterNum = scatterNum;
 
         return *this;
     }
@@ -177,10 +124,5 @@ namespace amdspl
 
     ILProgInfo::~ILProgInfo()
     {
-        delete ConstArrays;
-        delete Constants;
-        delete Inputs;
-        delete Outputs;
-        delete Scatters;
     }
 }

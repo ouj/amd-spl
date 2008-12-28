@@ -19,8 +19,11 @@ namespace amdspl
         // _data points to the corresponding CPU array.
         unsigned char* _data;
 
-        //! \brief number of bytes in _data
-        unsigned int _nBytes;
+        //! \brief number of elements in _data
+        unsigned int _nElements;
+
+        //! \brief number of bytes of a single elements
+        unsigned int _elementBytes;
     };
 }
 #endif
