@@ -222,5 +222,7 @@ void CILPreprocessorDlg::OnBnClickedReload()
 
 void CILPreprocessorDlg::OnBnClickedCopyToClipbroad()
 {
+    m_CppILSrcEdit.SetSel(0, -1);
     m_CppILSrcEdit.Copy();
+    m_CppILSrcEdit.SetSel(-1, -1);
 }
