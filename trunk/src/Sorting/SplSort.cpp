@@ -35,7 +35,7 @@ namespace amdspl
         uint InputDim[] = {_size};
         CalBuffer *sorted1Buffer = bufferMgr->createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
         CalBuffer *sorted2Buffer = bufferMgr->createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
-        CalConstBuffer *constBuffer = bufferMgr->createConstBuffer(3, CAL_FORMAT_FLOAT_1);
+        CalConstBuffer *constBuffer = bufferMgr->createConstBuffer(3, CAL_FORMAT_FLOAT_4);
 
         const CalProgram *program = amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_IL);
 
@@ -92,7 +92,7 @@ namespace amdspl
 
                     // Run the kernel on GPU
                     result = calCtxRunProgram(&execEvent, ctx, func, &rect);
-                    //while(calCtxIsEventDone(ctx, execEvent));
+                    while(calCtxIsEventDone(ctx, execEvent));
                     
                 }
                 else
@@ -109,13 +109,13 @@ namespace amdspl
 
                     // Run the kernel on GPU
                     result = calCtxRunProgram(&execEvent, ctx, func, &rect);
-                    //while(calCtxIsEventDone(ctx, execEvent));
+                    while(calCtxIsEventDone(ctx, execEvent));
                 }
                 flip ^= 0x01; // XOR flip w/ 0b1 which flips the flip variable between 0 and 1
             }
         }
 
-        if (flip)
+        if (!flip)
         {
             sorted1Buffer->writeData(ptr);
         }

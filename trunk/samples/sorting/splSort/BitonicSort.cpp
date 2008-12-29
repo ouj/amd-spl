@@ -50,7 +50,7 @@ BitonicSort::fillInputBuffer()
     srand((unsigned int)time(NULL));
     for (unsigned int i = 0; i < Length; i++)
     {
-        _array1[i] = (float)i;
+        _array1[i] = (float)rand();
     }
 
     copy(_array1.begin(), _array1.end(), _array2.begin());
