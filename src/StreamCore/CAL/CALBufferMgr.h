@@ -13,13 +13,15 @@
 #include <vector>
 #include <map>
 #include "CALBuffer.h"
+    
+class CALDevice;
+class CALBuffer;
 
 namespace amdspl
 {
-    class CALBuffer;
+
     class CalConstArrayBuffer;
     class CalConstBuffer;
-    class CALDevice;
 
     typedef std::map<CALBuffer*, bool> BufferMap;
     typedef BufferMap::iterator BufferMapIter;
