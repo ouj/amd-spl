@@ -92,9 +92,8 @@ namespace amdspl
 
                     // Run the kernel on GPU
                     result = calCtxRunProgram(&execEvent, ctx, func, &rect);
-                    while(calCtxIsEventDone(ctx, execEvent));
-
-                    sorted2Buffer->writeData(&temp[0]);
+                    //while(calCtxIsEventDone(ctx, execEvent));
+                    
                 }
                 else
                 {
@@ -110,12 +109,19 @@ namespace amdspl
 
                     // Run the kernel on GPU
                     result = calCtxRunProgram(&execEvent, ctx, func, &rect);
-                    while(calCtxIsEventDone(ctx, execEvent));
-
-                    sorted1Buffer->writeData(&temp[0]);
+                    //while(calCtxIsEventDone(ctx, execEvent));
                 }
                 flip ^= 0x01; // XOR flip w/ 0b1 which flips the flip variable between 0 and 1
             }
+        }
+
+        if (flip)
+        {
+            sorted1Buffer->writeData(ptr);
+        }
+        else
+        {
+            sorted2Buffer->writeData(ptr);
         }
 
         bufferMgr->destroyBuffer(sorted1Buffer);
