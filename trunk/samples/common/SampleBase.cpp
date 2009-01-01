@@ -161,7 +161,7 @@ SampleBase::ParseCommandLine(int argc, char** argv)
         case 'i':
             if (++x < argc)
             {
-                sscanf(argv[x], "%u", &info->Iterations);
+                sscanf_s(argv[x], "%u", &info->Iterations);
             }
             else
             {
@@ -173,7 +173,7 @@ SampleBase::ParseCommandLine(int argc, char** argv)
         case 'x':
             if (++x < argc)
             {
-                sscanf(argv[x], "%u", &info->Width);
+                sscanf_s(argv[x], "%u", &info->Width);
             }
             else
             {
@@ -185,7 +185,7 @@ SampleBase::ParseCommandLine(int argc, char** argv)
         case 'y':
             if (++x < argc)
             {
-                sscanf(argv[x], "%u", &info->Height);
+                sscanf_s(argv[x], "%u", &info->Height);
             }
             else
             {
@@ -197,7 +197,7 @@ SampleBase::ParseCommandLine(int argc, char** argv)
         case 's':
             if (++x < argc)
             {
-                sscanf(argv[x], "%u", &info->Seed);
+                sscanf_s(argv[x], "%u", &info->Seed);
             }
             else
             {

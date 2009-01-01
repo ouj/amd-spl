@@ -200,6 +200,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALConstBufferDef.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALDevice.h"
 						>
 					</File>
@@ -371,6 +375,10 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="Common"
+			>
 		</Filter>
 	</Files>
 	<Globals>

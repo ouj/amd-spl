@@ -2,28 +2,33 @@
 #define _AMDSPL_CALCONSTBUFFER_H_
 #include "cal.h"
 #include "CALBuffer.h"
+#include "Utility.h"
+#include "VectorDataType.h"
+
 namespace amdspl
 {
     class CalDevice;
 
+	template <unsigned int CONSTNUM>
     class CalConstBuffer : public CalBuffer
     {
     public:
-        CalConstBuffer(unsigned int* dimensions, CalDevice* device, CALformat format);
+
+        CalConstBuffer(CalDevice* device);
+
         ~CalConstBuffer(void);
 
-        void setConstant(void* data, CALformat format, unsigned int count = 1);
+		template <unsigned int INDEX>
+        void setConstant(void* data, CALformat format);
+
         bool setDataToBuffer();
     private:
         //! \brief CAL creates a buffer of multiple constants. 
         // _data points to the corresponding CPU array.
-        unsigned char* _data;
-
-        //! \brief number of elements in _data
-        unsigned int _nElements;
-
-        //! \brief number of bytes of a single elements
-        unsigned int _elementBytes;
+        float4 _data[CONSTNUM];
     };
 }
+
+#include "CALConstBufferDef.h"
+
 #endif

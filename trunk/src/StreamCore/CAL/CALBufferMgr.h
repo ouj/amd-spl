@@ -10,9 +10,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
+#include "CommonDefs.h"
 #include <vector>
 #include <map>
 #include "CALBuffer.h"
+#include "CALConstBuffer.h"
     
 class CALDevice;
 class CALBuffer;
@@ -21,7 +23,6 @@ namespace amdspl
 {
 
     class CalConstArrayBuffer;
-    class CalConstBuffer;
 
     typedef std::map<CALBuffer*, bool> BufferMap;
     typedef BufferMap::iterator BufferMapIter;
@@ -48,7 +49,9 @@ namespace amdspl
 
         explicit        CalBufferMgr(CalDevice* device);
         CalConstArrayBuffer* createConstArrayBuffer(unsigned int numConstants, CALformat calFormat = CAL_FORMAT_FLOAT_4);
-        CalConstBuffer* createConstBuffer(unsigned int numConstants, CALformat calFormat = CAL_FORMAT_FLOAT_4);
+
+		template<unsigned int CONSTNUM> 
+		CalConstBuffer<CONSTNUM>* createConstBuffer();
         CalBuffer*      createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat); 
         void            destroyBuffer(CalBuffer *buffer);
         void            clearUsedConstCache();
@@ -88,5 +91,30 @@ namespace amdspl
         //! \brief constant buffers being used in the the same kernel
         std::vector<CalConstArrayBuffer*> _usedConstBuffers;
     };
+
+	template<unsigned int CONSTNUM>
+	CalConstBuffer<CONSTNUM>* 
+		CalBufferMgr::createConstBuffer()
+	{
+		CALdeviceinfo info = _device->getInfo();
+		if(CONSTNUM > info.maxResource1DWidth)
+		{
+			return NULL;
+		}
+
+		unsigned int dimensions[] = {CONSTNUM};
+		CalConstBuffer<CONSTNUM>* tmpBuffer = NULL;
+
+		tmpBuffer = new CalConstBuffer<CONSTNUM>(_device);
+		// Try again to allocate resource after deallocating all the resources
+		if(!tmpBuffer->initialize())
+		{
+			SET_ERROR("Failed to create host cal resource for constant buffer\n");
+			delete tmpBuffer;
+
+			return NULL;
+		}
+		return tmpBuffer;
+	}
 }
 #endif //_AMDSPL_CALBUFFERMGR_H_

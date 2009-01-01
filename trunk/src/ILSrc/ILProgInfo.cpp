@@ -12,7 +12,7 @@ namespace amdspl
     ILProgInfo::ILProgInfo(const char* name) : Name(name), Image(NULL)
     {
         ConstArrayNum = 0;
-        ConstantNum = 0;
+        HasConstant = false;
         InputNum = 0;
         OutputNum = 0;
         ScatterNum = 0;
@@ -61,9 +61,9 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    ILProgInfo& ILProgInfo::constant(int constantNum)
+    ILProgInfo& ILProgInfo::constant(bool hasConstant)
     {
-        ConstantNum = constantNum;
+        HasConstant = hasConstant;
 
         return *this;
     }

@@ -80,7 +80,7 @@ namespace amdspl
             ILProgInfo(const char* name);
             ILProgInfo& image(const char* image);
             ILProgInfo& constArray(int constArrayNum);
-            ILProgInfo& constant(int constantNum);
+            ILProgInfo& constant(bool hasConstant);
             ILProgInfo& input(int inputNum);
             ILProgInfo& output(int outputNum);
             ILProgInfo& scatter(int scatterNum);
@@ -99,8 +99,8 @@ namespace amdspl
             //! \brief The number of constant array 
             unsigned int ConstArrayNum;
 
-            //! \brief The number of constants
-            unsigned int ConstantNum;
+            //! \brief The boolean indicate whether the program has constants
+            bool		 HasConstant;
 
             //! \brief The number of input stream.
             unsigned int InputNum;
