@@ -86,7 +86,6 @@ namespace amdspl
     //! \return Pointer to the newly created host buffer
     //!
     ////////////////////////////////////////////////////////////////////////////////
-
     CalBuffer* 
         CalBufferMgr::createHostBuffer(unsigned short rank, unsigned int* dimensions,
         const CALformat & format)
@@ -291,29 +290,6 @@ namespace amdspl
         _constBufferCache.push_back(tmpBuffer);
         _usedConstBuffers.push_back(tmpBuffer);
 
-        return tmpBuffer;
-    }
-
-    CalConstBuffer* CalBufferMgr::createConstBuffer(unsigned int numConstants, CALformat calFormat)
-    {
-        CALdeviceinfo info = _device->getInfo();
-        if(numConstants > info.maxResource1DWidth)
-        {
-            return NULL;
-        }
-
-        unsigned int dimensions[] = {numConstants};
-        CalConstBuffer* tmpBuffer;
-
-        tmpBuffer = new CalConstBuffer(dimensions, _device, calFormat);
-        // Try again to allocate resource after deallocating all the resources
-        if(!tmpBuffer->initialize())
-        {
-            SET_ERROR("Failed to create host cal resource for constant buffer\n");
-            delete tmpBuffer;
-
-            return NULL;
-        }
         return tmpBuffer;
     }
 

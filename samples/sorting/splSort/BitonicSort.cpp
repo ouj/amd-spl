@@ -141,13 +141,13 @@ BitonicSort::comparePerformance()
     std::cout << "-p Compare performance with CPU.\n";
 	
     // Record CPU Total time
-    for(i = 0; i < info->Iterations; i ++)
-    {
+    //for(i = 0; i < info->Iterations; i ++)
+    //{
         sort(_array2.begin(), _array2.end());
-    }
+    //}
 	
     timer->Stop();
-    cpuTime = timer->GetElapsedTime();
+    cpuTime = timer->GetElapsedTime() * info->Iterations;
 
 	// Print CPU timing and speedup
 	std::cout << std::setw(8) << "Width" << std::setw(8) << "Height"

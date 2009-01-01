@@ -35,7 +35,7 @@ namespace amdspl
         uint InputDim[] = {_size};
         CalBuffer *sorted1Buffer = bufferMgr->createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
         CalBuffer *sorted2Buffer = bufferMgr->createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
-        CalConstBuffer *constBuffer = bufferMgr->createConstBuffer(3, CAL_FORMAT_FLOAT_4);
+        CalConstBuffer<3> *constBuffer = bufferMgr->createConstBuffer<3>();
 
         const CalProgram *program = amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_IL);
 
@@ -85,9 +85,9 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem2);
                     AMDSPL_CAL_RESULT_LOG(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant(&segWidth, CAL_FORMAT_FLOAT_1, 0);
-                    constBuffer->setConstant(&offset, CAL_FORMAT_FLOAT_1, 1);
-                    constBuffer->setConstant(&offset_2, CAL_FORMAT_FLOAT_1, 2);
+                    constBuffer->setConstant<0>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<1>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<2>(&offset_2, CAL_FORMAT_FLOAT_1);
                     constBuffer->setDataToBuffer();
 
                     // Run the kernel on GPU
@@ -102,9 +102,9 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem1);
                     AMDSPL_CAL_RESULT_LOG(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant(&segWidth, CAL_FORMAT_FLOAT_1, 0);
-                    constBuffer->setConstant(&offset, CAL_FORMAT_FLOAT_1, 1);
-                    constBuffer->setConstant(&offset_2, CAL_FORMAT_FLOAT_1, 2);
+                    constBuffer->setConstant<0>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<1>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<2>(&offset_2, CAL_FORMAT_FLOAT_1);
                     constBuffer->setDataToBuffer();
 
                     // Run the kernel on GPU

@@ -71,7 +71,7 @@ namespace amdspl
         }
 
         // Get constant name handle
-        if(_ilInfo.ConstantNum > 0)
+        if(_ilInfo.HasConstant == true)
         {
             CALname name;
             std::ostringstream tmpStr;

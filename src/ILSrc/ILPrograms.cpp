@@ -5,6 +5,7 @@ namespace amdspl
 {
     ILInfoFunc ILInfoFuncs[] = 
     {
-        &BitonicSortILInfo
+        &BitonicSortILInfo,
+		&BitonicSortATILInfo
     };
 }
