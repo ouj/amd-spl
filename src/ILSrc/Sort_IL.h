@@ -164,12 +164,20 @@ amdspl::ILProgInfo BitonicSortILInfo(void)
 }
 
 
-
+const char f_szBitonicSortAT[] = 
+"il_ps_2_0\n"
+"dcl_output_generic o0\n"
+"dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
+"dcl_input_position_interp(linear_noperspective) v0.xy__\n"
+"dcl_cb cb0[7]\n"
+"mov o0, v0\n"
+"endmain\n"
+"end\n";
 
 amdspl::ILProgInfo BitonicSortATILInfo(void)
 {
 	return amdspl::ILProgInfo( "f_szBitonicSortAT " )
-		.image(f_szBitonicSort)
+		.image(f_szBitonicSortAT)
 		.input(1).constant(true).output(1);
 }
 
