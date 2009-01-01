@@ -1,4 +1,5 @@
 #summary AMD Stream Programming Library
+#labels Featured,Phase-Requirements
 
 = Introduction =
 
