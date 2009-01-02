@@ -59,8 +59,8 @@ namespace amdspl
 		CALcontext ctx = device->getContext();
 
 		uint InputDim[] = {_size};
-		CalBuffer *sorted1Buffer = bufferMgr->createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
-		CalBuffer *sorted2Buffer = bufferMgr->createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
+		CalBuffer *sorted1Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
+		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
 		CalConstBuffer<3> *constBuffer = bufferMgr->createConstBuffer<3>();
 		const CalProgram *program = 
 			amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_IL);
@@ -148,9 +148,9 @@ namespace amdspl
 			sorted2Buffer->writeData(ptr);
 		}
 
-		bufferMgr->destroyBuffer(constBuffer);
-		bufferMgr->destroyBuffer(sorted1Buffer);
-		bufferMgr->destroyBuffer(sorted2Buffer);
+		CalBuffer::destroyBuffer(constBuffer);
+		CalBuffer::destroyBuffer(sorted1Buffer);
+		CalBuffer::destroyBuffer(sorted2Buffer);
 		return true;
 	}
 
@@ -163,8 +163,8 @@ namespace amdspl
 		CALcontext ctx = device->getContext();
 
 		uint InputDim[] = {_width, _height};
-		CalBuffer *sorted1Buffer = bufferMgr->createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
-		CalBuffer *sorted2Buffer = bufferMgr->createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
+		CalBuffer *sorted1Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
+		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
 
 		CalConstBuffer<4> *constBuffer = bufferMgr->createConstBuffer<4>();
 		const CalProgram *program = 
@@ -201,9 +201,9 @@ namespace amdspl
 
 		sorted2Buffer->writeData(ptr);
 
-		bufferMgr->destroyBuffer(constBuffer);
-		bufferMgr->destroyBuffer(sorted1Buffer);
-		bufferMgr->destroyBuffer(sorted2Buffer);
+		CalBuffer::destroyBuffer(constBuffer);
+		CalBuffer::destroyBuffer(sorted1Buffer);
+		CalBuffer::destroyBuffer(sorted2Buffer);
 		return true;
 	}
 }

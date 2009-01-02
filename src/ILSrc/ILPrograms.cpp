@@ -3,6 +3,7 @@
 
 namespace amdspl
 {
+	typedef ILProgInfo (*ILInfoFunc)(void);
     ILInfoFunc ILInfoFuncs[] = 
     {
         &BitonicSortILInfo,

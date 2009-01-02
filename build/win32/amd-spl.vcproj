@@ -355,7 +355,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\ILSrc\ILPrograms.h"
+					RelativePath="..\..\src\include\ILPrograms.h"
 					>
 				</File>
 				<File
@@ -376,10 +376,14 @@
 				</File>
 			</Filter>
 		</Filter>
-		<Filter
-			Name="Common"
+		<File
+			RelativePath="..\..\src\amdspl.cpp"
 			>
-		</Filter>
+		</File>
+		<File
+			RelativePath="..\..\src\include\amdspl.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

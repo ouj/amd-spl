@@ -8,7 +8,7 @@
 //! \brief Contains the declaration of CALBuffer class
 //!
 ////////////////////////////////////////////////////////////////////////////////
-
+#include "CommonDefs.h"
 #include "cal.h"
 namespace amdspl
 {
@@ -53,6 +53,9 @@ namespace amdspl
     class CalBuffer
     {
     public:
+
+		static CalBuffer* createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat);
+        static inline void destroyBuffer(CalBuffer *buffer);
 
         CalBuffer(unsigned short rank, unsigned int* dimansions,
             CALformat format, BufferPool bufferPool, CALuint flag,
@@ -146,6 +149,12 @@ namespace amdspl
         CALevent* _outputEvent;
 
     };
+
+	inline void
+		CalBuffer::destroyBuffer(CalBuffer *buffer)
+	{
+		SAFE_DELETE(buffer);
+	}
 
     inline const
         unsigned short

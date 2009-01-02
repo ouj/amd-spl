@@ -5,6 +5,9 @@
 
 namespace amdspl
 {
+	typedef ILProgInfo (*ILInfoFunc)(void);
+	extern ILInfoFunc ILInfoFuncs[];
+
     CalProgramMgr::CalProgramMgr(CalDevice *device) : _device(device)
     {
         _programs.resize(ILPRGROGRAMS_NUM, NULL);

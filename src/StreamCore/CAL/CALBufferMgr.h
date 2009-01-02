@@ -52,8 +52,6 @@ namespace amdspl
 
 		template<unsigned int CONSTNUM> 
 		CalConstBuffer<CONSTNUM>* createConstBuffer();
-        CalBuffer*      createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat); 
-        void            destroyBuffer(CalBuffer *buffer);
         void            clearUsedConstCache();
 
         ~CalBufferMgr();
