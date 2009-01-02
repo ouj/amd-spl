@@ -1,7 +1,7 @@
 #ifndef _AMDSPL_BITONICSORT_CALCODE_H
 #define _AMDSPL_BITONICSORT_CALCODE_H
 
-#include "ILPrograms.h"
+#include "ILProgInfo.h"
 
 const char f_szBitonicSort[] = 
 "il_ps_2_0\n"

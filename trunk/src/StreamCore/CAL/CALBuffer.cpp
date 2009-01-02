@@ -4,9 +4,69 @@
 #include "CALRuntime.h"
 #include "CALBufferMgr.h"
 #include <assert.h>
+#include "cal.h"
 
 namespace amdspl
 {
+	////////////////////////////////////////////////////////////////////////////////
+	//!
+	//! \brief Method to create buffers using CALBuffer.
+	//!
+	//! \param stream The associated stream
+	//! \return Pointer to the newly created buffer
+	//!
+	////////////////////////////////////////////////////////////////////////////////
+
+	CalBuffer*
+		CalBuffer::createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat)
+	{
+		// Check if double precision is supported on the underlying hardware
+		CalDevice* device = CalRuntime::getInstance()->getDevice();
+		CALdeviceattribs attrib = device->getAttribs();
+		CALdeviceinfo info = device->getInfo();
+
+		if(!attrib.doublePrecision)
+		{
+			if(calFormat == CAL_FORMAT_DOUBLE_1 || calFormat == CAL_FORMAT_DOUBLE_2)
+			{
+				//stream->setErrorCode(BR_ERROR_NOT_SUPPORTED);
+				//stream->setErrorString("Stream Allocation : Double precision not supported " 
+				//    "on underlying hardware\n");
+
+				return NULL;
+			}
+		}
+
+		if(rank == 1 && dimensions[0] > info.maxResource1DWidth)
+		{
+			//stream->setErrorCode(BR_ERROR_NOT_SUPPORTED);
+			//stream->setErrorString("Stream Allocation : This dimension not supported on undelying"
+			//    "hardware\n");
+
+			return NULL;
+		}
+		else if(rank == 2 && (dimensions[0] > info.maxResource2DWidth || 
+			dimensions[1] > info.maxResource2DHeight))
+		{
+			//stream->setErrorCode(BR_ERROR_NOT_SUPPORTED);
+			//stream->setErrorString("Stream Allocation : This dimension not supported on undelying"
+			//    "hardware\n");
+
+			return NULL;
+		}
+
+		CalBuffer* buffer = new CalBuffer(rank, dimensions, calFormat, 
+			BUFFER_LOCAL, 0, device);
+
+		if (!buffer->initialize())
+		{
+			SAFE_DELETE(buffer);
+			return NULL;
+		}
+		else
+			return buffer;
+	}
+
     ////////////////////////////////////////////////////////////////////////////////
     //!
     //! \brief Constructor
@@ -257,7 +317,7 @@ namespace amdspl
             // That bufferMap is only for local resource
             if(_bufferPool == BUFFER_LOCAL)
             {
-                ::amdspl::CalRuntime::getInstance()->getBufferMgr()->destroyBuffer(this);
+                CalBuffer::destroyBuffer(this);
             }
         }
     }
@@ -525,8 +585,8 @@ namespace amdspl
         char* fromPtr = (char*) getBufferPointerCPU(pitch);
         char* toPtr = (char*) appPtr;
 
-        unsigned int toRowStride = pitch * elementStride;
-        unsigned int fromRowStride = _dimensions[0] * elementStride;
+        unsigned int toRowStride = _dimensions[0] * elementStride;
+        unsigned int fromRowStride = pitch * elementStride;
 
         unsigned int totalBytes = elementStride;
         for(unsigned int i = 0; i < _rank; ++i)

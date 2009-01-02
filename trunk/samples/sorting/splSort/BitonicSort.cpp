@@ -1,7 +1,7 @@
 #include "BitonicSort.h"
 #include <ctime>
 #include <algorithm>
-#include "splSort.h"
+#include "amdspl.h"
 
 using namespace std;
 
@@ -182,7 +182,14 @@ BitonicSort::run()
         unsigned int flip = 0;
         unsigned int i;
 
-        ::amdspl::SPLSort::bitonicSort(&_array1[0], (unsigned int)_array1.size());
+		amdspl::ILPROGRAMS_INDEX progIdxs[] = {
+			amdspl::BITONIC_SORT_IL, 
+			amdspl::BITONIC_SORT_AT_IL, 
+			amdspl::ILPRGROGRAMS_NUM
+		};
+		
+		::amdspl::preInitSPL(progIdxs);
+
         timer->Start();
         // Record CPU Total time
         for(i = 0; i < info->Iterations; i ++)

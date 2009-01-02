@@ -19,63 +19,6 @@ namespace amdspl
     {
     }
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Method to create backend spefic buffers using CALBuffer.
-    //!
-    //! \param stream The associated stream
-    //! \return Pointer to the newly created buffer
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-
-    CalBuffer*
-        CalBufferMgr::createBuffer(unsigned short rank, unsigned int* dimensions, CALformat calFormat)
-    {
-        // Check if double precision is supported on the underlying hardware
-        CALdeviceattribs attrib = _device->getAttribs();
-        CALdeviceinfo info = _device->getInfo();
-
-        if(!attrib.doublePrecision)
-        {
-            if(calFormat == CAL_FORMAT_DOUBLE_1 || calFormat == CAL_FORMAT_DOUBLE_2)
-            {
-                //stream->setErrorCode(BR_ERROR_NOT_SUPPORTED);
-                //stream->setErrorString("Stream Allocation : Double precision not supported " 
-                //    "on underlying hardware\n");
-
-                return NULL;
-            }
-        }
-
-        if(rank == 1 && dimensions[0] > info.maxResource1DWidth)
-        {
-            //stream->setErrorCode(BR_ERROR_NOT_SUPPORTED);
-            //stream->setErrorString("Stream Allocation : This dimension not supported on undelying"
-            //    "hardware\n");
-
-            return NULL;
-        }
-        else if(rank == 2 && (dimensions[0] > info.maxResource2DWidth || 
-            dimensions[1] > info.maxResource2DHeight))
-        {
-            //stream->setErrorCode(BR_ERROR_NOT_SUPPORTED);
-            //stream->setErrorString("Stream Allocation : This dimension not supported on undelying"
-            //    "hardware\n");
-
-            return NULL;
-        }
-
-        CalBuffer* buffer = new CalBuffer(rank, dimensions, calFormat, 
-            BUFFER_LOCAL, 0, _device);
-
-        if (!buffer->initialize())
-        {
-            SAFE_DELETE(buffer);
-            return NULL;
-        }
-        else
-            return buffer;
-    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //!
@@ -347,10 +290,5 @@ namespace amdspl
         _copyEvents.push_back(event);
 
         return event;
-    }
-
-    void CalBufferMgr::destroyBuffer(CalBuffer *buffer)
-    {
-        SAFE_DELETE(buffer);
     }
 }
