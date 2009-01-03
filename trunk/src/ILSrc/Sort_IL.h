@@ -3,7 +3,7 @@
 
 #include "ILProgInfo.h"
 
-const char f_szBitonicSort[] = 
+const char BitonicSortSource[] = 
 "il_ps_2_0\n"
 "dcl_literal l0, 0x00000000, 0x00000000, 0x00000000, 0x00000000\n"
 "dcl_literal l1, 0x00000001, 0x00000001, 0x00000001, 0x00000001\n"
@@ -157,7 +157,7 @@ const char f_szBitonicSort[] =
 "end\n";
 
 
-const char f_szBitonicSortAT[] = 
+const char BitonicSortATSource[] = 
 "il_ps_2_0\n"
 "dcl_output_generic o0\n"
 "dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"

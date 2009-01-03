@@ -212,10 +212,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALProgramMgr.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.h"
 						>
 					</File>
@@ -259,14 +255,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALDevice.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALProgram.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALProgramMgr.cpp"
 						>
 					</File>
 					<File
@@ -374,10 +362,6 @@
 			<Filter
 				Name="Source Files"
 				>
-				<File
-					RelativePath="..\..\src\ILSrc\ILProgInfo.cpp"
-					>
-				</File>
 				<File
 					RelativePath="..\..\src\ILSrc\ILPrograms.cpp"
 					>

@@ -95,7 +95,6 @@ namespace amdspl
 
         _devices = device;
         _bufferMgr = new CalBufferMgr(device);
-        _programMgr = new CalProgramMgr(device);
 
         return true;
     }
