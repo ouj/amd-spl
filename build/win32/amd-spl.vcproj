@@ -87,7 +87,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
+				CommandLine="mkdir &quot;..\..\samples\bin\$(ConfigurationName)\&quot; | copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -163,7 +163,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
+				CommandLine="mkdir &quot;..\..\samples\bin\$(ConfigurationName)\&quot; | copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
