@@ -6,6 +6,13 @@
 
 namespace amdspl
 {
+    enum ILPROGRAMS_INDEX
+    {
+        BITONIC_SORT_IL = 0,
+        BITONIC_SORT_AT_IL,
+        ILPRGROGRAMS_NUM
+    };
+
     typedef ILInfoList<
             ILParameters<1, 1, 3>, 
         ILInfoList<

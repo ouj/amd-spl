@@ -182,13 +182,7 @@ BitonicSort::run()
         unsigned int flip = 0;
         unsigned int i;
 
-		amdspl::ILPROGRAMS_INDEX progIdxs[] = {
-			amdspl::BITONIC_SORT_IL, 
-			amdspl::BITONIC_SORT_AT_IL, 
-			amdspl::ILPRGROGRAMS_NUM
-		};
-		
-		::amdspl::preInitProgram(progIdxs);
+        ::amdspl::SPLSort::initModule();
 
         timer->Start();
         // Record CPU Total time

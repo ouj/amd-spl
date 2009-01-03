@@ -6,15 +6,25 @@
 #include "CALConstBuffer.h"
 #include "CALRuntime.h"
 #include "CALBufferMgr.h"
-#include "CALProgramMgr.h"
 #include "CALProgram.h"
-#include "ILProgramIndex.h"
+#include "ILPrograms.h"
 #include "CALBase.h"
 #include <vector>
 #include <cmath>
+#include <cassert>
+
+#define PREINIT_PROGRAM(ID) {CalProgram<ID>* program = CalProgram<ID>::getInstance();\
+    assert(program); if (!program) return false;}
 
 namespace amdspl
 {
+    bool SPLSort::initModule(void)
+    {
+        PREINIT_PROGRAM(BITONIC_SORT_IL);
+        PREINIT_PROGRAM(BITONIC_SORT_AT_IL);
+        return true;
+    }
+
     bool SPLSort::bitonicSort(float *ptr, unsigned int _size)
     {
 		CalDevice* device = CalRuntime::getInstance()->getDevice();
