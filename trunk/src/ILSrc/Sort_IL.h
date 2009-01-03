@@ -156,13 +156,6 @@ const char f_szBitonicSort[] =
 "ret\n"
 "end\n";
 
-amdspl::ILProgInfo BitonicSortILInfo(void)
-{
-    return amdspl::ILProgInfo( "f_szBitonicSort " )
-        .image(f_szBitonicSort)
-        .input(1).constant(true).output(1);
-}
-
 
 const char f_szBitonicSortAT[] = 
 "il_ps_2_0\n"
@@ -174,11 +167,5 @@ const char f_szBitonicSortAT[] =
 "endmain\n"
 "end\n";
 
-amdspl::ILProgInfo BitonicSortATILInfo(void)
-{
-	return amdspl::ILProgInfo( "f_szBitonicSortAT " )
-		.image(f_szBitonicSortAT)
-		.input(1).constant(true).output(1);
-}
 
 #endif // _AMDSPL_SORT_CALCODE_H

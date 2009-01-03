@@ -351,11 +351,19 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\..\src\ILSrc\ILInfoList.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\ILSrc\ILProgInfo.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\include\ILPrograms.h"
+					RelativePath="..\..\src\include\ILProgramIndex.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\ILSrc\ILPrograms.h"
 					>
 				</File>
 				<File

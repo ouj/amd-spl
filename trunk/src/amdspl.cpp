@@ -1,38 +1,25 @@
 #include "amdspl.h"
 #include "CALRuntime.h"
-#include "CALProgramMgr.h"
+#include "CALProgram.h"
 #include <assert.h>
+
+#define PREINIT_PROGRAM(ID) case ID: \
+{ CalProgram<ID>* program = CalProgram<ID>::getInstance();\
+assert(program); if (!program) return false; break;}
 
 namespace amdspl
 {
-	class CalProgram;
-	bool preInitSPL(ILPROGRAMS_INDEX *progIdxs)
+	bool preInitProgram(ILPROGRAMS_INDEX *progIdxs)
 	{
-		CalRuntime* runtime = amdspl::CalRuntime::getInstance();
-		assert(runtime);
-		if (!runtime)
-		{
-			return false;
-		}
-
-		CalProgramMgr* progMgr = runtime->getProgramMgr();
-		assert(progMgr);
-		if (!progMgr)
-		{
-			return false;
-		}
-
 		if (progIdxs != NULL)
 		{
-			const CalProgram *program = NULL;
 			while(*progIdxs != ILPRGROGRAMS_NUM)
 			{
-				program = progMgr->GetProgram(*progIdxs);
-				assert(program);
-				if (!program)
-				{
-					return false;
-				}
+                switch(*progIdxs)
+                {
+                    PREINIT_PROGRAM(BITONIC_SORT_IL)
+                    PREINIT_PROGRAM(BITONIC_SORT_AT_IL)
+                }
 				progIdxs++;
 			}
 		}

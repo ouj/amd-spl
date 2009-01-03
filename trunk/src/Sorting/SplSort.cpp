@@ -8,7 +8,7 @@
 #include "CALBufferMgr.h"
 #include "CALProgramMgr.h"
 #include "CALProgram.h"
-#include "ILPrograms.h"
+#include "ILProgramIndex.h"
 #include "CALBase.h"
 #include <vector>
 #include <cmath>
@@ -62,8 +62,8 @@ namespace amdspl
 		CalBuffer *sorted1Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
 		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
 		CalConstBuffer<3> *constBuffer = bufferMgr->createConstBuffer<3>();
-		const CalProgram *program = 
-			amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_IL);
+        const CalProgram<BITONIC_SORT_IL> *program = CalProgram<BITONIC_SORT_IL>::getInstance();
+			//amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_IL);
 
 		sorted1Buffer->readData(ptr);
 
@@ -72,7 +72,7 @@ namespace amdspl
 		CALmem mem1 = sorted1Buffer->getMemHandle();
 		CALmem mem2 = sorted2Buffer->getMemHandle();
 
-		CALname constName = program->getConstName(0);
+		CALname constName = program->getConstName();
 		CALmem constMem = constBuffer->getMemHandle();
 
 		result = calCtxSetMem(ctx, inputName, mem1);
@@ -167,8 +167,7 @@ namespace amdspl
 		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
 
 		CalConstBuffer<4> *constBuffer = bufferMgr->createConstBuffer<4>();
-		const CalProgram *program = 
-			amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_AT_IL);
+        const CalProgram<BITONIC_SORT_AT_IL> *program = CalProgram<BITONIC_SORT_AT_IL>::getInstance();
 
 		sorted1Buffer->readData(ptr);
 
@@ -176,7 +175,7 @@ namespace amdspl
 		CALname outputName = program->getOutputName(0);
 		CALmem mem1 = sorted1Buffer->getMemHandle();
 		CALmem mem2 = sorted2Buffer->getMemHandle();
-		CALname constName = program->getConstName(0);
+		CALname constName = program->getConstName();
 		CALmem constMem = constBuffer->getMemHandle();
 
 		// Run the kernel on GPU
