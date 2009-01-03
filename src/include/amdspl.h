@@ -1,7 +1,7 @@
 #ifndef _AMD_SPL_LIBRARY_
 #define _AMD_SPL_LIBRARY_
 #include "SplSort.h"
-#include "ILPrograms.h"
+#include "ILProgramIndex.h"
 
 #ifdef AMD_SPL_EXPORT
 #define SPL_EXPORT __declspec(dllexport)
@@ -11,7 +11,7 @@
 
 namespace amdspl
 {
-	bool SPL_EXPORT preInitSPL(ILPROGRAMS_INDEX *progIdxs);
+	bool SPL_EXPORT preInitProgram(ILPROGRAMS_INDEX *progIdxs);
 }
 
 #endif

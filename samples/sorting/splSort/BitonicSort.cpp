@@ -188,7 +188,7 @@ BitonicSort::run()
 			amdspl::ILPRGROGRAMS_NUM
 		};
 		
-		::amdspl::preInitSPL(progIdxs);
+		::amdspl::preInitProgram(progIdxs);
 
         timer->Start();
         // Record CPU Total time

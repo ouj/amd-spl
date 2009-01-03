@@ -3,10 +3,9 @@
 
 namespace amdspl
 {
-	typedef ILProgInfo (*ILInfoFunc)(void);
-    ILInfoFunc ILInfoFuncs[] = 
+    const char* ILSources[] = 
     {
-        &BitonicSortILInfo,
-		&BitonicSortATILInfo
+        f_szBitonicSort,
+        f_szBitonicSortAT
     };
 }
