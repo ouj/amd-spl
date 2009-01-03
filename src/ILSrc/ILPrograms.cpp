@@ -5,7 +5,7 @@ namespace amdspl
 {
     const char* ILSources[] = 
     {
-        f_szBitonicSort,
-        f_szBitonicSortAT
+        BitonicSortSource,
+        BitonicSortATSource
     };
 }
