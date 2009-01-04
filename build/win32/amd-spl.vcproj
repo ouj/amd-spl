@@ -188,6 +188,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALBufferAT.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALBufferMgr.h"
 						>
 					</File>
@@ -221,6 +225,10 @@
 					>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALBufferAT.cpp"
 						>
 					</File>
 					<File

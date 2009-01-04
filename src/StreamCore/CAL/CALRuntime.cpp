@@ -5,7 +5,6 @@
 #include "CALDevice.h"
 #include <assert.h>
 #include "CALBufferMgr.h"
-#include "CALProgramMgr.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////

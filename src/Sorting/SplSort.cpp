@@ -73,7 +73,6 @@ namespace amdspl
 		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
 		CalConstBuffer<3> *constBuffer = bufferMgr->createConstBuffer<3>();
         const CalProgram<BITONIC_SORT_IL> *program = CalProgram<BITONIC_SORT_IL>::getInstance();
-			//amdspl::CalRuntime::getInstance()->getProgramMgr()->GetProgram(BITONIC_SORT_IL);
 
 		sorted1Buffer->readData(ptr);
 
@@ -168,6 +167,16 @@ namespace amdspl
 	{
 		CALresult result = CAL_RESULT_OK;;
 
+        unsigned int flip = 0;
+
+        unsigned int _lgArraySize = 0;
+        unsigned int _stage;
+
+        for (_stage = _size >> 1; _stage; _lgArraySize++)
+        {
+            _stage >>= 1;
+        }
+
 		CalBufferMgr* bufferMgr = CalRuntime::getInstance()->getBufferMgr();
 		CalDevice* device = CalRuntime::getInstance()->getDevice();
 		CALcontext ctx = device->getContext();
@@ -176,8 +185,21 @@ namespace amdspl
 		CalBuffer *sorted1Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
 		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
 
-		CalConstBuffer<4> *constBuffer = bufferMgr->createConstBuffer<4>();
+		CalConstBuffer<7> *constBuffer = bufferMgr->createConstBuffer<7>();
         const CalProgram<BITONIC_SORT_AT_IL> *program = CalProgram<BITONIC_SORT_AT_IL>::getInstance();
+        
+        uint4 bufferDim;
+        bufferDim.x = _width;
+        bufferDim.y = _height;
+
+        uint4 strDim;
+        strDim.x = _size;
+        strDim.y = 1;
+
+        constBuffer->setConstant<0>(&strDim, CAL_FORMAT_INT_4);
+        constBuffer->setConstant<1>(&bufferDim, CAL_FORMAT_INT_4);
+        constBuffer->setConstant<5>(&strDim, CAL_FORMAT_INT_4);
+        constBuffer->setConstant<6>(&bufferDim, CAL_FORMAT_INT_4);
 
 		sorted1Buffer->readData(ptr);
 
@@ -188,9 +210,7 @@ namespace amdspl
 		CALname constName = program->getConstName();
 		CALmem constMem = constBuffer->getMemHandle();
 
-		// Run the kernel on GPU
-		CALfunc func = program->getFunction();
-		CALdomain rect = {0, 0, _width, _height};
+
 
 		result = calCtxSetMem(ctx, inputName, mem1);
 		AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
@@ -204,11 +224,69 @@ namespace amdspl
 		constBuffer->setDataToBuffer();
 
 		CALevent execEvent;
-		// Run the kernel on GPU
-		result = calCtxRunProgram(&execEvent, ctx, func, &rect);
-		while(calCtxIsEventDone(ctx, execEvent));
 
-		sorted2Buffer->writeData(ptr);
+
+        // Run the kernel on GPU
+        CALfunc func = program->getFunction();
+        CALdomain rect = {0, 0, _width, _height};
+
+        for(_stage = 1; _stage <= _lgArraySize; _stage++)
+        {
+            unsigned int step = 0;
+            // Width of each sorted segment to be sorted in parallel (2, 4, 8, ...)
+            float segWidth = (float)pow(2.0f, (int)_stage);
+
+            for (step = 1; step <= _stage; ++step)
+            {
+                // offset = (stageWidth/2, stageWidth/4, ... , 2, 1)
+                float offset = (float)pow(2.0f, (int)(_stage - step));
+                float offset_2 = offset * 2.0f;
+
+                if (!flip)
+                {
+                    result = calCtxSetMem(ctx, inputName, mem1);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                    result = calCtxSetMem(ctx, outputName, mem2);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+
+                    constBuffer->setConstant<2>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<3>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<4>(&offset_2, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setDataToBuffer();
+
+                    // Run the kernel on GPU
+                    result = calCtxRunProgram(&execEvent, ctx, func, &rect);
+                    while(calCtxIsEventDone(ctx, execEvent));
+
+                }
+                else
+                {
+                    result = calCtxSetMem(ctx, inputName, mem2);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                    result = calCtxSetMem(ctx, outputName, mem1);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+
+                    constBuffer->setConstant<2>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<3>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<4>(&offset_2, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setDataToBuffer();
+
+                    // Run the kernel on GPU
+                    result = calCtxRunProgram(&execEvent, ctx, func, &rect);
+                    while(calCtxIsEventDone(ctx, execEvent));
+                }
+                flip ^= 0x01; // XOR flip w/ 0b1 which flips the flip variable between 0 and 1
+            }
+        }
+
+        if (!flip)
+        {
+            sorted1Buffer->writeData(ptr, _size);
+        }
+        else
+        {
+            sorted2Buffer->writeData(ptr, _size);
+        }
 
 		CalBuffer::destroyBuffer(constBuffer);
 		CalBuffer::destroyBuffer(sorted1Buffer);

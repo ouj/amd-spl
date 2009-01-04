@@ -63,8 +63,8 @@ namespace amdspl
         bool initialize();
         bool flush();
 
-        void readData(const void* appPtr);
-        void writeData(void *appPtr);
+        void readData(const void* appPtr, unsigned int size = -1);
+        void writeData(void *appPtr, unsigned int size = -1);
 
         inline const CALmem getMemHandle() const;
         inline const CALformat getFormat() const;

@@ -513,7 +513,7 @@ namespace amdspl
         return numComponents * bytes;
     }
 
-    void CalBuffer::readData(const void* appPtr)
+    void CalBuffer::readData(const void* appPtr, unsigned int size)
     {
         unsigned int height = (_rank == 1) ? 1 : _dimensions[1];
         unsigned int width = _dimensions[0];
@@ -528,9 +528,17 @@ namespace amdspl
         unsigned int fromRowStride = _dimensions[0] * elementStride;
 
         unsigned int totalBytes = elementStride;
-        for(unsigned int i = 0; i < _rank; ++i)
+
+        if (size == -1)
         {
-            totalBytes *= _dimensions[i];
+            for(unsigned int i = 0; i < _rank; ++i)
+            {
+                totalBytes *= _dimensions[i];
+            }
+        }
+        else
+        {
+            totalBytes *= size;
         }
 
         char*& cpuPtr = fromPtr;
@@ -574,7 +582,7 @@ namespace amdspl
         freeBufferPointerCPU();
     }
 
-    void CalBuffer::writeData(void *appPtr)
+    void CalBuffer::writeData(void *appPtr, unsigned int size)
     {
         unsigned int height = (_rank == 1) ? 1 : _dimensions[1];
         unsigned int width = _dimensions[0];
@@ -589,9 +597,16 @@ namespace amdspl
         unsigned int fromRowStride = pitch * elementStride;
 
         unsigned int totalBytes = elementStride;
-        for(unsigned int i = 0; i < _rank; ++i)
+        if (size == -1)
         {
-            totalBytes *= _dimensions[i];
+            for(unsigned int i = 0; i < _rank; ++i)
+            {
+                totalBytes *= _dimensions[i];
+            }
+        }
+        else
+        {
+            totalBytes *= size;
         }
 
         char*& cpuPtr = toPtr;
