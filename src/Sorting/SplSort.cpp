@@ -201,7 +201,7 @@ namespace amdspl
         constBuffer->setConstant<5>(&strDim, CAL_FORMAT_INT_4);
         constBuffer->setConstant<6>(&bufferDim, CAL_FORMAT_INT_4);
 
-		sorted1Buffer->readData(ptr);
+		sorted1Buffer->readData(ptr, _size);
 
 		CALname inputName = program->getInputName(0);
 		CALname outputName = program->getOutputName(0);
