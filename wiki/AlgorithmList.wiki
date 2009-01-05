@@ -10,7 +10,7 @@ Add your content here.  Format your content with:
 
 = Numeric =
 
-#Sort
-#Prefix Sum
-#Reduction
-#Scan
+* Sort
+* Prefix Sum
+* Reduction
+* Scan
