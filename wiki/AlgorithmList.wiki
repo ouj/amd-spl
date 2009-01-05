@@ -7,6 +7,10 @@ Here we list all algorithms which we plan to implement. If you are interested in
 
   # Linear Algebra
     * LU Decomposition
+  # Transform
+    * FFT
+    * DCT
+  # Monte Carlo
 
 = Non-Numeric =
 
