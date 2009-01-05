@@ -1,7 +1,17 @@
 #summary AMD Stream Programming Library
 
-= Introduction =
+== Introduction ==
 
 AMD SPL is a programming library based on AMD's stream computing technology. This library will provide common general purpose computing function such as sorting and prefix sum. This project aims to provide some common functions for GPGPU and makes AMD's GPGPU programming easier.
 
-= [AlgorithmList Algorithm List] =
+== Language Binding == 
+
+This library itself is implemented in standard C++ and AMD IL. 
+
+  * OpenCL
+    [http://www.khronos.org/opencl/ OpenCL] is a new industry standard for parallel computing. AMD OpenCL implementation will be released in 2009.
+
+  * C/C++
+    Any C/C++ code can link to it freely.
+
+== [AlgorithmList Algorithm List] ==
