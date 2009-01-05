@@ -1,16 +1,16 @@
 = Algorithm List =
 
-
-= Non-Numeric =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Here we list all algorithms which we plan to implement. If you are interested in anyone, welcome to join us.
 
 = Numeric =
 
-* Sort
-* Prefix Sum
-* Reduction
-* Scan
+  # Linear Algebra
+    * LU Decomposition
+
+= Non-Numeric =
+
+  # Sort
+    * BinorticSort
+  # Prefix Sum
+  # Reduction
+  # Scan
