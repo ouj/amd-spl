@@ -1,5 +1,5 @@
-#ifndef _AMDSPL_CALPASS_H_
-#define _AMDSPL_CALPASS_H_
+#ifndef _AMDSPL_CALPARAMETERS_H_
+#define _AMDSPL_CALPARAMETERS_H_
 
 #include <string>
 #include <vector>
@@ -8,11 +8,11 @@ namespace amdspl
 {
     ////////////////////////////////////////////////////////////////////////////////
     //!
-    //! \class Pass
+    //! \class ILParaInfo
     //!
-    //! \brief Contain the metadata and backend specific Kernel program.
+    //! \brief Contain the parameter information for specific IL program.
     //! 
-    //! Metadata constains information for number of inputs, outputs, constants.
+    //! parameter information contains number of inputs, outputs, constants.
     //! 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -21,7 +21,7 @@ namespace amdspl
         unsigned int CONST_NUM = 0,
         unsigned int CONST_ARRAY_NUM = 0, 
         unsigned int SCATTER_NUM = 0>
-    class ILParameters
+    class ILParaInfo
     {
     public:
         enum{
@@ -31,6 +31,8 @@ namespace amdspl
             ConstArrayNum = CONST_ARRAY_NUM,
             ScatterNum = SCATTER_NUM
         };
+
+        static const char* image;
     };
 }
 

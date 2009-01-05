@@ -321,6 +321,10 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
+					RelativePath="..\..\src\Sorting\Sort_IL.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\include\SplSort.h"
 					>
 				</File>
@@ -331,8 +335,6 @@
 			</Filter>
 			<Filter
 				Name="Source Files"
-				Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-				UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 				>
 				<File
 					RelativePath="..\..\src\Sorting\SplSort.cpp"
@@ -347,30 +349,18 @@
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\..\src\ILSrc\ILInfoList.h"
+					RelativePath="..\..\src\ILSrc\ILParaInfo.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\ILSrc\ILProgInfo.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\ILSrc\ILPrograms.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\ILSrc\Sort_IL.h"
+					RelativePath="..\..\src\ILSrc\ILParaList.h"
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\src\ILSrc\ILPrograms.cpp"
-					>
-				</File>
-			</Filter>
+		</Filter>
+		<Filter
+			Name="Common"
+			>
 		</Filter>
 		<File
 			RelativePath="..\..\src\amdspl.cpp"
