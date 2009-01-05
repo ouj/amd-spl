@@ -20,28 +20,24 @@
 #include "CALBase.h"
 #include "CALDevice.h"
 #include "CALRuntime.h"
-#include "ILPrograms.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //!
 //! \class Program
 //!
-//! \brief CAL backend specific implementation for Program
+//! \brief CAL back-end specific implementation for Program
 //!
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     class CalProgram
     {
-        // IL parameter information
-        typedef typename ILInfoAt<ILINFOLIST, INDEX>::Result IlInfo;
-
     public:
         CalProgram(CalDevice* device);
         bool initialize();
 
-        static CalProgram<INDEX>* getInstance(void);
+        static CalProgram<ILPARAINFO>* getInstance(void);
 
         CALname getConstArrayName(unsigned short i) const;
         CALname getConstName(void) const;
@@ -60,17 +56,20 @@ namespace amdspl
     private:
         static CalProgram*  _program;
 
+        //! \brief Contins CAL IL source string;
+        const char*          _image;     
+
         //! \brief Contains CAL specific constant array buffer name handles
-        CALname              _constArrayNames[IlInfo::ConstArrayNum + 1];
+        CALname              _constArrayNames[ILPARAINFO::ConstArrayNum + 1];
 
         //! \brief Contains CAL specific constant buffer name handles
         CALname              _constNames;
 
         //! \brief input name handles
-        CALname              _inputNames[IlInfo::InputNum + 1];
+        CALname              _inputNames[ILPARAINFO::InputNum + 1];
 
         //! \brief output name handles
-        CALname              _outputNames[IlInfo::OutputNum + 1];
+        CALname              _outputNames[ILPARAINFO::OutputNum + 1];
 
         //! \brief output name handles
         CALname              _scatterNames;
@@ -84,16 +83,16 @@ namespace amdspl
     };
 
     // Static member of program
-    template<unsigned int INDEX>
-    CalProgram<INDEX>* CalProgram<INDEX>::_program = NULL;
+    template<typename ILPARAINFO>
+    CalProgram<ILPARAINFO>* CalProgram<ILPARAINFO>::_program = NULL;
 
     // Singleton
-    template<unsigned int INDEX>
-    CalProgram<INDEX>* CalProgram<INDEX>::getInstance(void)
+    template<typename ILPARAINFO>
+    CalProgram<ILPARAINFO>* CalProgram<ILPARAINFO>::getInstance(void)
     {
         if (_program == NULL)
         {
-            CalProgram<INDEX> *program = new CalProgram<INDEX>(CalRuntime::getInstance()->getDevice());
+            CalProgram<ILPARAINFO> *program = new CalProgram<ILPARAINFO>(CalRuntime::getInstance()->getDevice());
             if(!program->initialize())
             {
                 SAFE_DELETE(program);
@@ -110,16 +109,16 @@ namespace amdspl
     //! \brief Get the CAL funtion handle
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     inline const
         CALfunc
-        CalProgram<INDEX>::getFunction() const
+        CalProgram<ILPARAINFO>::getFunction() const
     {
         return _func;
     }
 
-    template<unsigned int INDEX>
-    CalProgram<INDEX>::CalProgram(CalDevice* device)
+    template<typename ILPARAINFO>
+    CalProgram<ILPARAINFO>::CalProgram(CalDevice* device)
         : _device(device), _func(0), _module(0)
     {
     }
@@ -130,9 +129,9 @@ namespace amdspl
     //!
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     bool
-        CalProgram<INDEX>::initialize()
+        CalProgram<ILPARAINFO>::initialize()
     {
         CALdeviceinfo info = _device->getInfo();
         CALcontext ctx = _device->getContext();
@@ -142,7 +141,7 @@ namespace amdspl
         // Compiling program
         CALobject obj;
 
-        result = calclCompile(&obj, CAL_LANGUAGE_IL, ILSources[INDEX], info.target);
+        result = calclCompile(&obj, CAL_LANGUAGE_IL, ILPARAINFO::image, info.target);
         AMDSPL_CAL_RESULT_ERROR(result, "Failed to compile program\n");
 
         // Linking program
@@ -160,7 +159,7 @@ namespace amdspl
         AMDSPL_CAL_RESULT_ERROR(result, "Failed to get function handle\n");
 
         unsigned int i = 0;
-        for(i = 0; i < IlInfo::ConstArrayNum; ++i)
+        for(i = 0; i < ILPARAINFO::ConstArrayNum; ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -172,7 +171,7 @@ namespace amdspl
         }
 
         // Get constant name handle
-        if(IlInfo::ConstantNum > 0)
+        if(ILPARAINFO::ConstantNum > 0)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -184,7 +183,7 @@ namespace amdspl
         }
 
         // Get all the input name handles
-        for(unsigned int i = 0; i < IlInfo::InputNum; ++i)
+        for(unsigned int i = 0; i < ILPARAINFO::InputNum; ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -196,7 +195,7 @@ namespace amdspl
         }
 
         // Get all the output name handles
-        for(unsigned int i = 0; i < IlInfo::OutputNum; ++i)
+        for(unsigned int i = 0; i < ILPARAINFO::OutputNum; ++i)
         {
             CALname name;
             std::ostringstream tmpStr;
@@ -208,7 +207,7 @@ namespace amdspl
         }
 
         // Get name handle for scatter stream
-        if(IlInfo::ScatterNum > 0)
+        if(ILPARAINFO::ScatterNum > 0)
         {
             CALname name;
             result = calModuleGetName(&name, ctx, _module, "g[]");
@@ -227,9 +226,9 @@ namespace amdspl
     //! \param i constant index
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     CALname
-        CalProgram<INDEX>::getConstArrayName(unsigned short i) const
+        CalProgram<ILPARAINFO>::getConstArrayName(unsigned short i) const
     {
         return _constArrayNames[i];
     }
@@ -241,9 +240,9 @@ namespace amdspl
     //! \param i constant index
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     CALname
-        CalProgram<INDEX>::getConstName() const
+        CalProgram<ILPARAINFO>::getConstName() const
     {
         return _constNames;
     }
@@ -255,9 +254,9 @@ namespace amdspl
     //! \param i input index
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     CALname
-        CalProgram<INDEX>::getInputName(unsigned short i) const
+        CalProgram<ILPARAINFO>::getInputName(unsigned short i) const
     {
         return _inputNames[i];
     }
@@ -269,9 +268,9 @@ namespace amdspl
     //! \param i output indxex
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     CALname
-        CalProgram<INDEX>::getOutputName(unsigned short i) const
+        CalProgram<ILPARAINFO>::getOutputName(unsigned short i) const
     {
         return _outputNames[i];
     }
@@ -281,9 +280,9 @@ namespace amdspl
     //! \brief Get the scatter name handle
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
+    template<typename ILPARAINFO>
     CALname
-        CalProgram<INDEX>::getScatterName(void) const
+        CalProgram<ILPARAINFO>::getScatterName(void) const
     {
         return _scatterNames[i];
     }
@@ -293,8 +292,8 @@ namespace amdspl
     //! \brief Destructor
     //!
     ////////////////////////////////////////////////////////////////////////////////
-    template<unsigned int INDEX>
-    CalProgram<INDEX>::~CalProgram()
+    template<typename ILPARAINFO>
+    CalProgram<ILPARAINFO>::~CalProgram()
     {
         CALcontext ctx = _device->getContext();
 
