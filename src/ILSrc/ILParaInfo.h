@@ -32,7 +32,7 @@ namespace amdspl
             ScatterNum = SCATTER_NUM
         };
 
-        static const char* image;
+        static const char* Image;
     };
 }
 

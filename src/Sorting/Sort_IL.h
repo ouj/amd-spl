@@ -15,9 +15,9 @@ namespace amdspl
 
         typedef AppendILPara<ILParaEnd,     ILParaInfo<1, 1, 7>>::Result    T1; // BITONIC_SORT_AT_IL
         typedef AppendILPara<T1,            ILParaInfo<1, 1, 3>>::Result    T2; // BITONIC_SORT_IL
-        typedef T2                                                          SORT_ILINFO_LIST;
+        typedef T2                                                          SORT_ILPARA_LIST;
 
-        const char* ILParaAt<SORT_ILINFO_LIST, BITONIC_SORT_IL>::Result::image = 
+        const char* ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result::Image = 
             "il_ps_2_0\n"
             "dcl_output_generic o0\n"
             "dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
@@ -47,7 +47,7 @@ namespace amdspl
             "endmain\n"
             "end\n";
 
-        const char* ILParaAt<SORT_ILINFO_LIST, BITONIC_SORT_AT_IL>::Result::image = 
+        const char* ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result::Image = 
             "il_ps_2_0\n"
             "dcl_literal l0, 0x00000000, 0x00000000, 0x00000000, 0x00000000\n"
             "dcl_literal l1, 0x00000001, 0x00000001, 0x00000001, 0x00000001\n"

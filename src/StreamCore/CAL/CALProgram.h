@@ -141,7 +141,7 @@ namespace amdspl
         // Compiling program
         CALobject obj;
 
-        result = calclCompile(&obj, CAL_LANGUAGE_IL, ILPARAINFO::image, info.target);
+        result = calclCompile(&obj, CAL_LANGUAGE_IL, ILPARAINFO::Image, info.target);
         AMDSPL_CAL_RESULT_ERROR(result, "Failed to compile program\n");
 
         // Linking program
