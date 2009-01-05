@@ -2,7 +2,6 @@
 
 = Introduction =
 
-Add your content here.
-
+AMD SPL is a programming library based on AMD's stream computing technology. This library will provide common general purpose computing function such as sorting and prefix sum. This project aims to provide some common functions for GPGPU and makes AMD's GPGPU programming easier.
 
 = [AlgorithmList] =
