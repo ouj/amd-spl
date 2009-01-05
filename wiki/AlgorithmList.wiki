@@ -1,3 +1,4 @@
+#summary Algorithm List
 = Algorithm List =
 
 Here we list all algorithms which we plan to implement. If you are interested in anyone, welcome to join us.
