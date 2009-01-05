@@ -12,18 +12,32 @@
 #include <vector>
 #include <cmath>
 #include <cassert>
+#include <iostream>
+#include "Timer.h"
 
-#define PREINIT_PROGRAM(ID) {CalProgram<ILParaAt<SORT_ILINFO_LIST, ID>::Result>* program = \
-    CalProgram<ILParaAt<SORT_ILINFO_LIST, ID>::Result>::getInstance();\
-    assert(program); if (!program) return false;}
+#ifdef _AMDSPL_PERF_
+static CPerfCounter timer;
+#endif // _AMDSPL_PERF_
 
 namespace amdspl
 {
+    template<typename ILPARA_LIST, unsigned int ID>
+    bool preInitCalProgram(void)
+    {
+        CalProgram<ILParaAt<ILPARA_LIST, ID>::Result>* program = 
+            CalProgram<ILParaAt<ILPARA_LIST, ID>::Result>::getInstance();
+
+        assert(program); 
+        if (!program) 
+            return false;
+
+        return true;
+    };
+
     bool SPLSort::initModule(void)
     {
-        PREINIT_PROGRAM(BITONIC_SORT_IL);
-        PREINIT_PROGRAM(BITONIC_SORT_AT_IL);
-        return true;
+        return preInitCalProgram<SORT_ILPARA_LIST, BITONIC_SORT_IL>() && 
+            preInitCalProgram<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>();
     }
 
     bool SPLSort::bitonicSort(float *ptr, unsigned int _size)
@@ -73,10 +87,20 @@ namespace amdspl
 		CalBuffer *sorted1Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
 		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
 		CalConstBuffer<3> *constBuffer = bufferMgr->createConstBuffer<3>();
-        const CalProgram<ILParaAt<SORT_ILINFO_LIST, BITONIC_SORT_IL>::Result> *program = 
-            CalProgram<ILParaAt<SORT_ILINFO_LIST, BITONIC_SORT_IL>::Result>::getInstance();
+        const CalProgram<ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result> *program = 
+            CalProgram<ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result>::getInstance();
+        
+#ifdef _AMDSPL_PERF_
+        timer.Reset();
+        timer.Start();
+#endif // _AMDSPL_PERF_
+		
+        sorted1Buffer->readData(ptr);
 
-		sorted1Buffer->readData(ptr);
+#ifdef _AMDSPL_PERF_
+        timer.Stop();
+        std::cout << "Data Read Time: " << timer.GetElapsedTime() << std::endl;
+#endif // _AMDSPL_PERF_
 
 		CALname inputName = program->getInputName(0);
 		CALname outputName = program->getOutputName(0);
@@ -100,6 +124,11 @@ namespace amdspl
 		// Run the kernel on GPU
 		CALfunc func = program->getFunction();
 		CALdomain rect = {0, 0, _size, 1};
+
+#ifdef _AMDSPL_PERF_
+        timer.Reset();
+        timer.Start();
+#endif // _AMDSPL_PERF_
 
 		for(_stage = 1; _stage <= _lgArraySize; _stage++)
 		{
@@ -135,7 +164,15 @@ namespace amdspl
                 flip ^= 0x01; // XOR flip w/ 0b1 which flips the flip variable between 0 and 1
 			}
 		}
+#ifdef _AMDSPL_PERF_
+        timer.Stop();
+        std::cout << "Computing Time: " << timer.GetElapsedTime() << std::endl;
+#endif // _AMDSPL_PERF_
 
+#ifdef _AMDSPL_PERF_
+        timer.Reset();
+        timer.Start();
+#endif // _AMDSPL_PERF_
 		if (!flip)
 		{
 			sorted1Buffer->writeData(ptr);
@@ -144,6 +181,10 @@ namespace amdspl
 		{
 			sorted2Buffer->writeData(ptr);
 		}
+#ifdef _AMDSPL_PERF_
+        timer.Stop();
+        std::cout << "Data write time: " << timer.GetElapsedTime() << std::endl;
+#endif // _AMDSPL_PERF_
 
 		CalBuffer::destroyBuffer(constBuffer);
 		CalBuffer::destroyBuffer(sorted1Buffer);
@@ -174,8 +215,8 @@ namespace amdspl
 		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
 
 		CalConstBuffer<7> *constBuffer = bufferMgr->createConstBuffer<7>();
-        const CalProgram<ILParaAt<SORT_ILINFO_LIST, BITONIC_SORT_AT_IL>::Result> *program = 
-            CalProgram<ILParaAt<SORT_ILINFO_LIST, BITONIC_SORT_AT_IL>::Result>::getInstance();
+        const CalProgram<ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result> *program = 
+            CalProgram<ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result>::getInstance();
         
         uint4 bufferDim;
         bufferDim.x = _width;
@@ -190,7 +231,17 @@ namespace amdspl
         constBuffer->setConstant<5>(&strDim, CAL_FORMAT_INT_4);
         constBuffer->setConstant<6>(&bufferDim, CAL_FORMAT_INT_4);
 
+#ifdef _AMDSPL_PERF_
+        timer.Reset();
+        timer.Start();
+#endif // _AMDSPL_PERF_
+
 		sorted1Buffer->readData(ptr, _size);
+
+#ifdef _AMDSPL_PERF_
+        timer.Stop();
+        std::cout << "Data Read Time: " << timer.GetElapsedTime() << std::endl;
+#endif // _AMDSPL_PERF_
 
 		CALname inputName = program->getInputName(0);
 		CALname outputName = program->getOutputName(0);
@@ -218,6 +269,11 @@ namespace amdspl
         // Run the kernel on GPU
         CALfunc func = program->getFunction();
         CALdomain rect = {0, 0, _width, _height};
+
+#ifdef _AMDSPL_PERF_
+        timer.Reset();
+        timer.Start();
+#endif // _AMDSPL_PERF_
 
         for(_stage = 1; _stage <= _lgArraySize; _stage++)
         {
@@ -253,6 +309,11 @@ namespace amdspl
             }
         }
 
+#ifdef _AMDSPL_PERF_
+        timer.Stop();
+        std::cout << "Computing Time: " << timer.GetElapsedTime() << std::endl;
+#endif // _AMDSPL_PERF_
+
         if (!flip)
         {
             sorted1Buffer->writeData(ptr, _size);
@@ -261,6 +322,11 @@ namespace amdspl
         {
             sorted2Buffer->writeData(ptr, _size);
         }
+
+#ifdef _AMDSPL_PERF_
+        timer.Stop();
+        std::cout << "Data write time: " << timer.GetElapsedTime() << std::endl;
+#endif // _AMDSPL_PERF_
 
 		CalBuffer::destroyBuffer(constBuffer);
 		CalBuffer::destroyBuffer(sorted1Buffer);

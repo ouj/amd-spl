@@ -39,8 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc"
-				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc;..\..\src\Common"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -115,8 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc"
-				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc;..\..\src\Common"
 				RuntimeLibrary="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -361,6 +359,22 @@
 		<Filter
 			Name="Common"
 			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\src\Common\Timer.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\src\Common\Timer.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\..\src\amdspl.cpp"
