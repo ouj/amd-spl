@@ -11,7 +11,7 @@ Here we list all algorithms which we plan to implement. If you are interested in
 = Non-Numeric =
 
   # Sort
-    * BinorticSort
-  # Prefix Sum
-  # Reduction
-  # Scan
+    * [BinorticSort]
+  # [PrefixSum]
+  # [Reduction]
+  # [Scan]
