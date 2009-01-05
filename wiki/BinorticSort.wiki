@@ -1,3 +1,4 @@
+#summary BinorticSort Implementation
 = BinorticSort =
 
 Add your content here.
