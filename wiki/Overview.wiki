@@ -16,6 +16,9 @@ This library itself is implemented in standard C++ and AMD IL.
   * C/C++
     Any C/C++ code can link to it freely.
   
+  * C#
+    Planned.
+
   * Java
     Planned.
 
