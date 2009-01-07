@@ -10,16 +10,16 @@ AMD SPL is a programming library based on AMD's stream computing technology. Thi
 
 This library itself is implemented in standard C++ and AMD IL. 
 
-  *OpenCL*
+  * OpenCL
     [http://www.khronos.org/opencl/ OpenCL] is a new industry standard for parallel computing. AMD OpenCL implementation will be released in 2009. OpenCL binding will be ready after that.
 
-  *C/C++*
+  * C/C++
     Any C/C++ code can link to it freely.
   
-  *C#*
+  * C#
     Planned.
 
-  *Java*
+  * Java
     Planned.
 
 == [AlgorithmList Algorithm List] ==
