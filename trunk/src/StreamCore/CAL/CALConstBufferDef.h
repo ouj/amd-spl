@@ -3,6 +3,33 @@
 
 namespace amdspl
 {
+
+    template<unsigned int CONSTNUM>
+    CalConstBuffer<CONSTNUM>* 
+        CalConstBuffer<CONSTNUM>::createConstBuffer()
+    {
+        CalDevice* device = CalRuntime::getInstance()->getDevice();
+        CALdeviceinfo info = device->getInfo();
+        if(CONSTNUM > info.maxResource1DWidth)
+        {
+            return NULL;
+        }
+
+        unsigned int dimensions[] = {CONSTNUM};
+        CalConstBuffer<CONSTNUM>* tmpBuffer = NULL;
+
+        tmpBuffer = new CalConstBuffer<CONSTNUM>(device);
+        // Try again to allocate resource after deallocating all the resources
+        if(!tmpBuffer->initialize())
+        {
+            SET_ERROR("Failed to create host cal resource for constant buffer\n");
+            delete tmpBuffer;
+
+            return NULL;
+        }
+        return tmpBuffer;
+    }
+
 	template <unsigned int CONSTNUM>
 	CalConstBuffer<CONSTNUM>::CalConstBuffer(CalDevice* device) : 
 	CalBuffer(1, (unsigned int*)device, CAL_FORMAT_FLOAT_4, BUFFER_HOST, 0, device)
@@ -19,11 +46,11 @@ namespace amdspl
 	//!
 	////////////////////////////////////////////////////////////////////////////////
 	template <unsigned int CONSTNUM>
-	template <unsigned int INDEX>
+	template <unsigned int INDEX, typename T>
 	void
-		CalConstBuffer<CONSTNUM>::setConstant(void* data, CALformat format)
+		CalConstBuffer<CONSTNUM>::setConstant(T* data)
 	{
-		unsigned short bytes = amdspl::utils::getElementBytes(format);
+		unsigned short bytes = sizeof(T);
 		memcpy(&_data[INDEX], data, bytes);
 	}
 

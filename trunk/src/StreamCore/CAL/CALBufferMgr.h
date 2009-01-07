@@ -89,30 +89,5 @@ namespace amdspl
         //! \brief constant buffers being used in the the same kernel
         std::vector<CalConstArrayBuffer*> _usedConstBuffers;
     };
-
-	template<unsigned int CONSTNUM>
-	CalConstBuffer<CONSTNUM>* 
-		CalBufferMgr::createConstBuffer()
-	{
-		CALdeviceinfo info = _device->getInfo();
-		if(CONSTNUM > info.maxResource1DWidth)
-		{
-			return NULL;
-		}
-
-		unsigned int dimensions[] = {CONSTNUM};
-		CalConstBuffer<CONSTNUM>* tmpBuffer = NULL;
-
-		tmpBuffer = new CalConstBuffer<CONSTNUM>(_device);
-		// Try again to allocate resource after deallocating all the resources
-		if(!tmpBuffer->initialize())
-		{
-			SET_ERROR("Failed to create host cal resource for constant buffer\n");
-			delete tmpBuffer;
-
-			return NULL;
-		}
-		return tmpBuffer;
-	}
 }
 #endif //_AMDSPL_CALBUFFERMGR_H_

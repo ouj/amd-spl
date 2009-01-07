@@ -16,7 +16,8 @@ namespace amdspl
     //! 
     ////////////////////////////////////////////////////////////////////////////////
 
-    template<unsigned int INPUT_NUM = 0, 
+    template<unsigned int ID,
+        unsigned int INPUT_NUM = 0, 
         unsigned int OUTPUT_NUM = 0, 
         unsigned int CONST_NUM = 0,
         unsigned int CONST_ARRAY_NUM = 0, 
