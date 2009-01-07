@@ -12,14 +12,16 @@ namespace amdspl
 	template <unsigned int CONSTNUM>
     class CalConstBuffer : public CalBuffer
     {
-    public:
-
+    protected:
         CalConstBuffer(CalDevice* device);
+
+    public:
+        static CalConstBuffer<CONSTNUM>* createConstBuffer();
 
         ~CalConstBuffer(void);
 
-		template <unsigned int INDEX>
-        void setConstant(void* data, CALformat format);
+		template <unsigned int INDEX, typename T>
+        void setConstant(T* data);
 
         bool setDataToBuffer();
     private:
