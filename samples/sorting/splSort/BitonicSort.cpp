@@ -109,6 +109,15 @@ BitonicSort::verifyResults()
     std::cout << "Done\n";
 
     //res += Util::compareBuffers<float>(_array[0], _array[1], Height * Width);
+    for (unsigned int i = 0; i < _array1.size(); i++)
+    {
+        if (_array1[i] != _array2[i])
+        {
+            res = 1;
+            std::cout <<  "Sorting Failed at " << i << "\n";
+        }
+    }
+
     if (res)
     {
         std::cout << _name << ": Failed!\n\n";
@@ -136,18 +145,19 @@ BitonicSort::comparePerformance()
     
     gpuTime = timer->GetElapsedTime();
     timer->Reset();
-    timer->Start();
-    
     std::cout << "-p Compare performance with CPU.\n";
-	
+
+    vector<float> tmpArray(_array2.begin(), _array2.end());
     // Record CPU Total time
-    //for(i = 0; i < info->Iterations; i ++)
-    //{
-        sort(_array2.begin(), _array2.end());
-    //}
-	
-    timer->Stop();
-    cpuTime = timer->GetElapsedTime() * info->Iterations;
+    for(i = 0; i < info->Iterations; i ++)
+    {
+        timer->Start();
+
+        sort(tmpArray.begin(), tmpArray.end());
+
+        timer->Stop();
+    }
+    cpuTime = timer->GetElapsedTime();
 
 	// Print CPU timing and speedup
 	std::cout << std::setw(8) << "Width" << std::setw(8) << "Height"

@@ -15,6 +15,8 @@
 #include <iostream>
 #include "Timer.h"
 
+#define _AMDSPL_PERF_
+
 #ifdef _AMDSPL_PERF_
 static CPerfCounter timer;
 #endif // _AMDSPL_PERF_
@@ -138,28 +140,43 @@ namespace amdspl
 
 			for (step = 1; step <= _stage; ++step)
 			{
-				// offset = (stageWidth/2, stageWidth/4, ... , 2, 1)
+                // offset = (stageWidth/2, stageWidth/4, ... , 2, 1)
                 float offset = (float)pow(2.0f, (int)(_stage - step));
                 float offset_2 = offset * 2.0f;
 
-                result = calCtxSetMem(ctx, inputName, mem1);
-                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
-                result = calCtxSetMem(ctx, outputName, mem2);
-                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                if (!flip)
+                {
+                    result = calCtxSetMem(ctx, inputName, mem1);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                    result = calCtxSetMem(ctx, outputName, mem2);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                constBuffer->setConstant<0>(&segWidth, CAL_FORMAT_FLOAT_1);
-                constBuffer->setConstant<1>(&offset, CAL_FORMAT_FLOAT_1);
-                constBuffer->setConstant<2>(&offset_2, CAL_FORMAT_FLOAT_1);
-                constBuffer->setDataToBuffer();
+                    constBuffer->setConstant<0>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<1>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<2>(&offset_2, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setDataToBuffer();
 
-                // Run the kernel on GPU
-                result = calCtxRunProgram(&execEvent, ctx, func, &rect);
-                while(calCtxIsEventDone(ctx, execEvent));
+                    // Run the kernel on GPU
+                    result = calCtxRunProgram(&execEvent, ctx, func, &rect);
+                    while(calCtxIsEventDone(ctx, execEvent));
 
+                }
+                else
+                {
+                    result = calCtxSetMem(ctx, inputName, mem2);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                    result = calCtxSetMem(ctx, outputName, mem1);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                CALmem tempMem = mem1;
-                mem2 = mem1;
-                mem1 = tempMem;
+                    constBuffer->setConstant<0>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<1>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<2>(&offset_2, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setDataToBuffer();
+
+                    // Run the kernel on GPU
+                    result = calCtxRunProgram(&execEvent, ctx, func, &rect);
+                    while(calCtxIsEventDone(ctx, execEvent));
+                }
 
                 flip ^= 0x01; // XOR flip w/ 0b1 which flips the flip variable between 0 and 1
 			}
@@ -287,23 +304,39 @@ namespace amdspl
                 float offset = (float)pow(2.0f, (int)(_stage - step));
                 float offset_2 = offset * 2.0f;
 
-                result = calCtxSetMem(ctx, inputName, mem1);
-                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
-                result = calCtxSetMem(ctx, outputName, mem2);
-                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                if (!flip)
+                {
+                    result = calCtxSetMem(ctx, inputName, mem1);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                    result = calCtxSetMem(ctx, outputName, mem2);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                constBuffer->setConstant<2>(&segWidth, CAL_FORMAT_FLOAT_1);
-                constBuffer->setConstant<3>(&offset, CAL_FORMAT_FLOAT_1);
-                constBuffer->setConstant<4>(&offset_2, CAL_FORMAT_FLOAT_1);
-                constBuffer->setDataToBuffer();
+                    constBuffer->setConstant<2>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<3>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<4>(&offset_2, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setDataToBuffer();
 
-                // Run the kernel on GPU
-                result = calCtxRunProgram(&execEvent, ctx, func, &rect);
-                while(calCtxIsEventDone(ctx, execEvent));
+                    // Run the kernel on GPU
+                    result = calCtxRunProgram(&execEvent, ctx, func, &rect);
+                    while(calCtxIsEventDone(ctx, execEvent));
 
-                CALmem tempMem = mem1;
-                mem2 = mem1;
-                mem1 = tempMem;
+                }
+                else
+                {
+                    result = calCtxSetMem(ctx, inputName, mem2);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                    result = calCtxSetMem(ctx, outputName, mem1);
+                    AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+
+                    constBuffer->setConstant<2>(&segWidth, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<3>(&offset, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setConstant<4>(&offset_2, CAL_FORMAT_FLOAT_1);
+                    constBuffer->setDataToBuffer();
+
+                    // Run the kernel on GPU
+                    result = calCtxRunProgram(&execEvent, ctx, func, &rect);
+                    while(calCtxIsEventDone(ctx, execEvent));
+                }
 
                 flip ^= 0x01; // XOR flip w/ 0b1 which flips the flip variable between 0 and 1
             }
@@ -325,7 +358,7 @@ namespace amdspl
 
 #ifdef _AMDSPL_PERF_
         timer.Stop();
-        std::cout << "Data write time: " << timer.GetElapsedTime() << std::endl;
+        std::cout << "Data Write time: " << timer.GetElapsedTime() << std::endl;
 #endif // _AMDSPL_PERF_
 
 		CalBuffer::destroyBuffer(constBuffer);
