@@ -39,6 +39,7 @@ namespace amdspl
 
         static CalProgram<ILPARAINFO>* getInstance(void);
 
+        CALresult executeProgram(const CALdomain &rect);
         CALname getConstArrayName(unsigned short i) const;
         CALname getConstName(void) const;
         CALname getInputName(unsigned short i) const;
@@ -50,13 +51,14 @@ namespace amdspl
 
     protected:
 
-        //! \brief contains Device information for Loading pass on a specific device
+        //! \brief Contains Device information for loading program on a specific device
         CalDevice* _device;
 
     private:
+        //! \brief Singleton static member of CalProgram.
         static CalProgram*  _program;
 
-        //! \brief Contins CAL IL source string;
+        //! \brief Contains CAL IL source string;
         const char*          _image;     
 
         //! \brief Contains CAL specific constant array buffer name handles
@@ -80,13 +82,16 @@ namespace amdspl
         //! \brief CAL module handle
         CALmodule _module;
 
+        //! \brief execution event of the program;
+        CALevent _execEvent;
+
     };
 
-    // Static member of program
+    //! \brief Static member of CALProgram, to be used as the singleton
     template<typename ILPARAINFO>
     CalProgram<ILPARAINFO>* CalProgram<ILPARAINFO>::_program = NULL;
 
-    // Singleton
+    //! \brief Singleton
     template<typename ILPARAINFO>
     CalProgram<ILPARAINFO>* CalProgram<ILPARAINFO>::getInstance(void)
     {
@@ -103,6 +108,14 @@ namespace amdspl
         return _program;
     }
 
+    template<typename ILPARAINFO>
+    CALresult CalProgram<ILPARAINFO>::executeProgram(const CALdomain &rect)
+    {
+        CALcontext ctx = _device->getContext();
+        CALfunc func = getFunction();
+        // Run the kernel on GPU
+        return calCtxRunProgram(&_execEvent, ctx, func, &rect);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////
     //!
