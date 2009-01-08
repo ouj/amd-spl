@@ -2,7 +2,6 @@ il_ps_2_0
 dcl_output_generic o0
 dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
 dcl_input_position_interp(linear_noperspective) v0.xy__
-dcl_literal l0, 0x3F000000, 0x40000000, 0x00000000, 0x3F800000
 dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF
 dcl_cb cb0[4]
 
@@ -11,7 +10,7 @@ mov r1.xy__, v0
 sample_resource(0)_sampler(0) r11, r1.x000
 
 ;idx1 mod offset_2
-ftoi r1, r1
+ftoi r1.x___, r1.x000
 iadd r10.x___, cb0[2].x000, l1.x000
 and r3.x___, r1.x000, r10.x000
 
@@ -23,7 +22,6 @@ cmov_logical r3.x___, r3.x000, l1.y000, l1.x000
 itof r4.x___, r1.x000
 itof r5.x___, cb0[0].x000
 div_zeroop(infinity) r4.x___, r4.x000, r5.x000
-round_neginf r4.x___, r4.x000
 ftoi r4.x___, r4.x000
 and r4.x___, r4.x000, l1.y000
 

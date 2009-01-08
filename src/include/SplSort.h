@@ -12,8 +12,8 @@ namespace amdspl
     class SPL_EXPORT SPLSort
     {
     public:
-        inline static bool initModule(void);
-        inline static bool bitonicSort(float *ptr, unsigned int _size);
+        static bool initModule(void);
+        static bool bitonicSort(float *ptr, unsigned int _size);
     };
 }
 
