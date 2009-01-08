@@ -34,9 +34,11 @@ namespace amdspl
     template<typename ILPARAINFO>
     class CalProgram
     {
-    public:
+    protected:
         CalProgram(CalDevice* device);
+    public:
         bool initialize();
+        void cleanup();
 
         static CalProgram<ILPARAINFO>* getInstance(void);
 

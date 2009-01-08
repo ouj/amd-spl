@@ -42,27 +42,6 @@ namespace amdspl
     };
 
 
-    template <class TList, unsigned int index,
-        typename DefaultType = ILParaEnd>
-    struct ILParaAt 
-    {
-        typedef DefaultType Result;
-    };
-
-    template <class Head, class Tail, typename DefaultType>
-    struct ILParaAt<ILPARA_LIST<Head, Tail>, 0, DefaultType>
-    {
-        typedef Head Result;
-    };
-
-    template <class Head, class Tail, unsigned int i, typename DefaultType>
-    struct ILParaAt<ILPARA_LIST<Head, Tail>, i, DefaultType>
-    {
-        typedef typename 
-            ILParaAt<Tail, i - 1, DefaultType>::Result Result;
-    };
-
-
     template <typename T, unsigned int id> struct ILParaByID;
 
     template <unsigned int id>

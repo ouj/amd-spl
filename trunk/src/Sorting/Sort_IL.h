@@ -8,23 +8,35 @@ namespace amdspl
 {
         enum SORT_ILPROGRAMS_INDEX
         {
-            BITONIC_SORT_IL = 0,
+            BITONIC_INIT_IL,
+            BITONIC_SORT_IL,
             BITONIC_SORT_AT_IL
         };
 
         typedef AppendILPara<ILParaEnd,     ILParaInfo<BITONIC_SORT_IL, 1, 1, 3>>::Result       T1; // BITONIC_SORT_IL
         typedef AppendILPara<T1,            ILParaInfo<BITONIC_SORT_AT_IL, 1, 1, 7>>::Result    T2; // BITONIC_SORT_AT_IL
-        typedef T2                                                                              SORT_ILPARA_LIST;
+        typedef AppendILPara<T2,            ILParaInfo<BITONIC_INIT_IL, 0, 1, 1>>::Result    T3; // BITONIC_SORT_AT_IL
+        typedef T3                                                                              SORT_ILPARA_LIST;
 
-        const char* ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result::Image = 
+        const char* ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result::Image = 
             "il_ps_2_0\n"
             "dcl_output_generic o0\n"
-            "dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
+            "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
+            "dcl_cb cb0[1]\n"
+            "mov o0, cb0[0]\n"
+            "endmain\n"
+            "end\n";
+
+        const char* ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result::Image = 
+            "il_ps_2_0\n"
+            "dcl_output_generic o0\n"
+            "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
             "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
             "dcl_literal l0, 0x3F000000, 0x40000000, 0x00000000, 0x3F800000\n"
+            "dcl_literal l1, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF\n"
             "dcl_cb cb0[3]\n"
             "mov r1.xy__, v0\n"
-            "sample_resource(0)_sampler(0) r11, r1.xy00\n"
+            "sample_resource(0)_sampler(0) r11, r1.x000\n"
             "ftoi r1, r1\n"
             "itof r1.x___, r1.x000\n"
             "mod r3.x___, r1.x000, cb0[2].x000\n"
@@ -37,7 +49,7 @@ namespace amdspl
             "cmov_logical r4.x___, r4.x000, l0.w000, l0.w000_neg(xyzw)\n"
             "mul_ieee r2.x___, r3.x000, cb0[1].x000\n"
             "add r2.x___, r2.x000, r1.x000\n"
-            "sample_resource(0)_sampler(0) r22, r2.xy00\n"
+            "sample_resource(0)_sampler(0) r22, r2.x000\n"
             "lt r100, r11, r22\n"
             "cmov_logical r5, r100, r11, r22\n"
             "cmov_logical r6, r100, r22, r11\n"
@@ -46,7 +58,7 @@ namespace amdspl
             "endmain\n"
             "end\n";
 
-        const char* ILParaAt<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result::Image = 
+        const char* ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result::Image = 
             "il_ps_2_0\n"
             "dcl_literal l0,0x00000000,0x00000000,0x00000000,0x00000000\n"
             "dcl_literal l1,0x00000001,0x00000001,0x00000001,0x00000001\n"
