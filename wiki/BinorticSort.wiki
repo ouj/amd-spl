@@ -1,5 +1,5 @@
-#summary BinorticSort Implementation
-= BinorticSort =
+#summary BitonicSort Implementation
+= BitonicSort =
 
 Add your content here.
 
