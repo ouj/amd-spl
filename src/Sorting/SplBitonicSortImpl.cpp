@@ -117,13 +117,13 @@ namespace amdspl
         {
             unsigned int step = 0;
             // Width of each sorted segment to be sorted in parallel (2, 4, 8, ...)
-            float segWidth = (float)pow(2.0f, (int)_stage);
+            unsigned int segWidth = 1 << _stage;
 
             for (step = 1; step <= _stage; ++step)
             {
                 // offset = (stageWidth/2, stageWidth/4, ... , 2, 1)
-                float offset = (float)pow(2.0f, (int)(_stage - step));
-                float offset_2 = offset * 2.0f;
+                unsigned int offset = 1 << (_stage - step);
+                unsigned int offset_2 = offset << 1;
 
                 if (!flip)
                 {
@@ -139,6 +139,9 @@ namespace amdspl
                     // Run the kernel on GPU
                     program->executeProgram(rect);
                     program->waitDoneEvent();
+
+                    std::vector<float> vec(bufferSize);
+                    sorted2Buffer->writeData(&vec[0], _size);
                 }
                 else
                 {

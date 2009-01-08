@@ -13,9 +13,6 @@
 #pragma warning (disable : 4251)
 #endif
 
-#include "ErrorCodes.h"
-#include "Formats.h"
-
 #include <cstdio>
 #include <vector>
 
@@ -58,7 +55,6 @@ namespace amdspl
         CalProgramMgr*          _programMgr;
 
     private:
-        friend BRerror          getError();
         friend const char*      getErrorLog();
 
         friend void             cleanup();

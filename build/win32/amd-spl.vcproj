@@ -268,14 +268,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\Utils\ErrorCodes.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\StreamCore\Utils\Formats.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\StreamCore\Utils\Utility.h"
 						>
 					</File>
