@@ -1,4 +1,4 @@
-#Bitonic Sort
+#Bitonic Sort one of the sorting algorithm in amd-spl project
 
 = Introduction =
 
