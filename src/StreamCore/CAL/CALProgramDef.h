@@ -34,7 +34,7 @@ namespace amdspl
         // Run the kernel on GPU
         AMDSPL_CAL_RESULT_ERROR(calCtxRunProgram(&_execEvent, ctx, func, &rect), "Error to run program");
 
-        calCtxIsEventDone(ctx, _execEvent);
+        CALresult res = calCtxIsEventDone(ctx, _execEvent);
         return true;
     }
 
@@ -161,12 +161,22 @@ namespace amdspl
     }
 
     template<typename ILPARAINFO>
+    void CalProgram<ILPARAINFO>::cleanup()
+    {
+        SAFE_DELETE(_program);
+    }
+
+    template<typename ILPARAINFO>
     CalConstBuffer<ILPARAINFO::ConstantNum>* 
         CalProgram<ILPARAINFO>::getConstantBuffer(void)
     {
         if (_constBuffer == NULL)
         {
+            CALcontext ctx = _device->getContext();
             _constBuffer = CalConstBuffer<ILPARAINFO::ConstantNum>::createConstBuffer();
+            CALname constName = getConstName();
+            CALmem constMem = _constBuffer->getMemHandle();
+            CALresult result = calCtxSetMem(ctx, constName, constMem);
         }
         return _constBuffer;
     }

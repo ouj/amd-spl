@@ -27,7 +27,7 @@ namespace amdspl
     private:
         //! \brief CAL creates a buffer of multiple constants. 
         // _data points to the corresponding CPU array.
-        float4 _data[CONSTNUM];
+        float4 _data[CONSTNUM + 1];
     };
 }
 

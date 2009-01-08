@@ -14,6 +14,7 @@
 #include <cassert>
 #include <iostream>
 #include "Timer.h"
+#include <float.h>
 
 #define _AMDSPL_PERF_
 
@@ -26,8 +27,8 @@ namespace amdspl
     template<typename ILPARA_LIST, unsigned int ID>
     bool preInitCalProgram(void)
     {
-        CalProgram<ILParaAt<ILPARA_LIST, ID>::Result>* program = 
-            CalProgram<ILParaAt<ILPARA_LIST, ID>::Result>::getInstance();
+        CalProgram<ILParaByID<ILPARA_LIST, ID>::Result>* program = 
+            CalProgram<ILParaByID<ILPARA_LIST, ID>::Result>::getInstance();
 
         assert(program); 
         if (!program) 
@@ -76,19 +77,42 @@ namespace amdspl
 		unsigned int _lgArraySize = 0;
 		unsigned int _stage;
 
-		for (_stage = _size >> 1; _stage; _lgArraySize++)
+        uint bufferSize = bufferSize = utils::ceilPow(_size);
+		for (; bufferSize >> _lgArraySize; _lgArraySize++)
 		{
-			_stage >>= 1;
+			;
 		}
+        _lgArraySize--;
 
 		CalBufferMgr* bufferMgr = CalRuntime::getInstance()->getBufferMgr();
 		CalDevice* device = CalRuntime::getInstance()->getDevice();
 		CALcontext ctx = device->getContext();
 
-		uint InputDim[] = {_size};
+		uint InputDim[] = {bufferSize};
 		CalBuffer *sorted1Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
 		CalBuffer *sorted2Buffer = CalBuffer::createBuffer(1, InputDim, CAL_FORMAT_FLOAT_1);
         
+        if ( bufferSize != _size)
+        {
+            //When the buffer size is smaller than the real size, initiallization is needed.
+            CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result> *program = 
+                CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result>::getInstance();
+            CalConstBuffer<1> *constBuffer = program->getConstantBuffer();
+            const float minFloat = FLT_MAX;
+            constBuffer->setConstant<0>(&minFloat);
+
+            CALname outputName = program->getOutputName(0);
+            CALmem mem = sorted1Buffer->getMemHandle();
+
+            result = calCtxSetMem(ctx, outputName, mem);
+            AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+
+            CALdomain rect = {0, 0, bufferSize, 1};
+            program->executeProgram(rect);
+            program->waitDoneEvent();
+            program->cleanup();
+        }
+
         CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result> *program = 
             CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result>::getInstance();
         CalConstBuffer<3> *constBuffer = program->getConstantBuffer();
@@ -98,7 +122,7 @@ namespace amdspl
         timer.Start();
 #endif // _AMDSPL_PERF_
 		
-        sorted1Buffer->readData(ptr);
+        sorted1Buffer->readData(ptr, _size);
 
 #ifdef _AMDSPL_PERF_
         timer.Stop();
@@ -116,7 +140,7 @@ namespace amdspl
 		result = calCtxSetMem(ctx, constName, constMem);
 		AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind constant resource\n");
 
-		CALdomain rect = {0, 0, _size, 1};
+		CALdomain rect = {0, 0, bufferSize, 1};
 
 #ifdef _AMDSPL_PERF_
         timer.Reset();
@@ -177,11 +201,11 @@ namespace amdspl
 #endif // _AMDSPL_PERF_
 		if (!flip)
 		{
-			sorted1Buffer->writeData(ptr);
+			sorted1Buffer->writeData(ptr, _size);
 		}
 		else
 		{
-			sorted2Buffer->writeData(ptr);
+			sorted2Buffer->writeData(ptr, _size);
 		}
 #ifdef _AMDSPL_PERF_
         timer.Stop();
