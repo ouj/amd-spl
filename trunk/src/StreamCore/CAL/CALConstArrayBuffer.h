@@ -1,7 +1,6 @@
 #ifndef _AMDSPL_CALCONSARRAYTBUFFER_H_
 #define _AMDSPL_CALCONSARRAYTBUFFER_H_
 
-#include "Formats.h"
 #include "CALBuffer.h"
 namespace amdspl
 {
