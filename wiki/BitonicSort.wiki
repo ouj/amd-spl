@@ -1,4 +1,4 @@
-#summary BitonicSort
+#summary BitonicSort Implementation
 
 = Introduction =
 
