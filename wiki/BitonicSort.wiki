@@ -1,6 +1,4 @@
-#Bitonic Sort is a sorting algorithm used in parallel computing. It is first proposed to as a GPGPU sorting algorithm by XXX in 19XX. 
-Bitonic Sort does not depend on any advanced GPU features, such as scatter write, atomic operation and share memory, which makes it suitalbe to be implemented on all kinds of programmable GPUs. 
-However, because it does not take advantages of the new GPU feature, its performance is not satisfatory.  
+#Bitonic Sort
 
 = Introduction =
 
