@@ -57,11 +57,6 @@ BitonicSort::fillInputBuffer()
 
     copy(_array1.begin(), _array1.end(), _array2.begin());
     copy(_array1.begin(), _array1.end(), _array3.begin());
-
-    for (_stage = Length >> 1; _stage; _lgArraySize++)
-    {
-        _stage >>= 1;
-    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -106,14 +101,14 @@ BitonicSort::verifyResults()
     std::cout<<"-e Verify correct output.\n";
     std::cout<<"Performing Bitonic Sort on CPU ... ";
 
-    sort(_array2.begin(), _array2.end());
+    sort(_array3.begin(), _array3.end());
     
     std::cout << "Done\n";
 
     //res += Util::compareBuffers<float>(_array[0], _array[1], Height * Width);
     for (unsigned int i = 0; i < _array1.size(); i++)
     {
-        if (_array1[i] != _array2[i])
+        if (_array1[i] != _array3[i])
         {
             res = 1;
             assert(false);
@@ -147,17 +142,16 @@ BitonicSort::comparePerformance()
 	double gpuTime = 0.0;
     
     gpuTime = timer->GetElapsedTime();
+
     timer->Reset();
     std::cout << "-p Compare performance with CPU.\n";
 
-    vector<float> tmpArray(_array2.begin(), _array2.end());
     // Record CPU Total time
     for(i = 0; i < info->Iterations; i ++)
     {
+        vector<float> tmpArray(_array2.begin(), _array2.end());
         timer->Start();
-
         sort(tmpArray.begin(), tmpArray.end());
-
         timer->Stop();
     }
     cpuTime = timer->GetElapsedTime();
@@ -197,15 +191,15 @@ BitonicSort::run()
 
         ::amdspl::SPLSort::initModule();
 
-        timer->Start();
+        timer->Reset();
         // Record CPU Total time
         for(i = 0; i < info->Iterations; i ++)
         {
+            timer->Start();
             ::amdspl::SPLSort::bitonicSort(&_array1[0], _array1.size());
+            timer->Stop();
         }
-
-
-        timer->Stop();
+        
     }
 
     return retVal;

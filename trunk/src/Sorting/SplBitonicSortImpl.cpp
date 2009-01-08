@@ -18,7 +18,6 @@
 #include <float.h>
 #include "SplBitonicSortImpl.h"
 
-#define _AMDSPL_PERF_
 
 namespace amdspl
 {
@@ -139,9 +138,6 @@ namespace amdspl
                     // Run the kernel on GPU
                     program->executeProgram(rect);
                     program->waitDoneEvent();
-
-                    std::vector<float> vec(bufferSize);
-                    sorted2Buffer->writeData(&vec[0], _size);
                 }
                 else
                 {
@@ -187,6 +183,12 @@ namespace amdspl
         return true;
     }
 
+
+    //////////////////////////////////////////////////////////////////////////
+    //!                                                                     
+    //! \brief bitonicSort with address translation.
+    //!
+    //////////////////////////////////////////////////////////////////////////
     bool SplBitonicSortImpl::bitioncSortATImpl(float* ptr, unsigned int _size)
     {
         CALresult result = CAL_RESULT_OK;;
@@ -196,50 +198,61 @@ namespace amdspl
         unsigned int _lgArraySize = 0;
         unsigned int _stage;
 
+        uint bufferSize = bufferSize = utils::ceilPow(_size);
+        for (; bufferSize >> _lgArraySize; _lgArraySize++)
+        {
+            ;
+        }
+        _lgArraySize--;
+
+
         CalBufferMgr* bufferMgr = CalRuntime::getInstance()->getBufferMgr();
         CalDevice* device = CalRuntime::getInstance()->getDevice();
         CALcontext ctx = device->getContext();
         CALdeviceinfo info = device->getInfo();
 
-        unsigned int _width = 
-            static_cast<unsigned int>(sqrt(static_cast<double>(_size)));
-        if (_width > info.maxResource1DWidth)
-        {
-            return false;
-        }
-        unsigned int _height = 
-            static_cast<unsigned int>(ceil(static_cast<double>(_size) / _width));
+        unsigned int _width = info.maxResource1DWidth;
+        unsigned int _height = static_cast<unsigned int>(ceil(static_cast<double>(bufferSize) / _width));
         if (_height > info.maxResource2DHeight)
         {
             return false;
-        }
-
-        for (_stage = _size >> 1; _stage; _lgArraySize++)
-        {
-            _stage >>= 1;
         }
 
         uint InputDim[] = {_width, _height};
         CalBuffer *sorted1Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
         CalBuffer *sorted2Buffer = CalBuffer::createBuffer(2, InputDim, CAL_FORMAT_FLOAT_1);
 
+        if ( bufferSize != _size)
+        {
+            //When the buffer size is smaller than the real size, initiallization is needed.
+            CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result> *program = 
+                CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result>::getInstance();
+            CalConstBuffer<1> *constBuffer = program->getConstantBuffer();
+            const float minFloat = FLT_MAX;
+            constBuffer->setConstant<0>(&minFloat);
+
+            CALname outputName = program->getOutputName(0);
+            CALmem mem = sorted1Buffer->getMemHandle();
+
+            result = calCtxSetMem(ctx, outputName, mem);
+            AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+
+            CALdomain rect = {0, 0, _width, _height};
+            program->executeProgram(rect);
+            program->waitDoneEvent();
+            program->cleanup();
+        }
+
         CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result> *program = 
             CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result>::getInstance();
 
-        CalConstBuffer<7> *constBuffer = program->getConstantBuffer();
+        CalConstBuffer<4> *constBuffer = program->getConstantBuffer();
 
         uint4 bufferDim;
         bufferDim.x = _width;
         bufferDim.y = _height;
 
-        uint4 strDim;
-        strDim.x = _size;
-        strDim.y = 1;
-
-        constBuffer->setConstant<0>(&strDim);
-        constBuffer->setConstant<1>(&bufferDim);
-        constBuffer->setConstant<5>(&strDim);
-        constBuffer->setConstant<6>(&bufferDim);
+        constBuffer->setConstant<3>(&bufferDim);
 
 #ifdef _AMDSPL_PERF_
         timer.Reset();
@@ -274,13 +287,13 @@ namespace amdspl
         {
             unsigned int step = 0;
             // Width of each sorted segment to be sorted in parallel (2, 4, 8, ...)
-            float segWidth = (float)pow(2.0f, (int)_stage);
+            unsigned int segWidth = 1 << _stage;
 
             for (step = 1; step <= _stage; ++step)
             {
                 // offset = (stageWidth/2, stageWidth/4, ... , 2, 1)
-                float offset = (float)pow(2.0f, (int)(_stage - step));
-                float offset_2 = offset * 2.0f;
+                unsigned int offset = 1 << (_stage - step);
+                unsigned int offset_2 = offset << 1;
 
                 if (!flip)
                 {
@@ -289,9 +302,9 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem2);
                     AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant<2>(&segWidth);
-                    constBuffer->setConstant<3>(&offset);
-                    constBuffer->setConstant<4>(&offset_2);
+                    constBuffer->setConstant<0>(&segWidth);
+                    constBuffer->setConstant<1>(&offset);
+                    constBuffer->setConstant<2>(&offset_2);
 
                     // Run the kernel on GPU
                     program->executeProgram(rect);
@@ -304,9 +317,9 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem1);
                     AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant<2>(&segWidth);
-                    constBuffer->setConstant<3>(&offset);
-                    constBuffer->setConstant<4>(&offset_2);
+                    constBuffer->setConstant<0>(&segWidth);
+                    constBuffer->setConstant<1>(&offset);
+                    constBuffer->setConstant<2>(&offset_2);
 
                     // Run the kernel on GPU
                     program->executeProgram(rect);
