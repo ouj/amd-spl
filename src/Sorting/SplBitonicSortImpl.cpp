@@ -40,7 +40,6 @@ namespace amdspl
         unsigned int flip = 0;
 
         unsigned int _lgArraySize = 0;
-        unsigned int _stage;
 
         uint bufferSize = bufferSize = utils::ceilPow(_size);
         for (; bufferSize >> _lgArraySize; _lgArraySize++)
@@ -112,6 +111,7 @@ namespace amdspl
         timer.Start();
 #endif // _AMDSPL_PERF_
 
+        unsigned int _stage;
         for(_stage = 1; _stage <= _lgArraySize; _stage++)
         {
             unsigned int step = 0;
@@ -131,7 +131,7 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem2);
                     AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant<0>(&segWidth);
+                    constBuffer->setConstant<0>(&_stage);
                     constBuffer->setConstant<1>(&offset);
                     constBuffer->setConstant<2>(&offset_2);
 
@@ -146,7 +146,7 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem1);
                     AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant<0>(&segWidth);
+                    constBuffer->setConstant<0>(&_stage);
                     constBuffer->setConstant<1>(&offset);
                     constBuffer->setConstant<2>(&offset_2);
 

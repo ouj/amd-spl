@@ -18,14 +18,11 @@ and r3.x___, r1.x000, r10.x000
 ilt r3.x___, r3.x000, cb0[1].x000
 cmov_logical r3.x___, r3.x000, l1.y000, l1.x000
 
-;fmod(floor(idx / stageWidth), 2.0f)
-itof r4.x___, r1.x000
-itof r5.x___, cb0[0].x000
-div_zeroop(infinity) r4.x___, r4.x000, r5.x000
-ftoi r4.x___, r4.x000
+;(floor(idx / stageWidth) % 2)
+ishr r4.x___, r1.x000, cb0[0].x000
 and r4.x___, r4.x000, l1.y000
 
-;dir = (fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f)
+;dir = (floor(idx1 / stageWidth) % 2) == 0) ? 1 : -1
 ieq r4.x___, r4.x000, l1.z000
 cmov_logical r4.x___, r4.x000, l1.y000, l1.x000
 

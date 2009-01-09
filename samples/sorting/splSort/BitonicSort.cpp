@@ -52,7 +52,7 @@ BitonicSort::fillInputBuffer()
     srand((unsigned int)time(NULL));
     for (unsigned int i = 0; i < Length; i++)
     {
-        _array1[i] = (float)rand() / 1000;
+        _array1[i] = (float)rand() / INT_MAX;
     }
 
     copy(_array1.begin(), _array1.end(), _array2.begin());
@@ -112,7 +112,8 @@ BitonicSort::verifyResults()
         {
             res = 1;
             assert(false);
-            //std::cout <<  "Sorting Failed at " << i << "\n";
+            std::cout <<  "Sorting Failed at " << i << ": CPU(" << setprecision(10) << _array3[i] 
+            << "), GPU(" <<  setprecision(10) << _array1[i] << ")\n";
         }
     }
 
