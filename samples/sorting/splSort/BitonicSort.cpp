@@ -4,6 +4,7 @@
 #include "amdspl.h"
 #include <float.h>
 #include "assert.h"
+#include <functional>
 
 using namespace std;
 
@@ -101,7 +102,7 @@ BitonicSort::verifyResults()
     std::cout<<"-e Verify correct output.\n";
     std::cout<<"Performing Bitonic Sort on CPU ... ";
 
-    sort(_array3.begin(), _array3.end());
+    sort(_array3.begin(), _array3.end(), greater<float>());
     
     std::cout << "Done\n";
 
@@ -196,7 +197,7 @@ BitonicSort::run()
         {
             timer->Start();
             ::amdspl::sorting::BitonicSort::bitonicSort(&_array1[0], 
-                static_cast<unsigned int>(_array1.size()));
+                static_cast<unsigned int>(_array1.size()), false);
             timer->Stop();
         }
         
