@@ -21,10 +21,7 @@ ilt r3.x___, r3.x000, cb0[1].x000
 cmov_logical r3.x___, r3.x000, l1.y000, l1.x000
 
 ;r4 = floor(idx / stageWidth) % 2
-itof r4.x___, r1.x000
-itof r5.x___, cb0[0].x000
-div_zeroop(infinity) r4.x___, r4.x000, r5.x000
-ftoi r4.x___, r4.x000
+ishr r4.x___, r1.x000, cb0[0].x000
 and r4.x___, r4.x000, l1.y000
 
 ;r4 = dir = (floor(idx1 / stageWidth) % 2 == 0) ? 1 : -1
@@ -35,12 +32,10 @@ cmov_logical r4.x___, r4.x000, l1.y000, l1.x000
 imul r2.x___, r3.x000, cb0[1].x000
 iadd r2.x___, r2.x000, r1.x000
 
-itof r2.x___, r2.x000
-itof r6.x___, cb0[3].x000
-div_zeroop(infinity) r2._y__, r2.0x00, r6.0x00
-round_neginf r2._y__, r2.0y00
-mul_ieee r7.x___, r6.x000, r2.y000
-sub r2.x___, r2.x000, r7.x000
+ishr r2._y__, r2.0x00, cb0[3].0y00
+ishl r7.x___, l1.x000, cb0[3].y000
+umod r2.x___, r2.x000, cb0[3].x000
+itof r2, r2
 
 sample_resource(0)_sampler(0) r22, r2.xy00
 
