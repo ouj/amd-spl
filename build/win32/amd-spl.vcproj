@@ -299,15 +299,11 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\include\SplBitonicSort.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\Sorting\SplBitonicSortImpl.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\include\SplSort.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\include\SplSortDef.h"
 					>
 				</File>
 			</Filter>
@@ -315,11 +311,11 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\src\Sorting\SplBitonicSortImpl.cpp"
+					RelativePath="..\..\src\Sorting\SplBitonicSort.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\Sorting\SplSort.cpp"
+					RelativePath="..\..\src\Sorting\SplBitonicSortImpl.cpp"
 					>
 				</File>
 			</Filter>
