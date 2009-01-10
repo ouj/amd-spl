@@ -190,14 +190,14 @@ BitonicSort::run()
         unsigned int flip = 0;
         unsigned int i;
 
-        ::amdspl::SPLSort::initModule();
+        ::amdspl::sorting::BitonicSort::initModule();
 
         timer->Reset();
         // Record CPU Total time
         for(i = 0; i < info->Iterations; i ++)
         {
             timer->Start();
-            ::amdspl::SPLSort::bitonicSort(&_array1[0], _array1.size());
+            ::amdspl::sorting::BitonicSort::bitonicSort(&_array1[0], _array1.size());
             timer->Stop();
         }
         
