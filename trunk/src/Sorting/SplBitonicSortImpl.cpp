@@ -61,28 +61,36 @@ namespace amdspl
             if ( bufferSize != _size)
             {
                 //When the buffer size is smaller than the real size, initiallization is needed.
-                CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result> *program = 
-                    CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result>::getInstance();
-                CalConstBuffer<1> *constBuffer = program->getConstantBuffer();
+                CalProgram *program = 
+                    CalProgram::getProgram<SORT_ILPARA_LIST, BITONIC_INIT_IL>();
+                CalConstBuffer<1> *constBuffer = CalConstBuffer<1>::createConstBuffer();
                 const float minFloat = FLT_MAX;
                 constBuffer->setConstant<0>(&minFloat);
+                constBuffer->setDataToBuffer();
+
+                CALname constName = program->getConstName();
+                CALmem constMem = constBuffer->getMemHandle();
+
+                result = calCtxSetMem(ctx, constName, constMem);
+                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind constants\n");
 
                 CALname outputName = program->getOutputName(0);
                 CALmem mem = sorted1Buffer->getMemHandle();
 
                 result = calCtxSetMem(ctx, outputName, mem);
-                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
+                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind output resource\n");
 
                 CALdomain rect = {0, 0, bufferSize, 1};
                 program->executeProgram(rect);
                 program->waitDoneEvent();
-                program->cleanup();
+
+                CalConstBuffer<1>::destroyBuffer(constBuffer);
+                SAFE_DELETE(program);
             }
 
-            CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result> *program = 
-                CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_IL>::Result>::getInstance();
-            CalConstBuffer<3> *constBuffer = program->getConstantBuffer();
-
+            CalProgram *program = 
+                CalProgram::getProgram<SORT_ILPARA_LIST, BITONIC_SORT_IL>();
+            CalConstBuffer<3> *constBuffer = CalConstBuffer<3>::createConstBuffer();
 #ifdef _AMDSPL_PERF_
             timer.Reset();
             timer.Start();
@@ -135,6 +143,7 @@ namespace amdspl
                         constBuffer->setConstant<0>(&_stage);
                         constBuffer->setConstant<1>(&offset);
                         constBuffer->setConstant<2>(&offset_2);
+                        constBuffer->setDataToBuffer();
 
                         // Run the kernel on GPU
                         program->executeProgram(rect);
@@ -150,6 +159,7 @@ namespace amdspl
                         constBuffer->setConstant<0>(&_stage);
                         constBuffer->setConstant<1>(&offset);
                         constBuffer->setConstant<2>(&offset_2);
+                        constBuffer->setDataToBuffer();
 
                         // Run the kernel on GPU
                         program->executeProgram(rect);
@@ -181,6 +191,8 @@ namespace amdspl
             //CalBuffer::destroyBuffer(constBuffer);
             CalBuffer::destroyBuffer(sorted1Buffer);
             CalBuffer::destroyBuffer(sorted2Buffer);
+
+            SAFE_DELETE(program);
             return true;
         }
 
@@ -227,11 +239,18 @@ namespace amdspl
             if ( bufferSize != _size)
             {
                 //When the buffer size is smaller than the real size, initiallization is needed.
-                CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result> *program = 
-                    CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_INIT_IL>::Result>::getInstance();
-                CalConstBuffer<1> *constBuffer = program->getConstantBuffer();
+                CalProgram *program = 
+                    CalProgram::getProgram<SORT_ILPARA_LIST, BITONIC_INIT_IL>();
+                CalConstBuffer<1> *constBuffer = CalConstBuffer<1>::createConstBuffer();
                 const float minFloat = FLT_MAX;
                 constBuffer->setConstant<0>(&minFloat);
+                constBuffer->setDataToBuffer();
+
+                CALname constName = program->getConstName();
+                CALmem constMem = constBuffer->getMemHandle();
+
+                result = calCtxSetMem(ctx, constName, constMem);
+                AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind constants\n");
 
                 CALname outputName = program->getOutputName(0);
                 CALmem mem = sorted1Buffer->getMemHandle();
@@ -242,13 +261,14 @@ namespace amdspl
                 CALdomain rect = {0, 0, _width, _height};
                 program->executeProgram(rect);
                 program->waitDoneEvent();
-                program->cleanup();
+
+                SAFE_DELETE(program);
             }
 
-            CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result> *program = 
-                CalProgram<ILParaByID<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>::Result>::getInstance();
+            CalProgram *program = 
+                CalProgram::getProgram<SORT_ILPARA_LIST, BITONIC_SORT_AT_IL>();
 
-            CalConstBuffer<4> *constBuffer = program->getConstantBuffer();
+            CalConstBuffer<4> *constBuffer = CalConstBuffer<4>::createConstBuffer();
 
             uint2 bufferDim;
             bufferDim.x = _width;
@@ -269,8 +289,10 @@ namespace amdspl
 
             CALname inputName = program->getInputName(0);
             CALname outputName = program->getOutputName(0);
+
             CALmem mem1 = sorted1Buffer->getMemHandle();
             CALmem mem2 = sorted2Buffer->getMemHandle();
+
             CALname constName = program->getConstName();
             CALmem constMem = constBuffer->getMemHandle();
 
@@ -307,6 +329,7 @@ namespace amdspl
                         constBuffer->setConstant<0>(&_stage);
                         constBuffer->setConstant<1>(&offset);
                         constBuffer->setConstant<2>(&offset_2);
+                        constBuffer->setDataToBuffer();
 
                         // Run the kernel on GPU
                         program->executeProgram(rect);
@@ -322,6 +345,7 @@ namespace amdspl
                         constBuffer->setConstant<0>(&_stage);
                         constBuffer->setConstant<1>(&offset);
                         constBuffer->setConstant<2>(&offset_2);
+                        constBuffer->setDataToBuffer();
 
                         // Run the kernel on GPU
                         program->executeProgram(rect);
@@ -356,6 +380,8 @@ namespace amdspl
             //CalBuffer::destroyBuffer(constBuffer);
             CalBuffer::destroyBuffer(sorted1Buffer);
             CalBuffer::destroyBuffer(sorted2Buffer);
+
+            SAFE_DELETE(program);
             return true;
         }
     }
