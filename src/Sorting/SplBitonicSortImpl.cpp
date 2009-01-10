@@ -41,7 +41,7 @@ namespace amdspl
 
         unsigned int _lgArraySize = 0;
 
-        uint bufferSize = bufferSize = utils::ceilPow(_size);
+        uint bufferSize = utils::ceilPow(_size);
         for (; bufferSize >> _lgArraySize; _lgArraySize++)
         {
             ;
@@ -111,12 +111,11 @@ namespace amdspl
         timer.Start();
 #endif // _AMDSPL_PERF_
 
+        // Width of each sorted segment to be sorted in parallel (2, 4, 8, ...)
         unsigned int _stage;
         for(_stage = 1; _stage <= _lgArraySize; _stage++)
         {
             unsigned int step = 0;
-            // Width of each sorted segment to be sorted in parallel (2, 4, 8, ...)
-            unsigned int segWidth = 1 << _stage;
 
             for (step = 1; step <= _stage; ++step)
             {
@@ -195,11 +194,10 @@ namespace amdspl
 
         unsigned int flip = 0;
 
-        unsigned int _lgArraySize = 0;
-        unsigned int _stage;
+        unsigned int _lgArraySize;
 
-        uint bufferSize = bufferSize = utils::ceilPow(_size);
-        for (; bufferSize >> _lgArraySize; _lgArraySize++)
+        uint bufferSize = utils::ceilPow(_size);
+        for (_lgArraySize = 0; bufferSize >> _lgArraySize; _lgArraySize++)
         {
             ;
         }
@@ -212,6 +210,8 @@ namespace amdspl
         CALdeviceinfo info = device->getInfo();
 
         unsigned int _width = info.maxResource1DWidth;
+
+
         unsigned int _height = static_cast<unsigned int>(ceil(static_cast<double>(bufferSize) / _width));
         if (_height > info.maxResource2DHeight)
         {
@@ -248,9 +248,8 @@ namespace amdspl
 
         CalConstBuffer<4> *constBuffer = program->getConstantBuffer();
 
-        uint4 bufferDim;
+        uint2 bufferDim;
         bufferDim.x = _width;
-        bufferDim.y = _height;
 
         constBuffer->setConstant<3>(&bufferDim);
 
@@ -283,11 +282,12 @@ namespace amdspl
         timer.Start();
 #endif // _AMDSPL_PERF_
 
+        unsigned int _stage;
+
         for(_stage = 1; _stage <= _lgArraySize; _stage++)
         {
             unsigned int step = 0;
             // Width of each sorted segment to be sorted in parallel (2, 4, 8, ...)
-            unsigned int segWidth = 1 << _stage;
 
             for (step = 1; step <= _stage; ++step)
             {
@@ -302,7 +302,7 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem2);
                     AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant<0>(&segWidth);
+                    constBuffer->setConstant<0>(&_stage);
                     constBuffer->setConstant<1>(&offset);
                     constBuffer->setConstant<2>(&offset_2);
 
@@ -317,7 +317,7 @@ namespace amdspl
                     result = calCtxSetMem(ctx, outputName, mem1);
                     AMDSPL_CAL_RESULT_ERROR(result, "Failed to bind input resource\n");
 
-                    constBuffer->setConstant<0>(&segWidth);
+                    constBuffer->setConstant<0>(&_stage);
                     constBuffer->setConstant<1>(&offset);
                     constBuffer->setConstant<2>(&offset_2);
 
