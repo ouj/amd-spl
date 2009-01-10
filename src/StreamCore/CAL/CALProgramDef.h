@@ -3,65 +3,16 @@
 
 namespace amdspl
 {
-
-    //! \brief Static member of CALProgram, to be used as the singleton
-    template<typename ILPARAINFO>
-    CalProgram<ILPARAINFO>* CalProgram<ILPARAINFO>::_program = NULL;
-
-    //! \brief Singleton
-    template<typename ILPARAINFO>
-    CalProgram<ILPARAINFO>* CalProgram<ILPARAINFO>::getInstance(void)
+    template<typename ILPARALIST, unsigned int ID>
+    CalProgram* CalProgram::getProgram(void)
     {
-        if (_program == NULL)
+        CalProgram *program = new CalProgram(CalRuntime::getInstance()->getDevice());
+        if(!program->initialize<ILParaByID<ILPARALIST, ID>::Result>())
         {
-            CalProgram<ILPARAINFO> *program = new CalProgram<ILPARAINFO>(CalRuntime::getInstance()->getDevice());
-            if(!program->initialize())
-            {
-                SAFE_DELETE(program);
-                return NULL;
-            }
-            _program = program;
+            SAFE_DELETE(program);
+            return NULL;
         }
-        return _program;
-    }
-
-    template<typename ILPARAINFO>
-    bool CalProgram<ILPARAINFO>::executeProgram(const CALdomain &rect)
-    {
-        _constBuffer->setDataToBuffer();
-        CALcontext ctx = _device->getContext();
-        CALfunc func = getFunction();
-        // Run the kernel on GPU
-        AMDSPL_CAL_RESULT_ERROR(calCtxRunProgram(&_execEvent, ctx, func, &rect), "Error to run program");
-
-        CALresult res = calCtxIsEventDone(ctx, _execEvent);
-        return true;
-    }
-
-    template<typename ILPARAINFO>
-    void CalProgram<ILPARAINFO>::waitDoneEvent(void) const
-    {
-        CALcontext ctx = _device->getContext();
-        while(calCtxIsEventDone(ctx, _execEvent));
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Get the CAL funtion handle
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    template<typename ILPARAINFO>
-    inline const
-        CALfunc
-        CalProgram<ILPARAINFO>::getFunction() const
-    {
-        return _func;
-    }
-
-    template<typename ILPARAINFO>
-    CalProgram<ILPARAINFO>::CalProgram(CalDevice* device)
-        : _device(device), _func(0), _module(0), _constBuffer(0)
-    {
+        return program;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +23,7 @@ namespace amdspl
     ////////////////////////////////////////////////////////////////////////////////
     template<typename ILPARAINFO>
     bool
-        CalProgram<ILPARAINFO>::initialize()
+        CalProgram::initialize()
     {
         CALdeviceinfo info = _device->getInfo();
         CALcontext ctx = _device->getContext();
@@ -108,7 +59,7 @@ namespace amdspl
             result = calModuleGetName(&name, ctx, _module, tmpStr.str().c_str());
             AMDSPL_CAL_RESULT_ERROR(result, "Failed to get name handle for constant array\n");
 
-            _constArrayNames[i] = name;
+            _constArrayNames.push_back(name);
         }
 
         // Get constant name handle
@@ -132,7 +83,7 @@ namespace amdspl
             result = calModuleGetName(&name, ctx, _module, tmpStr.str().c_str());
             AMDSPL_CAL_RESULT_ERROR(result, "Failed to get name handle for input stream\n");
 
-            _inputNames[i] = name;
+            _inputNames.push_back(name);
         }
 
         // Get all the output name handles
@@ -144,7 +95,7 @@ namespace amdspl
             result = calModuleGetName(&name, ctx, _module, tmpStr.str().c_str());
             AMDSPL_CAL_RESULT_ERROR(result, "Failed to get name handle for output stream\n");
 
-            _outputNames[i] = name;
+            _outputNames.push_back(name);
         }
 
         // Get name handle for scatter stream
@@ -156,115 +107,7 @@ namespace amdspl
 
             _scatterNames = name;
         }
-
         return true;
-    }
-
-    template<typename ILPARAINFO>
-    void CalProgram<ILPARAINFO>::cleanup()
-    {
-        SAFE_DELETE(_program);
-    }
-
-    template<typename ILPARAINFO>
-    CalConstBuffer<ILPARAINFO::ConstantNum>* 
-        CalProgram<ILPARAINFO>::getConstantBuffer(void)
-    {
-        if (_constBuffer == NULL)
-        {
-            CALcontext ctx = _device->getContext();
-            _constBuffer = CalConstBuffer<ILPARAINFO::ConstantNum>::createConstBuffer();
-            CALname constName = getConstName();
-            CALmem constMem = _constBuffer->getMemHandle();
-            CALresult result = calCtxSetMem(ctx, constName, constMem);
-        }
-        return _constBuffer;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Get the constant array name handle
-    //!
-    //! \param i constant index
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    template<typename ILPARAINFO>
-    CALname
-        CalProgram<ILPARAINFO>::getConstArrayName(unsigned short i) const
-    {
-        return _constArrayNames[i];
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Get the constant name handle
-    //!
-    //! \param i constant index
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    template<typename ILPARAINFO>
-    CALname
-        CalProgram<ILPARAINFO>::getConstName() const
-    {
-        return _constNames;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Get the input name handle
-    //!
-    //! \param i input index
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    template<typename ILPARAINFO>
-    CALname
-        CalProgram<ILPARAINFO>::getInputName(unsigned short i) const
-    {
-        return _inputNames[i];
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Get the output name handle
-    //!
-    //! \param i output indxex
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    template<typename ILPARAINFO>
-    CALname
-        CalProgram<ILPARAINFO>::getOutputName(unsigned short i) const
-    {
-        return _outputNames[i];
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Get the scatter name handle
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    template<typename ILPARAINFO>
-    CALname
-        CalProgram<ILPARAINFO>::getScatterName(void) const
-    {
-        return _scatterNames[i];
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //!
-    //! \brief Destructor
-    //!
-    ////////////////////////////////////////////////////////////////////////////////
-    template<typename ILPARAINFO>
-    CalProgram<ILPARAINFO>::~CalProgram()
-    {
-        SAFE_DELETE(_constBuffer);
-        CALcontext ctx = _device->getContext();
-
-        // Destroy the module
-        if(_module)
-        {
-            calModuleUnload(ctx, _module);
-        }
     }
 }
 

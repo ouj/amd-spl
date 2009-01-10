@@ -45,6 +45,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				WarningLevel="3"
+				WarnAsError="true"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
@@ -119,6 +120,7 @@
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE;"
 				RuntimeLibrary="2"
 				WarningLevel="3"
+				WarnAsError="true"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
@@ -245,6 +247,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\StreamCore\CAL\CALDevice.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\StreamCore\CAL\CALProgram.cpp"
 						>
 					</File>
 					<File

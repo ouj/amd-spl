@@ -81,8 +81,11 @@ namespace amdspl
         _numDevices = 1;
 
         char *adapterEnv;
+        size_t len;
+        errno_t err = _dupenv_s( &adapterEnv, &len, "AMDPL_ADAPTER");
+
         int which_device = 0;
-        if ((adapterEnv = getenv("AMDPL_ADAPTER")))
+        if (!err && adapterEnv)
             which_device = atoi(adapterEnv);
 
         CalDevice* device = new CalDevice(which_device);

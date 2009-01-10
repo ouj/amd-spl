@@ -1,6 +1,6 @@
 #ifndef _AMD_SPL_LIBRARY_
 #define _AMD_SPL_LIBRARY_
-#include "SplSort.h"
+#include "SplBitonicSort.h"
 
 #ifdef AMD_SPL_EXPORT
 #define SPL_EXPORT __declspec(dllexport)

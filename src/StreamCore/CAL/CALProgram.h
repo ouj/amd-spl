@@ -31,16 +31,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace amdspl
 {
-    template<typename ILPARAINFO>
+
     class CalProgram
     {
     protected:
         CalProgram(CalDevice* device);
     public:
+        template<typename ILPARAINFO>
         bool initialize();
-        void cleanup();
 
-        static CalProgram<ILPARAINFO>* getInstance(void);
+        template<typename ILPARALIST, unsigned int ID>
+        static CalProgram* getProgram(void);
 
         bool    executeProgram(const CALdomain &rect);
         CALname getConstArrayName(unsigned short i) const;
@@ -53,9 +54,6 @@ namespace amdspl
         void    waitDoneEvent(void) const;
         ~CalProgram();
 
-        CalConstBuffer<ILPARAINFO::ConstantNum>*
-                getConstantBuffer(void);
-
     protected:
 
         //! \brief Contains device information for loading program on a specific device
@@ -64,26 +62,18 @@ namespace amdspl
         //! \brief Contains context information for executing program on a specific device
         CALcontext           _ctx;
     private:
-        CalConstBuffer<ILPARAINFO::ConstantNum>*
-                             _constBuffer;
-
-        //! \brief Singleton static member of CalProgram.
-        static CalProgram*   _program;
-
-        //! \brief Contains CAL IL source string;
-        const char*          _image;     
 
         //! \brief Contains CAL specific constant array buffer name handles
-        CALname              _constArrayNames[ILPARAINFO::ConstArrayNum + 1];
+        std::vector<CALname> _constArrayNames;
 
         //! \brief Contains CAL specific constant buffer name handles
         CALname              _constNames;
 
         //! \brief input name handles
-        CALname              _inputNames[ILPARAINFO::InputNum + 1];
+        std::vector<CALname> _inputNames;
 
         //! \brief output name handles
-        CALname              _outputNames[ILPARAINFO::OutputNum + 1];
+        std::vector<CALname> _outputNames;
 
         //! \brief output name handles
         CALname              _scatterNames;
