@@ -12,18 +12,46 @@ namespace amdspl
 {
     namespace sorting
     {
-        bool BitonicSort::bitonicSort(float *ptr, unsigned int _size)
+        bool BitonicSort::bitonicSort(float *ptr, unsigned int size, bool asc)
         {
             CalDevice* device = CalRuntime::getInstance()->getDevice();
             CALdeviceinfo info = device->getInfo();
-            if (_size <= info.maxResource1DWidth)
+            if (size <= info.maxResource1DWidth)
             {
-                return BitonicSortImpl::bitonicSortImpl(ptr, _size);
+                return BitonicSortImpl::bitonicSortImpl(ptr, size, asc);
             }
             else
             {
-                return BitonicSortImpl::bitioncSortATImpl(ptr, _size);
+                return BitonicSortImpl::bitioncSortATImpl(ptr, size, asc);
             }
         }
+
+        bool BitonicSort::bitonicSort(int *ptr, unsigned int size, bool asc)
+        {
+            CalDevice* device = CalRuntime::getInstance()->getDevice();
+            CALdeviceinfo info = device->getInfo();
+            if (size <= info.maxResource1DWidth)
+            {
+                return BitonicSortImpl::bitonicSortImpl(ptr, size, asc);
+            }
+            else
+            {
+                return BitonicSortImpl::bitioncSortATImpl(ptr, size, asc);
+            }
+        }
+
+        //bool BitonicSort::bitonicSort(unsigned int *ptr, unsigned int size, bool asc)
+        //{
+        //    CalDevice* device = CalRuntime::getInstance()->getDevice();
+        //    CALdeviceinfo info = device->getInfo();
+        //    if (size <= info.maxResource1DWidth)
+        //    {
+        //        return BitonicSortImpl::bitonicSortImpl(ptr, size, asc);
+        //    }
+        //    else
+        //    {
+        //        return BitonicSortImpl::bitioncSortATImpl(ptr, size, asc);
+        //    }
+        //}
     }
 }
