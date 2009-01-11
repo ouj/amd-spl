@@ -14,8 +14,8 @@ namespace amdspl
         class SPL_EXPORT BitonicSort
         {
         public:
-            static bool bitonicSort(float *ptr, unsigned int size, bool asc = true);
-            static bool bitonicSort(int *ptr, unsigned int size, bool asc = true);
+            static bool sort(float *ptr, unsigned int size, bool asc = true);
+            static bool sort(int *ptr, unsigned int size, bool asc = true);
         };
     }
 }
