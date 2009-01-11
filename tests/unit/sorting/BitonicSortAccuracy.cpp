@@ -27,7 +27,7 @@ TEST_F(BitonicSortTest, FloatPtrSort)
 
         sort(svec.begin(), svec.end());
 
-        amdspl::sorting::BitonicSort::bitonicSort(&vec[0], size);
+        amdspl::sorting::BitonicSort::sort(&vec[0], size);
         
         for (unsigned int j = 0; j < size; j++)
         {
@@ -55,7 +55,7 @@ TEST_F(BitonicSortTest, IntPtrSort)
 
         sort(svec.begin(), svec.end());
 
-        amdspl::sorting::BitonicSort::bitonicSort(&vec[0], size);
+        amdspl::sorting::BitonicSort::sort(&vec[0], size);
 
         for (unsigned int j = 0; j < size; j++)
         {

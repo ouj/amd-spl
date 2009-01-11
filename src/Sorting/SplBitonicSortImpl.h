@@ -45,9 +45,9 @@ namespace amdspl
             ~BitonicSortImpl(void) {};
         public:
             template<class T>
-            static bool bitonicSortImpl(T* ptr, unsigned int _size, bool asc);
+            static bool sort(T* ptr, unsigned int _size, bool asc);
             template<class T>
-            static bool bitioncSortATImpl(T* ptr, unsigned int _size, bool asc);
+            static bool sortAT(T* ptr, unsigned int _size, bool asc);
         };
 
         //////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ namespace amdspl
         //!
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        bool BitonicSortImpl::bitonicSortImpl(T* ptr, unsigned int _size, bool asc)
+        bool BitonicSortImpl::sort(T* ptr, unsigned int _size, bool asc)
         {
             CALresult result = CAL_RESULT_OK;;
             unsigned int flip = 0;
@@ -194,7 +194,7 @@ namespace amdspl
         //!
         //////////////////////////////////////////////////////////////////////////
         template<class T>
-        bool BitonicSortImpl::bitioncSortATImpl(T* ptr, unsigned int _size, bool asc)
+        bool BitonicSortImpl::sortAT(T* ptr, unsigned int _size, bool asc)
         {
             CALresult result = CAL_RESULT_OK;;
 

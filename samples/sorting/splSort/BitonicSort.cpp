@@ -196,7 +196,7 @@ BitonicSort::run()
         for(i = 0; i < info->Iterations; i ++)
         {
             timer->Start();
-            ::amdspl::sorting::BitonicSort::bitonicSort(&_array1[0], 
+            ::amdspl::sorting::BitonicSort::sort(&_array1[0], 
                 static_cast<unsigned int>(_array1.size()), false);
             timer->Stop();
         }

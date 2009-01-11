@@ -12,7 +12,7 @@ namespace amdspl
 {
     namespace sorting
     {
-        bool BitonicSort::bitonicSort(float *ptr, unsigned int size, bool asc)
+        bool BitonicSort::sort(float *ptr, unsigned int size, bool asc)
         {
             assert(ptr && size > 0);
             if(!ptr || size <= 0)
@@ -22,15 +22,15 @@ namespace amdspl
             CALdeviceinfo info = device->getInfo();
             if (size <= info.maxResource1DWidth)
             {
-                return BitonicSortImpl::bitonicSortImpl(ptr, size, asc);
+                return BitonicSortImpl::sort(ptr, size, asc);
             }
             else
             {
-                return BitonicSortImpl::bitioncSortATImpl(ptr, size, asc);
+                return BitonicSortImpl::sortAT(ptr, size, asc);
             }
         }
 
-        bool BitonicSort::bitonicSort(int *ptr, unsigned int size, bool asc)
+        bool BitonicSort::sort(int *ptr, unsigned int size, bool asc)
         {
             assert(ptr && size > 0);
             if(!ptr || size <= 0)
@@ -40,11 +40,11 @@ namespace amdspl
             CALdeviceinfo info = device->getInfo();
             if (size <= info.maxResource1DWidth)
             {
-                return BitonicSortImpl::bitonicSortImpl(ptr, size, asc);
+                return BitonicSortImpl::sort(ptr, size, asc);
             }
             else
             {
-                return BitonicSortImpl::bitioncSortATImpl(ptr, size, asc);
+                return BitonicSortImpl::sortAT(ptr, size, asc);
             }
         }
 
