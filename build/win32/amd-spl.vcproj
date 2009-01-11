@@ -16,7 +16,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\bin\win32\$(ConfigurationName)"
+			OutputDirectory="..\..\bin\win32\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
@@ -61,6 +61,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="amdcalcl.lib amdcalrt.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
 				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -88,12 +89,12 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;..\..\samples\bin\$(ConfigurationName)\&quot; | copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
+				CommandLine="mkdir &quot;..\..\tests\bin\&quot; | copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\tests\bin\&quot;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\bin\win32\$(ConfigurationName)"
+			OutputDirectory="..\..\bin\win32\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
@@ -165,7 +166,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir &quot;..\..\samples\bin\$(ConfigurationName)\&quot; | copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\samples\bin\$(ConfigurationName)\&quot;"
+				CommandLine="mkdir &quot;..\..\tests\bin\&quot; | copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\tests\bin\&quot;"
 			/>
 		</Configuration>
 	</Configurations>

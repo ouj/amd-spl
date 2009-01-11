@@ -41,8 +41,8 @@ namespace amdspl
         class BitonicSortImpl : public BitonicSort
         {
         private:
-            BitonicSortImpl(void);
-            ~BitonicSortImpl(void);
+            BitonicSortImpl(void) {};
+            ~BitonicSortImpl(void) {};
         public:
             template<class T>
             static bool bitonicSortImpl(T* ptr, unsigned int _size, bool asc);
