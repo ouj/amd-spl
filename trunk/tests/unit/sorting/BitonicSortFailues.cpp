@@ -3,7 +3,7 @@
 
 using namespace std;
 
-TEST(BitonicSortTest, NullPtrSort)
+TEST_F(BitonicSortTest, NullPtrSortFailure)
 {
     float* fp = NULL;
     int* ip = NULL;
@@ -11,7 +11,7 @@ TEST(BitonicSortTest, NullPtrSort)
     ASSERT_FALSE(amdspl::sorting::BitonicSort::sort(ip, 32));
 }
 
-TEST(BitonicSortTest, EmptySizeSort)
+TEST_F(BitonicSortTest, EmptySizeSortFailure)
 {
     vector<float> f(32);
     vector<int> i(32);
@@ -21,7 +21,7 @@ TEST(BitonicSortTest, EmptySizeSort)
     ASSERT_FALSE(amdspl::sorting::BitonicSort::sort(ip, 0));
 }
 
-TEST(BitonicSortTest, NegateSizeSort)
+TEST_F(BitonicSortTest, NegateSizeSortFailure)
 {
     vector<float> f(32);
     vector<int> i(32);

@@ -12,6 +12,14 @@ if ((result) != CAL_RESULT_OK) \
     return false; \
 }
 
+
+// A problem that can be handled.
+#define AMDSPL_CAL_RESULT_ERROR_RETURN(result, msg) \
+    if ((result) != CAL_RESULT_OK) \
+{ \
+    return result; \
+}
+
 // A problem that can be handled.
 #define AMDSPL_CAL_RESULT_ERROR(result, msg) \
 if ((result) != CAL_RESULT_OK) \

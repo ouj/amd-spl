@@ -16,6 +16,8 @@ namespace amdspl
         public:
             static bool sort(float *ptr, unsigned int size, bool asc = true);
             static bool sort(int *ptr, unsigned int size, bool asc = true);
+            static bool sort(unsigned int *ptr, unsigned int size, bool asc = true);
+            static bool sort(double *ptr, unsigned int size, bool asc = true);
         };
     }
 }
