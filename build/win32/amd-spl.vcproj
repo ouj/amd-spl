@@ -302,15 +302,19 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
-					RelativePath="..\..\src\Sorting\Sort_IL.h"
+					RelativePath="..\..\src\Sorting\BitonicSortIL.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Sorting\BitonicSortImpl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Sorting\BitonicSortImplDef.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\include\SplBitonicSort.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Sorting\SplBitonicSortImpl.h"
 					>
 				</File>
 			</Filter>
@@ -319,10 +323,6 @@
 				>
 				<File
 					RelativePath="..\..\src\Sorting\SplBitonicSort.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Sorting\SplBitonicSortImpl.cpp"
 					>
 				</File>
 			</Filter>
