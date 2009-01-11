@@ -20,7 +20,7 @@ namespace amdspl
     //!
     ////////////////////////////////////////////////////////////////////////////////
 
-    CalRuntime::CalRuntime() :_numDevices(0)
+    CalRuntime::CalRuntime() :_numDevices(0), _shutDownOnDestroy(true)
     {
     }
 
@@ -32,7 +32,10 @@ namespace amdspl
 
     CalRuntime::~CalRuntime()
     {
-        calShutdown();
+        if (_shutDownOnDestroy)
+        {
+            calShutdown();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +73,14 @@ namespace amdspl
 
         // Initialize CAL
         result = calInit();
-        AMDSPL_CHECK_CAL_RESULT(result, "Failed to initialize CAL \n");
+        if (CAL_RESULT_ERROR == result)
+        {
+            return false;
+        }
+        else if (CAL_RESULT_ALREADY == result)
+        {
+            _shutDownOnDestroy = false; //Other app is using CAL.
+        }
 
         // Get device count and initialize them
         calDeviceGetCount(&_numDevices);

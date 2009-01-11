@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="splSort"
-	ProjectGUID="{7DF567D0-DB50-46A2-A52D-7F7D0424A68F}"
-	RootNamespace="splSort"
+	Name="SortingTest"
+	ProjectGUID="{9E32905D-62CC-43BB-87B8-B3410764B2DC}"
+	RootNamespace="BitonicSortTest"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -17,9 +17,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfMFC="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -40,11 +41,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\include"
+				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -61,10 +62,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amd-spl.lib brook_d.lib"
-				OutputFile="..\..\bin\$(ConfigurationName)\$(ProjectName).exe"
+				AdditionalDependencies="gtestd.lib amdcalcl.lib amdcalrt.lib amd-spl_d.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\..\bin\win32\;&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
+				AdditionalLibraryDirectories="&quot;$(GOOGLETEST_ROOT)\lib&quot;;&quot;$(CALROOT)\lib\lh32&quot;;..\..\..\bin\win32\"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -96,9 +97,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfMFC="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -119,9 +121,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\include"
+				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -138,10 +140,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amd-spl.lib brook.lib"
-				OutputFile="..\..\bin\$(ConfigurationName)\$(ProjectName).exe"
+				AdditionalDependencies="gtest.lib amdcalcl.lib amdcalrt.lib amd-spl.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\..\bin\win32\;&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(BROOKROOT)\sdk\lib\&quot;"
+				AdditionalLibraryDirectories="&quot;$(GOOGLETEST_ROOT)\lib&quot;;&quot;$(CALROOT)\lib\lh32&quot;;..\..\..\bin\win32\"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -178,45 +179,49 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="AccuracyTests"
 			>
 			<File
-				RelativePath=".\BitonicSort.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Main.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\common\SampleBase.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\common\Timer.cpp"
+				RelativePath="..\..\unit\sorting\BitonicSortAccuracy.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			Name="Fixtures"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\unit\sorting\BitonicSortTest.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\unit\sorting\BitonicSortTest.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Failure Tests"
 			>
 			<File
-				RelativePath=".\BitonicSort.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\SampleBase.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\Timer.h"
+				RelativePath="..\..\unit\sorting\BitonicSortFailues.cpp"
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="StressTests"
+			>
+		</Filter>
+		<File
+			RelativePath="..\..\unit\sorting\TestMain.cpp"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

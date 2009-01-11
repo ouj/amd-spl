@@ -48,6 +48,7 @@ namespace amdspl
         ~CalRuntime();
 
     protected:
+        bool                    _shutDownOnDestroy;
         static CalRuntime*      _runtime;
         unsigned int            _numDevices;
         CalDevice*              _devices;

@@ -2,11 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "splSort", "splSort.vcproj", "{7DF567D0-DB50-46A2-A52D-7F7D0424A68F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C5BAC133-6111-477D-BA55-269A2B5A5C20} = {C5BAC133-6111-477D-BA55-269A2B5A5C20}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "amd-spl", "..\..\..\build\win32\amd-spl.vcproj", "{C5BAC133-6111-477D-BA55-269A2B5A5C20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,10 +13,6 @@ Global
 		{7DF567D0-DB50-46A2-A52D-7F7D0424A68F}.Debug|Win32.Build.0 = Debug|Win32
 		{7DF567D0-DB50-46A2-A52D-7F7D0424A68F}.Release|Win32.ActiveCfg = Release|Win32
 		{7DF567D0-DB50-46A2-A52D-7F7D0424A68F}.Release|Win32.Build.0 = Release|Win32
-		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Debug|Win32.Build.0 = Debug|Win32
-		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|Win32.ActiveCfg = Release|Win32
-		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

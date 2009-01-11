@@ -14,6 +14,10 @@ namespace amdspl
     {
         bool BitonicSort::bitonicSort(float *ptr, unsigned int size, bool asc)
         {
+            assert(ptr && size > 0);
+            if(!ptr || size <= 0)
+                return false;
+
             CalDevice* device = CalRuntime::getInstance()->getDevice();
             CALdeviceinfo info = device->getInfo();
             if (size <= info.maxResource1DWidth)
@@ -28,6 +32,10 @@ namespace amdspl
 
         bool BitonicSort::bitonicSort(int *ptr, unsigned int size, bool asc)
         {
+            assert(ptr && size > 0);
+            if(!ptr || size <= 0)
+                return false;
+
             CalDevice* device = CalRuntime::getInstance()->getDevice();
             CALdeviceinfo info = device->getInfo();
             if (size <= info.maxResource1DWidth)
