@@ -13,13 +13,10 @@ This library itself is implemented in standard C++ and AMD IL.
   * OpenCL
     [http://www.khronos.org/opencl/ OpenCL] is a new industry standard for parallel computing. AMD OpenCL implementation will be released in 2009. OpenCL binding will be ready after that.
 
-  * C/C++
-    Any C/C++ code can link to it freely.
+  * C/C++: Any C/C++ code can link to it freely. 
   
-  * C#
-    Planned.
+  * C#: Planned.
 
-  * Java
-    Planned.
+  * Java: Planned.
 
 == [AlgorithmList Algorithm List] ==
