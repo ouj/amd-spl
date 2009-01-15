@@ -3,7 +3,7 @@ dcl_output_generic o0
 dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
 dcl_input_position_interp(linear_noperspective) v0.xy__
 dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF
-dcl_cb cb0[4]
+dcl_cb cb0[3]
 
 ;idx1
 mov r1.xy__, v0
@@ -37,6 +37,6 @@ cmov_logical r5, r100, r11, r22
 cmov_logical r6, r100, r22, r11
 
 ieq r44, r3.x000, r4.x000
-cmov_logical o0, r44, r5, r6
+cmov_logical o0.x___, r44, r5, r6
 endmain
 end

@@ -78,7 +78,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -98,7 +98,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -133,7 +133,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -143,7 +143,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -163,7 +163,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -198,7 +198,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 #endif
@@ -210,7 +210,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -230,7 +230,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -265,7 +265,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -275,7 +275,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -295,7 +295,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -330,7 +330,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 #endif
@@ -342,7 +342,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -362,7 +362,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -397,7 +397,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -407,7 +407,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -427,7 +427,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -462,7 +462,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 #endif
@@ -474,7 +474,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -493,8 +493,8 @@ namespace amdspl
         "dlt r100, r11, r22\n"
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
-        "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "ieq r44, r3.xx00, r4.xx00\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -528,8 +528,8 @@ namespace amdspl
         "dlt r100, r11, r22\n"
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
-        "ieq r44, r3.x000, r4.x000\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "ieq r44, r3.xx00, r4.xx00\n"
+        "cmov_logical o0.x___, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -539,7 +539,7 @@ namespace amdspl
         "dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
         "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
         "dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF\n"
-        "dcl_cb cb0[4]\n"
+        "dcl_cb cb0[3]\n"
         "mov r1.xy__, v0\n"
         "sample_resource(0)_sampler(0) r11, r1.x000\n"
         "ftoi r1.x___, r1.x000\n"
@@ -558,7 +558,7 @@ namespace amdspl
         "dlt r100, r11, r22\n"
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
-        "ieq r44, r3.x000, r4.x000\n"
+        "ieq r44, r3.xx00, r4.xx00\n"
         "cmov_logical o0, r44, r5, r6\n"
         "endmain\n"
         "end\n";
@@ -593,7 +593,7 @@ namespace amdspl
         "dlt r100, r11, r22\n"
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
-        "ieq r44, r3.x000, r4.x000\n"
+        "ieq r44, r3.xx00, r4.xx00\n"
         "cmov_logical o0, r44, r5, r6\n"
         "endmain\n"
         "end\n";
