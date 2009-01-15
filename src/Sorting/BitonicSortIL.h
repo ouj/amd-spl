@@ -9,6 +9,9 @@ namespace amdspl
     using namespace sorting;
     namespace sorting
     {
+        //////////////////////////////////////////////////////////////////////////
+        //! \brief This is the IL program index of bitonic sort
+        //////////////////////////////////////////////////////////////////////////
         enum SORT_ILPROGRAMS_INDEX
         {
             BITONIC_INIT_IL,
@@ -37,6 +40,7 @@ namespace amdspl
             BITONIC_SORT_DOUBLE_DES_IL,
             BITONIC_SORT_DOUBLE_DES_AT_IL
         };
+
 
         typedef AppendILPara<ILParaEnd, ILParaInfo<BITONIC_SORT_FLOAT_ACS_IL, 1, 1, 3>>::Result         T1; // BITONIC_SORT_FLOAT_ACS_IL
         typedef AppendILPara<T1,        ILParaInfo<BITONIC_SORT_FLOAT_ACS_AT_IL, 1, 1, 4>>::Result      T2; // BITONIC_SORT_FLOAT_ACS_AT_IL
@@ -494,7 +498,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.xx00, r4.xx00\n"
-        "cmov_logical o0.x___, r44, r5, r6\n"
+        "cmov_logical o0.xy__, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -529,7 +533,7 @@ namespace amdspl
         "cmov_logical r5, r100, r11, r22\n"
         "cmov_logical r6, r100, r22, r11\n"
         "ieq r44, r3.xx00, r4.xx00\n"
-        "cmov_logical o0.x___, r44, r5, r6\n"
+        "cmov_logical o0.xy__, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -559,7 +563,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.xx00, r4.xx00\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.xy__, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 
@@ -594,7 +598,7 @@ namespace amdspl
         "cmov_logical r5, r100, r22, r11\n"
         "cmov_logical r6, r100, r11, r22\n"
         "ieq r44, r3.xx00, r4.xx00\n"
-        "cmov_logical o0, r44, r5, r6\n"
+        "cmov_logical o0.xy__, r44, r5, r6\n"
         "endmain\n"
         "end\n";
 #endif
