@@ -1,6 +1,6 @@
 #ifndef _AMDSPL_BITONICSORT_IMPL_DEF_
 #define _AMDSPL_BITONICSORT_IMPL_DEF_
-
+#include <assert.h>
 namespace amdspl
 {
     namespace sorting
@@ -143,6 +143,12 @@ namespace amdspl
             CalBuffer *sorted1Buffer = CalBuffer::createBuffer(1, InputDim, utils::type_descriptor<T>::Format);
             CalBuffer *sorted2Buffer = CalBuffer::createBuffer(1, InputDim, utils::type_descriptor<T>::Format);
 
+            assert(sorted1Buffer && sorted2Buffer);
+            if (!sorted1Buffer || !sorted2Buffer)
+            {
+                return false;
+            }
+
             if ( bufferSize != _size)
             {
                 CALdomain rect = {0, 0, bufferSize, 1};
@@ -214,6 +220,7 @@ namespace amdspl
                         // Run the kernel on GPU
                         program->executeProgram(rect);
                         program->waitDoneEvent();
+
                     }
 
                     flip ^= 0x01; // XOR flip w/ 0b1 which flips the flip variable between 0 and 1
@@ -270,6 +277,12 @@ namespace amdspl
             uint dim[] = {_width, _height};
             CalBuffer *sorted1Buffer = CalBuffer::createBuffer(2, dim, utils::type_descriptor<T>::Format);
             CalBuffer *sorted2Buffer = CalBuffer::createBuffer(2, dim, utils::type_descriptor<T>::Format);
+
+            assert(sorted1Buffer && sorted2Buffer);
+            if (!sorted1Buffer || !sorted2Buffer)
+            {
+                return false;
+            }
 
             if ( bufferSize != _size)
             {
