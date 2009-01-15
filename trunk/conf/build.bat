@@ -12,7 +12,7 @@ if "%CFG%." == "." goto BADENV
 set BUILDERR=%APP%_%CFG%.err
 if exist %BUILDERR% del /f %BUILDERR%
 
-if exist %APP%.vcproj goto CONTINUE
+if exist %BLD%\%APP%.vcproj goto CONTINUE
 echo. fatal error:%APP%.vcproj does not exist
 echo. fatal error:%APP%.vcproj does not exist > %BUILDERR%
 goto END
@@ -29,7 +29,7 @@ if /I "%CLEANING%"=="YES" set BLDORCLN=/clean
 
 
 ::BUILD
-call vcbuild /nologo %BLDORCLN% /errfile:%BUILDERR% /logfile:%BUILDERR% /useenv %APP%.vcproj "%CFG%"
+call vcbuild /nologo %BLDORCLN% /errfile:%BUILDERR% /logfile:%BUILDERR% /useenv %BLD%\%APP%.vcproj "%CFG%"
 
 if exist %BUILDERR% type %BUILDERR% > nul
 

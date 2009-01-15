@@ -217,6 +217,22 @@
 		<Filter
 			Name="StressTests"
 			>
+			<File
+				RelativePath="..\..\unit\sorting\BitonicSortStress.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Common"
+			>
+			<File
+				RelativePath="..\..\unit\common\Perf.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\common\Perf.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\unit\sorting\TestMain.cpp"
