@@ -8,6 +8,70 @@
 
 using namespace std;
 
+template<typename T>
+static void TestPtrSort(const vector<T> &arrayi)
+{
+    for (unsigned int size = 32; size <= BitonicSortTest::Length; size = size << 1)
+    {
+        printf("Test Size %16d\t", size);
+        vector<T> vec(arrayi.begin(), arrayi.begin() + size);
+        vector<T> svec(arrayi.begin(), arrayi.begin() + size);
+
+        sort(svec.begin(), svec.end());
+        printf("Ascend");
+        amdspl::sorting::BitonicSort::sort(&vec[0], size);
+
+        for (unsigned int j = 0; j < size; j++)
+        {
+            ASSERT_EQ(svec[j], vec[j]);
+        }
+        printf("...OK\t");
+
+        reverse(svec.begin(), svec.end());
+        printf("Descend");
+
+        amdspl::sorting::BitonicSort::sort(&vec[0], size, false);
+        for (unsigned int j = 0; j < size; j++)
+        {
+            ASSERT_EQ(svec[j], vec[j]);
+        }
+        printf("...OK\n");
+    }
+}
+
+template<>
+static void TestPtrSort<double>(const vector<double> &arrayi)
+{
+    unsigned int Length = 8192 * 2048;// in case we run out of vram.
+    for (unsigned int size = 32; size <= Length; size = size << 1)
+    {
+        printf("Test Size %16d\t", size);
+        vector<double> vec(arrayi.begin(), arrayi.begin() + size);
+        vector<double> svec(arrayi.begin(), arrayi.begin() + size);
+
+        sort(svec.begin(), svec.end());
+        printf("Ascend");
+        amdspl::sorting::BitonicSort::sort(&vec[0], size);
+
+        for (unsigned int j = 0; j < size; j++)
+        {
+            ASSERT_EQ(svec[j], vec[j]);
+        }
+        printf("...OK\t");
+
+        reverse(svec.begin(), svec.end());
+        printf("Descend");
+
+        amdspl::sorting::BitonicSort::sort(&vec[0], size, false);
+        for (unsigned int j = 0; j < size; j++)
+        {
+            ASSERT_EQ(svec[j], vec[j]);
+        }
+        printf("...OK\n");
+    }
+}
+
+
 TEST_F(BitonicSortTest, FloatPtrSort)
 {
     vector<float>   arrayf(BitonicSortTest::Length);
@@ -18,22 +82,7 @@ TEST_F(BitonicSortTest, FloatPtrSort)
         int r = rand();
         arrayf[i] = (float)r / INT_MAX;
     }
-
-    for (unsigned int size = 32; size <= BitonicSortTest::Length; size = size << 1)
-    {
-        printf("Buffer size: %d: \n", size);
-        vector<float> vec(arrayf.begin(), arrayf.begin() + size);
-        vector<float> svec(arrayf.begin(), arrayf.begin() + size);
-
-        sort(svec.begin(), svec.end());
-
-        amdspl::sorting::BitonicSort::sort(&vec[0], size);
-        
-        for (unsigned int j = 0; j < size; j++)
-        {
-            ASSERT_EQ(svec[j], vec[j]);
-        }
-    }
+    TestPtrSort(arrayf);
 }
 
 TEST_F(BitonicSortTest, IntPtrSort)
@@ -46,22 +95,7 @@ TEST_F(BitonicSortTest, IntPtrSort)
         int r = rand();
         arrayi[i] = r;
     }
-
-    for (unsigned int size = 32; size <= BitonicSortTest::Length; size = size << 1)
-    {
-        printf("Buffer size: %d: \n", size);
-        vector<int> vec(arrayi.begin(), arrayi.begin() + size);
-        vector<int> svec(arrayi.begin(), arrayi.begin() + size);
-
-        sort(svec.begin(), svec.end());
-
-        amdspl::sorting::BitonicSort::sort(&vec[0], size);
-
-        for (unsigned int j = 0; j < size; j++)
-        {
-            ASSERT_EQ(svec[j], vec[j]);
-        }
-    }
+    TestPtrSort(arrayi);
 }
 
 TEST_F(BitonicSortTest, UnsignedIntPtrSort)
@@ -74,22 +108,7 @@ TEST_F(BitonicSortTest, UnsignedIntPtrSort)
         int r = rand();
         arrayi[i] = r;
     }
-
-    for (unsigned int size = 32; size <= BitonicSortTest::Length; size = size << 1)
-    {
-        printf("Buffer size: %d: \n", size);
-        vector<unsigned int> vec(arrayi.begin(), arrayi.begin() + size);
-        vector<unsigned int> svec(arrayi.begin(), arrayi.begin() + size);
-
-        sort(svec.begin(), svec.end());
-
-        amdspl::sorting::BitonicSort::sort(&vec[0], size);
-
-        for (unsigned int j = 0; j < size; j++)
-        {
-            ASSERT_EQ(svec[j], vec[j]);
-        }
-    }
+    TestPtrSort(arrayi);
 }
 
 TEST_F(BitonicSortTest, DoublePtrSort)
@@ -100,22 +119,7 @@ TEST_F(BitonicSortTest, DoublePtrSort)
     for (unsigned int i = 0; i < BitonicSortTest::Length; i++)
     {
         int r = rand();
-        arrayi[i] = (double)r / DBL_MAX;
+        arrayi[i] = r / INT_MAX;
     }
-
-    for (unsigned int size = 32; size <= BitonicSortTest::Length; size = size << 1)
-    {
-        printf("Buffer size: %d: \n", size);
-        vector<double> vec(arrayi.begin(), arrayi.begin() + size);
-        vector<double> svec(arrayi.begin(), arrayi.begin() + size);
-
-        sort(svec.begin(), svec.end());
-
-        amdspl::sorting::BitonicSort::sort(&vec[0], size);
-
-        for (unsigned int j = 0; j < size; j++)
-        {
-            ASSERT_EQ(svec[j], vec[j]);
-        }
-    }
+    TestPtrSort(arrayi);
 }

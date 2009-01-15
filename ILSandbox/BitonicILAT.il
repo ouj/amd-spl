@@ -44,7 +44,7 @@ cmov_logical r5, r100, r11, r22
 cmov_logical r6, r100, r22, r11
 
 ieq r44, r3.x000, r4.x000
-cmov_logical o0, r44, r5, r6
+cmov_logical o0.x___, r44, r5, r6
 
 endmain
 end

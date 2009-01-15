@@ -7,7 +7,7 @@
 
 namespace amdspl
 {
-	bool preInitProgram()
+	bool initialSPL()
 	{
         amdspl::CalRuntime::getInstance();
 		return true;
