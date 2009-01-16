@@ -19,7 +19,7 @@ rem set the env variable
 set CONF=u:\conf
 
 :: Tool
-set TOOLS=u:\tools
+set TOOLS=u:\tools\bin
 
 :: Build Directory
 set BLD=u:\build\win32
