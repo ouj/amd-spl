@@ -4,7 +4,14 @@
 
 AMD SPL is a programming library based on AMD's stream computing technology. This library will provide common general purpose computing function such as sorting and prefix sum. This project aims to provide some common functions for GPGPU and makes AMD's GPGPU programming easier.
 
+== [AlgorithmList Algorithm List] ==
+
 == Run Time ==
+Although the amd-spl runtime is not a part of user interface, it is the most important part of the library. Runtime is the core of the library. It communicates with the hardwares using CAL & IL, and provides GPGPU service to other modules of the library. Other modules will use the classes and functions provided by the core runtime to implement their algorithms.
+
+The performance of the runtime will greatly affect the performance of the library. Currently, we use a modified runtime of Brook+. However, it is not satisfactory. We are going to develop our own runtime.
+
+We are now working on the high level design of the runtime. 
 
 == Language Binding == 
 
@@ -18,5 +25,3 @@ This library itself is implemented in standard C++ and AMD IL.
   * C#: Planned.
 
   * Java: Planned.
-
-== [AlgorithmList Algorithm List] ==
