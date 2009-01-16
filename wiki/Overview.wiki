@@ -11,7 +11,7 @@ Although the amd-spl runtime is not a part of user interface, it is the most imp
 
 The performance of the runtime will greatly affect the performance of the library. Currently, we use a modified runtime of Brook+. However, it is not satisfactory. We are going to develop our own runtime.
 
-We are now working on the high level design of the runtime. 
+We are now doing requirment analysis of the [RuntimeDesirableFeatures runtime]. 
 
 == Language Binding == 
 
