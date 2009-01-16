@@ -1,4 +1,4 @@
-#This page is about development tools of project
+#summary development tools of amd-spl project
 
 = Introduction =
 
