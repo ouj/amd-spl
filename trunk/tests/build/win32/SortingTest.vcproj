@@ -25,6 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="mkdir $(OutDir) | copy &quot;..\..\..\bin\amd-spl_d.dll&quot; $(OutDir)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -65,7 +66,7 @@
 				AdditionalDependencies="gtestd.lib amdcalcl.lib amdcalrt.lib amd-spl_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(GOOGLETEST_ROOT)\lib&quot;;&quot;$(CALROOT)\lib\lh32&quot;;..\..\..\bin\win32\"
+				AdditionalLibraryDirectories="&quot;$(GOOGLETEST_ROOT)\lib&quot;;&quot;$(CALROOT)\lib\lh32&quot;;..\..\..\lib\"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -106,6 +107,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="mkdir $(OutDir) | copy &quot;..\..\..\bin\amd-spl.dll&quot; $(OutDir)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -142,7 +144,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="gtest.lib amdcalcl.lib amdcalrt.lib amd-spl.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(GOOGLETEST_ROOT)\lib&quot;;&quot;$(CALROOT)\lib\lh32&quot;;..\..\..\bin\win32\"
+				AdditionalLibraryDirectories="&quot;$(GOOGLETEST_ROOT)\lib&quot;;&quot;$(CALROOT)\lib\lh32&quot;;..\..\..\lib\"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
