@@ -5,3 +5,4 @@ In this page, we will list and discuss the requriment of the runtime.
 
 
 = Desirable Features =
+== Constant Buffer Pool ==
