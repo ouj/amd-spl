@@ -1,13 +1,9 @@
 #summary Use the AMD-SPL in C++
 
-= Introduction =
+= Setup AMD-SPL in Visual Studio =
 
-Add your content here.
+== Visual Studio 2005 ==
 
+=== Include file path ===
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=== Library file path ===
