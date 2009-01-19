@@ -1,4 +1,4 @@
-#summary Use the Spl In C++
+#summary Use the AMD-SPL in C++
 
 = Introduction =
 
