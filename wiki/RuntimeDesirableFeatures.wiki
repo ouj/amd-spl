@@ -3,13 +3,16 @@
 = Introduction =
 In this page, we will list and discuss the requriment of the runtime.
 
-
-= Desirable Features =
+= Features =
+== CAL Runtime Features ==
+  * System initialization and query
+  * Device management
+  * Context management
+  * Memory management
+  * Program loading
+  * Program execution
+== Additional Features ==
   * Seperate compile-time behaviour and run-time behaviour using C++ template
-  * CAL context management
   * Multi-devices support
-  * Buffer Management
-  * IL Program Management
   * Constant Buffer Pool
-  * Execution Management
   * Event Management
