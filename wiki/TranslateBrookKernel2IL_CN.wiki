@@ -44,6 +44,8 @@ bitonic(float input[], out float output<>, float stageWidth, float offset, float
 在Brook+中，这一段C语言的kernel代码会被转化成两个版本的IL，一个是没有进行地址转换的，另一个是进行了地址转换※（Address Translation，以下简称AT）。这两份IL可以在KSA中通过选择不同的function看到。把以上的代码复制到SKA的代码编写区，就可以马上在输出区看到对应的IL代码。并且可以在相关性能分析。我们可以看到在HD4870的显卡上的Ave Cycle为1.90，throughput为6316M Thread/sec，并不是十分的高效。如果使用了AT，效率就更低了，Ave Cycle为6.62，Throughput仅为2264M Thread/sec。而且，SKA生成的IL有很多冗余的命令，虽然这些冗余在转化为汇编的时候都会被IL编译器优化掉，但是这些冗余却对程序的可读性带来很大的影响。基于效率和可读性的原因，我们需要自己来编写IL。本文除了介绍怎么从上面的Brook+ kernel转化为IL，还会介绍一些基本优化技巧，把Throughput提升到极限。
 
 = 把BROOK+程序转化为IL =
+一个标准的IL程序由两个个部分组成，分别为声明部分和程序体部分。其中声明部分用于声明IL中会用到的所有资源。包括输入资源，输出寄存器等。
+
 == IL的类型与版本 ==
 所有IL中的第一条语句用于声明IL的版本和类型：
 {{{
@@ -51,8 +53,7 @@ il_ps_2_0
 }}}
 个IL使用Pixel Shader的方式，版本为2.0版。另外一个可能的IL类型是cs。cs只能用在支持computating shader的显卡上，本文并不会详细介绍。
 == 输入的声明 ==
-细心观察Bitonic排序的kernel，我们可以发现这个kernel有一个输入流，一个输出流和三个常量。这些需要转化为IL中的声明。
-对输出流的声明，因为只有一个输出流，只需要定义o0一个输出寄存器。IL程序的最终输出结果要写到这个寄存器中。
+细心观察Bitonic排序的kernel，我们可以发现这个kernel有一个输入流，一个输出流和三个常量。这些需要转化为IL中的声明。对输出流的声明，因为只有一个输出流，只需要定义o0一个输出寄存器。IL程序的最终输出结果要写到这个寄存器中。
 {{{
 dcl_output_generic o0
 }}}
@@ -73,7 +74,36 @@ dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF
 有了这些声明，我们就可以进入IL程序体的编写了。
 
 == 分割细化BROOK+程序 ==
-因为IL是一种中间语言，类似于汇编，因此其语法比较简单，每一条IL命令只能完成一个运算操作。因此，为了便于理解，我们需要把Brook+的kernel进行分解，转化成一系列的操作序列。
+因为IL是一种中间语言，类似于汇编，因此其语法比较简单，每一条IL命令只能完成一个运算操作。因此，为了便于理解，我们需要把Brook+的kernel进行分解，转化成一系列的操作序列。因为IL中的不存在变量的概念，只有寄存器的概念，而寄存器是变量名的，所以我们把变量名也用共用寄存器代替了。
+{{{
+[in i0[], out o0<>, c0, c1, c2] //declaration
+{
+r1 = (float)instance().x;   // idx1 = r1 = (float)instance().x;
+
+r3 = r1 % c2                // r3 = fmod(idx1, twoOffset)
+r3 = r3 < c1                // r3 = fmod(idx1, twoOffset) < offset
+r3 = r3 ? 1.0f : -1.0f      // sign = r3 = (fmod(idx1, twoOffset) < offset) ? 1.0f : -1.0f;
+
+r4 = r1 / c0                // r4 = idx1 / stageWidth
+r4 = floor(r5)              // r4 = floor(idx1 / stageWidth)
+r4 = r4 % 2.0f              // r4 = floor(idx1 / stageWidth) % 2.0f
+r4 = r4 == 0.0f             // r4 = fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f
+r4 = r4 ? 1.0f : -1.0f      // dir = r4 = (fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f) ? 1.0f: -1.0f
+r2 = r3 * c1                // r2 = sign * offset;
+r2 = r2 + r1                // idx2 = r2 = idx1 + sign * offset;
+
+r5 = i0[r1]                 // r5 = input[idx1]
+r6 = i0[r2]                 // r6 = input[idx2]
+
+r7 = r5 < r6                // r7 = input[idx1] < input[idx2]
+r7 = r7 ? r5 : r6           // min = r7 = (input[idx1] < input[idx2]) ? input[idx1] : input[idx2]
+r8 = r5 > r6                // r8 = input[idx1] > input[idx2]
+r8 = r8 ? r5 : r6               // max = r8 = (input[idx1] > input[idx2]) ? input[idx1] : input[idx2]
+
+r9 = r3 == r4               // r9 = sign == dir
+o0 = r9 ? r7 : r8           // output = (sign == dir) ? min : max;
+}
+}}}
 
 = 待续... =
 
