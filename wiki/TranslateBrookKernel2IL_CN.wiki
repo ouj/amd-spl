@@ -78,30 +78,30 @@ dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF
 {{{
 [in i0[], out o0<>, c0, c1, c2] //declaration
 {
-r1 = (float)instance().x;   // idx1 = r1 = (float)instance().x;
+    r1 = (float)instance().x;   // idx1 = r1 = (float)instance().x;
 
-r3 = r1 % c2                // r3 = fmod(idx1, twoOffset)
-r3 = r3 < c1                // r3 = fmod(idx1, twoOffset) < offset
-r3 = r3 ? 1.0f : -1.0f      // sign = r3 = (fmod(idx1, twoOffset) < offset) ? 1.0f : -1.0f;
+    r3 = r1 % c2                // r3 = fmod(idx1, twoOffset)
+    r3 = r3 < c1                // r3 = fmod(idx1, twoOffset) < offset
+    r3 = r3 ? 1.0f : -1.0f      // sign = r3 = (fmod(idx1, twoOffset) < offset) ? 1.0f : -1.0f;
 
-r4 = r1 / c0                // r4 = idx1 / stageWidth
-r4 = floor(r5)              // r4 = floor(idx1 / stageWidth)
-r4 = r4 % 2.0f              // r4 = floor(idx1 / stageWidth) % 2.0f
-r4 = r4 == 0.0f             // r4 = fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f
-r4 = r4 ? 1.0f : -1.0f      // dir = r4 = (fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f) ? 1.0f: -1.0f
-r2 = r3 * c1                // r2 = sign * offset;
-r2 = r2 + r1                // idx2 = r2 = idx1 + sign * offset;
+    r4 = r1 / c0                // r4 = idx1 / stageWidth
+    r4 = floor(r5)              // r4 = floor(idx1 / stageWidth)
+    r4 = r4 % 2.0f              // r4 = floor(idx1 / stageWidth) % 2.0f
+    r4 = r4 == 0.0f             // r4 = fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f
+    r4 = r4 ? 1.0f : -1.0f      // dir = r4 = (fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f) ? 1.0f: -1.0f
+    r2 = r3 * c1                // r2 = sign * offset;
+    r2 = r2 + r1                // idx2 = r2 = idx1 + sign * offset;
 
-r5 = i0[r1]                 // r5 = input[idx1]
-r6 = i0[r2]                 // r6 = input[idx2]
+    r5 = i0[r1]                 // r5 = input[idx1]
+    r6 = i0[r2]                 // r6 = input[idx2]
 
-r7 = r5 < r6                // r7 = input[idx1] < input[idx2]
-r7 = r7 ? r5 : r6           // min = r7 = (input[idx1] < input[idx2]) ? input[idx1] : input[idx2]
-r8 = r5 > r6                // r8 = input[idx1] > input[idx2]
-r8 = r8 ? r5 : r6           // max = r8 = (input[idx1] > input[idx2]) ? input[idx1] : input[idx2]
+    r7 = r5 < r6                // r7 = input[idx1] < input[idx2]
+    r7 = r7 ? r5 : r6           // min = r7 = (input[idx1] < input[idx2]) ? input[idx1] : input[idx2]
+    r8 = r5 > r6                // r8 = input[idx1] > input[idx2]
+    r8 = r8 ? r5 : r6           // max = r8 = (input[idx1] > input[idx2]) ? input[idx1] : input[idx2]
 
-r9 = r3 == r4               // r9 = sign == dir
-o0 = r9 ? r7 : r8           // output = (sign == dir) ? min : max;
+    r9 = r3 == r4               // r9 = sign == dir
+    o0 = r9 ? r7 : r8           // output = (sign == dir) ? min : max;
 }
 }}}
 
