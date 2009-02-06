@@ -98,7 +98,7 @@ r6 = i0[r2]                 // r6 = input[idx2]
 r7 = r5 < r6                // r7 = input[idx1] < input[idx2]
 r7 = r7 ? r5 : r6           // min = r7 = (input[idx1] < input[idx2]) ? input[idx1] : input[idx2]
 r8 = r5 > r6                // r8 = input[idx1] > input[idx2]
-r8 = r8 ? r5 : r6               // max = r8 = (input[idx1] > input[idx2]) ? input[idx1] : input[idx2]
+r8 = r8 ? r5 : r6           // max = r8 = (input[idx1] > input[idx2]) ? input[idx1] : input[idx2]
 
 r9 = r3 == r4               // r9 = sign == dir
 o0 = r9 ? r7 : r8           // output = (sign == dir) ? min : max;
