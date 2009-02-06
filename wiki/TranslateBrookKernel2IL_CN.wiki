@@ -52,16 +52,16 @@ il_ps_2_0
 个IL使用Pixel Shader的方式，版本为2.0版。另外一个可能的IL类型是cs。cs只能用在支持computating shader的显卡上，本文并不会详细介绍。
 == 输入的声明 ==
 细心观察Bitonic排序的kernel，我们可以发现这个kernel有一个输入流，一个输出流和三个常量。这些需要转化为IL中的声明。
-对输出流的声明：
+对输出流的声明，因为只有一个输出流，只需要定义o0一个输出寄存器。IL程序的最终输出结果要写到这个寄存器中。
 {{{
 dcl_output_generic o0
 }}}
-对输入流的声明是一个采样器与一个输入坐标：
+对输入流的声明是一个资源与一个输入坐标，通过输入坐标对资源进行采样可以获得输入流的值
 {{{
 dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
 dcl_input_position_interp(linear_noperspective) v0.xy__
 }}}
-所有的常量都被组织在一个常量缓存中：
+所有的常量都被组织在一个常量缓存中
 {{{
 dcl_cb cb0[3]
 }}}
