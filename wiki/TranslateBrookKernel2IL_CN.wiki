@@ -1,0 +1,43 @@
+#summary 介绍Brook+的kernel到IL的转化方法和优化技巧
+
+= 引言 =
+
+进行GPGPU编程，很多人（包括我在内）会选择从Brook+入手。Brook+的kernel编写是基于C语言的，易于编写和理解，而且Brook+的运行时处理了很多繁琐的细节，使到GPGPU编程变得非常的简单。但是随着设计和应用的深入，Brook+就不再是理想的GPGPU的编程语言了。主要原因有两个：
+# Brook+的运行时效率不高，调用kernel有一定的额外开销，而且无法支持多GPU
+# Brook+的kernel不支持高级的GPU命令，比如本地共享内存和原子操作等
+基于以上的两个原因，CAL就更加适合深入的进行GPGPU开发。因为它暴露更多的显卡特性，允许程序员对GPGPU的资源和流程进行精细的控制。
+
+在进行Brook+编程的时候，所有的Brook+的kernel会由brcc转化成IL。但是，要使用CAL进行GPGPU开发，就必须进行IL的编写。IL是指AMD Intermediate Language。是一种汇编形式的语言。有些人一听到是汇编语言就会感到非常难以理解和编写。实际上并不是这样子。一旦有了Brook+的kernel我们就可以很容易的把它转化为IL并进行优化。本文将会通过一个例子介绍如何把Brook+的kernel转化为IL并且对其进行优化。
+
+= IL开发环境 =
+
+IL代码和大多数的编程语言的代码一样，是纯文本。因此，可以使用任何的文本编辑器进行编写。这里推荐使用AMD提供的一个工具，Stream KernelAnalyzer（以下简称SKA）。这个工具可以在AMD的官方网站上下载得到。GPGPU开发者可以在SKA上进行Brook+内核编写，IL程序编写，甚至是直接的显卡汇编的编写。SKA会对输入的代码进行语法检测和编译，给出对应的在每一个型号的GPU上的汇编码和一些相关的性能分析以供参考。
+
+SKA提供的性能分析可能并不是实际的执行结果，但是却可以为GPGPU开发者提供很好的参考。开发者可以通过设置SKA的显示选项来查看更多的性能参数，在这篇文章里面我们主要关注两个性能参数，Ave Cycle和Throughput。越低的Cycle和越高的Throughput表明GPGPU程序越高效。
+
+= BITONIC的BROOK+实现 =
+在这篇文章里面，我们不会详细介绍Bitonic排序的原理。我们使用Brook+开发包自带的Bitonic排序实现来举例介绍IL的开发。关于Brook+资源分配与调用请参看相关的文档。这里主要关注Brook+的kernel，因为这是Brook+中会被brcc编译器转化为IL的代码。的Brook+中自带的Bitonic排序的kernel代码如下：
+{{{
+kernel void 
+bitonic(float input[], out float output<>, float stageWidth, float offset, float twoOffset)
+{
+    float idx2;
+    float sign, dir;
+    float min, max;
+    float idx1 = (float)instance().x;
+
+    // Either compared with element above or below
+    sign = (fmod(idx1, twoOffset) < offset) ? 1.0f : -1.0f;
+
+    // "Arrow" direction in the bitonic search algorithm (see above reference)
+    dir = (fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f) ? 1.0f: -1.0f;
+
+    // comparing elements idx1 and idx2
+    idx2 = idx1 + sign * offset;
+
+    min = (input[idx1] < input[idx2]) ? input[idx1] : input[idx2];
+    max = (input[idx1] > input[idx2]) ? input[idx1] : input[idx2];
+
+    output = (sign == dir) ? min : max;
+}
+}}}
