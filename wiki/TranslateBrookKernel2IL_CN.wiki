@@ -44,51 +44,51 @@ bitonic(float input[], out float output<>, float stageWidth, float offset, float
 }
 }}}
 
-在Brook+中，这一段C语言的kernel代码会被转化成两个版本的IL，一个是没有进行地址转换的，另一个是进行了地址转换※（Address Translation，以下简称AT）。这两份IL可以在KSA中通过选择不同的function看到。在SKA中，把以上的代码复制到SKA的代码编写区，就可以马上在输出区看到对应的IL代码。并且可以在相关性能分析。我们可以看到在HD3870的显卡上的Ave Cycle为2.38，throughput为2611M Thread/sec，并不是十分的高效。如果使用了AT，效率就更低了，Ave Cycle为13.25，Throughput仅为936M Thread/sec。另一方面，SKA生成的IL有很多冗余的命令，虽然这些冗余在转化为汇编的时候都会被IL编译器优化掉，但是这些冗余却严重影响了程序的可读性。基于效率和可读性的原因，我们需要自己来编写IL。本文除了介绍怎么从上面的Brook+的 kernel转化为IL，还会介绍一些基本优化技巧，把Throughput提升到极限。
+在Brook+中，这一段C语言的kernel代码会被转化成两个版本的IL，一个是没有进行地址转换的，另一个是进行了地址转换※（Address Translation，以下简称AT）。这两份IL可以在KSA中通过选择不同的function看到。在SKA中，把以上的代码复制到SKA的代码编写区，就可以马上在输出区看到对应的IL代码。并且可以在相关性能分析。我们可以看到在HD3870的显卡上的Est. Cycles为4.75，throughput为2611M Thread/sec，并不是十分的高效。如果使用了AT，效率就更低了，Est. Cycles为13.25，Throughput仅为936M Thread/sec。另一方面，SKA生成的IL有很多冗余的命令，虽然这些冗余在转化为汇编的时候都会被IL编译器优化掉，但是这些冗余却严重影响了程序的可读性。基于效率和可读性的原因，我们需要自己来编写IL。本文除了介绍怎么从上面的Brook+的 kernel转化为IL，还会介绍一些基本优化技巧，把Throughput提升到极限。
 
 = 在IL的角度理解Brook+ Kernel =
-一个标准的IL程序由两个个部分组成，分别为声明部分和程序体部分。其中声明部分用于声明IL中会用到的所有资源。包括输入资源，输出寄存器等。程序体部分是一系列的IL指令。这些指令进行一系列的运算，并把最终结果写到输出寄存器。
+一个标准的IL程序由两个个部分组成，分别为声明部分和程序体部分。其中声明部分用于声明IL中会用到的所有资源。包括输入资源，输出寄存器等。程序体部分是一系列的IL指令。GPU通过这些指令进行一系列的运算，并把最终结果写到输出寄存器。
 
-因为IL是一种中间语言，类似于汇编，因此其语法比较简单，每一条IL命令只能完成一个运算操作。因此，为了便于理解，初学者可以先编写Brook+ kernel，然后把Brook+的kernel进行分解，转化成一系列的操作序列。我们可以将其看作为IL的伪代码。因为IL中的不存在变量的概念，只有寄存器的概念，而寄存器是变量名的，所以我们把变量名也用共用寄存器代替了。以下是根据代码1编写的IL伪代码：
+因为IL是一种中间语言，类似于汇编，因此其语法比较简单，每一条IL命令只能完成一个运算操作。因此，为了便于理解，我们需要把Brook+的kernel进行分解，转化成一系列的操作序列。我们可以将其看作为IL的伪代码。因为IL中的不存在变量的概念，只有寄存器的概念，而寄存器是变量名的，所以我们把变量名也用共用寄存器代替了。以下是根据代码1编写的IL伪代码：
 
 `代码2`
 {{{
 [in i0[], out o0<>, c0, c1, c2] //declaration
 {
-    r1 = (float)instance().x;   // idx1 = r1 = (float)instance().x;
+    r1 = instance().x;          // idx1 = r1 = (float)instance().x;
 
-    r3 = r1 % c2                // r3 = fmod(idx1, twoOffset)
-    r3 = r3 < c1                // r3 = fmod(idx1, twoOffset) < offset
-    r3 = r3 ? 1.0f : -1.0f      // sign = r3 = (fmod(idx1, twoOffset) < offset) ? 1.0f : -1.0f;
+    r3 = r1 % cb0[2]            // r3 = fmod(idx1, twoOffset)
+    r3 = r3 < cb0[1]            // r3 = fmod(idx1, twoOffset) < offset
+    r3 = r3 ? 1 : -1            // sign = r3 = (fmod(idx1, twoOffset) < offset) ? 1.0f : -1.0f;
 
-    r4 = r1 / c0                // r4 = idx1 / stageWidth
+    r4 = r1 / cb0[0]            // r4 = idx1 / stageWidth
     r4 = floor(r5)              // r4 = floor(idx1 / stageWidth)
-    r4 = r4 % 2.0f              // r4 = floor(idx1 / stageWidth) % 2.0f
-    r4 = r4 == 0.0f             // r4 = fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f
-    r4 = r4 ? 1.0f : -1.0f      // dir = r4 = (fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f) ? 1.0f: -1.0f
-    r2 = r3 * c1                // r2 = sign * offset;
+    r4 = r4 % 2                 // r4 = floor(idx1 / stageWidth) % 2.0f
+    r4 = r4 == 0                // r4 = fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f
+    r4 = r4 ? 1 : -1            // dir = r4 = (fmod(floor(idx1 / stageWidth), 2.0f) == 0.0f) ? 1.0f: -1.0f
+    r2 = r3 * cb0[1]            // r2 = sign * offset;
     r2 = r2 + r1                // idx2 = r2 = idx1 + sign * offset;
 
     r5 = i0[r1]                 // r5 = input[idx1]
     r6 = i0[r2]                 // r6 = input[idx2]
 
     r7 = r5 < r6                // r7 = input[idx1] < input[idx2]
-    r7 = r7 ? r5 : r6           // min = r7 = (input[idx1] < input[idx2]) ? input[idx1] : input[idx2]
-    r8 = r5 > r6                // r8 = input[idx1] > input[idx2]
-    r8 = r8 ? r5 : r6           // max = r8 = (input[idx1] > input[idx2]) ? input[idx1] : input[idx2]
+    r8 = r7 ? r5 : r6           // min = r8 = (input[idx1] < input[idx2]) ? input[idx1] : input[idx2]
+    r9 = r7 ? r6 : r5           // max = r9 = (input[idx1] < input[idx2]) ? input[idx2] : input[idx1]
 
-    r9 = r3 == r4               // r9 = sign == dir
-    o0 = r9 ? r7 : r8           // output = (sign == dir) ? min : max;
+    r10 = r3 == r4              // r10 = sign == dir
+    o0 = r10 ? r8 : r9          // output = (sign == dir) ? min : max;
 }
 }}}
-细心的读者可能会发现在上面的伪代码中的寄存器在一些指令中被用作为浮点数，在一些指令中被用作为布尔值。实际上，IL是一种无类型的语言。寄存器内数值所代表的类型由操作指令来决定。而不同的指令所消耗的cycle也是不一样的，在GPU中单精度浮点数操作的速度最快，整数操作的速度相对较慢，而双精度浮点数并不是所有的GPU都支持，即使据有GPU支持，效率也不高。这也是为什么Brook+例子中的Bitonic排序全部使用单精度浮点运算。因此这里，我们介绍第一个优化技巧：
+细心的读者会发现在上面的伪代码中的寄存器在一些指令中被用作为浮点数，在一些指令中被用作为布尔值。实际上，IL是一种无类型的语言。寄存器内数值所代表的类型由操作指令来决定。而不同的指令所消耗的cycle也是不一样的，在GPU中单精度浮点数操作的速度最快，整数操作的速度相对较慢，而双精度浮点数并不是所有的GPU都支持，即使据有GPU支持，效率也不高。这也是为什么Brook+例子中的Bitonic排序全部使用单精度浮点运算。因此这里，我们介绍第一个优化技巧：
 
 *在不影响正确性的情况下，尽可能使用单精度浮点数运算。*
 
-然而，这个优化技巧在我们这里并不是完全适用，我们反而要放弃使用浮点数而使用整数。我们这样做的原因有两个：
+然而，这个优化技巧在我们这里并不适用。在这里，我们要放弃使用浮点数而使用整数。我们这样做的原因有两个：
   #使用整数允许我们通过利用位操作来对程序进行优化。我们在后面的部分会介绍如何使用移位操作来代替取模运算来提高速度。
   #单精度浮点数有精度的问题，这个问题会导致在AT的IL中，单精度浮点数无法提供足够的精度来表示大数组的索引。单精度浮点数的尾数位只有23位，对于大于223 = 8388608的数值因为有效小数位不足，无法精确表示。但是在使用AT的情况下，转化后的索引很轻易就会超过这个数值。
 基于以上原因，我们的程序会使用主要使用整数操作。三个传入的常量参数也要以整数方式传入。
+
 = IL声明的编写 =
 == IL的类型与版本 ==
 所有IL中的第一条语句用于声明IL的版本和类型。
@@ -119,12 +119,12 @@ dcl_literal l1, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF
 = IL程序体编写 =
 有了前面的分析，编写的工作就相对简单得多了。我们可以逐行使用IL进行转换。
 == instance()函数 ==
-instance()是Brook+ kernel的一个内置函数，返回的是一个线程的索引。在IL中我们已经定义了输入坐标寄存器v0，在非AT的IL中这个寄存器只有x分量有意义。默认情况下这个x分量中存放的类型是单精度浮点数。这个在GPU中索引序列并没有取整，是以0.5f为起始值，以1.0f为增量的数列（0.5f，1.5f，2.5f……）。因此，要得到取整后的索引，我们需要对其进行处理。处理方法有很多，比如直接减0.5f，floor操作，bias操作，转化成整型。因为我们主要使用整形，因此我们只需要把这个值转化成整形就可以了。
+instance()是Brook+ kernel的一个内置函数，返回的是一个线程的索引。在IL中我们已经定义了输入坐标寄存器v0，在非AT的IL中这个寄存器只有x分量有意义。默认情况下这个x分量中存放的类型是单精度浮点数。这个在GPU中索引序列并没有取整，是以0.5f为起始值，以1.0f为增量的数列（0.5f，1.5f，2.5f……）。因此，要得到取整后的索引，我们需要对其进行处理。处理方法有很多，比如直接减0.5f，floor操作，bias操作，转化成整型。因为我们主要使用整型，因此我们只需要把这个值转化成整型就可以了。
 {{{
 ftoi r1.x___, v0.x000
 }}}
 == 优化取模操作 ==
-接着我们就要对r1进行取模运算了。在IL中提供了两个取模的操作，分别是MOD和UMOD，前者针对浮点数，后者针对整数。其中MOD要比UMOD的效率高很多。因为我们要对整数进行取模，我们就需要使用UMOD，这对性能的影响是很大的。幸好，通过观察，我们发现输入的常量cb0[2]的值是2的N次方。在这个基础上，我们就可以用位操作来代替取模操作。因为，a %b在b为2的N次方的情况下与a&(b-1)是等价的。因此取模操作我们可以写成一次减法与一次按位与，效率大大提高：
+接着我们就要对r1进行取模运算了。在IL中提供了两个取模的操作，分别是MOD和UMOD，前者针对浮点数，后者针对整数。其中MOD要比UMOD的效率高很多。因为我们要对整数进行取模，我们就需要使用UMOD，这对性能的影响是很大的。幸好，通过观察，我们发现输入的常量cb0[2]的值是2的N次方。在这个基础上，我们就可以用位操作来代替取模操作。因为，a %b在b为2的N次方的情况下与a&(b-1)是等价的。因此取模操作我们可以写成一次减法与一次按位与，效率大大提高。
 {{{
 iadd r3.x___, cb0[2].x000, l0.x000              //r3 = cb0[2] - 1
 and r3.x___, r1.x000, r3.x000                   // r3 = r3 & r1
@@ -134,13 +134,148 @@ and r3.x___, r1.x000, r3.x000                   // r3 = r3 & r1
 
 == 问号三目运算符 ==
 对于问号三目运算符的需要分两步。首先要进行比较运算。IL比较操作的单精度版本有LT（小于），GE（大于等于），EQ（等于）和NE（不等）。大于和小于等于可以通过对LT和GE返回值取反获得。我们使用的这些比较运算的整数版本ILT，IGE，IEQ和INE。这些操作符返回值为布尔值TRUE和FALSE。在IL中TRUE定义为0xFFFFFFFF，FALSE定义为0x00000000。
-有了布尔值以后就可以用逻辑运算符进行判断了。IL命令CMOV_LOGICAL可以完成问号三目运算符的操作。通过判断寄存器中布尔值，选择两个输入寄存器的数值输出到目标寄存器中。因此，问号三目运算符被写成以下两条IL命令
+
+有了布尔值以后就可以用逻辑运算符进行判断了。IL命令CMOV_LOGICAL可以完成问号三目运算符的操作。该命令通过判断寄存器中布尔值，选择两个输入寄存器的数值输出到目标寄存器中。因此，问号三目运算符被写成以下两条IL命令。
 {{{
 ilt r3.x___, r3.x000, cb0[1].x000                                // r3 = r3 < cb0[1]
 cmov_logical r3.x___, r3.x000, l0.y000, l0.x000                  // r3 = r3 ? 1 : -1
 }}}
+有一点值得注意的是，在使用CMOV_LOGICAL命令的时候要尽量避免同一个寄存器既是目标寄存器，又是源寄存器。这样会导致IL生成的汇编被添加额外的操作，从而减低性能。实际上，对于所有的命令也都应该避免同一个寄存器既为输入又为输出，这样会可以为IL的编译器提供更多的优化空间。但引入太多的符号会影响IL程序的可读性。因此，在IL编程中，在这两个方面是需要进行一些取舍的。
 
 == 用移位代替乘除法 ==
+接着我们要进行一个整数除法运算IDIV。整数除法的效率比单精度除法DIV的效率低很多。虽然，在非AT的版本我们可以通过类型转换把整型转化为浮点，使用DIV来计算的方法来提高效率，这也是我们提到的第一个优化小技巧。然而，这样做在AT的时候会有精度问题。我们需要有更好的方法。
+观察Bitonic排序的Brook+实现，我们发现被除数stageWidth取值为2，4，8，16……。这是在kernel外，通过计算2的n次方计算得到的。为了进行优化，我们选择不进行乘方计算，直接传入n作为cb0[0]。这样，这个整数除法就可以用移位的方式进行了。这样做，之后的floor操作也可以省略了。这也符合我们提到的第二个优化小技巧。而后面对2取模的运算也可以用与1进行按位与的方式来代替。接着的几个命令就可以写成。
+{{{
+ishr r4.x___, r1.x000, cb0[0].x000
+and r4.x___, r4.x000, l0.y000
+}}}
+== 对输入进行采样 ==
+在我们的程序中我们需要两次读取输入流，其标志是中括号运算符（在Brook+ kernel中是四次，不过在生产汇编的时候，多余的采样操作会被优化掉）。在IL中，我们已经声明了输入的资源了，对输入资源的读取就写成两个采样操作。
+{{{
+sample_resource(0)_sampler(0) r5, v0.x000
+sample_resource(0)_sampler(0) r6, r2.x000
+}}}
+这里有两点需要注意的，首先，因为我们只是一维显存，因此我们只适用寄存器的x分量作为索引。在后面AT的IL中我们就需要用到xy分量了。第二，采样的索引必须为单精度浮点数，而我们一直是用整数的方式计算的，因此在这里我们需要先把r2.x___里面的整数转型为单精度浮点数
+{{{
+itof r2.x___, r2.x000
+}}}
+细心观察的读者还会发现，我们对于r5的采样采用v0做索引，而v0的值不依赖于之前的所有命令，因此实际上这个采样操作可以放在r5被使用前的任何位置。我个人比较喜欢把它放到程序的最开始处。
+
+== 完整的程序（非AT） ==
+经过以上的分析，我们就可以写出完整的程序了。
+{{{
+il_ps_2_0
+dcl_output_generic o0
+dcl_resource_id(0)_type(1d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
+dcl_input_position_interp(linear_noperspective) v0.xy__
+dcl_literal l0, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF
+dcl_cb cb0[3]
+
+sample_resource(0)_sampler(0) r5, v0.x000
+
+ftoi r1.x___, v0.x000
+iadd r3.x___, cb0[2].x000, l0.x000
+and r3.x___, r1.x000, r3.x000
+ilt r3.x___, r3.x000, cb0[1].x000
+cmov_logical r3.x___, r3.x000, l0.y000, l0.x000
+
+ishr r4.x___, r1.x000, cb0[0].x000
+and r4.x___, r4.x000, l0.y000
+ieq r4.x___, r4.x000, l0.z000
+cmov_logical r4.x___, r4.x000, l0.y000, l0.x000
+
+imul r2.x___, r3.x000, cb0[1].x000
+iadd r2.x___, r2.x000, r1.x000
+
+itof r2.x___, r2.x000
+sample_resource(0)_sampler(0) r6, r2.x000
+
+lt r7, r5, r6
+cmov_logical r8, r7, r5, r6
+cmov_logical r9, r7, r6, r5
+
+ieq r10, r3.x000, r4.x000
+cmov_logical o0.x___, r10, r8, r9
+endmain
+end
+}}}
+这个程序的运行结果完全正确。然而我们可以在SKA上看到，经过优化后，这段IL在HD3870的显卡上的Est. Cycles为2.50，throughput为4960M Thread/sec。比原来的生成的IL效率提高了一倍以上。
+
+= 使用地址转换 =
+目前GPU对一维显存的长度有限制，如HD4870上是8192个元素。为了支持更多元素的Bitonic排序，我们需要实现AT技术。Brook+中的AT是自动支持的，brcc会生成一份AT的IL。该AT为每一个AT流多传入两个参数表明其物理的显存的维度（二维显存的高宽）和逻辑显存的维度，我们的Brook+ kernel有一个输入流和一个输出流，都要进行AT。这样，brcc生成的AT的IL输入的常量数就从三个增加到了七个了。
+
+AT的IL会数值计算把物理显存的索引转化为逻辑显存的索引进行计算，然后再把逻辑显存的索引转化为物理显存的索引进行采样操作。这些额外的操作也是导致AT的IL效率比非AT的IL效率低。因为Brook+生成的代码需要考虑各种应用，这是不可避免的。但是，我们的Bitonic排序IL只针对我们的应用。因此，我们可以根据我们自身情况进行优化。在我们的应用中，输入输出流的物理和逻辑维度是一样的，而且物理维度确定是一维的。因此，在我们的IL中只需要输入物理二维显存的宽度就可以了。
+
+AT的IL有一些变化，首先是声明部分。
+{{{
+dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
+dcl_cb cb0[4]
+}}}
+中的2d表明这个输入的资源是以2D的方式进行采样的。采样语句会根据输入寄存器的xy分量进行二维的采样。这个IL定义了4个输入常量，cb0[3].x___的值是二维显存的宽度。
+以下语句把声明的二维单精度索引转化为一维的整型索引
+{{{
+ftoi r1.xy__, v0.xy00
+imul r1._y__, r1.0y00, cb0[3].0x00
+iadd r1.x___, r1.y000, r1.x000
+}}}
+以下语句把一维的整型索引转化为二维的单精度索引，以便进行采样操作：
+{{{
+udiv r2._y__, r2.0x00, cb0[3].0x00
+imul r22.x___, r2.y000, cb0[3].x000_neg(x)
+iadd r2.x___, r2.x000, r22.x000
+}}}
+itof r2, r2
+这里我们也给出AT的IL：
+{{{
+il_ps_2_0
+dcl_output_generic o0
+dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
+dcl_input_position_interp(linear_noperspective) v0.xy__
+dcl_literal l0, 0xFFFFFFFF, 0x00000001, 0x00000000, 0xFFFFFFFF
+dcl_cb cb0[4]
+
+sample_resource(0)_sampler(0) r5, v0.xy00
+
+ftoi r1.xy__, v0.xy00
+imul r1._y__, r1.0y00, cb0[3].0x00
+iadd r1.x___, r1.y000, r1.x000
+
+;r3 = idx1 % offset_2
+iadd r3.x___, cb0[2].x000, l0.x000
+and r3.x___, r1.x000, r3.x000
+ilt r3.x___, r3.x000, cb0[1].x000
+cmov_logical r3.x___, r3.x000, l0.y000, l0.x000
+
+ishr r4.x___, r1.x000, cb0[0].x000
+and r4.x___, r4.x000, l0.y000
+ieq r4.x___, r4.x000, l0.z000
+cmov_logical r4.x___, r4.x000, l0.y000, l0.x000
+
+imul r2.x___, r3.x000, cb0[1].x000
+iadd r2.x___, r2.x000, r1.x000
+
+udiv r2._y__, r2.0x00, cb0[3].0x00
+imul r22.x___, r2.y000, cb0[3].x000_neg(x)
+iadd r2.x___, r2.x000, r22.x000
+itof r2, r2
+
+sample_resource(0)_sampler(0) r6, r2.xy00
+
+lt r7, r5, r6
+cmov_logical r8, r7, r5, r6
+cmov_logical r9, r7, r6, r5
+
+ieq r10, r3.x000, r4.x000
+cmov_logical o0.x___, r10, r8, r9
+
+endmain
+end
+}}}
+这一段AT的IL，在HD3870的显卡上，Est. Cycles为5.50，Throughput为2255 M Thread/sec。也比brcc生成的代码提高了一倍以上的效率。虽然这样，其实这段代码还有优化的空间。观察可以发现，我们使用了IMUL和UDIV的操作。如果可以保证输入的二维显存的宽度为2的n次方，我们还可以继续使用移位操作来代替乘除法。这其实不难做到，因为Bitonic排序必须保证输入显存的长度必须为2的n次方。
+
+= 总结 = 
+本文介绍了怎么根据Brook+的kernel来编写IL并进行一些优化。实际上使用IL编写GPGPU程序并没有想象中那么困难。而通过使用IL，我们可以享受CAL带来的精确灵活的资源管理。
+然而，IL的优化只是GPGPU程序优化的一部分。而往往GPGPU程序的瓶颈存在于数据传输，资源管理等其他方面。对于GPGPU程序优化需要从全局出发。
 
 
 = 待续... =
