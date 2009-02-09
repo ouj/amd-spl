@@ -20,6 +20,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfMFC="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -40,11 +41,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(CALROOT)\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -61,7 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtestd.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(GOOGLETEST_ROOT)\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -116,6 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -134,7 +138,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtest.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -177,15 +183,15 @@
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\..\..\src\StreamCore\CAL\Device.h"
+					RelativePath="..\..\..\src\core\CAL\Device.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\StreamCore\CAL\DeviceManager.h"
+					RelativePath="..\..\..\src\core\CAL\DeviceManager.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\StreamCore\CAL\Runtime.h"
+					RelativePath="..\..\..\src\core\CAL\Runtime.h"
 					>
 				</File>
 			</Filter>
@@ -193,15 +199,15 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\..\src\StreamCore\CAL\Device.cpp"
+					RelativePath="..\..\..\src\core\CAL\Device.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\StreamCore\CAL\DeviceManager.cpp"
+					RelativePath="..\..\..\src\core\CAL\DeviceManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\src\StreamCore\CAL\Runtime.cpp"
+					RelativePath="..\..\..\src\core\CAL\Runtime.cpp"
 					>
 				</File>
 			</Filter>
@@ -218,6 +224,10 @@
 			Name="StressTests"
 			>
 		</Filter>
+		<File
+			RelativePath="..\..\unit\core\TestMain.cpp"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -1,7 +1,8 @@
-// BitonicSortTest.cpp : Defines the entry point for the console application.
+// TestMain.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+#include <stdio.h>
+#include <tchar.h>
 #include "tchar.h"
 #include "gtest\gtest.h"
 
