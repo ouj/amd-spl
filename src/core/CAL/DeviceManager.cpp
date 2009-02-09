@@ -28,6 +28,7 @@ namespace amdspl
 
 			bool DeviceManager::initialize()
 			{
+
 				return true;
 			}
 
