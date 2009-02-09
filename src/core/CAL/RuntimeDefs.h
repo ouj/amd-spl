@@ -1,5 +1,7 @@
-(#ifndef _AMDSPL_RUNTIMEEFS_H_
+#ifndef _AMDSPL_RUNTIMEEFS_H_
 #define _AMDSPL_RUNTIMEEFS_H_
+
+#include "CommonDefs.h"
 
  // A problem that can be handled.
 #define CHECK_CAL_RESULT(result, msg) \
@@ -12,8 +14,13 @@
 #define CAL_RESULT_ERROR(result, msg) \
     if (result != CAL_RESULT_OK) \
 { \
-    fprintf(stderr, msg);
+    fprintf(stderr, (msg)); \
     return false; \
+}
+
+#define LOG_ERROR(msg) \
+{ \
+    fprintf(stderr, (msg)); \
 }
 
 #endif //_AMDSPL_RUNTIMEEFS_H_

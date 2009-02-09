@@ -23,13 +23,15 @@ namespace amdspl
         {
             class ProgramManager
             {
+                friend class Runtime;
             public:
-                Program* loadProgram(Device* device);
+                Program* loadProgram();
                 void unloadPorgram(Program* program);
             protected:
                 std::map<string, Program*> _programCache;
                 ProgramManager();
                 ~ProgramManager();
+                bool initialize();
             };
         }
     }

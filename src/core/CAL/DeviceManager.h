@@ -24,12 +24,8 @@ namespace amdspl
 			class Device;
             class DeviceManager
             {
+                friend class Runtime;
             public:
-				DeviceManager();
-				~DeviceManager();
-
-				bool initialize();
-
                 bool addDevice(unsigned short id = 0, CALdevice device = NULL);
                 unsigned short getDeviceNum();
                 unsigned short getSysDeviceNum();
@@ -41,6 +37,10 @@ namespace amdspl
                 bool setDefaultDevice(unsigned short id);
                 CALdevice* getDeviceHandles();
             protected:
+                DeviceManager();
+                ~DeviceManager();
+                bool initialize();
+
                 // the list of pointers to all the devices, order by device Id. If the device is not initialized, the pointer is set to NULL.
                 std::vector<Device*> _devices;
                 // The number of devices assigned to the SPL.

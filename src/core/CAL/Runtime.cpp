@@ -11,8 +11,10 @@
 #include <stdio.h>
 
 #include "Runtime.h"
-#include "CommonDefs.h"
+#include "RuntimeDefs.h"
 #include "DeviceManager.h"
+#include "BufferManager.h"
+#include "ProgramManager.h"
 #include "amdspl.h"
 
 namespace amdspl
@@ -48,7 +50,7 @@ namespace amdspl
 
             ////////////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief Function regstered in atexit call
+            //! \brief Function registered in atexit call
             //!
             //! A friend function that calls runtime destructor.
             //! This function is called as soon as application exits.
@@ -102,17 +104,49 @@ namespace amdspl
                 }
                 else if (result != CAL_RESULT_OK)
                 {
-                    fprintf(stderr, "Failed to initialize CAL\n");
+                    LOG_ERROR("Failed to initialize CAL\n");
                     return false;
                 }
 
 				//initialize device manager
 				_deviceMgr = new DeviceManager();
+                if (!_deviceMgr->initialize())
+                {
+                    LOG_ERROR("Failed to initialize device manager\n");
+                    SAFE_DELETE(_deviceMgr);
+                    return false;
+                }
 				for (unsigned short i = 0; i < numDevices; i++)
 				{
-					_deviceMgr->addDevice(devices[i].deviceId, devices[i].deviceHandle);
+					if(_deviceMgr->addDevice(devices[i].deviceId, devices[i].deviceHandle))
+                    {
+                        LOG_ERROR("Failed to add device\n");
+                        goto SAFE_DELETE_ALL_ON_ERROR;
+                    }
 				}
+
+                _bufferMgr = new BufferManager();
+                if (!_bufferMgr->initialize())
+                {
+                    LOG_ERROR("Failed to initialize buffer manager\n");
+                    goto SAFE_DELETE_ALL_ON_ERROR;
+                }
+
+                _programMgr = new ProgramManager();
+                if (!_programMgr->initialize())
+                {
+                    LOG_ERROR("Failed to initialize buffer manager\n");
+                    goto SAFE_DELETE_ALL_ON_ERROR;
+                }
+
 				return true;
+
+SAFE_DELETE_ALL_ON_ERROR:
+                SAFE_DELETE(_programMgr);
+                SAFE_DELETE(_bufferMgr);
+                SAFE_DELETE(_deviceMgr);
+                
+                return false;
             }
             
             bool Runtime::destroy()
@@ -123,8 +157,8 @@ namespace amdspl
                 }
 
                 SAFE_DELETE(_deviceMgr);
-                //SAFE_DELETE(_programMgr);
-                //SAFE_DELETE(_bufferMgr);
+                SAFE_DELETE(_programMgr);
+                SAFE_DELETE(_bufferMgr);
                 //SAFE_DELETE(_constBufferPool);
 
                 return true;

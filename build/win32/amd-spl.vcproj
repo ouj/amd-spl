@@ -236,6 +236,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\ConstBuffer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\ConstBufferPool.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\Device.h"
 						>
 					</File>
@@ -245,6 +253,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\Event.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\LocalBuffer.h"
 						>
 					</File>
 					<File
@@ -260,11 +272,19 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\RemoteBuffer.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\Runtime.h"
 						>
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\RuntimeDefs.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\ScatterBuffer.h"
 						>
 					</File>
 				</Filter>
@@ -308,6 +328,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\ConstBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\ConstBufferPool.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\Device.cpp"
 						>
 					</File>
@@ -320,6 +348,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\LocalBuffer.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\Program.cpp"
 						>
 					</File>
@@ -327,15 +359,23 @@
 						RelativePath="..\..\src\core\CAL\ProgramManager.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\RemoteBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\Runtime.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\ScatterBuffer.cpp"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
 				Name="OpenCL"
 				>
-				<File
-					RelativePath="..\..\src\core\CAL\Runtime.cpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Utils"

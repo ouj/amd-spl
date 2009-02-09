@@ -22,10 +22,15 @@ namespace amdspl
             class Buffer;
             class BufferManager
             {
+                friend class Runtime;
             public:
                 void destroyBuffer(Buffer* buffer);
                 Buffer* createLocalBuffer(CALformat format, unsigned int width, unsigned int height = 0);
                 Buffer* createRemoatBuffer(CALformat format, unsigned int width, unsigned int height = 0);
+            protected:
+                BufferManager();
+                ~BufferManager();
+                bool initialize();
             };
         }
     }
