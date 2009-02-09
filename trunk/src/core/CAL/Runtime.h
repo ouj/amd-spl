@@ -15,6 +15,8 @@
 
 namespace amdspl
 {
+    typedef void(*MemoryHandler)();
+
 	struct DEVICE_LIST_ITEM;
     namespace core
     {
@@ -29,7 +31,8 @@ namespace amdspl
             {
             public:
                 static Runtime* getInstance();
-				bool create(DEVICE_LIST_ITEM *devices = 0, unsigned short numDevices = 0);
+				bool virtual create(DEVICE_LIST_ITEM *devices = 0, unsigned short numDevices = 0);
+                bool virtual destroy();
                 DeviceManager* getDeviceManager();
                 ConstBufferPool* getConstBufferPool();
                 BufferManager* getBufferManager();
@@ -43,6 +46,8 @@ namespace amdspl
                 ProgramManager* _programMgr;
                 static Runtime* _runtime;
                 bool _shutdownOnDestroy;
+
+                friend void atExitCleanUp();
             };
         }
     }

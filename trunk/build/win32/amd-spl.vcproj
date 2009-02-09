@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc;..\..\src\Common"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\core\Utils;..\..\src\core\CAL;..\..\src\ILSrc;..\..\src\Common"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\StreamCore\Utils;..\..\src\StreamCore\CAL;..\..\src\ILSrc;..\..\src\Common"
+				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\core\Utils;..\..\src\core\CAL;..\..\src\ILSrc;..\..\src\Common"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE;"
 				RuntimeLibrary="2"
 				WarningLevel="3"
@@ -184,63 +184,63 @@
 					Name="Header Files"
 					>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALBase.h"
+						RelativePath="..\..\src\core\CAL\CALBase.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALBuffer.h"
+						RelativePath="..\..\src\core\CAL\CALBuffer.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALBufferAT.h"
+						RelativePath="..\..\src\core\CAL\CALBufferAT.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALBufferMgr.h"
+						RelativePath="..\..\src\core\CAL\CALBufferMgr.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALConstArrayBuffer.h"
+						RelativePath="..\..\src\core\CAL\CALConstArrayBuffer.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALConstBuffer.h"
+						RelativePath="..\..\src\core\CAL\CALConstBuffer.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALConstBufferDef.h"
+						RelativePath="..\..\src\core\CAL\CALConstBufferDef.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALDevice.h"
+						RelativePath="..\..\src\core\CAL\CALDevice.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALProgram.h"
+						RelativePath="..\..\src\core\CAL\CALProgram.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALProgramDef.h"
+						RelativePath="..\..\src\core\CAL\CALProgramDef.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.h"
+						RelativePath="..\..\src\core\CAL\CALRuntime.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\Device.h"
+						RelativePath="..\..\src\core\CAL\Device.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\DeviceManager.h"
+						RelativePath="..\..\src\core\CAL\DeviceManager.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\Runtime.h"
+						RelativePath="..\..\src\core\CAL\Runtime.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\RuntimeDefs.h"
+						RelativePath="..\..\src\core\CAL\RuntimeDefs.h"
 						>
 					</File>
 				</Filter>
@@ -248,43 +248,39 @@
 					Name="Source Files"
 					>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALBuffer.cpp"
+						RelativePath="..\..\src\core\CAL\CALBuffer.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALBufferAT.cpp"
+						RelativePath="..\..\src\core\CAL\CALBufferAT.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALBufferMgr.cpp"
+						RelativePath="..\..\src\core\CAL\CALBufferMgr.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALConstArrayBuffer.cpp"
+						RelativePath="..\..\src\core\CAL\CALConstArrayBuffer.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALDevice.cpp"
+						RelativePath="..\..\src\core\CAL\CALDevice.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALProgram.cpp"
+						RelativePath="..\..\src\core\CAL\CALProgram.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\CALRuntime.cpp"
+						RelativePath="..\..\src\core\CAL\CALRuntime.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\Device.cpp"
+						RelativePath="..\..\src\core\CAL\Device.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\CAL\DeviceManager.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\StreamCore\CAL\Runtime.cpp"
+						RelativePath="..\..\src\core\CAL\DeviceManager.cpp"
 						>
 					</File>
 				</Filter>
@@ -292,6 +288,10 @@
 			<Filter
 				Name="OpenCL"
 				>
+				<File
+					RelativePath="..\..\src\core\CAL\Runtime.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Utils"
@@ -300,11 +300,11 @@
 					Name="Header Files"
 					>
 					<File
-						RelativePath="..\..\src\StreamCore\Utils\CommonDefs.h"
+						RelativePath="..\..\src\core\Utils\CommonDefs.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\StreamCore\Utils\Utility.h"
+						RelativePath="..\..\src\core\Utils\Utility.h"
 						>
 					</File>
 					<File
@@ -316,7 +316,7 @@
 					Name="Source Files"
 					>
 					<File
-						RelativePath="..\..\src\StreamCore\Utils\Utility.cpp"
+						RelativePath="..\..\src\core\Utils\Utility.cpp"
 						>
 					</File>
 				</Filter>
