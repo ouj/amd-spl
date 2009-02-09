@@ -4313,8 +4313,8 @@
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">16</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">152</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">177</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">82</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">479</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">95</XPD:ATTR>
 <XPD:REF name="Model">T4IS1tTw9UaWQoSJdjo9HgAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="CBVT1NsweESw0CClQHlouAAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="Z23808h+IUK3G9yMd3nsgwAA">
@@ -4356,6 +4356,24 @@
 <XPD:REF name="Views[5]">4bA3xVnPrUWvyS/v2WdW8gAA</XPD:REF>
 <XPD:REF name="Views[6]">EXVEYM4gkEGMcLvI2uN64wAA</XPD:REF>
 <XPD:REF name="Views[7]">vil9ley5lE6262Z8cAFyUQAA</XPD:REF>
+<XPD:ATTR name="#Operations" type="integer">1</XPD:ATTR>
+<XPD:OBJ name="Operations[0]" type="UMLOperation" guid="LQVkx+1ZzEeLUUPuCCJPRQAA">
+<XPD:ATTR name="Name" type="string">DEVICE_LIST_ITEM</XPD:ATTR>
+<XPD:ATTR name="StereotypeProfile" type="string">UMLStandard</XPD:ATTR>
+<XPD:ATTR name="StereotypeName" type="string">create</XPD:ATTR>
+<XPD:REF name="Owner">T4IS1tTw9UaWQoSJdjo9HgAA</XPD:REF>
+<XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="NYrPmYSCd0iWu9MqhDmYRAAA">
+<XPD:ATTR name="Name" type="string">unsigned short deviceId</XPD:ATTR>
+<XPD:ATTR name="DefaultValue" type="string">0</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">LQVkx+1ZzEeLUUPuCCJPRQAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="E/P5/lRBYUaR7xOj8AMYnwAA">
+<XPD:ATTR name="Name" type="string">CALdevice deviceHandle</XPD:ATTR>
+<XPD:ATTR name="DefaultValue" type="string">NULL</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">LQVkx+1ZzEeLUUPuCCJPRQAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
 <XPD:ATTR name="#Associations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Associations[0]">DvdzPyWC3kuvIL2Mztw2BwAA</XPD:REF>
 <XPD:ATTR name="#Attributes" type="integer">2</XPD:ATTR>
@@ -4437,7 +4455,7 @@
 <XPD:REF name="Views[0]">4ItRgiYXR0uO8niet2ZVoAAA</XPD:REF>
 <XPD:ATTR name="#OwnedDiagrams" type="integer">5</XPD:ATTR>
 <XPD:OBJ name="OwnedDiagrams[0]" type="UMLClassDiagram" guid="g3QtHYrJjkGNi88EEtp4RgAA">
-<XPD:ATTR name="Name" type="string">Cal Runtime</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Runtime structure</XPD:ATTR>
 <XPD:REF name="DiagramOwner">Z+uNfP+9gUW+HJWmaTH3qQAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLClassDiagramView" guid="bb0Snuogdkigv7FrYBvVjgAA">
 <XPD:REF name="Diagram">g3QtHYrJjkGNi88EEtp4RgAA</XPD:REF>
