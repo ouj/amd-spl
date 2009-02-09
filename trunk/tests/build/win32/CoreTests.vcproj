@@ -40,6 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(CALROOT)\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -175,10 +176,34 @@
 			<Filter
 				Name="Header Files"
 				>
+				<File
+					RelativePath="..\..\..\src\StreamCore\CAL\Device.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\StreamCore\CAL\DeviceManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\StreamCore\CAL\Runtime.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
 				>
+				<File
+					RelativePath="..\..\..\src\StreamCore\CAL\Device.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\StreamCore\CAL\DeviceManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\StreamCore\CAL\Runtime.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

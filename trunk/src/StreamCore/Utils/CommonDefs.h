@@ -10,9 +10,6 @@
 #endif
 #endif
 
-// MACROS
-#define MaxRank 4
-
 // Something that can be handled
 #define CHECK_CONDITION(condition, msg) \
 if (!(condition)) \
