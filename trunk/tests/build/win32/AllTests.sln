@@ -8,6 +8,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SortingTest", "SortingTest.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "amd-spl", "..\..\..\build\win32\amd-spl.vcproj", "{C5BAC133-6111-477D-BA55-269A2B5A5C20}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{57A795B5-8D31-4418-A381-84C0D4D0B2C3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreTests", "CoreTests.vcproj", "{CF1D0A27-48F3-44B6-B5E7-CA27878C0046}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +26,10 @@ Global
 		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Debug|Win32.Build.0 = Debug|Win32
 		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|Win32.ActiveCfg = Release|Win32
 		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|Win32.Build.0 = Release|Win32
+		{CF1D0A27-48F3-44B6-B5E7-CA27878C0046}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CF1D0A27-48F3-44B6-B5E7-CA27878C0046}.Debug|Win32.Build.0 = Debug|Win32
+		{CF1D0A27-48F3-44B6-B5E7-CA27878C0046}.Release|Win32.ActiveCfg = Release|Win32
+		{CF1D0A27-48F3-44B6-B5E7-CA27878C0046}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
