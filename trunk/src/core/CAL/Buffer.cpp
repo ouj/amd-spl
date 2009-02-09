@@ -62,9 +62,9 @@ namespace amdspl
             
             }
             
-            void Buffer::initializa()
+            bool Buffer::initialize()
             {
-            
+                return true;
             }
             
             void Buffer::getCPUPointer()

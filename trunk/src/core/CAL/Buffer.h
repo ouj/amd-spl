@@ -22,8 +22,8 @@ namespace amdspl
             class Buffer
             {
             public:
-                void readData(void *ptr, unsigned int size);
-                void writeData(void *ptr, unsigned int size);
+                virtual void readData(void *ptr, unsigned int size);
+                virtual void writeData(void *ptr, unsigned int size);
                 void getResHandle();
                 void getFormat();
                 void getPitch();
@@ -37,7 +37,7 @@ namespace amdspl
                 unsigned int _width;
                 unsigned int _height;
                 Buffer(CALformat format, unsigned int width, unsigned int height = 0);
-                void initializa();
+                bool initialize();
                 void getCPUPointer();
                 void releaseCPUPointer();
             };

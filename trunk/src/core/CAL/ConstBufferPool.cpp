@@ -2,16 +2,15 @@
 //
 //
 //  @ Project : AMD-SPL
-//  @ File Name : ProgramManager.cpp
+//  @ File Name : ConstBufferPool.cpp
 //  @ Date : 2009/2/9
 //  @ Author : Jiawei Ou
 //
 //
 
 
-#include "ProgramManager.h"
-#include "Program.h"
-#include "CommonDefs.h"
+#include "ConstBufferPool.h"
+#include "RuntimeDefs.h"
 
 namespace amdspl
 {
@@ -19,30 +18,26 @@ namespace amdspl
     {
         namespace cal
         {
-            Program* ProgramManager::loadProgram()
+            ConstBuffer* ConstBufferPool::getConstBuffer(int size)
             {
                 return NULL;
             }
             
-            void ProgramManager::unloadPorgram(Program* program)
+            void ConstBufferPool::releaseConstBuffer(ConstBuffer* constBuf)
             {
             
             }
             
-            ProgramManager::ProgramManager()
+            ConstBufferPool::~ConstBufferPool()
             {
             
             }
             
-            ProgramManager::~ProgramManager()
+            ConstBufferPool::ConstBufferPool()
             {
             
             }
             
-            bool ProgramManager::initialize()
-            {
-                return true;
-            }
         }
     }
 }

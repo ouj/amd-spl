@@ -18,6 +18,21 @@ namespace amdspl
     {
         namespace cal
         {
+            BufferManager::BufferManager()
+            {
+
+            }
+            
+            BufferManager::~BufferManager()
+            {
+
+            }
+            
+            bool BufferManager::initialize()
+            {
+                return true;
+            }
+
             void BufferManager::destroyBuffer(Buffer* buffer)
             {
             
