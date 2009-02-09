@@ -1,0 +1,11 @@
+#ifndef _AMDSPL_DEFS_H_
+#define _AMDSPL_DEFS_H_
+
+enum SPL_ERROR
+{
+	SPL_RESULT_OK = 0,
+	SPL_RESULT_ERROR,
+	SPL_RESULT_NOT_INITIALIZED
+};
+
+#endif //_AMDSPL_DEFS_H_

@@ -18,6 +18,7 @@
 
 
 #include "cal.h"
+#include "SPLDefs.h"
 
 #ifdef AMD_SPL_EXPORT
 #define SPL_EXPORT __declspec(dllexport)
@@ -43,8 +44,8 @@ namespace amdspl
     class SPL_EXPORT AmdSpl
     {
     public:
-        static bool InitializeSPL(DEVICE_LIST_ITEM *devices = 0, unsigned short numDevices = 0, int defaultDeviceIdx = 0);
-        static bool CleanupSPL();
+        static SPL_ERROR InitializeSPL(DEVICE_LIST_ITEM *devices = 0, unsigned short numDevices = 0, int defaultDeviceIdx = 0);
+        static SPL_ERROR CleanupSPL();
     };
 }
 
