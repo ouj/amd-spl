@@ -184,6 +184,14 @@
 					Name="Header Files"
 					>
 					<File
+						RelativePath="..\..\src\core\CAL\Buffer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\BufferManager.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\CALBase.h"
 						>
 					</File>
@@ -236,6 +244,22 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\Event.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\Program.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\ProgramInfo.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\ProgramManager.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\Runtime.h"
 						>
 					</File>
@@ -247,6 +271,14 @@
 				<Filter
 					Name="Source Files"
 					>
+					<File
+						RelativePath="..\..\src\core\CAL\Buffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\BufferManager.cpp"
+						>
+					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\CALBuffer.cpp"
 						>
@@ -281,6 +313,18 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\DeviceManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\Event.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\Program.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\CAL\ProgramManager.cpp"
 						>
 					</File>
 				</Filter>
