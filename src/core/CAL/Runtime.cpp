@@ -15,6 +15,7 @@
 #include "DeviceManager.h"
 #include "BufferManager.h"
 #include "ProgramManager.h"
+#include "ConstBufferPool.h"
 #include "amdspl.h"
 
 namespace amdspl
@@ -48,27 +49,6 @@ namespace amdspl
                 std::set_new_handler(handler);
             }
 
-            ////////////////////////////////////////////////////////////////////////////////
-            //!
-            //! \brief Function registered in atexit call
-            //!
-            //! A friend function that calls runtime destructor.
-            //! This function is called as soon as application exits.
-            //!
-            ////////////////////////////////////////////////////////////////////////////////
-
-            void
-                atExitCleanUp()
-            {
-                Runtime*& runtime = Runtime::_runtime;
-                if (runtime != NULL)
-                {
-                    delete runtime;
-                    runtime = NULL;
-                }
-            }
-
-
 			Runtime* Runtime::_runtime = 0;
             Runtime* Runtime::getInstance()
             {
@@ -81,14 +61,23 @@ namespace amdspl
                     }
 
 					_runtime = new Runtime();
-                    atexit(atExitCleanUp);
+                    assert(_runtime);
+                    if (_runtime)
+                    {
+                        if(!_runtime->create())
+                        {
+                            SAFE_DELETE(_runtime);
+                            return NULL;
+                        }
+                        atexit(destroy); //Function registered in atexit call
+                    } 
 				}
 				return _runtime;
             }
             
-            bool Runtime::create(DEVICE_LIST_ITEM *devices, unsigned short numDevices)
+            bool Runtime::create()
             {
-				assert(!_runtime);
+				assert(_runtime);
 				if (!_runtime)
 				{
 					return false;
@@ -113,17 +102,8 @@ namespace amdspl
                 if (!_deviceMgr->initialize())
                 {
                     LOG_ERROR("Failed to initialize device manager\n");
-                    SAFE_DELETE(_deviceMgr);
-                    return false;
+                    goto SAFE_DELETE_ALL_ON_ERROR;
                 }
-				for (unsigned short i = 0; i < numDevices; i++)
-				{
-					if(_deviceMgr->addDevice(devices[i].deviceId, devices[i].deviceHandle))
-                    {
-                        LOG_ERROR("Failed to add device\n");
-                        goto SAFE_DELETE_ALL_ON_ERROR;
-                    }
-				}
 
                 _bufferMgr = new BufferManager();
                 if (!_bufferMgr->initialize())
@@ -139,29 +119,27 @@ namespace amdspl
                     goto SAFE_DELETE_ALL_ON_ERROR;
                 }
 
+                _constBufferPool = new ConstBufferPool();
+
 				return true;
 
 SAFE_DELETE_ALL_ON_ERROR:
                 SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_bufferMgr);
                 SAFE_DELETE(_deviceMgr);
+                SAFE_DELETE(_constBufferPool);
                 
                 return false;
             }
             
-            bool Runtime::destroy()
+            void Runtime::destroy()
             {
-                if (_shutdownOnDestroy)
+                Runtime*& runtime = Runtime::_runtime;
+                if (runtime != NULL)
                 {
-                    calShutdown();
+                    delete runtime;
+                    runtime = NULL;
                 }
-
-                SAFE_DELETE(_deviceMgr);
-                SAFE_DELETE(_programMgr);
-                SAFE_DELETE(_bufferMgr);
-                //SAFE_DELETE(_constBufferPool);
-
-                return true;
             }
 
             DeviceManager* Runtime::getDeviceManager()
@@ -191,12 +169,19 @@ SAFE_DELETE_ALL_ON_ERROR:
 			Runtime::Runtime() : _programMgr(0), _bufferMgr(0), 
 				_deviceMgr(0), _constBufferPool(0)
             {
-            
             }
             
             Runtime::~Runtime()
             {
-                destroy();
+                if (_shutdownOnDestroy)
+                {
+                    calShutdown();
+                }
+
+                SAFE_DELETE(_deviceMgr);
+                SAFE_DELETE(_programMgr);
+                SAFE_DELETE(_bufferMgr);
+                SAFE_DELETE(_constBufferPool);
             }
             
         }

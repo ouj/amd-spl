@@ -10,21 +10,29 @@
 #endif
 #endif
 
-// MACROS
-#define MaxRank 4
+#define SAFE_DELETE(ptr) \
+    if ((ptr) != NULL) \
+{ \
+    delete ptr; \
+    ptr = NULL; \
+}
+
+#define LOG_ERROR(msg) \
+{ \
+    fprintf(stderr, (msg)); \
+}
+
+#define LOG_TRACE(msg) \
+{\
+    fprintf(stdout, (msg)); \
+}
 
 // Something that can be handled
 #define CHECK_CONDITION(condition, msg) \
 if (!(condition)) \
 { \
+    fprintf(stderr, (msg)); \
     return false; \
-}
-
-#define SAFE_DELETE(ptr) \
-if ((ptr) != NULL) \
-{ \
-    delete ptr; \
-    ptr = NULL; \
 }
 
 // An error

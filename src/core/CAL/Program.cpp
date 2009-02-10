@@ -64,7 +64,7 @@ namespace amdspl
 
             Event Program::run(CALdomain domain)
             {
-                return Event();
+                return Event(NULL);
             }
             
         }

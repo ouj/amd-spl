@@ -12,6 +12,9 @@
 #include "AmdSpl.h"
 #include "CommonDefs.h"
 #include "Runtime.h"
+#include "DeviceManager.h"
+
+using namespace amdspl::core::cal;
 
 namespace amdspl
 {
@@ -30,17 +33,21 @@ namespace amdspl
     //////////////////////////////////////////////////////////////////////////
     SPL_ERROR AmdSpl::InitializeSPL(DEVICE_LIST_ITEM *devices, unsigned short numDevices, int defaultDeviceIdx)
     {
-        core::cal::Runtime* runtime = core::cal::Runtime::getInstance();
+        Runtime* runtime = Runtime::getInstance();
         if (runtime == NULL)
             return SPL_RESULT_ERROR;
-
-        if (runtime->create(devices, numDevices))
-        {
-            return SPL_RESULT_OK;
-        }
         else
         {
-            return SPL_RESULT_NOT_INITIALIZED;
+            DeviceManager* pDeviceMgr = runtime->getDeviceManager();
+            for (unsigned short i = 0; i < numDevices; i++)
+            {
+                if(!pDeviceMgr->addDevice(devices[i].deviceId, devices[i].deviceHandle))
+                {
+                    CleanupSPL();
+                    return SPL_RESULT_ERROR;
+                }
+            }
+            return SPL_RESULT_OK;
         }
     }
     
@@ -52,6 +59,7 @@ namespace amdspl
     //////////////////////////////////////////////////////////////////////////
     SPL_ERROR AmdSpl::CleanupSPL()
     {
+        Runtime::destroy();
         return SPL_RESULT_OK;
     }
     
