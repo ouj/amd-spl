@@ -1,4 +1,5 @@
 #summary 介绍Brook+的kernel到IL的转化方法和优化技巧
+#labels Featured,Phase-Implementation
 
 = 草稿 1.0 =
 
