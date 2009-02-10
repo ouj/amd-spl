@@ -2,12 +2,11 @@
 
 = Introduction =
 
-Add your content here.
+Currently, to develop the AMD-SPL, developers need to use the AMD CAL(compute abstraction layer) to do GPGPU. In our SPL, we have a SPL runtime that encapsulate the CAL function calls that needed to do AMD-SPL development. 
 
+The runtime we developed try to make CAL development easier. However, there is no obligation for a SPL developer to always use the SPL runtime. Since SPL runtime will also expose everything that is needed to make a CAL function call, a developer can easily switch to using pure CAL functions when SPL runtime cannot satisfy his need. 
 
-= Details =
+= Runtime initialization =
+The SPL runtime uses the singleton design parttern. It is initialized when the user call AmdSpl::InitializeSPL(). In AmdSpl::InitializeSPL(), a Runtime object is created, can its Runtime::intialize() method is called. In the Runtime::intialize() method, the following things are done:
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== CAL initialization ==
