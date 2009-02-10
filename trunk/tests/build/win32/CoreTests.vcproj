@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
+				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -96,7 +96,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
@@ -119,7 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
+				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -179,42 +179,74 @@
 		<Filter
 			Name="core"
 			>
-			<Filter
-				Name="Header Files"
+			<File
+				RelativePath="..\..\..\src\amdspl.cpp"
 				>
-				<File
-					RelativePath="..\..\..\src\core\CAL\Device.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\core\CAL\DeviceManager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\core\CAL\Runtime.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Source Files"
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Buffer.cpp"
 				>
-				<File
-					RelativePath="..\..\..\src\core\CAL\Device.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\core\CAL\DeviceManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\src\core\CAL\Runtime.cpp"
-					>
-				</File>
-			</Filter>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\BufferManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ConstBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ConstBufferPool.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Device.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\DeviceManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Event.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\LocalBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Program.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ProgramManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\RemoteBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Runtime.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ScatterBuffer.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="AccuracyTests"
 			>
+			<File
+				RelativePath="..\..\unit\core\InitCleanupTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\RuntimeTests.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Failure Tests"
@@ -224,8 +256,20 @@
 			Name="StressTests"
 			>
 		</Filter>
+		<Filter
+			Name="Fixtures"
+			>
+			<File
+				RelativePath="..\..\unit\core\RuntimeTestFixture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\RuntimeTestFixture.h"
+				>
+			</File>
+		</Filter>
 		<File
-			RelativePath="..\..\unit\core\TestMain.cpp"
+			RelativePath="..\..\unit\TestMain.cpp"
 			>
 		</File>
 	</Files>

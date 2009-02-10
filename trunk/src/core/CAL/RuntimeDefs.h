@@ -18,9 +18,4 @@
     return false; \
 }
 
-#define LOG_ERROR(msg) \
-{ \
-    fprintf(stderr, (msg)); \
-}
-
 #endif //_AMDSPL_RUNTIMEEFS_H_

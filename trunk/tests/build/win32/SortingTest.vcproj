@@ -237,7 +237,7 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\..\unit\sorting\TestMain.cpp"
+			RelativePath="..\..\unit\TestMain.cpp"
 			>
 		</File>
 	</Files>

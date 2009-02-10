@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _BITONIC_SORT_TEST_H_
+#define _BITONIC_SORT_TEST_H_
+
 #include "gtest\gtest.h"
 #include "SplBitonicSort.h"
 
@@ -17,3 +19,4 @@ public:
 private:
     static bool                     m_Fatal;
 };
+#endif

@@ -9,6 +9,9 @@
 //
 
 #include "DeviceManager.h"
+#include "CommonDefs.h"
+#include "Device.h"
+#include <cassert>
 
 namespace amdspl
 {
@@ -28,12 +31,27 @@ namespace amdspl
 
 			bool DeviceManager::initialize()
 			{
+                // Get device count and initialize them
+                calDeviceGetCount(&_sysDevicesNum);
+                CHECK_CONDITION(_sysDevicesNum > 0, "No CAL devices available \n");
+
+                _devices.resize(_sysDevicesNum, NULL); //initialize the list.
 
 				return true;
 			}
 
-            bool DeviceManager::addDevice(unsigned short id, CALdevice device)
+            bool DeviceManager::addDevice(unsigned short id, CALdevice deviceHandle)
             {
+                Device* pDevice = new Device(id, deviceHandle);
+                assert(pDevice);
+                CHECK_CONDITION(pDevice, "Failed to create the device object\n");
+
+                if (!pDevice->initialize())
+                {
+                    fprintf(stderr, "Failed to initialize the device, Device Id %d", id);
+                    SAFE_DELETE(pDevice);
+                }
+
 				return true;
             }
             

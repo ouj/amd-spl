@@ -22,6 +22,7 @@ namespace amdspl
         {
             class ConstBufferPool
             {
+                friend class Runtime;
             public:
                 ConstBuffer* getConstBuffer(int size);
                 void releaseConstBuffer(ConstBuffer* constBuf);
