@@ -1,4 +1,5 @@
 #summary AMD Stream Programming Library
+#labels Featured
 [http://www.jiawei-ou.com/Image/amd-spl.gif]
 == Introduction ==
 
