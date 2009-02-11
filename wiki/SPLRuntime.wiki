@@ -4,6 +4,9 @@
 
 The CAL runtime provide GPGPU service to the entire SPL. It is a wrapper of the underlying CAL function call. 
 
+= UML class Diagram =
+[http://i671.photobucket.com/albums/vv74/ojavax/AMD-SPL/DeviceManagement.jpg]
+
 = Runtime initialization =
 CAL runtime uses the singleton design parttern. `Runtime::getInstance()` is used to get the pointer of Runtime instance. In `AmdSpl::Initailized()`, `Runtime::getInstance()` is called, then a Runtime instance is created and its `Runtime::create()` method is called. In the `Runtime::create()` method, the following things are done:
 
