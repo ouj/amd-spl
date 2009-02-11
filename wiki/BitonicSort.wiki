@@ -1,4 +1,5 @@
 #summary Bitonic Sort one of the sorting algorithm in amd-spl project
+#labels Deprecated
 
 = Introduction =
 
