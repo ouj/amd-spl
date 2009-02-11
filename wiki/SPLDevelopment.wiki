@@ -2,7 +2,7 @@
 
 = Introduction =
 
-If you are interested in understanding the internals of AMD-SPL, building from source, or contributing ideas or modifications to the project, then this document is for you. 
+If you are interested in contributing ideas or modifications to the project, then this document is for you. 
 
 Currently, to develop the AMD-SPL, developers need to use the AMD CAL(compute abstraction layer) to do GPGPU. In our SPL, we have a [SPLRuntime runtime] that encapsulate the CAL function calls that needed to do AMD-SPL development. 
 
@@ -11,12 +11,8 @@ The runtime we developed try to make CAL development easier. However, there is n
 == Discussing AMD-SPL ==
 As always, discuss AMD-SPL in the official [http://groups.google.com/group/amd-spl AMD-SPL discussion group]. You don't have to actually submit code in order to sign up. Your participation itself is a valuable contribution. 
 
-== Try to Be Friendly ==
-We strongly encourage everyone participating in AMD-SPL development to join us in accepting nothing less. Of course, being courteous is not the same as failing to constructively disagree with each other, but it does mean that we should be respectful of each other when enumerating technical reasons that a particular proposal may not be the best choice. There's never a reason to be antagonistic or dismissive toward anyone who is sincerely trying to contribute to a discussion. 
-
 = Writing AMD-SPL code =
 == contribute to the runtime ==
 Currently, the runtime is still not stable. we don't allow developers to do modification to the runtime. However, developers can still check out the runtime and read the code. If you have some ideas to improve the runtime, feel free to raise an issue in the issues tag. We would like discuss it.
-
 
 == contribute to the algorithm library ==
