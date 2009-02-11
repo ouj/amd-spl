@@ -49,6 +49,9 @@ namespace amdspl
                 CALuint         _sysDevicesNum;
                 // The id of default device
                 unsigned short  _defaultDeviceId;
+            private:
+                // The list of device handle, used by BufferManager to Create remote buffer.
+                std::vector<CALdevice> _deviceHandles;
             };
         }
     }

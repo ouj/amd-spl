@@ -13,6 +13,7 @@
 #include "CommonDefs.h"
 #include "Runtime.h"
 #include "DeviceManager.h"
+#include <cassert>
 
 using namespace amdspl::core::cal;
 
@@ -33,6 +34,16 @@ namespace amdspl
     //////////////////////////////////////////////////////////////////////////
     SPL_ERROR AmdSpl::InitializeSPL(DEVICE_LIST_ITEM *devices, unsigned short numDevices, int defaultDeviceIdx)
     {
+        if (!devices)
+        {
+            return SPL_RESULT_INVALID_ARGUMENT;
+        }
+
+        if (numDevices <= 0)
+        {
+            return SPL_RESULT_INVALID_ARGUMENT;
+        }
+
         Runtime* runtime = Runtime::getInstance();
         if (runtime == NULL)
             return SPL_RESULT_ERROR;
