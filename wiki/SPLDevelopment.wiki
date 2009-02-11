@@ -15,3 +15,8 @@ As always, discuss AMD-SPL in the official [http://groups.google.com/group/amd-s
 We strongly encourage everyone participating in AMD-SPL development to join us in accepting nothing less. Of course, being courteous is not the same as failing to constructively disagree with each other, but it does mean that we should be respectful of each other when enumerating technical reasons that a particular proposal may not be the best choice. There's never a reason to be antagonistic or dismissive toward anyone who is sincerely trying to contribute to a discussion. 
 
 = Writing AMD-SPL code =
+== contribute to the runtime ==
+Currently, the runtime is still not stable. we don't allow developers to do modification to the runtime. However, developers can still check out the runtime and read the code. If you have some ideas to improve the runtime, feel free to raise an issue in the issues tag. We would like discuss it.
+
+
+== contribute to the algorithm library ==
