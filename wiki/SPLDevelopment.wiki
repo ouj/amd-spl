@@ -9,7 +9,9 @@ Currently, to develop the AMD-SPL, developers need to use the AMD CAL(compute ab
 The runtime we developed try to make CAL development easier. However, there is no obligation for a SPL developer to always use the SPL runtime, a developer can also uses pure CAL functions when SPL runtime cannot satisfy her/his need. 
 
 == Discussing AMD-SPL ==
-As always, discuss AMD-SPL in the official AMD-SPL discussion group. You don't have to actually submit code in order to sign up. Your participation itself is a valuable contribution. 
+As always, discuss AMD-SPL in the official [http://groups.google.com/group/amd-spl AMD-SPL discussion group]. You don't have to actually submit code in order to sign up. Your participation itself is a valuable contribution. 
 
-== Please Be Friendly ==
-We strongly encourage everyone participating in AMD-SPL development to join us in accepting nothing less. Of course, being courteous is not the same as failing to constructively disagree with each other, but it does mean that we should be respectful of each other when enumerating the 42 technical reasons that a particular proposal may not be the best choice. There's never a reason to be antagonistic or dismissive toward anyone who is sincerely trying to contribute to a discussion. 
+== Try to Be Friendly ==
+We strongly encourage everyone participating in AMD-SPL development to join us in accepting nothing less. Of course, being courteous is not the same as failing to constructively disagree with each other, but it does mean that we should be respectful of each other when enumerating technical reasons that a particular proposal may not be the best choice. There's never a reason to be antagonistic or dismissive toward anyone who is sincerely trying to contribute to a discussion. 
+
+= Writing AMD-SPL code =
