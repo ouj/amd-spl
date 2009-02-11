@@ -7,6 +7,4 @@ Currently, to develop the AMD-SPL, developers need to use the AMD CAL(compute ab
 The runtime we developed try to make CAL development easier. However, there is no obligation for a SPL developer to always use the SPL runtime. Since SPL runtime will also expose everything that is needed to make a CAL function call, a developer can easily switch to using pure CAL functions when SPL runtime cannot satisfy his need. 
 
 = Runtime initialization =
-The SPL runtime uses the singleton design parttern. It is initialized when the user call AmdSpl::InitializeSPL(). In AmdSpl::InitializeSPL(), a Runtime object is created, can its Runtime::intialize() method is called. In the Runtime::intialize() method, the following things are done:
-
-== CAL initialization ==
+The SPL runtime uses the singleton design parttern. It is initialized when the user call AmdSpl::InitializeSPL(). 
