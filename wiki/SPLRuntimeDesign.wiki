@@ -1,0 +1,10 @@
+#summary The design and behaviour of the SPL runtime
+
+= Runtime initialization =
+
+In AmdSpl::InitializeSPL(), a Runtime object is created, can its Runtime::create() method is called. In the Runtime::create() method, the following things are done:
+
+== CAL initialization ==
+the Runtime::create() method will call calInit() to initialize the CAL. If calInit() returns CAL_RESULT_OK, that means CAL is initialized successfully, and the SPL is responsible for its shutdown at exit. If calInit() returns CAL_RESULT_ALREADY, that means CAL is already initialized somewhere else in the same program. Then the SPL will not call calShutdown at exit.
+
+== Create manager classes ==
