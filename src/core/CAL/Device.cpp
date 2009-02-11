@@ -12,6 +12,7 @@
 #include "Device.h"
 #include "RuntimeDefs.h"
 #include <cassert>
+#include <stdio.h>
 
 namespace amdspl
 {
@@ -20,41 +21,50 @@ namespace amdspl
         namespace cal
         {
 			Device::Device(unsigned short id) : 
-                _Id(id), _device(NULL), _shutDownOnDestroy(false)
+                _Id(id), _deviceHandle(NULL), _context(0), _shutDownOnDestroy(false)
             {
                 
             }
             
 			Device::Device(unsigned short id, CALdevice device) : 
-                _Id(id), _device(device), _shutDownOnDestroy(false)
+                _Id(id), _deviceHandle(device), _context(0), _shutDownOnDestroy(false)
             {
 
             }
             
             Device::~Device()
             {
+                CALresult result;
                 // Cleanup of context and Device handle
                 if(_context)
                 {
-                    calCtxDestroy(_context);
+                    result = calCtxDestroy(_context);
+                    if (result != CAL_RESULT_OK)
+                    {
+                        LOG_ERROR("Failed to destroy context!\n");
+                    }
                 }
 
                 // if device handle is initialize somewhere else,
                 // we will set the shutdown on destroy flag to false
                 // we will not destroy the device handle when exit.
-                if(_device && _shutDownOnDestroy)
+                if(_deviceHandle && _shutDownOnDestroy)
                 {
-                    calDeviceClose(_device);
+                    result = calDeviceClose(_deviceHandle);
+                    if (result != CAL_RESULT_OK)
+                    {
+                        LOG_ERROR("Failed to close device!\n");
+                    }
                 }
             }
             
             bool Device::initialize()
             {
                 CALresult result;
-                if (_device == NULL)
+                if (_deviceHandle == NULL)
                 {
                     _shutDownOnDestroy = true;
-                    result = calDeviceOpen(&_device, _Id);
+                    result = calDeviceOpen(&_deviceHandle, _Id);
                     CHECK_CAL_RESULT(result, "Failed to open CAL device \n");
                 }
 
@@ -66,7 +76,7 @@ namespace amdspl
                 CHECK_CAL_RESULT(result, "Failed to get CAL device attributes\n");
 
                 // Create the device context
-                result = calCtxCreate(&_context, _device);
+                result = calCtxCreate(&_context, _deviceHandle);
                 CHECK_CAL_RESULT(result, "Failed to create context on CAL device \n");
 
                 return true;
@@ -74,7 +84,8 @@ namespace amdspl
             
             CALdevice Device::getHandle()
             {
-                return _device;
+                assert(_deviceHandle);
+                return _deviceHandle;
             }
             
             CALdeviceinfo Device::getInfo()
@@ -89,6 +100,7 @@ namespace amdspl
             
             CALcontext Device::getContext()
             {
+                assert(_context);
                 return _context;
             }
             

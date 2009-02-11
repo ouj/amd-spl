@@ -13,6 +13,8 @@
 #include "Device.h"
 #include <cassert>
 
+using namespace std;
+
 namespace amdspl
 {
     namespace core
@@ -26,7 +28,12 @@ namespace amdspl
 
 			DeviceManager::~DeviceManager()
 			{
-
+                vector<Device*>::iterator it = _devices.begin();
+                while (it != _devices.end())
+                {
+                    SAFE_DELETE(*it);
+                    it++;
+                }
 			}
 
 			bool DeviceManager::initialize()
@@ -50,7 +57,13 @@ namespace amdspl
                 {
                     fprintf(stderr, "Failed to initialize the device, Device Id %d", id);
                     SAFE_DELETE(pDevice);
+                    return false;
                 }
+
+                _devices[pDevice->getId()] = pDevice;
+                _devicesNum++;
+
+                _deviceHandles.push_back(pDevice->getHandle());
 
 				return true;
             }
@@ -67,22 +80,33 @@ namespace amdspl
             
             Device* DeviceManager::getDeviceByID(unsigned short id)
             {
-                return NULL;
+                if (id >= _devices.size())
+                {
+                    return NULL;
+                }
+
+                return _devices[id];
             }
             
             Device* DeviceManager::getDefaultDevice()
             {
-                return NULL;
+                return _devices[_defaultDeviceId];
             }
             
             bool DeviceManager::setDefaultDevice(unsigned short id)
             {
-                return true;
+                if (_devices[id] != NULL)
+                {
+                    _defaultDeviceId = id;
+                    return true;
+                }
+                else
+                    return false;
             }
             
             CALdevice* DeviceManager::getDeviceHandles()
             {
-                return NULL;
+                return &_deviceHandles[0];
             }         
         }
     }

@@ -32,7 +32,7 @@ namespace amdspl
                 CALcontext getContext();
                 unsigned short getId();
             private:
-                CALdevice _device;
+                CALdevice _deviceHandle;
                 CALdeviceinfo _deviceInfo;
                 CALdeviceattribs _deviceAttribs;
                 CALcontext _context;

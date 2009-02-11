@@ -240,6 +240,10 @@
 			Name="AccuracyTests"
 			>
 			<File
+				RelativePath="..\..\unit\core\DeviceManagerTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\InitCleanupTests.cpp"
 				>
 			</File>
@@ -251,6 +255,10 @@
 		<Filter
 			Name="Failure Tests"
 			>
+			<File
+				RelativePath="..\..\unit\core\InitCleanupFailureTests.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="StressTests"
