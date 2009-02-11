@@ -10,13 +10,13 @@ AMD SPL is a programming library based on AMD's stream computing technology. Thi
 == Run Time ==
 Although the amd-spl runtime is not a part of user interface, it is the core of the library. It communicates with the hardwares using CAL & IL, and provides GPGPU service to other modules of the library. Other modules will use the classes and functions provided by the core runtime to implement their algorithms.
 
-The performance of the runtime will greatly affect the performance of the library. Currently, we use a modified runtime of Brook+. However, it is not satisfactory. We are developing our own [Runtime]. 
+The performance of the runtime will greatly affect the performance of the library. Currently, we use a modified runtime of Brook+. However, it is not satisfactory. We are developing our own [SPLRuntime Runtime]. 
 
 == Language Binding == 
 
 This library itself is implemented in standard C++ and AMD IL. 
 
-  * OpenCL: [http://www.khronos.org/opencl/ OpenCL] is a new industry standard for parallel computing. AMD OpenCL implementation will be released in 2009. OpenCL binding will be ready after that.
+  * [http://www.khronos.org/opencl/ OpenCL]: OpenCL is a new industry standard for parallel computing. AMD OpenCL implementation will be released in 2009. OpenCL binding will be ready after that.
 
   * C/C++: Any C/C++ code can link to it freely. 
   
