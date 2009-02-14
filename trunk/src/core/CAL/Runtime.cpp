@@ -173,15 +173,16 @@ SAFE_DELETE_ALL_ON_ERROR:
             
             Runtime::~Runtime()
             {
-                if (_shutdownOnDestroy)
-                {
-                    calShutdown();
-                }
-
                 SAFE_DELETE(_deviceMgr);
                 SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_bufferMgr);
                 SAFE_DELETE(_constBufferPool);
+
+                // Finally, shutdown the CAL
+                if (_shutdownOnDestroy)
+                {
+                    calShutdown();
+                }
             }
             
         }

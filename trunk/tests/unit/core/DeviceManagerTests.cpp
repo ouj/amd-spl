@@ -35,13 +35,15 @@ TEST(DeviceManagerTests, RuntimeAddDevice1Test)
 
 TEST(DeviceManagerTests, RuntimeAddDevice2Test)
 {
+    calInit();
+    CALdevice deviceHandle;
+    ASSERT_TRUE(CAL_RESULT_OK == calDeviceOpen(&deviceHandle, 0));
+
     DeviceManager* _deviceMgr = Runtime::getInstance()->getDeviceManager();
     ASSERT_TRUE(_deviceMgr != NULL);
-    CALdevice deviceHandle;
-
-    ASSERT_TRUE(CAL_RESULT_OK == calDeviceOpen(&deviceHandle, 0));
     ASSERT_TRUE(_deviceMgr->addDevice(0, deviceHandle));
-
     Runtime::destroy();
+
     ASSERT_TRUE(CAL_RESULT_OK == calDeviceClose(deviceHandle));
+    calShutdown();
 }

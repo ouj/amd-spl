@@ -19,7 +19,8 @@ namespace amdspl
     {
         namespace cal
         {
-            template <int inputs, int outputs, int constants, int scatters> class ProgramInfo
+            template <int inputs, int outputs, int constants, int scatters> 
+            class ProgramInfo
             {
             public:
                 const char* source;
