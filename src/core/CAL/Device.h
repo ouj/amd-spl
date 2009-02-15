@@ -22,7 +22,6 @@ namespace amdspl
             class Device
             {
             public:
-                Device(unsigned short id = 0);
                 Device(unsigned short id, CALdevice device = 0);
                 ~Device();
                 bool initialize();

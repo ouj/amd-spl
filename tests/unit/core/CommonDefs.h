@@ -1,0 +1,7 @@
+#include "gtest\gtest.h"
+#include "amdspl.h"
+#include "Runtime.h"
+#include "DeviceManager.h"
+#include "BufferManager.h"
+#include "ProgramManager.h"
+#include "ConstBufferPool.h"
