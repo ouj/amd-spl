@@ -55,7 +55,7 @@ namespace amdspl
 
                 if (!pDevice->initialize())
                 {
-                    fprintf(stderr, "Failed to initialize the device, Device Id %d", id);
+                    fprintf(stderr, "Failed to initialize the device, Device Id: %d, Handle: 0x%X\n", id, deviceHandle);
                     SAFE_DELETE(pDevice);
                     return false;
                 }
@@ -95,7 +95,11 @@ namespace amdspl
             
             bool DeviceManager::setDefaultDevice(unsigned short id)
             {
-                if (_devices[id] != NULL)
+                if (id >= _devices.size())
+                {
+                    return false;
+                }
+                else if (_devices[id] != NULL)
                 {
                     _defaultDeviceId = id;
                     return true;

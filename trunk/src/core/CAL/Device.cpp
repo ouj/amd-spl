@@ -20,13 +20,7 @@ namespace amdspl
     {
         namespace cal
         {
-			Device::Device(unsigned short id) : 
-                _Id(id), _deviceHandle(NULL), _context(0), _shutDownOnDestroy(false)
-            {
-                
-            }
-            
-			Device::Device(unsigned short id, CALdevice device) : 
+            Device::Device(unsigned short id, CALdevice device) : 
                 _Id(id), _deviceHandle(device), _context(0), _shutDownOnDestroy(false)
             {
 

@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtestd.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(GOOGLETEST_ROOT)\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;..\..\gtest_lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -141,7 +141,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtest.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;$(GOOGLETEST_ROOT)\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;..\..\gtest_lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -245,6 +245,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\unit\core\DeviceTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\InitCleanupTests.cpp"
 				>
 			</File>
@@ -256,6 +260,14 @@
 		<Filter
 			Name="Failure Tests"
 			>
+			<File
+				RelativePath="..\..\unit\core\DeviceFailureTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\DeviceManagerFailureTests.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\unit\core\InitCleanupFailureTests.cpp"
 				>
@@ -277,6 +289,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath="..\..\unit\core\CommonDefs.h"
+			>
+		</File>
 		<File
 			RelativePath="..\..\unit\TestMain.cpp"
 			>

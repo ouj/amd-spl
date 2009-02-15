@@ -1,11 +1,4 @@
-#include "gtest\gtest.h"
-#include "amdspl.h"
-#include "Runtime.h"
-#include "DeviceManager.h"
-#include "RuntimeTestFixture.h"
-#include "BufferManager.h"
-#include "ProgramManager.h"
-#include "ConstBufferPool.h"
+#include "CommonDefs.h"
 
 using namespace amdspl;
 using namespace amdspl::core::cal;
@@ -37,13 +30,57 @@ TEST(DeviceManagerTests, RuntimeAddDevice2Test)
 {
     calInit();
     CALdevice deviceHandle;
-    ASSERT_TRUE(CAL_RESULT_OK == calDeviceOpen(&deviceHandle, 0));
+    ASSERT_EQ(CAL_RESULT_OK, calDeviceOpen(&deviceHandle, 0));
 
     DeviceManager* _deviceMgr = Runtime::getInstance()->getDeviceManager();
     ASSERT_TRUE(_deviceMgr != NULL);
     ASSERT_TRUE(_deviceMgr->addDevice(0, deviceHandle));
     Runtime::destroy();
 
-    ASSERT_TRUE(CAL_RESULT_OK == calDeviceClose(deviceHandle));
+    ASSERT_EQ(CAL_RESULT_OK, calDeviceClose(deviceHandle));
     calShutdown();
+}
+
+TEST(DeviceManagerTests, GetDeviceNumTest)
+{
+    DeviceManager* _deviceMgr = Runtime::getInstance()->getDeviceManager();
+    ASSERT_TRUE(_deviceMgr != NULL);
+
+    ASSERT_TRUE(_deviceMgr->addDevice(0, NULL));
+
+    ASSERT_EQ(1, _deviceMgr->getDeviceNum());
+    Runtime::destroy();
+}
+
+TEST(DeviceManagerTests, GetDeviceByIDTest)
+{
+    DeviceManager* _deviceMgr = Runtime::getInstance()->getDeviceManager();
+    ASSERT_TRUE(_deviceMgr != NULL);
+    for (int i = 0; i < _deviceMgr->getSysDeviceNum(); i++)
+    {
+        ASSERT_TRUE(_deviceMgr->addDevice(i, NULL));
+    }
+
+    Device *pDevice = _deviceMgr->getDeviceByID(0);
+    ASSERT_TRUE(pDevice != NULL);
+
+    ASSERT_EQ(0, pDevice->getId());
+    Runtime::destroy();
+}
+
+TEST(DeviceManagerTests, SetGetDefualtDeviceTest)
+{
+    DeviceManager* _deviceMgr = Runtime::getInstance()->getDeviceManager();
+    ASSERT_TRUE(_deviceMgr != NULL);
+    for (int i = 0; i < _deviceMgr->getSysDeviceNum(); i++)
+    {
+        ASSERT_TRUE(_deviceMgr->addDevice(i, NULL));
+    }
+
+    ASSERT_TRUE(_deviceMgr->setDefaultDevice(0));
+
+    Device *pDevice = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(pDevice != NULL);
+    ASSERT_EQ(0, pDevice->getId());
+    Runtime::destroy();
 }
