@@ -185,7 +185,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\include\amdspl.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\CAL\Buffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Buffer.h"
 				>
 			</File>
 			<File
@@ -193,7 +201,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\CAL\BufferManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\CAL\ConstBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ConstBuffer.h"
 				>
 			</File>
 			<File
@@ -201,7 +217,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\CAL\ConstBufferPool.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\CAL\Device.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Device.h"
 				>
 			</File>
 			<File
@@ -209,7 +233,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\CAL\DeviceManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\CAL\Event.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Event.h"
 				>
 			</File>
 			<File
@@ -217,7 +249,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\CAL\LocalBuffer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\CAL\Program.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\Program.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ProgramInfo.h"
 				>
 			</File>
 			<File
@@ -225,7 +269,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\CAL\ProgramManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\CAL\RemoteBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\RemoteBuffer.h"
 				>
 			</File>
 			<File
@@ -233,13 +285,33 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\core\CAL\Runtime.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\RuntimeDefs.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\core\CAL\ScatterBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ScatterBuffer.h"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="AccuracyTests"
 			>
+			<File
+				RelativePath="..\..\unit\core\BufferManagerTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\BufferTests.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\unit\core\DeviceManagerTests.cpp"
 				>
@@ -260,6 +332,14 @@
 		<Filter
 			Name="Failure Tests"
 			>
+			<File
+				RelativePath="..\..\unit\core\BufferFaliureTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\BufferManagerFailureTests.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\unit\core\DeviceFailureTests.cpp"
 				>

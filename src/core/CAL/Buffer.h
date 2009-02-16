@@ -21,12 +21,13 @@ namespace amdspl
         {
             class Buffer
             {
+                friend class BufferManager;
             public:
                 virtual void readData(void *ptr, unsigned int size);
-                virtual void writeData(void *ptr, unsigned int size);
-                void getResHandle();
-                void getFormat();
-                void getPitch();
+                virtual void writeData(void *ptr, unsigned int size, void* defaultVal = 0);
+                CALresource getResHandle();
+                CALformat getFormat();
+                unsigned int getPitch();
                 unsigned int getWidth();
                 unsigned int getHeight();
                 void getBufferType();
@@ -36,10 +37,11 @@ namespace amdspl
                 CALmem _mem;
                 unsigned int _width;
                 unsigned int _height;
+                CALuint      _pitch;
                 Buffer(CALformat format, unsigned int width, unsigned int height = 0);
                 bool initialize();
-                void getCPUPointer();
-                void releaseCPUPointer();
+                void* getPointerCPU(CALuint &pitch);
+                void releasePointerCPU();
             };
         }
     }

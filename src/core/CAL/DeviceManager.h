@@ -44,11 +44,11 @@ namespace amdspl
                 // the list of pointers to all the devices, order by device Id. If the device is not initialized, the pointer is set to NULL.
                 std::vector<Device*> _devices;
                 // The number of devices assigned to the SPL.
-                unsigned short  _devicesNum;
+                CALint          _devicesNum;
                 // The number of devices in the system, which is larger or equal to the devices in the device list.
                 CALuint         _sysDevicesNum;
                 // The id of default device
-                unsigned short  _defaultDeviceId;
+                CALint          _defaultDeviceId;
             private:
                 // The list of device handle, used by BufferManager to Create remote buffer.
                 std::vector<CALdevice> _deviceHandles;

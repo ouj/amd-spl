@@ -5,3 +5,5 @@
 #include "BufferManager.h"
 #include "ProgramManager.h"
 #include "ConstBufferPool.h"
+#include "LocalBuffer.h"
+#include "RemoteBuffer.h"

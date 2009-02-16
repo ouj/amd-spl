@@ -21,7 +21,7 @@ namespace amdspl
     {
         namespace cal
         {
-			DeviceManager::DeviceManager() : _devicesNum(0), _sysDevicesNum(0), _defaultDeviceId(0)
+			DeviceManager::DeviceManager() : _devicesNum(0), _sysDevicesNum(0), _defaultDeviceId(-1)
 			{
 
 			}
@@ -58,6 +58,11 @@ namespace amdspl
                     fprintf(stderr, "Failed to initialize the device, Device Id: %d, Handle: 0x%X\n", id, deviceHandle);
                     SAFE_DELETE(pDevice);
                     return false;
+                }
+
+                if(_defaultDeviceId == -1)
+                {
+                    _defaultDeviceId = pDevice->getId();
                 }
 
                 _devices[pDevice->getId()] = pDevice;
