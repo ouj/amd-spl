@@ -20,16 +20,19 @@ namespace amdspl
     {
         namespace cal
         {
+            class Device;
             class LocalBuffer : public Buffer
             {
+                friend class BufferManager;
             public:
-                void readData(void* ptr, unsigned int size);
-                void writeData(void* ptr, unsigned int size);
+                virtual void readData(void* ptr, unsigned int size);
+                virtual void writeData(void* ptr, unsigned int size);
             protected:
-                LocalBuffer(CALformat format, unsigned int width, unsigned int height = 0);
+                LocalBuffer(Device* device, CALformat format, 
+                    unsigned int width, unsigned int height = 0);
                 bool initialize();
             private:
-                unsigned short _deviceId;
+                Device* _device;
             };
         }
     }

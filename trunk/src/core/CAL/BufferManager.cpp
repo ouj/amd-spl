@@ -11,6 +11,7 @@
 
 #include "BufferManager.h"
 #include "CommonDefs.h"
+#include "LocalBuffer.h"
 
 namespace amdspl
 {
@@ -38,12 +39,18 @@ namespace amdspl
             
             }
             
-            Buffer* BufferManager::createLocalBuffer(CALformat format, unsigned int width, unsigned int height)
+            Buffer* BufferManager::createLocalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height)
+            {
+                LocalBuffer *localBuf = new LocalBuffer(device, format, width, height);
+                return NULL;
+            }
+
+            Buffer* BufferManager::createScatterBuffer(Device* device, CALformat format, unsigned int width, unsigned int height)
             {
                 return NULL;
             }
-            
-            Buffer* BufferManager::createRemoatBuffer(CALformat format, unsigned int width, unsigned int height)
+
+            Buffer* BufferManager::createRemoteBuffer(CALformat format, unsigned int width, unsigned int height)
             {
                 return NULL;
             }

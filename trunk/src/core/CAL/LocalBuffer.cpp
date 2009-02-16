@@ -8,7 +8,7 @@
 //
 //
 
-
+#include "RuntimeDefs.h"
 #include "LocalBuffer.h"
 
 namespace amdspl
@@ -27,8 +27,8 @@ namespace amdspl
             
             }
             
-            LocalBuffer::LocalBuffer(CALformat format, unsigned int width, unsigned int height)
-                : Buffer(format, width, height)
+            LocalBuffer::LocalBuffer(Device *device, CALformat format, unsigned int width, unsigned int height)
+                : Buffer(format, width, height), _device(device)
             {
             
             }

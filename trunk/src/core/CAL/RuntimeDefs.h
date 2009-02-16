@@ -11,11 +11,18 @@
 }
 
  // A problem that can be handled.
-#define CAL_RESULT_ERROR(result, msg) \
+#define CHECK_CAL_RESULT_ERROR(result, msg) \
     if (result != CAL_RESULT_OK) \
 { \
     fprintf(stderr, (msg)); \
     return false; \
+}
+
+// A problem that can be handled.
+#define LOG_CAL_RESULT_ERROR(result, msg) \
+    if (result != CAL_RESULT_OK) \
+{ \
+    fprintf(stderr, (msg)); \
 }
 
 #endif //_AMDSPL_RUNTIMEEFS_H_

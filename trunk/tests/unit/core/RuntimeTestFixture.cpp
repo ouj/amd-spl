@@ -4,6 +4,8 @@
 using namespace amdspl;
 
 Runtime* RuntimeTestFixture::_runtime = NULL;
+BufferManager* RuntimeTestFixture::_bufMgr = NULL;
+DeviceManager* RuntimeTestFixture::_deviceMgr = NULL;
 
 RuntimeTestFixture::RuntimeTestFixture(void)
 {
@@ -15,24 +17,29 @@ RuntimeTestFixture::~RuntimeTestFixture(void)
 
 void RuntimeTestFixture::SetUpTestCase()
 {
-    _runtime = Runtime::getInstance();
-}
-
-void RuntimeTestFixture::TearDownTestCase()
-{
-    _runtime = NULL;
-}
-
-void RuntimeTestFixture::SetUp()
-{
     DEVICE_LIST_ITEM deviceList[] = 
     {
         DEVICE_LIST_ITEM(0, 0)
     };
-    ASSERT_TRUE(AmdSpl::InitializeSPL(deviceList, 1, 0) == SPL_RESULT_OK);
+    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::InitializeSPL(deviceList, 1, 0));
+
+}
+
+void RuntimeTestFixture::TearDownTestCase()
+{
+    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::CleanupSPL());
+}
+
+void RuntimeTestFixture::SetUp()
+{
+    _runtime = Runtime::getInstance();
+    _bufMgr = _runtime->getBufferManager();
+    _deviceMgr = _runtime->getDeviceManager();
 }
 
 void RuntimeTestFixture::TearDown()
 {
-    ASSERT_TRUE(AmdSpl::CleanupSPL() == SPL_RESULT_OK);
+    _runtime = NULL;
+    _bufMgr = NULL;
+    _deviceMgr = NULL;
 }

@@ -19,14 +19,16 @@ namespace amdspl
     {
         namespace cal
         {
+            class Device;
             class Buffer;
             class BufferManager
             {
                 friend class Runtime;
             public:
                 void destroyBuffer(Buffer* buffer);
-                Buffer* createLocalBuffer(CALformat format, unsigned int width, unsigned int height = 0);
-                Buffer* createRemoatBuffer(CALformat format, unsigned int width, unsigned int height = 0);
+                Buffer* createLocalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
+                Buffer* createScatterBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
+                Buffer* createRemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
             protected:
                 BufferManager();
                 ~BufferManager();

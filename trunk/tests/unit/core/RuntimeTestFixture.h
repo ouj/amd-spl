@@ -2,6 +2,8 @@
 #define _RUNTIME_TEST_FIXTURE_H_
 #include "gtest/gtest.h"
 #include "Runtime.h"
+#include "DeviceManager.h"
+#include "BufferManager.h"
 
 using namespace amdspl::core::cal;
 
@@ -18,5 +20,7 @@ public:
     void TearDown();
 
     static Runtime* _runtime;
+    static BufferManager* _bufMgr;
+    static DeviceManager* _deviceMgr;
 };
 #endif
