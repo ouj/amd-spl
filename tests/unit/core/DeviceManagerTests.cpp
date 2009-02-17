@@ -12,6 +12,8 @@ TEST(DeviceManagerTests, RuntimeSysDeviceNumTest)
     calDeviceGetCount(&deviceNum);
     ASSERT_EQ(deviceNum, _deviceMgr->getSysDeviceNum());
 
+    printf_s("System Device Number: %d\n", _deviceMgr->getSysDeviceNum());
+
     Runtime::destroy();
 }
 

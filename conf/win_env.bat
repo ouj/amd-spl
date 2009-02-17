@@ -40,7 +40,7 @@ set SPLBIN=u:\bin\win32
 set DOCS=u:\docs
 
 ::============================================
-set PATH=%PATH%;%TOOLS%;%SPLBIN%;%BLD%;%CONF%
+set PATH=%PATH%;%TOOLS%;%SPLBIN%;%BLD%;%CONF%;%ANT_HOME%\bin;%ANT_HOME%\lib;
 ::=============================================
 ::Set app name to amd-spl
 set APP=amd-spl
