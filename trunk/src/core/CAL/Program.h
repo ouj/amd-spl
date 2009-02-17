@@ -26,7 +26,7 @@ namespace amdspl
         {
             class Buffer;
             class ConstBuffer;
-            class ScatterBuffer;
+            class GlobalBuffer;
 
             class Program
             {
@@ -39,14 +39,14 @@ namespace amdspl
                 void bindInput(Buffer* buffer, unsigned int idx = 0);
                 void bindOutput(Buffer* buffer, unsigned int idx = 0);
                 void bindConstant(ConstBuffer* buffer, unsigned int idx = 0);
-                void bindScatter(ScatterBuffer* buffer, unsigned int idx = 0);
+                void bindGlobal(GlobalBuffer* buffer, unsigned int idx = 0);
             protected:
                 CALobject _object;
                 vector<CALimage> _image;
                 vector<CALname> _inputNames;
                 vector<CALname> _outputNames;
                 vector<CALname> _constNames;
-                vector<CALname> _scatterNames;
+                vector<CALname> _globalNames;
                 CALfunc _func;
                 CALmodule _module;
                 Device* _device;

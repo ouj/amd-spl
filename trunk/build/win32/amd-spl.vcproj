@@ -256,6 +256,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\GlobalBuffer.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\LocalBuffer.h"
 						>
 					</File>
@@ -281,10 +285,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\RuntimeDefs.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\ScatterBuffer.h"
 						>
 					</File>
 				</Filter>
@@ -348,6 +348,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\GlobalBuffer.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\LocalBuffer.cpp"
 						>
 					</File>
@@ -365,10 +369,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\Runtime.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\ScatterBuffer.cpp"
 						>
 					</File>
 				</Filter>

@@ -2,6 +2,14 @@
 #define _AMDSPL_RUNTIMEEFS_H_
 
 #include "CommonDefs.h"
+#include "Runtime.h"
+#include "Device.h"
+#include "DeviceManager.h"
+#include "BufferManager.h"
+#include "ProgramManager.h"
+#include "LocalBuffer.h"
+#include "RemoteBuffer.h"
+#include "GlobalBuffer.h"
 
  // A problem that can be handled.
 #define CHECK_CAL_RESULT(result, msg) \

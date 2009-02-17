@@ -27,7 +27,7 @@ namespace amdspl
             public:
                 void destroyBuffer(Buffer* buffer);
                 Buffer* createLocalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
-                Buffer* createScatterBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
+                Buffer* createGlobalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
                 Buffer* createRemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
             protected:
                 BufferManager();
