@@ -9,9 +9,7 @@
 //
 
 
-#include "BufferManager.h"
-#include "CommonDefs.h"
-#include "LocalBuffer.h"
+#include "RuntimeDefs.h"
 
 namespace amdspl
 {
@@ -36,23 +34,40 @@ namespace amdspl
 
             void BufferManager::destroyBuffer(Buffer* buffer)
             {
-            
+                SAFE_DELETE(buffer);
             }
             
             Buffer* BufferManager::createLocalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height)
             {
                 LocalBuffer *localBuf = new LocalBuffer(device, format, width, height);
-                return NULL;
+                if (!localBuf->initialize())
+                {
+                    SAFE_DELETE(localBuf);
+                    return NULL;
+                }
+                return localBuf;
             }
 
-            Buffer* BufferManager::createScatterBuffer(Device* device, CALformat format, unsigned int width, unsigned int height)
+            Buffer* BufferManager::createGlobalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height)
             {
-                return NULL;
+                GlobalBuffer *globalBuf = new GlobalBuffer(device, format, width, height);
+                if (!globalBuf->initialize())
+                {
+                    SAFE_DELETE(globalBuf);
+                    return NULL;
+                }
+                return globalBuf;
             }
 
             Buffer* BufferManager::createRemoteBuffer(CALformat format, unsigned int width, unsigned int height)
             {
-                return NULL;
+                RemoteBuffer *remoteBuf = new RemoteBuffer(format, width, height);
+                if (!remoteBuf->initialize())
+                {
+                    SAFE_DELETE(remoteBuf);
+                    return NULL;
+                }
+                return remoteBuf;
             }
             
         }

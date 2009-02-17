@@ -25,7 +25,7 @@ namespace amdspl
             
             bool RemoteBuffer::initialize()
             {
-                return true;
+                return false;
             }
             
         }

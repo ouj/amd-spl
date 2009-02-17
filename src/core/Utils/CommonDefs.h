@@ -1,6 +1,8 @@
 #ifndef _AMDSPL_COMMONDEFS_H_
 #define _AMDSPL_COMMONDEFS_H_
 
+#include "stdio.h"
+
 /* Define NULL pointer value */
 #ifndef NULL
 #ifdef __cplusplus

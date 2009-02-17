@@ -25,13 +25,13 @@ namespace amdspl
             {
                 friend class BufferManager;
             public:
-                virtual void readData(void* ptr, unsigned int size);
-                virtual void writeData(void* ptr, unsigned int size);
+                ~LocalBuffer();
+                //virtual void readData(void* ptr, unsigned int size);
+                //virtual void writeData(void* ptr, unsigned int size, void* defaultVal = 0);
             protected:
                 LocalBuffer(Device* device, CALformat format, 
                     unsigned int width, unsigned int height = 0);
-                bool initialize();
-            private:
+                virtual bool initialize();
                 Device* _device;
             };
         }

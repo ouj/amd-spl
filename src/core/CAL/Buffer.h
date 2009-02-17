@@ -23,23 +23,22 @@ namespace amdspl
             {
                 friend class BufferManager;
             public:
+                virtual ~Buffer();
                 virtual void readData(void *ptr, unsigned int size);
-                virtual void writeData(void *ptr, unsigned int size, void* defaultVal = 0);
+                virtual void writeData(void *ptr, unsigned int size, void *defaultVal = 0);
                 CALresource getResHandle();
                 CALformat getFormat();
                 unsigned int getPitch();
                 unsigned int getWidth();
                 unsigned int getHeight();
-                void getBufferType();
             protected:
                 CALformat _dataFormat;
                 CALresource _res;
-                CALmem _mem;
                 unsigned int _width;
                 unsigned int _height;
                 CALuint      _pitch;
                 Buffer(CALformat format, unsigned int width, unsigned int height = 0);
-                bool initialize();
+                virtual bool initialize();
                 void* getPointerCPU(CALuint &pitch);
                 void releasePointerCPU();
             };

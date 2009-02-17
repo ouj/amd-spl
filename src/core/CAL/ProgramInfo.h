@@ -19,7 +19,7 @@ namespace amdspl
     {
         namespace cal
         {
-            template <int inputs, int outputs, int constants, int scatters> 
+            template <int inputs, int outputs, int constants, int globals> 
             class ProgramInfo
             {
             public:

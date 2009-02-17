@@ -2,17 +2,17 @@
 //
 //
 //  @ Project : AMD-SPL
-//  @ File Name : RemoteBuffer.h
+//  @ File Name : GlobalBuffer.h
 //  @ Date : 2009/2/9
 //  @ Author : Jiawei Ou
 //
 //
 
 
-#if !defined(_REMOTEBUFFER_H)
-#define _REMOTEBUFFER_H
+#if !defined(_GLOBALBUFFER_H)
+#define _GLOBALBUFFER_H
 
-#include "Buffer.h"
+#include "LocalBuffer.h"
 
 namespace amdspl
 {
@@ -20,16 +20,16 @@ namespace amdspl
     {
         namespace cal
         {
-            class RemoteBuffer : public Buffer
+            class GlobalBuffer : public LocalBuffer
             {
                 friend class BufferManager;
             protected:
-                RemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
+                GlobalBuffer(Device* device, CALformat format, 
+                    unsigned int width, unsigned int height = 0);
                 virtual bool initialize();
-                bool _cachable;
             };
         }
     }
 }
 
-#endif  //_REMOTEBUFFER_H
+#endif  //_GLOBALBUFFER_H

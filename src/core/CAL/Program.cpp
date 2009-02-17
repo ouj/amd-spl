@@ -52,7 +52,7 @@ namespace amdspl
             
             }
             
-            void Program::bindScatter(ScatterBuffer* buffer, unsigned int idx)
+            void Program::bindGlobal(GlobalBuffer* buffer, unsigned int idx)
             {
             
             }
