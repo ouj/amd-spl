@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <vector>
-#include "..\Common\Perf.h"
+#include "Perf.h"
 
 using namespace std;
 

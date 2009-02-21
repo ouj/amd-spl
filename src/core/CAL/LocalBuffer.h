@@ -26,8 +26,8 @@ namespace amdspl
                 friend class BufferManager;
             public:
                 ~LocalBuffer();
-                //virtual void readData(void* ptr, unsigned int size);
-                //virtual void writeData(void* ptr, unsigned int size, void* defaultVal = 0);
+                //virtual void readData(void* ptr, unsigned int size, void* defaultVal = 0);
+                //virtual void writeData(void* ptr, unsigned int size);
             protected:
                 LocalBuffer(Device* device, CALformat format, 
                     unsigned int width, unsigned int height = 0);

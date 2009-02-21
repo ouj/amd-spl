@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SortingTest", "SortingTest.vcproj", "{9E32905D-62CC-43BB-87B8-B3410764B2DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{57A795B5-8D31-4418-A381-84C0D4D0B2C3}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreTests", "CoreTests.vcproj", "{CF1D0A27-48F3-44B6-B5E7-CA27878C0046}"
 EndProject
 Global

@@ -72,60 +72,34 @@ namespace amdspl
         unsigned short 
             getElementBytes(CALformat dataFormat)
         {
-            unsigned short numComponents = 0;
-            unsigned short bytes = 0;
-
             switch(dataFormat)
             {
             case CAL_FORMAT_FLOAT_1:
-                numComponents = 1;
-                bytes = sizeof(float);
-                break;
-
+                return sizeof(float);
             case CAL_FORMAT_UINT_1:
+                return sizeof(unsigned int);
             case CAL_FORMAT_INT_1:
-                numComponents = 1;
-                bytes = sizeof(int);
-                break;
-
+                return sizeof(int);
             case CAL_FORMAT_DOUBLE_1:
-                numComponents = 1;
-                bytes = sizeof(double);
-                break;
-
+                return sizeof(double);
             case CAL_FORMAT_FLOAT_2:
-                numComponents = 2;
-                bytes = sizeof(float);
-                break;
-
+                return sizeof(float2);
             case CAL_FORMAT_UINT_2:
+                return sizeof(uint2);
             case CAL_FORMAT_INT_2:
-                numComponents = 2;
-                bytes = sizeof(int);
-                break;
-
+                return sizeof(int2);
             case CAL_FORMAT_DOUBLE_2:
-                numComponents = 2;
-                bytes = sizeof(double);
-                break;
-
+                return sizeof(double2);
             case CAL_FORMAT_FLOAT_4:
-                numComponents = 4;
-                bytes = sizeof(float);
-                break;
-
+                return sizeof(float4);
             case CAL_FORMAT_UINT_4:
+                return sizeof(uint4);
             case CAL_FORMAT_INT_4:
-                numComponents = 4;
-                bytes = sizeof(int);
-                break;
-
+                return sizeof(int4);
             default:
-                numComponents = 0;
-                bytes = 0;
+                return 0;
             }
-
-            return numComponents * bytes;
+            return 0;
         }
     }
 }

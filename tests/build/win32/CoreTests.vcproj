@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
+				AdditionalIncludeDirectories="..\..\gtest_inc;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\..\src\core\CAL;..\..\..\src\Common;..\..\unit\common"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(GOOGLETEST_ROOT)\include&quot;;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\..\src\core\CAL;..\..\..\src\ILSrc;..\..\..\src\Common"
+				AdditionalIncludeDirectories="..\..\gtest_inc;..\..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\..\src\core\Utils;..\..\..\src\core\CAL;..\..\..\src\Common;..\..\unit\common"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -300,6 +300,10 @@
 				RelativePath="..\..\..\src\core\CAL\RuntimeDefs.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\src\core\Utils\Utility.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="AccuracyTests"
@@ -322,6 +326,10 @@
 			</File>
 			<File
 				RelativePath="..\..\unit\core\InitCleanupTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\ProgramTests.cpp"
 				>
 			</File>
 			<File
@@ -366,6 +374,22 @@
 			</File>
 			<File
 				RelativePath="..\..\unit\core\RuntimeTestFixture.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="utils"
+			>
+			<File
+				RelativePath="..\..\unit\common\util.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\common\util.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\common\utilDefs.h"
 				>
 			</File>
 		</Filter>
