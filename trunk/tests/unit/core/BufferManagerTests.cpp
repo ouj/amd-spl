@@ -44,6 +44,18 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer2Test)
     _bufMgr->destroyBuffer(buf);
 }
 
+TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer3Test)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(device);
+    Buffer *buf = 
+        RuntimeTestFixture::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_1, 8192, 8192);
+
+    ASSERT_TRUE(buf != NULL);
+    _bufMgr->destroyBuffer(buf);
+}
+
+
 
 TEST_F(RuntimeTestFixture, BufferManagerCreate1DRemoteBufferTest)
 {

@@ -7,3 +7,5 @@
 #include "ConstBufferPool.h"
 #include "LocalBuffer.h"
 #include "RemoteBuffer.h"
+#include "ProgramInfo.h"
+#include "Program.h"

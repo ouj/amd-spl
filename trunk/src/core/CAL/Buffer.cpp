@@ -12,6 +12,7 @@
 #include "Buffer.h"
 #include "RuntimeDefs.h"
 #include <stdio.h>
+#include "Utility.h"
 
 namespace amdspl
 {
@@ -35,14 +36,152 @@ namespace amdspl
                 return true;
             }
 
-            void Buffer::readData(void *ptr, unsigned int size)
+            bool Buffer::readData(void *ptr, unsigned long size, void *defaultVal)
             {
+                char *cpuPtr = static_cast<char*>(ptr);
+                if (!cpuPtr)
+                {
+                    return false;
+                }
 
+                CALuint pitch;
+                char* gpuPtr = static_cast<char*>(getPointerCPU(pitch));
+                if (!gpuPtr)
+                {
+                    return false;
+                }
+
+                // element size
+                unsigned short elementStride = utils::getElementBytes(_dataFormat);
+
+                //bytes in the gpu buffer
+                unsigned int height = _height == 0 ? 1 : _height; //1D
+
+                unsigned int bufferBytes = 
+                    elementStride *  _width * height;
+
+                //bytes in the cpu buffer
+                unsigned int totalBytes = size * elementStride;
+
+                if (bufferBytes < totalBytes)
+                {
+                    return false;
+                }
+
+                //bytes that should set the default value
+                unsigned int defaultBytes = bufferBytes - totalBytes;
+                
+                unsigned int cpuRowStride = elementStride * _width;
+                unsigned int gpuRowStride = elementStride * pitch;
+
+                if (cpuRowStride == gpuRowStride)
+                {
+                    memcpy(gpuPtr, cpuPtr, totalBytes);
+                    if (defaultBytes && defaultVal)
+                    {
+                        gpuPtr += totalBytes;
+                        while (defaultBytes)
+                        {
+                            memcpy(gpuPtr, defaultVal, elementStride);
+                            gpuPtr += elementStride;
+                            defaultBytes -= elementStride;
+                        }
+                    }
+                }
+                else
+                {
+                    unsigned int bytesCopied = 0;
+                    for (unsigned int row = 0; row < height - 1; row++)
+                    {
+                        memcpy(gpuPtr, cpuPtr, cpuRowStride);
+                        gpuPtr += gpuRowStride;
+                        cpuPtr += cpuRowStride;
+                    }
+
+                    unsigned int remainBytes = totalBytes - (cpuPtr - static_cast<char*>(ptr));
+                    if (remainBytes)
+                    {
+                        memcpy(gpuPtr, cpuPtr, remainBytes);
+                    }
+
+                    if (defaultBytes && defaultVal)
+                    {
+                        char* tmpPtr = gpuPtr + remainBytes;
+                        unsigned int remainBytesInRow = cpuRowStride - remainBytes;
+                        while (defaultBytes)
+                        {
+                            if (remainBytesInRow == 0)
+                            {
+                                remainBytesInRow = cpuRowStride;
+                                gpuPtr += gpuRowStride;
+                                tmpPtr = gpuPtr;
+                            }
+                            memcpy(tmpPtr, defaultVal, elementStride);
+                            tmpPtr += elementStride;
+                            remainBytesInRow -= elementStride;
+                            defaultBytes -= elementStride;
+                        }
+                    }
+                }
+                releasePointerCPU();
+                return true;
             }
 
-            void Buffer::writeData(void *ptr, unsigned int size, void *defaultVal)
+            bool Buffer::writeData(void *ptr, unsigned long size)
             {
+                char *cpuPtr = static_cast<char*>(ptr);
+                if (!cpuPtr)
+                {
+                    return false;
+                }
 
+                CALuint pitch;
+                char* gpuPtr = static_cast<char*>(getPointerCPU(pitch));
+                if (!gpuPtr)
+                {
+                    return false;
+                }
+
+                // element size
+                unsigned short elementStride = utils::getElementBytes(_dataFormat);
+
+                //bytes in the gpu buffer
+                unsigned int height = _height == 0 ? 1 : _height; //1D
+
+                unsigned int bufferBytes = 
+                    elementStride *  _width * height;
+
+                //bytes in the cpu buffer
+                unsigned int totalBytes = size * elementStride;
+
+                if (totalBytes < bufferBytes)
+                {
+                    return false;
+                }
+
+                unsigned int cpuRowStride = elementStride * _width;
+                unsigned int gpuRowStride = elementStride * pitch;
+
+                if (cpuRowStride == gpuRowStride)
+                {
+                    memcpy(cpuPtr, gpuPtr, totalBytes);
+                }
+                else
+                {
+                    for (unsigned int row = 0; row < height - 1; row++)
+                    {
+                        memcpy(cpuPtr, gpuPtr, cpuRowStride);
+                        gpuPtr += gpuRowStride;
+                        cpuPtr += cpuRowStride;
+                    }
+                    unsigned int remainBytes = totalBytes - (cpuPtr - static_cast<char*>(ptr));
+                    if (remainBytes)
+                    {
+                        memcpy(cpuPtr, gpuPtr, remainBytes);
+                    }
+                }
+                releasePointerCPU();
+                return true;
             }
 
             CALresource Buffer::getResHandle()
@@ -81,7 +220,7 @@ namespace amdspl
                 CALresult result = calResMap(&bufferPtr, &pitch,
                     _res, 0);
 
-                if (CAL_RESULT_OK == result)
+                if (CAL_RESULT_OK != result)
                 {
                     LOG_ERROR("Failed to get CPU pointer\n");
                     return NULL;

@@ -374,11 +374,11 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="OpenCL"
+				Name="openCL"
 				>
 			</Filter>
 			<Filter
-				Name="Utils"
+				Name="utils"
 				>
 				<Filter
 					Name="Header Files"

@@ -13,18 +13,28 @@
 #define _PROGRAMINFO_H
 
 
+#define DCL_PROGRAM_SOURCE(ProgInfo) const char* (ProgInfo::source)
+#define DCL_PROGRAM_ID(ProgInfo) const char* (ProgInfo::programID)
+
 namespace amdspl
 {
     namespace core
     {
         namespace cal
         {
-            template <int inputs, int outputs, int constants, int globals> 
+            template <int outputsT, int inputsT = 0, int constantsT = 0, int globalsT = 0> 
             class ProgramInfo
             {
             public:
-                const char* source;
-                const char* programID;
+                enum para
+                {
+                    outputs = outputsT,
+                    inputs = inputsT,
+                    constants = constantsT,
+                    globals = globalsT
+                };
+                static const char* source;
+                static const char* programID;
             };
         }
     }

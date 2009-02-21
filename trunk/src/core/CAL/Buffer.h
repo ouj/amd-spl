@@ -24,8 +24,8 @@ namespace amdspl
                 friend class BufferManager;
             public:
                 virtual ~Buffer();
-                virtual void readData(void *ptr, unsigned int size);
-                virtual void writeData(void *ptr, unsigned int size, void *defaultVal = 0);
+                virtual bool readData(void *ptr, unsigned long size, void *defaultVal = 0);
+                virtual bool writeData(void *ptr, unsigned long size);
                 CALresource getResHandle();
                 CALformat getFormat();
                 unsigned int getPitch();
