@@ -26,14 +26,16 @@ namespace amdspl
                 ~Device();
                 bool initialize();
                 CALdevice getHandle();
-                CALdeviceinfo getInfo();
-                CALdeviceattribs getAttribs();
+                const CALdeviceinfo& getInfo();
+                const CALdeviceattribs& getAttribs();
+                const CALdevicestatus& getStatus();
                 CALcontext getContext();
                 unsigned short getId();
             private:
                 CALdevice _deviceHandle;
                 CALdeviceinfo _deviceInfo;
                 CALdeviceattribs _deviceAttribs;
+                CALdevicestatus _deviceStatus;
                 CALcontext _context;
                 unsigned short _Id;
 				bool _shutDownOnDestroy;

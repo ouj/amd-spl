@@ -3,8 +3,10 @@
 
 #include <vector>
 #include "VectorDataType.h"
+#include "Device.h"
 
 using namespace std;
+using namespace amdspl::core::cal;
 
 namespace util
 {
@@ -24,6 +26,8 @@ namespace util
         POSY,               // Assigns only the y location
         NONZERO_RANDOM      // Assigns a non zero random number (float/double)
     };
+
+    void printDeviceStatus(Device* device);
 
     template <class T>
     void initializeBuffer(vector<T> &buffer,
