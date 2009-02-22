@@ -5,12 +5,14 @@
 using namespace amdspl;
 using namespace amdspl::core::cal;
 
-TEST_F(RuntimeTestFixture, GetBufferManagerTest)
+typedef RuntimeTestFixture BufferManagerTests;
+
+TEST_F(BufferManagerTests, GetBufferManagerTest)
 {
     ASSERT_TRUE(RuntimeTestFixture::_runtime->getBufferManager());
 }
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate1DLocalBufferTest)
+TEST_F(BufferManagerTests, BufferManagerCreate1DLocalBufferTest)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
@@ -21,7 +23,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate1DLocalBufferTest)
     _bufMgr->destroyBuffer(buf);
 }
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer1Test)
+TEST_F(BufferManagerTests, Create2DLocalBuffer1Test)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
@@ -33,7 +35,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer1Test)
 }
 
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer2Test)
+TEST_F(BufferManagerTests, Create2DLocalBuffer2Test)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
@@ -44,7 +46,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer2Test)
     _bufMgr->destroyBuffer(buf);
 }
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer3Test)
+TEST_F(BufferManagerTests, Create2DLocalBuffer3Test)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
@@ -57,7 +59,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate2DLocalBuffer3Test)
 
 
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate1DRemoteBufferTest)
+TEST_F(RuntimeTestFixture, Create1DRemoteBufferTest)
 {
     Buffer *buf = 
         RuntimeTestFixture::_bufMgr->createRemoteBuffer(CAL_FORMAT_FLOAT_4, 1024);
@@ -66,7 +68,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate1DRemoteBufferTest)
     _bufMgr->destroyBuffer(buf);
 }
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate2DRemoteBuffer1Test)
+TEST_F(RuntimeTestFixture, Create2DRemoteBuffer1Test)
 {
     Buffer *buf = 
         RuntimeTestFixture::_bufMgr->createRemoteBuffer(CAL_FORMAT_FLOAT_2, 1024, 2);
@@ -76,7 +78,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate2DRemoteBuffer1Test)
 }
 
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate2DRemoteBuffer2Test)
+TEST_F(RuntimeTestFixture, Create2DRemoteBuffer2Test)
 {
     Buffer *buf = 
         RuntimeTestFixture::_bufMgr->createRemoteBuffer(CAL_FORMAT_FLOAT_1, 1024, 512);
@@ -85,7 +87,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate2DRemoteBuffer2Test)
     _bufMgr->destroyBuffer(buf);
 }
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate1DGlobalBufferTest)
+TEST_F(RuntimeTestFixture, Create1DGlobalBufferTest)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
@@ -96,7 +98,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate1DGlobalBufferTest)
     _bufMgr->destroyBuffer(buf);
 }
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate2DGlobalBuffer1Test)
+TEST_F(RuntimeTestFixture, Create2DGlobalBuffer1Test)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
@@ -108,7 +110,7 @@ TEST_F(RuntimeTestFixture, BufferManagerCreate2DGlobalBuffer1Test)
 }
 
 
-TEST_F(RuntimeTestFixture, BufferManagerCreate2DGlobalBuffer2Test)
+TEST_F(RuntimeTestFixture, Create2DGlobalBuffer2Test)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);

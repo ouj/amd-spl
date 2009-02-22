@@ -2,6 +2,7 @@
 #define _AMDSPL_RUNTIMEEFS_H_
 
 #include "CommonDefs.h"
+#include <assert.h>
 #include "Runtime.h"
 #include "Device.h"
 #include "DeviceManager.h"

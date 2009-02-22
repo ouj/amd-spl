@@ -1,7 +1,15 @@
 #include "util.h"
+#include "stdio.h"
 
 namespace util
 {
+    void printDeviceStatus(Device* device)
+    {
+        CALdevicestatus status = device->getStatus();
+        printf("\tLocalRam: %d, UncachedRemoteRam: %d, CachedRemoteRam: %d\n", 
+            status.availLocalRAM, status.availUncachedRemoteRAM, status.availCachedRemoteRAM);
+    }
+
     // Value functions
     template<>
     void 
@@ -122,6 +130,32 @@ namespace util
         value(var.y, x, y, width, height, bound, type);
     }
 
+    template <>
+    bool
+        compare(const int2 val0, const int2 val1)
+    {
+        return (compare(val0.x, val1.x) && compare(val0.y,val1.y));
+    }
+
+    template <>
+    bool
+        compare(const int3 val0, const int3 val1)
+    {
+        return (compare(val0.x, val1.x) && 
+            compare(val0.y,val1.y) &&
+            compare(val0.z, val1.z));
+    }
+
+    template <>
+    bool
+        compare(const int4 val0, const int4 val1)
+    {
+        return (compare(val0.x, val1.x) && 
+            compare(val0.y,val1.y) &&
+            compare(val0.z, val1.z) &&
+            compare(val0.w, val1.w));
+    }
+
     // Compare functions
     template <>
     bool
@@ -131,10 +165,10 @@ namespace util
         float diff = (val1 - val0);
         if (fabs(val1) > epsilon)
         {
-            diff /= val0;            
+            diff /= val0;
         }
 
-        return (fabs(diff) > epsilon);
+        return (fabs(diff) < epsilon);
     }
 
     template <>
@@ -174,7 +208,7 @@ namespace util
             diff /= val0;            
         }
 
-        return (fabs(diff) > epsilon);
+        return (fabs(diff) < epsilon);
     }
 
     template <>

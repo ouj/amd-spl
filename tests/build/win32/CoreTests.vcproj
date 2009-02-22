@@ -313,10 +313,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\unit\core\BufferTests.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\unit\core\DeviceManagerTests.cpp"
 				>
 			</File>
@@ -325,11 +321,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\unit\core\GlobalBufferTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\InitCleanupTests.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\..\unit\core\LocalBufferTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\ProgramTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\RemoteBufferTests.cpp"
 				>
 			</File>
 			<File
@@ -364,6 +372,10 @@
 		<Filter
 			Name="StressTests"
 			>
+			<File
+				RelativePath="..\..\unit\core\BufferStressTests.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Fixtures"

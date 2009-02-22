@@ -59,6 +59,18 @@ TEST(DeviceTests, DeviceGetInfoAndAttribsTest)
     calShutdown();
 }
 
+TEST(DeviceTests, DeviceGetStatusTest)
+{
+    calInit();
+    Device *pDevice = new Device(0);
+    ASSERT_TRUE(pDevice->initialize());
+    CALdevicestatus status = pDevice->getStatus();
+    printf("LocalRam: %d, UncachedRemoteRam: %d, CachedRemoteRam: %d\n", 
+        status.availLocalRAM, status.availUncachedRemoteRAM, status.availCachedRemoteRAM);
+    delete pDevice;
+    calShutdown();
+}
+
 TEST(DeviceTests, DeviceGetContextTest)
 {
     calInit();
@@ -97,5 +109,21 @@ TEST(DeviceTests, DeviceGetHandle2Test)
     delete pDevice;
 
     ASSERT_EQ(CAL_RESULT_OK, calDeviceClose(deviceHandle));
+    calShutdown();
+}
+
+TEST(DeviceTests, MultiDevicesTest)
+{
+    calInit();
+    Device *pDevice1 = new Device(0);
+    ASSERT_TRUE(pDevice1->initialize());
+    util::printDeviceStatus(pDevice1);
+
+    Device *pDevice2 = new Device(1);
+    ASSERT_TRUE(pDevice2->initialize());
+    util::printDeviceStatus(pDevice2);
+
+    delete pDevice1;
+    delete pDevice2;
     calShutdown();
 }

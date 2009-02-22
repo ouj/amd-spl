@@ -82,12 +82,21 @@ namespace amdspl
                 return _deviceHandle;
             }
             
-            CALdeviceinfo Device::getInfo()
+            const CALdeviceinfo& Device::getInfo()
             {
                 return _deviceInfo;
             }
+
+            const CALdevicestatus& Device::getStatus()
+            {
+                memset(&_deviceStatus, 0, sizeof(CALdevicestatus));
+                _deviceStatus.struct_size = sizeof(CALdevicestatus);
+                CALresult result = calDeviceGetStatus(&_deviceStatus, _deviceHandle);
+                LOG_CAL_RESULT_ERROR(result, "Failed to get device status\n");
+                return _deviceStatus;
+            }
             
-            CALdeviceattribs Device::getAttribs()
+            const CALdeviceattribs& Device::getAttribs()
             {
                 return _deviceAttribs;
             }

@@ -9,7 +9,7 @@ namespace util
     {
         unsigned int height = kheight == 0 ? 1 : kheight; //1D
 
-        buffer.resize(width * height);
+        assert(buffer.size() >= width * height);
 
         for(unsigned int i = 0; i < height; ++i)
         {
@@ -44,7 +44,7 @@ namespace util
         int nequal = 0;
         for (unsigned int i = 0; i < buffer1.size(); ++i)
         {
-            if ((compare(buffer1[i], buffer2[i])))
+            if (!(compare(buffer1[i], buffer2[i])))
             {
                 nequal++;
             }
@@ -59,6 +59,18 @@ namespace util
     {
         return (val0 == val1);
     }
+
+    template <>
+    bool
+        compare(const int2 val0, const int2 val1);
+
+    template <>
+    bool
+        compare(const int3 val0, const int3 val1);
+
+    template <>
+    bool
+        compare(const int4 val0, const int4 val1);
 
     template <>
     bool
