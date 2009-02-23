@@ -38,7 +38,7 @@ if (!(condition)) \
 }
 
 // A problem that can be handled.
-#define CHECK_CAL_RESULT(result, msg) \
+#define CHECK_CAL_RESULT(result) \
     if (result != CAL_RESULT_OK) \
 { \
     return false; \

@@ -59,19 +59,19 @@ namespace amdspl
                 {
                     _shutDownOnDestroy = true;
                     result = calDeviceOpen(&_deviceHandle, _Id);
-                    CHECK_CAL_RESULT(result, "Failed to open CAL device \n");
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to open CAL device \n");
                 }
 
                 result = calDeviceGetInfo(&_deviceInfo, _Id);
-                CHECK_CAL_RESULT(result, "Failed to get info on CAL device \n");
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get info on CAL device \n");
 
                 _deviceAttribs.struct_size = sizeof(CALdeviceattribs);
                 result = calDeviceGetAttribs(&_deviceAttribs, _Id);
-                CHECK_CAL_RESULT(result, "Failed to get CAL device attributes\n");
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get CAL device attributes\n");
 
                 // Create the device context
                 result = calCtxCreate(&_context, _deviceHandle);
-                CHECK_CAL_RESULT(result, "Failed to create context on CAL device \n");
+                CHECK_CAL_RESULT_ERROR(result, "Failed to create context on CAL device \n");
 
                 return true;
             }

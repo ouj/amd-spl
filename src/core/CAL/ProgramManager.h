@@ -27,7 +27,7 @@ namespace amdspl
                 friend class Runtime;
             public:
                 template<typename ProgInfo>
-                Program* loadProgram(Device* device);
+                Program* loadProgram(Device* device = NULL);
                 void unloadProgram(Program* program);
             protected:
                 std::map<string, Program*> _programCache;
@@ -48,8 +48,14 @@ namespace amdspl
             template<typename ProgInfo>
             Program* ProgramManager::loadProgram(Device* device)
             {
-                Program *prog = new Program(device);
+                if (device == NULL)
+                {
+                    // use the default device;
+                    device = 
+                        Runtime::getInstance()->getDeviceManager()->getDefaultDevice();
+                }
 
+                Program *prog = new Program(device);
                 if (!prog->initialize<ProgInfo>())
                 {
                     SAFE_DELETE(prog);
