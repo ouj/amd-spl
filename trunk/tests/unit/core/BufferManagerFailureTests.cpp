@@ -1,4 +1,4 @@
-#include "CommonDefs.h"
+#include "CommonTestDefs.h"
 #include "RuntimeTestFixture.h"
 
 
@@ -14,15 +14,6 @@ TEST_F(BufferManagerFailureTests, CreateLocalBufferFailure1Test)
 
     ASSERT_TRUE(buf == NULL);
 }
-
-//TEST_F(BufferManagerFailureTests, CreateLocalBufferFailure2Test)
-//{
-//    Device* device = _deviceMgr->getDefaultDevice();
-//    ASSERT_TRUE(device);
-//    Buffer *buf = 
-//        RuntimeTestFixture::_bufMgr->createLocalBuffer(device, (CALformat)-1, 1024);
-//    ASSERT_TRUE(buf == NULL);
-//}
 
 TEST_F(BufferManagerFailureTests, CreateLocalBufferFailure3Test)
 {
@@ -41,16 +32,6 @@ TEST_F(BufferManagerFailureTests, CreateLocalBufferFailure4Test)
         RuntimeTestFixture::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_4, 1024, -1);
     ASSERT_TRUE(buf == NULL);
 }
-
-
-//TEST_F(BufferManagerFailureTests, CreateRemoteBufferFailure2Test)
-//{
-//    Device* device = _deviceMgr->getDefaultDevice();
-//    ASSERT_TRUE(device);
-//    Buffer *buf = 
-//        RuntimeTestFixture::_bufMgr->createRemoteBuffer((CALformat)-1, 1024);
-//    ASSERT_TRUE(buf == NULL);
-//}
 
 TEST_F(BufferManagerFailureTests, CreateRemoteBufferFailure3Test)
 {
@@ -77,15 +58,6 @@ TEST_F(BufferManagerFailureTests, CreateGlobalBufferFailure1Test)
 
     ASSERT_TRUE(buf == NULL);
 }
-
-//TEST_F(BufferManagerFailureTests, CreateGlobalBufferFailure2Test)
-//{
-//    Device* device = _deviceMgr->getDefaultDevice();
-//    ASSERT_TRUE(device);
-//    Buffer *buf = 
-//        RuntimeTestFixture::_bufMgr->createGlobalBuffer(device, (CALformat)-1, 1024);
-//    ASSERT_TRUE(buf == NULL);
-//}
 
 TEST_F(BufferManagerFailureTests, CreateGlobalBufferFailure3Test)
 {

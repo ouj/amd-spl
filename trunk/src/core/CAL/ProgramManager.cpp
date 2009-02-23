@@ -19,14 +19,9 @@ namespace amdspl
     {
         namespace cal
         {
-            Program* ProgramManager::loadProgram()
+            void ProgramManager::unloadProgram(Program* program)
             {
-                return NULL;
-            }
-            
-            void ProgramManager::unloadPorgram(Program* program)
-            {
-            
+                SAFE_DELETE(program);
             }
             
             ProgramManager::ProgramManager()

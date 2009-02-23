@@ -22,7 +22,7 @@ namespace amdspl
     {
         namespace cal
         {
-            template <int outputsT, int inputsT = 0, int constantsT = 0, int globalsT = 0> 
+            template <int outputsT, int inputsT = 0, int constantsT = 0, bool globalsT = false> 
             class ProgramInfo
             {
             public:
@@ -31,7 +31,7 @@ namespace amdspl
                     outputs = outputsT,
                     inputs = inputsT,
                     constants = constantsT,
-                    globals = globalsT
+                    global = globalsT
                 };
                 static const char* source;
                 static const char* programID;

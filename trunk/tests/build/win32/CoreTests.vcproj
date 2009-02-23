@@ -333,6 +333,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\unit\core\ProgramManagerTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\ProgramTests.cpp"
 				>
 			</File>
@@ -406,7 +410,7 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\..\unit\core\CommonDefs.h"
+			RelativePath="..\..\unit\core\CommonTestDefs.h"
 			>
 		</File>
 		<File

@@ -17,56 +17,71 @@ namespace amdspl
     {
         namespace cal
         {
-            Program::Program()
+            Program::Program(Device *device) : _device(device), _module(0), _func(0)
             {
-            
+                
             }
             
             Program::~Program()
             {
-            
+                CALcontext ctx = _device->getContext();
+
+                // Destroy the module
+                if(_module)
+                {
+                    calModuleUnload(ctx, _module);
+                }
             }
             
-            bool Program::load(Device* device)
+            CALname Program::getOutputName(unsigned short i) const
             {
-                return true;
+                return _outputNames[i];
+            }
+
+            CALname Program::getInputName(unsigned short i) const
+            {
+                return _inputNames[i];
+            }
+
+            CALname Program::getConstName(unsigned short i) const
+            {
+                return _constNames[i];
+            }
+
+            CALname Program::getGlobalName() const
+            {
+                return _globalName;
+            }
+
+            bool Program::bindInput(Buffer* buffer, unsigned int idx)
+            {
+                return false;
             }
             
-            bool Program::unload()
+            bool Program::bindOutput(Buffer* buffer, unsigned int idx)
             {
-                return true;
+                return false;
             }
             
-            void Program::bindInput(Buffer* buffer, unsigned int idx)
+            bool Program::bindConstant(ConstBuffer* buffer, unsigned int idx)
             {
-            
+                return false;
             }
             
-            void Program::bindOutput(Buffer* buffer, unsigned int idx)
+            bool Program::bindGlobal(GlobalBuffer* buffer)
             {
-            
+                return false;
             }
-            
-            void Program::bindConstant(ConstBuffer* buffer, unsigned int idx)
+
+            void Program::unbindAll()
             {
-            
-            }
-            
-            void Program::bindGlobal(GlobalBuffer* buffer, unsigned int idx)
-            {
-            
-            }
-            
-            bool Program::build(Device* device)
-            {
-                return true;
+
             }
 
             Event Program::run(CALdomain domain)
             {
                 return Event(NULL);
             }
-            
         }
     }
 }

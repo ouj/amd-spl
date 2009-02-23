@@ -22,5 +22,6 @@ public:
     static Runtime* _runtime;
     static BufferManager* _bufMgr;
     static DeviceManager* _deviceMgr;
+    static ProgramManager* _progMgr;
 };
 #endif

@@ -1,4 +1,4 @@
-#include "CommonDefs.h"
+#include "CommonTestDefs.h"
 #include "RuntimeTestFixture.h"
 #include "string.h"
 
@@ -7,20 +7,101 @@ using namespace amdspl::core::cal;
 
 typedef RuntimeTestFixture ProgramTests;
 
-typedef ProgramInfo<1, 2, 3, 4> SampleProgamInfo;
+typedef ProgramInfo<5, 3, 2, true> SampleProgram;
+DCL_PROGRAM_ID(SampleProgram) = "Sample Program Info";
+DCL_PROGRAM_SOURCE(SampleProgram) = 
+"il_ps_2_0\n"
+"dcl_output_generic o0\n"
+"dcl_output_generic o1\n"
+"dcl_output_generic o2\n"
+"dcl_output_generic o3\n"
+"dcl_output_generic o4\n"
+"dcl_input_position_interp(linear_noperspective) v0.xy__\n"
+"dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
+"dcl_resource_id(1)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
+"dcl_resource_id(2)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
+"dcl_cb cb0[1]\n"
+"dcl_cb cb1[2]\n"
+"sample_resource(0)_sampler(0) r1, v0.xy00\n"
+"mov g[r1.x], r1.y000\n"
+"add o0, r1, cb0[0]\n"
+"endmain\n"
+"end\n";
 
-DCL_PROGRAM_ID(SampleProgamInfo) = "Sample Program Info";
-DCL_PROGRAM_SOURCE(SampleProgamInfo) = 
-        "This is a test source file, I am not going to compile it.\n";
-
-TEST_F(ProgramTests, ProgramInfoTest)
+TEST_F(ProgramTests, GetNameTest)
 {
-    ASSERT_EQ(1, SampleProgamInfo::outputs);
-    ASSERT_EQ(2, SampleProgamInfo::inputs);
-    ASSERT_EQ(3, SampleProgamInfo::constants);
-    ASSERT_EQ(4, SampleProgamInfo::globals);
+    Device* device = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(device);
+    Program *prog = 
+        ProgramTests::_progMgr->loadProgram<SampleProgram>(device);
+    if(prog != NULL)
+    {
+        for (unsigned int i = 0; i < SampleProgram::inputs; i++)
+        {
+            ASSERT_TRUE(prog->getInputName(i) != 0);
+        }
+        for (unsigned int i = 0; i < SampleProgram::outputs; i++)
+        {
+            ASSERT_TRUE(prog->getOutputName(i) != 0);
+        }
+        for (unsigned int i = 0; i < SampleProgram::constants; i++)
+        {
+            ASSERT_TRUE(prog->getConstName(i) != 0);
+        }
+        if (SampleProgram::global)
+        {
+            ASSERT_TRUE(prog->getGlobalName() != 0);
+        }
+    }
 
-    ASSERT_TRUE(!strcmp(SampleProgamInfo::source, "This is a test source file, I am not going to compile it.\n"));
-    ASSERT_TRUE(!strcmp(SampleProgamInfo::programID, "Sample Program Info"));
+    _progMgr->unloadProgram(prog);
 }
 
+typedef ProgramInfo<1, 1, 0, true> CopyProgram;
+DCL_PROGRAM_ID(CopyProgram) = "Copy Program Info";
+DCL_PROGRAM_SOURCE(CopyProgram) = 
+"il_ps_2_0\n"
+"dcl_output_generic o0\n"
+"dcl_input_position_interp(linear_noperspective) v0.xy__\n"
+"dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)\n"
+"sample_resource(0)_sampler(0) o0, v0.xy00\n"
+"endmain\n"
+"end\n";
+
+TEST_F(ProgramTests, BindBufferTest)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(device);
+
+    Buffer *buf1 = _bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_2, 1024, 1);
+    ASSERT_TRUE(buf1 != NULL);
+    Buffer *buf2 = _bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_2, 1024, 1);
+    ASSERT_TRUE(buf1 != NULL);
+
+    Program *prog = 
+        ProgramTests::_progMgr->loadProgram<SampleProgram>(device);
+    if(prog != NULL)
+    {
+        ASSERT_TRUE(prog->bindInput(buf1, 0));
+        ASSERT_TRUE(prog->bindOutput(buf2, 0));
+    }
+
+    prog->unbindAll();
+
+    _progMgr->unloadProgram(prog);
+    _bufMgr->destroyBuffer(buf1);
+    _bufMgr->destroyBuffer(buf2);
+}
+
+TEST_F(ProgramTests, RunProgramTest)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(device);
+    Program *prog = 
+        ProgramTests::_progMgr->loadProgram<SampleProgram>(device);
+    if(prog != NULL)
+    {
+
+    }
+    _progMgr->unloadProgram(prog);
+}

@@ -15,6 +15,9 @@
 #include "Event.h"
 #include "Device.h"
 #include <vector>
+#include <stdio.h>
+#include "calcl.h"
+#include "CommonDefs.h"
 
 using namespace std;
 
@@ -31,29 +34,40 @@ namespace amdspl
             class Program
             {
             public:
-                Program();
+                Program(Device *device);
                 ~Program();
-                bool load(Device* device);
-                bool unload();
-                virtual Event run(CALdomain domain);
-                void bindInput(Buffer* buffer, unsigned int idx = 0);
-                void bindOutput(Buffer* buffer, unsigned int idx = 0);
-                void bindConstant(ConstBuffer* buffer, unsigned int idx = 0);
-                void bindGlobal(GlobalBuffer* buffer, unsigned int idx = 0);
+                template<typename ProgInfo>
+                bool            initialize();
+                virtual Event   run(CALdomain domain);
+                bool            bindInput(Buffer* buffer, unsigned int idx = 0);
+                bool            bindOutput(Buffer* buffer, unsigned int idx = 0);
+                bool            bindConstant(ConstBuffer* buffer, unsigned int idx = 0);
+                bool            bindGlobal(GlobalBuffer* buffer);
+                void            unbindAll();
+
+                CALname         getOutputName(unsigned short i) const;
+                CALname         getInputName(unsigned short i) const;
+                CALname         getConstName(unsigned short i) const;
+                CALname         getGlobalName() const;
             protected:
-                CALobject _object;
-                vector<CALimage> _image;
-                vector<CALname> _inputNames;
-                vector<CALname> _outputNames;
-                vector<CALname> _constNames;
-                vector<CALname> _globalNames;
-                CALfunc _func;
-                CALmodule _module;
-                Device* _device;
-                bool build(Device* device);
+                vector<CALname>         _inputNames;
+                vector<CALname>         _outputNames;
+                vector<CALname>         _constNames;
+                CALname                 _globalName;
+
+                vector<Buffer*>         _inputBuffers;
+                vector<Buffer*>         _outputBuffers;
+                vector<ConstBuffer*>    _constBuffers;
+                GlobalBuffer*           _globalBuffer;
+
+                CALfunc                 _func;
+                CALmodule               _module;
+                Device*                 _device;
             };
         }
     }
 }
+
+#include "ProgramDefs.h"
 
 #endif  //_PROGRAM_H

@@ -6,6 +6,7 @@ using namespace amdspl;
 Runtime* RuntimeTestFixture::_runtime = NULL;
 BufferManager* RuntimeTestFixture::_bufMgr = NULL;
 DeviceManager* RuntimeTestFixture::_deviceMgr = NULL;
+ProgramManager* RuntimeTestFixture::_progMgr = NULL;
 
 RuntimeTestFixture::RuntimeTestFixture(void)
 {
@@ -35,6 +36,7 @@ void RuntimeTestFixture::SetUp()
     _runtime = Runtime::getInstance();
     _bufMgr = _runtime->getBufferManager();
     _deviceMgr = _runtime->getDeviceManager();
+    _progMgr = _runtime->getProgramManager();
 }
 
 void RuntimeTestFixture::TearDown()
@@ -42,4 +44,5 @@ void RuntimeTestFixture::TearDown()
     _runtime = NULL;
     _bufMgr = NULL;
     _deviceMgr = NULL;
+    _progMgr = NULL;
 }
