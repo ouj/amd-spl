@@ -1,12 +1,36 @@
 #ifndef _PROGRAM_DEFS_H_
 #define _PROGRAM_DEFS_H_
 
+#include <assert.h>
 namespace amdspl
 {
     namespace core
     {
         namespace cal
         {
+            inline CALname Program::getOutputName(unsigned short i) const
+            {
+                assert(i <= _outputNames.size());
+                return _outputNames[i];
+            }
+
+            inline CALname Program::getInputName(unsigned short i) const
+            {
+                assert(i <= _inputNames.size());
+                return _inputNames[i];
+            }
+
+            inline CALname Program::getConstName(unsigned short i) const
+            {
+                assert(i <= _constNames.size());
+                return _constNames[i];
+            }
+
+            inline CALname Program::getGlobalName() const
+            {
+                return _globalName;
+            }
+
             template<typename ProgInfo>
             bool Program::initialize()
             {
@@ -80,11 +104,11 @@ namespace amdspl
                     _globalName = name;
                 }
 
-                // Initialize buffer pointers
-                _constBuffers.resize(ProgInfo::constants, NULL);
-                _inputBuffers.resize(ProgInfo::inputs, NULL);
-                _outputBuffers.resize(ProgInfo::outputs, NULL);
-                _globalBuffer = NULL;
+                // Intialize mem
+                _constMems.resize(ProgInfo::constants, NULL);
+                _inputMems.resize(ProgInfo::inputs, NULL);
+                _outputMems.resize(ProgInfo::outputs, NULL);
+                _globalMem = NULL;
 
                 return true;
             }

@@ -68,7 +68,7 @@ DCL_PROGRAM_SOURCE(CopyProgram) =
 "endmain\n"
 "end\n";
 
-TEST_F(ProgramTests, BindBufferTest)
+TEST_F(ProgramTests, BindBufferTest1)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
@@ -86,22 +86,45 @@ TEST_F(ProgramTests, BindBufferTest)
         ASSERT_TRUE(prog->bindOutput(buf2, 0));
     }
 
-    prog->unbindAll();
+    ASSERT_TRUE(prog->unbindInput(0));
+    ASSERT_TRUE(prog->unbindOutput(0));
 
-    _progMgr->unloadProgram(prog);
     _bufMgr->destroyBuffer(buf1);
     _bufMgr->destroyBuffer(buf2);
+    _progMgr->unloadProgram(prog);
 }
 
 TEST_F(ProgramTests, RunProgramTest)
 {
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
+
+    Buffer *buf1 = _bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_2, 1024, 1);
+    ASSERT_TRUE(buf1 != NULL);
+    Buffer *buf2 = _bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_2, 1024, 1);
+    ASSERT_TRUE(buf1 != NULL);
+
+    vector<float2> buffer1(1024);
+    util::initializeBuffer(buffer1, 1024, 1, 1024, util::RANDOM);
+    buf1->readData(&buffer1[0], buffer1.size());
+
     Program *prog = 
         ProgramTests::_progMgr->loadProgram<SampleProgram>(device);
     if(prog != NULL)
     {
-
+        ASSERT_TRUE(prog->bindInput(buf1, 0));
+        ASSERT_TRUE(prog->bindOutput(buf2, 0));
     }
+
+    ASSERT_TRUE(prog->unbindInput(0));
+    ASSERT_TRUE(prog->unbindOutput(0));
+
+    vector<float2> buffer2(1024);
+    buf2->writeData(&buffer2[0], buffer2.size());
+    
+    util::compareBuffers(buffer1, buffer2, buffer1.size());
+
     _progMgr->unloadProgram(prog);
+    _bufMgr->destroyBuffer(buf1);
+    _bufMgr->destroyBuffer(buf2);
 }

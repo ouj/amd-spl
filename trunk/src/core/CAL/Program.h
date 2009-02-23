@@ -39,26 +39,31 @@ namespace amdspl
                 template<typename ProgInfo>
                 bool            initialize();
                 virtual Event   run(CALdomain domain);
-                bool            bindInput(Buffer* buffer, unsigned int idx = 0);
-                bool            bindOutput(Buffer* buffer, unsigned int idx = 0);
-                bool            bindConstant(ConstBuffer* buffer, unsigned int idx = 0);
+                bool            bindInput(Buffer* buffer, unsigned int idx);
+                bool            bindOutput(Buffer* buffer, unsigned int idx);
+                bool            bindConstant(ConstBuffer* buffer, unsigned int idx);
                 bool            bindGlobal(GlobalBuffer* buffer);
-                void            unbindAll();
 
-                CALname         getOutputName(unsigned short i) const;
-                CALname         getInputName(unsigned short i) const;
-                CALname         getConstName(unsigned short i) const;
-                CALname         getGlobalName() const;
+                bool            unbindInput(unsigned int idx);
+                bool            unbindOutput(unsigned int idx);
+                bool            unbindConstant(unsigned int idx);
+                bool            unbindGlobal();
+                bool            unbindAll();
+
+                inline CALname  getOutputName(unsigned short i) const;
+                inline CALname  getInputName(unsigned short i) const;
+                inline CALname  getConstName(unsigned short i) const;
+                inline CALname  getGlobalName() const;
             protected:
                 vector<CALname>         _inputNames;
                 vector<CALname>         _outputNames;
                 vector<CALname>         _constNames;
                 CALname                 _globalName;
 
-                vector<Buffer*>         _inputBuffers;
-                vector<Buffer*>         _outputBuffers;
-                vector<ConstBuffer*>    _constBuffers;
-                GlobalBuffer*           _globalBuffer;
+                vector<CALmem>          _inputMems;
+                vector<CALmem>          _outputMems;
+                vector<CALmem>          _constMems;
+                CALmem                  _globalMem;
 
                 CALfunc                 _func;
                 CALmodule               _module;
