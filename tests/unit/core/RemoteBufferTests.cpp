@@ -1,4 +1,4 @@
-#include "CommonDefs.h"
+#include "CommonTestDefs.h"
 #include "RuntimeTestFixture.h"
 #include "util.h"
 

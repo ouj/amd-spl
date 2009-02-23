@@ -13,6 +13,7 @@
 #define _PROGRAMMANAGER_H
 
 #include "Program.h"
+#include "CommonDefs.h"
 #include <map>
 
 namespace amdspl
@@ -25,8 +26,9 @@ namespace amdspl
             {
                 friend class Runtime;
             public:
-                Program* loadProgram();
-                void unloadPorgram(Program* program);
+                template<typename ProgInfo>
+                Program* loadProgram(Device* device);
+                void unloadProgram(Program* program);
             protected:
                 std::map<string, Program*> _programCache;
                 ProgramManager();
@@ -37,4 +39,25 @@ namespace amdspl
     }
 }
 
+namespace amdspl
+{
+    namespace core
+    {
+        namespace cal
+        {
+            template<typename ProgInfo>
+            Program* ProgramManager::loadProgram(Device* device)
+            {
+                Program *prog = new Program(device);
+
+                if (!prog->initialize<ProgInfo>())
+                {
+                    SAFE_DELETE(prog);
+                    return NULL;
+                }
+                return prog;
+            }
+        }
+    }
+}
 #endif  //_PROGRAMMANAGER_H

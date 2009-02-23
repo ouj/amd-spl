@@ -37,6 +37,27 @@ if (!(condition)) \
     return false; \
 }
 
+// A problem that can be handled.
+#define CHECK_CAL_RESULT(result, msg) \
+    if (result != CAL_RESULT_OK) \
+{ \
+    return false; \
+}
+
+// A problem that can be handled.
+#define CHECK_CAL_RESULT_ERROR(result, msg) \
+    if (result != CAL_RESULT_OK) \
+{ \
+    fprintf(stderr, (msg)); \
+    return false; \
+}
+
+// A problem that can be handled.
+#define LOG_CAL_RESULT_ERROR(result, msg) \
+    if (result != CAL_RESULT_OK) \
+{ \
+    fprintf(stderr, (msg)); \
+}
 // An error
 #define SET_ERROR(msg) \
 

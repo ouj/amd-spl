@@ -268,6 +268,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\CAL\ProgramDefs.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\ProgramInfo.h"
 						>
 					</File>

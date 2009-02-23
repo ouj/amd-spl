@@ -1,4 +1,4 @@
-#include "CommonDefs.h"
+#include "CommonTestDefs.h"
 
 using namespace amdspl;
 using namespace amdspl::core::cal;
