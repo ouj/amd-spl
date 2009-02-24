@@ -63,7 +63,7 @@ namespace amdspl
                 // Get constant name handle
                 for(unsigned int i = 0; i < ProgInfo::constants; ++i)
                 {
-                    CALname name;
+                    CALname name = 0;
                     sprintf(symbolStr, "cb%d", i);
                     result = calModuleGetName(&name, ctx, _module, symbolStr);
                     CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for constants\n");
@@ -75,7 +75,7 @@ namespace amdspl
                 // Get all the input name handles
                 for(unsigned int i = 0; i < ProgInfo::inputs; ++i)
                 {
-                    CALname name;
+                    CALname name = 0;
                     sprintf(symbolStr, "i%d", i);
                     result = calModuleGetName(&name, ctx, _module, symbolStr);
                     CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for input stream\n");
@@ -86,7 +86,7 @@ namespace amdspl
                 // Get all the output name handles
                 for(unsigned int i = 0; i < ProgInfo::outputs; ++i)
                 {
-                    CALname name;
+                    CALname name = 0;
                     sprintf(symbolStr, "o%d", i);
                     result = calModuleGetName(&name, ctx, _module, symbolStr);
                     CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for output stream\n");
@@ -97,9 +97,9 @@ namespace amdspl
                 // Get name handle for scatter stream
                 if(ProgInfo::global != 0)
                 {
-                    CALname name;
+                    CALname name = 0;
                     result = calModuleGetName(&name, ctx, _module, "g[]");
-                    CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for scatter stream\n");
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for global stream\n");
 
                     _globalName = name;
                 }

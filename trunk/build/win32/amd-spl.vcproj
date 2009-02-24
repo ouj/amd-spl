@@ -240,10 +240,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\core\CAL\ConstBufferPool.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\core\CAL\Device.h"
 						>
 					</File>
@@ -333,10 +329,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\ConstBuffer.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\ConstBufferPool.cpp"
 						>
 					</File>
 					<File

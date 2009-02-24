@@ -12,5 +12,6 @@
 #include "LocalBuffer.h"
 #include "RemoteBuffer.h"
 #include "GlobalBuffer.h"
+#include "ConstBuffer.h"
 
 #endif //_AMDSPL_RUNTIMEEFS_H_

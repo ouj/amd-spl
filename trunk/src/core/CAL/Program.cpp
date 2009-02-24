@@ -83,12 +83,44 @@ namespace amdspl
             bool Program::bindConstant(ConstBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _constMems.size());
-                return false;
+                unbindConstant(idx);
+
+                CALname name = getConstName(idx);
+                CALcontext ctx = _device->getContext();
+                CALresource res = buffer->getResHandle();
+                CALmem mem;
+
+                // Get the memory handle
+                CALresult result = calCtxGetMem(&mem, ctx, res);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get constant memory handle \n");
+
+                result = calCtxSetMem(ctx, name, mem);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to bind constant memory\n");
+
+                _constMems[idx] = mem;
+
+                return true;
             }
             
             bool Program::bindGlobal(GlobalBuffer* buffer)
             {
-                return false;
+                unbindGlobal();
+
+                CALname name = getGlobalName();
+                CALcontext ctx = _device->getContext();
+                CALresource res = buffer->getResHandle();
+                CALmem mem;
+
+                // Get the memory handle
+                CALresult result = calCtxGetMem(&mem, ctx, res);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get global memory handle \n");
+
+                result = calCtxSetMem(ctx, name, mem);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to bind global memory\n");
+
+                _globalMem = mem;
+
+                return true;
             }
 
             bool Program::unbindInput(unsigned int idx)
@@ -115,11 +147,11 @@ namespace amdspl
                 assert(idx <= _outputMems.size());
                 if (_outputMems[idx] != NULL)
                 {
-                    CALname name = getInputName(idx);
+                    CALname name = getOutputName(idx);
                     CALcontext ctx = _device->getContext();
 
                     CALresult result = calCtxSetMem(ctx, name, NULL);
-                    CHECK_CAL_RESULT_ERROR(result, "Failed to unbind input memory\n");
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to unbind output memory\n");
 
                     // release mem handle
                     calCtxReleaseMem(_device->getContext(), _outputMems[idx]);
@@ -130,11 +162,36 @@ namespace amdspl
 
             bool Program::unbindConstant(unsigned int idx)
             {
-                return false;
+                assert(idx <= _constMems.size());
+                if (_constMems[idx] != NULL)
+                {
+                    CALname name = getConstName(idx);
+                    CALcontext ctx = _device->getContext();
+
+                    CALresult result = calCtxSetMem(ctx, name, NULL);
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to unbind constant memory\n");
+
+                    // release mem handle
+                    calCtxReleaseMem(_device->getContext(), _constMems[idx]);
+                    _constMems[idx] = NULL;
+                }
+                return true;
             }
 
             bool Program::unbindGlobal()
             {
+                if (_globalMem != NULL)
+                {
+                    CALname name = getGlobalName();
+                    CALcontext ctx = _device->getContext();
+
+                    CALresult result = calCtxSetMem(ctx, name, NULL);
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to unbind constant memory\n");
+
+                    // release mem handle
+                    calCtxReleaseMem(_device->getContext(), _globalMem);
+                    _globalMem = NULL;
+                }
                 return false;
             }
 
@@ -157,9 +214,15 @@ namespace amdspl
                 return result;
             }
 
-            Event Program::run(CALdomain domain)
+            Event Program::run(const CALdomain &domain)
             {
-                return Event(NULL);
+                CALevent execEvent;
+                CALcontext ctx = _device->getContext();
+
+                CALresult result = calCtxRunProgram(&execEvent, ctx, _func, &domain);
+                LOG_CAL_RESULT_ERROR(result, "Failed to execute program!\n");
+
+                return Event(execEvent, ctx);
             }
         }
     }

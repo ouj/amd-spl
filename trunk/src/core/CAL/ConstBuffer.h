@@ -24,7 +24,11 @@ namespace amdspl
         {
             class ConstBuffer : public RemoteBuffer
             {
+                friend class BufferManager;
             public:
+                ConstBuffer();
+                ~ConstBuffer();
+                bool initialize();
                 void setConstant();
                 void sync();
             protected:

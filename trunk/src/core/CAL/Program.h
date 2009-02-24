@@ -38,7 +38,7 @@ namespace amdspl
                 ~Program();
                 template<typename ProgInfo>
                 bool            initialize();
-                virtual Event   run(CALdomain domain);
+                virtual Event   run(const CALdomain &domain);
                 bool            bindInput(Buffer* buffer, unsigned int idx);
                 bool            bindOutput(Buffer* buffer, unsigned int idx);
                 bool            bindConstant(ConstBuffer* buffer, unsigned int idx);

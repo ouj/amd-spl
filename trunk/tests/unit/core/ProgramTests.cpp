@@ -57,7 +57,7 @@ TEST_F(ProgramTests, GetNameTest)
     _progMgr->unloadProgram(prog);
 }
 
-typedef ProgramInfo<1, 1, 0, true> CopyProgram;
+typedef ProgramInfo<1, 1, 0, false> CopyProgram;
 DCL_PROGRAM_ID(CopyProgram) = "Copy Program Info";
 DCL_PROGRAM_SOURCE(CopyProgram) = 
 "il_ps_2_0\n"
@@ -109,20 +109,24 @@ TEST_F(ProgramTests, RunProgramTest)
     buf1->readData(&buffer1[0], buffer1.size());
 
     Program *prog = 
-        ProgramTests::_progMgr->loadProgram<SampleProgram>(device);
+        ProgramTests::_progMgr->loadProgram<CopyProgram>(device);
     if(prog != NULL)
     {
         ASSERT_TRUE(prog->bindInput(buf1, 0));
         ASSERT_TRUE(prog->bindOutput(buf2, 0));
-    }
 
-    ASSERT_TRUE(prog->unbindInput(0));
-    ASSERT_TRUE(prog->unbindOutput(0));
+        CALdomain domain = {0, 0, 1024, 1};
+        Event e = prog->run(domain);
+        e.waitEvent();
+
+        ASSERT_TRUE(prog->unbindInput(0));
+        ASSERT_TRUE(prog->unbindOutput(0));
+    }
 
     vector<float2> buffer2(1024);
     buf2->writeData(&buffer2[0], buffer2.size());
     
-    util::compareBuffers(buffer1, buffer2, buffer1.size());
+    ASSERT_EQ(0, util::compareBuffers(buffer1, buffer2, buffer1.size()));
 
     _progMgr->unloadProgram(prog);
     _bufMgr->destroyBuffer(buf1);

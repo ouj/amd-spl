@@ -22,13 +22,13 @@ namespace amdspl
             class Event
             {
             public:
-                Event(CALevent event);
-                void getHandle();
+                Event(CALevent event, CALcontext ctx);
+                CALevent getHandle();
                 void waitEvent();
-                void checkEvent();
+                CALresult checkEvent();
             private:
                 CALevent _event;
-                CALcontext _context;
+                CALcontext _ctx;
             };
         }
     }

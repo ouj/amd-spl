@@ -24,21 +24,22 @@ namespace amdspl
             public:
                 Device(unsigned short id, CALdevice device = 0);
                 ~Device();
-                bool initialize();
-                CALdevice getHandle();
-                const CALdeviceinfo& getInfo();
-                const CALdeviceattribs& getAttribs();
-                const CALdevicestatus& getStatus();
-                CALcontext getContext();
-                unsigned short getId();
+                bool                        initialize();
+                CALdevice                   getHandle();
+                const CALdeviceinfo&        getInfo();
+                const CALdeviceattribs&     getAttribs();
+                const CALdevicestatus&      getStatus();
+                CALcontext                  getContext();
+                unsigned short              getId();
+                bool                        flush();
             private:
-                CALdevice _deviceHandle;
-                CALdeviceinfo _deviceInfo;
-                CALdeviceattribs _deviceAttribs;
-                CALdevicestatus _deviceStatus;
-                CALcontext _context;
-                unsigned short _Id;
-				bool _shutDownOnDestroy;
+                CALdevice                   _deviceHandle;
+                CALdeviceinfo               _deviceInfo;
+                CALdeviceattribs            _deviceAttribs;
+                CALdevicestatus             _deviceStatus;
+                CALcontext                  _context;
+                unsigned short              _Id;
+				bool                        _shutDownOnDestroy;
             };
         }
     }
