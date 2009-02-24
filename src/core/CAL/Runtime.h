@@ -24,7 +24,6 @@ namespace amdspl
 			class DeviceManager;
 			class BufferManager;
 			class ProgramManager;
-			class ConstBufferPool;
 			
             class Runtime
             {
@@ -32,7 +31,6 @@ namespace amdspl
                 static Runtime* getInstance();
                 static void destroy();
                 DeviceManager* getDeviceManager();
-                ConstBufferPool* getConstBufferPool();
                 BufferManager* getBufferManager();
                 ProgramManager* getProgramManager();
             private:
@@ -42,7 +40,6 @@ namespace amdspl
                 bool virtual create();
                 
                 DeviceManager* _deviceMgr;
-                ConstBufferPool* _constBufferPool;
                 BufferManager* _bufferMgr;
                 ProgramManager* _programMgr;
                 static Runtime* _runtime;

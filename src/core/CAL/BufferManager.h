@@ -12,6 +12,7 @@
 #if !defined(_BUFFERMANAGER_H)
 #define _BUFFERMANAGER_H
 #include "cal.h"
+#include <vector>
 
 namespace amdspl
 {
@@ -21,6 +22,7 @@ namespace amdspl
         {
             class Device;
             class Buffer;
+            class ConstBuffer;
             class BufferManager
             {
                 friend class Runtime;
@@ -29,10 +31,16 @@ namespace amdspl
                 Buffer* createLocalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
                 Buffer* createGlobalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
                 Buffer* createRemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
+
+                ConstBuffer*    getConstBuffer(unsigned int size);
+                void            releaseConstBuffer(ConstBuffer constBuf);
             protected:
                 BufferManager();
                 ~BufferManager();
                 bool initialize();
+            private:
+                std::vector<ConstBuffer*> _usedConstBuf;
+                std::vector<ConstBuffer*> _freeConstBuf;
             };
         }
     }

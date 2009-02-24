@@ -10,6 +10,7 @@
 
 
 #include "Event.h"
+#include "RuntimeDefs.h"
 
 namespace amdspl
 {
@@ -17,26 +18,26 @@ namespace amdspl
     {
         namespace cal
         {
-            Event::Event(CALevent event)
+            Event::Event(CALevent event, CALcontext ctx)
             {
+                assert(event);
                 _event = event;
-
+                _ctx = ctx;
             }
-            void Event::getHandle()
+            CALevent Event::getHandle()
             {
-            
+                return _event;
             }
             
             void Event::waitEvent()
             {
-            
+                while(calCtxIsEventDone(_ctx, _event));
             }
-            
-            void Event::checkEvent()
+
+            CALresult Event::checkEvent()
             {
-            
+                return calCtxIsEventDone(_ctx, _event);
             }
-            
         }
     }
 }

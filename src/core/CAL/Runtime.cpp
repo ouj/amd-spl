@@ -15,7 +15,6 @@
 #include "DeviceManager.h"
 #include "BufferManager.h"
 #include "ProgramManager.h"
-#include "ConstBufferPool.h"
 #include "amdspl.h"
 
 namespace amdspl
@@ -119,15 +118,12 @@ namespace amdspl
                     goto SAFE_DELETE_ALL_ON_ERROR;
                 }
 
-                _constBufferPool = new ConstBufferPool();
-
 				return true;
 
 SAFE_DELETE_ALL_ON_ERROR:
                 SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_bufferMgr);
                 SAFE_DELETE(_deviceMgr);
-                SAFE_DELETE(_constBufferPool);
                 
                 return false;
             }
@@ -148,12 +144,6 @@ SAFE_DELETE_ALL_ON_ERROR:
 				return _deviceMgr;
             }
             
-            ConstBufferPool* Runtime::getConstBufferPool()
-            {
-				assert(_constBufferPool);
-				return _constBufferPool;
-            }
-            
             BufferManager* Runtime::getBufferManager()
             {
 				assert(_bufferMgr);
@@ -167,7 +157,7 @@ SAFE_DELETE_ALL_ON_ERROR:
             }
             
 			Runtime::Runtime() : _programMgr(0), _bufferMgr(0), 
-				_deviceMgr(0), _constBufferPool(0)
+				_deviceMgr(0)
             {
             }
             
@@ -176,7 +166,6 @@ SAFE_DELETE_ALL_ON_ERROR:
                 SAFE_DELETE(_deviceMgr);
                 SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_bufferMgr);
-                SAFE_DELETE(_constBufferPool);
 
                 // Finally, shutdown the CAL
                 if (_shutdownOnDestroy)

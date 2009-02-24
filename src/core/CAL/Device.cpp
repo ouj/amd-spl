@@ -28,6 +28,7 @@ namespace amdspl
             
             Device::~Device()
             {
+                flush();
                 CALresult result;
                 // Cleanup of context and Device handle
                 if(_context)
@@ -112,6 +113,12 @@ namespace amdspl
                 return _Id;
             }
             
+            bool Device::flush()
+            {
+                CALresult result = calCtxFlush(_context);
+                CHECK_CAL_RESULT_ERROR(result, "Unable to flush the context\n");
+                return true;
+            }
         }
     }
 }
