@@ -104,11 +104,11 @@ namespace amdspl
                     _globalName = name;
                 }
 
-                // Intialize mem
-                _constMems.resize(ProgInfo::constants, NULL);
-                _inputMems.resize(ProgInfo::inputs, NULL);
-                _outputMems.resize(ProgInfo::outputs, NULL);
-                _globalMem = NULL;
+                // Initialize Buffer
+                _constBuffers.resize(ProgInfo::constants);
+                _inputBuffers.resize(ProgInfo::inputs);
+                _outputBuffers.resize(ProgInfo::outputs);
+                _globalBuffer = BufferItem();
 
                 return true;
             }
