@@ -213,14 +213,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\CAL\ConstBufferPool.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\ConstBufferPool.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\Device.cpp"
 				>
 			</File>
@@ -266,6 +258,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\core\CAL\Program.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\core\CAL\ProgramDefs.h"
 				>
 			</File>
 			<File

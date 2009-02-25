@@ -26,9 +26,3 @@ TEST_F(RuntimeTestFixture, RuntimeGetProgramManagerTest)
     ProgramManager* _deviceMgr = _runtime->getProgramManager();
     ASSERT_TRUE(_deviceMgr != NULL);
 }
-
-TEST_F(RuntimeTestFixture, RuntimeGetConstBufferPoolTest)
-{
-    ConstBufferPool* _deviceMgr = _runtime->getConstBufferPool();
-    ASSERT_TRUE(_deviceMgr != NULL);
-}

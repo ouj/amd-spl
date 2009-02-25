@@ -69,7 +69,42 @@ namespace amdspl
                 }
                 return remoteBuf;
             }
-            
+
+            ConstBuffer* BufferManager::getConstBuffer(unsigned int size)
+            {
+                ConstBuffer *constBuf;
+                if (_constBufferPool.size())
+                {
+                    constBuf = _constBufferPool.back();
+                    _constBufferPool.pop_back();
+                }
+                else
+                {
+                    constBuf = new ConstBuffer();
+                    if(!constBuf->initialize())
+                    {
+                        SAFE_DELETE(constBuf);
+                        return NULL;
+                    }
+                }
+
+                if(!constBuf->resize(size))
+                {
+                    // you break the rule, you get nothing;
+                    _constBufferPool.push_back(constBuf);
+                    return NULL;
+                }
+
+                return constBuf;
+            }
+
+            void BufferManager::releaseConstBuffer(ConstBuffer *constBuf)
+            {
+                if (constBuf)
+                {
+                    _constBufferPool.push_back(constBuf);
+                }
+            }
         }
     }
 }

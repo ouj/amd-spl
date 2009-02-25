@@ -17,16 +17,40 @@ namespace amdspl
     {
         namespace cal
         {
-            void ConstBuffer::setConstant()
+            ConstBuffer::ConstBuffer() : 
+                RemoteBuffer(CAL_FORMAT_FLOAT_4, MAX_CONST_NUM, 0), _buffer(MAX_CONST_NUM)
             {
-            
             }
-            
-            void ConstBuffer::sync()
+
+            bool ConstBuffer::resize(unsigned int size)
             {
-            
+                if (size > MAX_CONST_NUM)
+                {
+                    fprintf(stderr, "Constant buffer size cannot exceed %d\n", MAX_CONST_NUM);
+                    return false;
+                }
+
+                _buffer.resize(size);
+                return true;
             }
-            
+
+            ConstBuffer::~ConstBuffer()
+            {
+
+            }
+
+            bool ConstBuffer::sync()
+            {
+                CALuint pitch;
+                void* data = getPointerCPU(pitch);
+                if(!data)
+                {
+                    return false;
+                }
+                memcpy(data, &_buffer[0], _buffer.size() * sizeof(float4));
+                releasePointerCPU();
+                return true;
+            }
         }
     }
 }

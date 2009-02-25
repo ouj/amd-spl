@@ -106,7 +106,7 @@ TEST_F(ProgramTests, RunProgramTest)
 
     vector<float2> buffer1(1024);
     util::initializeBuffer(buffer1, 1024, 1, 1024, util::RANDOM);
-    buf1->readData(&buffer1[0], buffer1.size());
+    buf1->readData(&buffer1[0], static_cast<unsigned long>(buffer1.size()));
 
     Program *prog = 
         ProgramTests::_progMgr->loadProgram<CopyProgram>(device);
@@ -116,17 +116,18 @@ TEST_F(ProgramTests, RunProgramTest)
         ASSERT_TRUE(prog->bindOutput(buf2, 0));
 
         CALdomain domain = {0, 0, 1024, 1};
-        Event e = prog->run(domain);
-        e.waitEvent();
+        Event *e = prog->run(domain);
+        ASSERT_TRUE(e != NULL);
+        e->waitEvent();
 
         ASSERT_TRUE(prog->unbindInput(0));
         ASSERT_TRUE(prog->unbindOutput(0));
     }
 
     vector<float2> buffer2(1024);
-    buf2->writeData(&buffer2[0], buffer2.size());
+    buf2->writeData(&buffer2[0], static_cast<unsigned long>(buffer2.size()));
     
-    ASSERT_EQ(0, util::compareBuffers(buffer1, buffer2, buffer1.size()));
+    ASSERT_EQ(0, util::compareBuffers(buffer1, buffer2, static_cast<unsigned long>(buffer1.size())));
 
     _progMgr->unloadProgram(prog);
     _bufMgr->destroyBuffer(buf1);

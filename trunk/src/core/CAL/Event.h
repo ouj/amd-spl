@@ -21,14 +21,20 @@ namespace amdspl
         {
             class Event
             {
+                friend class Program;
+                friend class ProgramManager;
             public:
-                Event(CALevent event, CALcontext ctx);
-                CALevent getHandle();
-                void waitEvent();
-                CALresult checkEvent();
+                Event();
+                void        set(CALevent e, CALcontext ctx);
+                void        reset();
+                bool        isUnused();
+                CALevent    getHandle();
+                CALcontext  getContext();
+                void        waitEvent();
+                CALresult   checkEvent();
             private:
-                CALevent _event;
-                CALcontext _ctx;
+                CALevent    _event;
+                CALcontext  _ctx;
             };
         }
     }

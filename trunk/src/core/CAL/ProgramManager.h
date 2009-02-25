@@ -14,7 +14,7 @@
 
 #include "Program.h"
 #include "CommonDefs.h"
-#include <map>
+#include <vector>
 
 namespace amdspl
 {
@@ -27,13 +27,15 @@ namespace amdspl
                 friend class Runtime;
             public:
                 template<typename ProgInfo>
-                Program* loadProgram(Device* device = NULL);
-                void unloadProgram(Program* program);
+                Program*    loadProgram(Device* device = NULL);
+                void        unloadProgram(Program* program);
+                Event*      getEvent();
             protected:
-                std::map<string, Program*> _programCache;
-                ProgramManager();
-                ~ProgramManager();
-                bool initialize();
+                            ProgramManager();
+                            ~ProgramManager();
+                bool        initialize();
+            private:
+                vector<Event*>  _eventPool;
             };
         }
     }

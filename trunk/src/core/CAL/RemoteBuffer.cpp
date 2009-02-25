@@ -20,7 +20,7 @@ namespace amdspl
         namespace cal
         {
             RemoteBuffer::RemoteBuffer(CALformat format, unsigned int width, unsigned int height)
-                : Buffer(format, width, height)
+                : Buffer(format, width, height), _cachable(false)
             {
                 
             }

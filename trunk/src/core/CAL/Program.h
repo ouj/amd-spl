@@ -15,6 +15,7 @@
 #include "Event.h"
 #include "Device.h"
 #include <vector>
+#include <utility>
 #include <stdio.h>
 #include "calcl.h"
 #include "CommonDefs.h"
@@ -31,6 +32,14 @@ namespace amdspl
             class ConstBuffer;
             class GlobalBuffer;
 
+            //Internal use only
+            struct BufferItem
+            {
+                BufferItem() : buffer(NULL), mem(0) {}
+                Buffer* buffer;
+                CALmem  mem;
+            };
+
             class Program
             {
             public:
@@ -38,7 +47,7 @@ namespace amdspl
                 ~Program();
                 template<typename ProgInfo>
                 bool            initialize();
-                virtual Event   run(const CALdomain &domain);
+                virtual Event*  run(const CALdomain &domain);
                 bool            bindInput(Buffer* buffer, unsigned int idx);
                 bool            bindOutput(Buffer* buffer, unsigned int idx);
                 bool            bindConstant(ConstBuffer* buffer, unsigned int idx);
@@ -54,20 +63,24 @@ namespace amdspl
                 inline CALname  getInputName(unsigned short i) const;
                 inline CALname  getConstName(unsigned short i) const;
                 inline CALname  getGlobalName() const;
-            protected:
+            private:
+                void            syncConstBuffers(void);
+                void            setEvents(Event* e);
+                void            waitEvents(void);
+                Device*                 _device;
+            private:
                 vector<CALname>         _inputNames;
                 vector<CALname>         _outputNames;
                 vector<CALname>         _constNames;
                 CALname                 _globalName;
 
-                vector<CALmem>          _inputMems;
-                vector<CALmem>          _outputMems;
-                vector<CALmem>          _constMems;
-                CALmem                  _globalMem;
+                vector<BufferItem>      _inputBuffers;
+                vector<BufferItem>      _outputBuffers;
+                vector<BufferItem>      _constBuffers;
+                BufferItem              _globalBuffer;
 
                 CALfunc                 _func;
                 CALmodule               _module;
-                Device*                 _device;
             };
         }
     }
