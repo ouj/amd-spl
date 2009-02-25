@@ -33,14 +33,14 @@ namespace amdspl
                 Buffer* createRemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
 
                 ConstBuffer*    getConstBuffer(unsigned int size);
-                void            releaseConstBuffer(ConstBuffer constBuf);
+                void            releaseConstBuffer(ConstBuffer *constBuf);
             protected:
                 BufferManager();
                 ~BufferManager();
                 bool initialize();
             private:
                 std::vector<ConstBuffer*> _usedConstBuf;
-                std::vector<ConstBuffer*> _freeConstBuf;
+                std::vector<ConstBuffer*> _constBufferPool;
             };
         }
     }

@@ -120,3 +120,25 @@ TEST_F(BufferManagerTests, Create2DGlobalBuffer2Test)
     ASSERT_TRUE(buf != NULL);
     _bufMgr->destroyBuffer(buf);
 }
+
+
+TEST_F(BufferManagerTests, GetConstBufferTest1)
+{
+    ConstBuffer *buf = _bufMgr->getConstBuffer(16);
+    ASSERT_TRUE(buf != NULL);
+    _bufMgr->releaseConstBuffer(buf);
+}
+
+TEST_F(BufferManagerTests, GetConstBufferTest2)
+{
+    ConstBuffer *buf1 = _bufMgr->getConstBuffer(16);
+    ConstBuffer *buf2 = _bufMgr->getConstBuffer(32);
+    ASSERT_TRUE(buf2 != NULL);
+    _bufMgr->releaseConstBuffer(buf2);
+    ConstBuffer *buf3 = _bufMgr->getConstBuffer(64);
+    ASSERT_TRUE(buf1 != NULL);
+    
+    ASSERT_TRUE(buf3 != NULL);
+    _bufMgr->releaseConstBuffer(buf1);
+    _bufMgr->releaseConstBuffer(buf3);
+}

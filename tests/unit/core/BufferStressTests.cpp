@@ -26,12 +26,12 @@ TEST_F(BufferStressTests, BufferReadWriteStressTest1)
         vector<float4> cpuBuf(info.maxResource2DWidth * info.maxResource2DHeight);
         util::initializeBuffer(cpuBuf, info.maxResource2DWidth, info.maxResource2DHeight, 1000, util::RANDOM);
 
-        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], cpuBuf.size()));
+        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], static_cast<unsigned long>(cpuBuf.size())));
         vector<float4> result;
         result.resize(info.maxResource2DWidth * info.maxResource2DHeight);
-        ASSERT_TRUE(buf1D->writeData(&result[0], result.size()));
+        ASSERT_TRUE(buf1D->writeData(&result[0], static_cast<unsigned long>(result.size())));
 
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, cpuBuf.size()));
+        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, static_cast<unsigned long>(cpuBuf.size())));
 
         _bufMgr->destroyBuffer(buf1D);
     }

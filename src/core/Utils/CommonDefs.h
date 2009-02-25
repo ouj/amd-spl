@@ -29,7 +29,6 @@
     fprintf(stdout, (msg)); \
 }
 
-// Something that can be handled
 #define CHECK_CONDITION(condition, msg) \
 if (!(condition)) \
 { \
@@ -37,14 +36,19 @@ if (!(condition)) \
     return false; \
 }
 
-// A problem that can be handled.
+#define CHECK_CONDITION_PTR(condition, msg) \
+    if (!(condition)) \
+{ \
+    fprintf(stderr, (msg)); \
+    return NULL; \
+}
+
 #define CHECK_CAL_RESULT(result) \
     if (result != CAL_RESULT_OK) \
 { \
     return false; \
 }
 
-// A problem that can be handled.
 #define CHECK_CAL_RESULT_ERROR(result, msg) \
     if (result != CAL_RESULT_OK) \
 { \
@@ -52,7 +56,13 @@ if (!(condition)) \
     return false; \
 }
 
-// A problem that can be handled.
+#define CHECK_CAL_RESULT_ERROR2(result, msg) \
+    if (result != CAL_RESULT_OK) \
+{ \
+    fprintf(stderr, (msg)); \
+    return NULL; \
+}
+
 #define LOG_CAL_RESULT_ERROR(result, msg) \
     if (result != CAL_RESULT_OK) \
 { \

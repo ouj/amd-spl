@@ -5,7 +5,6 @@
 #include "DeviceManager.h"
 #include "BufferManager.h"
 #include "ProgramManager.h"
-#include "ConstBufferPool.h"
 #include "LocalBuffer.h"
 #include "GlobalBuffer.h"
 #include "RemoteBuffer.h"

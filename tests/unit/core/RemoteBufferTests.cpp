@@ -54,12 +54,12 @@ TEST_F(RemoteBufferTests, RemoteBufferReadWriteData1Test)
         vector<float2> cpuBuf(1024);
         util::initializeBuffer(cpuBuf, 1024, 0, 1000, util::RANDOM);
 
-        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], cpuBuf.size()));
+        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], (unsigned long)cpuBuf.size()));
         vector<float2> result;
         result.resize(1024);
-        ASSERT_TRUE(buf1D->writeData(&result[0], result.size()));
+        ASSERT_TRUE(buf1D->writeData(&result[0], (unsigned long)result.size()));
 
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, cpuBuf.size()));
+        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));
 
         _bufMgr->destroyBuffer(buf1D);
     }
@@ -77,12 +77,12 @@ TEST_F(RemoteBufferTests, RemoteBufferReadWriteData2Test)
         vector<int2> cpuBuf(78);
         util::initializeBuffer(cpuBuf, 78, 1, 1000, util::RANDOM);
 
-        ASSERT_TRUE(buf->readData(&cpuBuf[0], cpuBuf.size()));
+        ASSERT_TRUE(buf->readData(&cpuBuf[0], (unsigned long)cpuBuf.size()));
         vector<int2> result;
         result.resize(78);
-        ASSERT_TRUE(buf->writeData(&result[0], result.size()));
+        ASSERT_TRUE(buf->writeData(&result[0], (unsigned long)result.size()));
 
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, cpuBuf.size()));
+        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));
 
         _bufMgr->destroyBuffer(buf);
     }
@@ -103,12 +103,12 @@ TEST_F(RemoteBufferTests, RemoteBufferReadWriteData3Test)
         vector<double2> cpuBuf(width * height);
         util::initializeBuffer(cpuBuf, width, height, 1000, util::RANDOM);
 
-        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], cpuBuf.size()));
+        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], (unsigned long)cpuBuf.size()));
         vector<double2> result;
         result.resize(width * height);
-        ASSERT_TRUE(buf1D->writeData(&result[0], result.size()));
+        ASSERT_TRUE(buf1D->writeData(&result[0], (unsigned long)result.size()));
 
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, cpuBuf.size()));
+        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));
 
         _bufMgr->destroyBuffer(buf1D);
     }
@@ -130,9 +130,9 @@ TEST_F(RemoteBufferTests, RemoteBufferReadWriteData5Test)
         int defaultVal = 123321;
         ASSERT_TRUE(buf1D->readData(&cpuBuf[0], 1200, &defaultVal));
         vector<int> result(1024 * 1024);
-        ASSERT_TRUE(buf1D->writeData(&result[0], result.size()));
+        ASSERT_TRUE(buf1D->writeData(&result[0], (unsigned long)result.size()));
 
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, cpuBuf.size()));
+        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));
 
         _bufMgr->destroyBuffer(buf1D);
     }

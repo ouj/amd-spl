@@ -21,7 +21,8 @@ namespace amdspl
         namespace cal
         {
             Buffer::Buffer(CALformat format, unsigned int width, unsigned int height) : 
-                    _dataFormat(format), _width(width), _height(height), _res(0), _pitch(0)
+                    _dataFormat(format), _width(width), _height(height), _res(0), _pitch(0),
+                        _inputEvent(NULL), _outputEvent(NULL)
             {
             }
 
@@ -43,6 +44,8 @@ namespace amdspl
                 {
                     return false;
                 }
+
+                waitInputEvent();
 
                 CALuint pitch;
                 char* gpuPtr = static_cast<char*>(getPointerCPU(pitch));
@@ -135,6 +138,8 @@ namespace amdspl
                     return false;
                 }
 
+                waitOutputEvent();
+
                 CALuint pitch;
                 char* gpuPtr = static_cast<char*>(getPointerCPU(pitch));
                 if (!gpuPtr)
@@ -182,6 +187,52 @@ namespace amdspl
                 }
                 releasePointerCPU();
                 return true;
+            }
+
+            bool Buffer::setInputEvent(Event* e)
+            {
+                if (!e)
+                    return false;
+                if (!e->isUnused())
+                {
+                    _inputEvent = e;
+                    return true;
+                }
+                else
+                    return false;
+            }
+
+            bool Buffer::setOutputEvent(Event* e)
+            {
+                if (!e)
+                    return false;
+                if (!e->isUnused())
+                {
+                    _outputEvent = e;
+                    return true;
+                }
+                else
+                    return false;
+            }
+
+            void Buffer::waitInputEvent()
+            {
+                if (!_inputEvent)
+                    return;
+                else
+                {
+                    _inputEvent->waitEvent();
+                }
+            }
+
+            void Buffer::waitOutputEvent()
+            {
+                if (!_outputEvent)
+                    return;
+                else
+                {
+                    _outputEvent->waitEvent();
+                }
             }
 
             CALresource Buffer::getResHandle()

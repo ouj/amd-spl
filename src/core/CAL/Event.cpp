@@ -18,25 +18,68 @@ namespace amdspl
     {
         namespace cal
         {
-            Event::Event(CALevent event, CALcontext ctx)
+            Event::Event()
             {
-                assert(event);
-                _event = event;
+                reset();
+            }
+
+            void Event::set(CALevent e, CALcontext ctx)
+            {
+                _event = e;
                 _ctx = ctx;
             }
+
+            bool Event::isUnused()
+            {
+                return (!_event || !_ctx);
+            }
+
             CALevent Event::getHandle()
             {
                 return _event;
             }
-            
+
+            CALcontext Event::getContext()
+            {
+                return _ctx;
+            }
+
+            void Event::reset()
+            {
+                _event = 0;
+                _ctx = 0;
+            }
+
             void Event::waitEvent()
             {
-                while(calCtxIsEventDone(_ctx, _event));
+                CALresult result;
+                if (isUnused())
+                    return;
+
+                do 
+                {
+                    result = calCtxIsEventDone(_ctx, _event);
+                    if (result == CAL_RESULT_ERROR)
+                    {
+                        reset();
+                        return;
+                    }
+                } while (result == CAL_RESULT_PENDING);
+                reset();
             }
 
             CALresult Event::checkEvent()
             {
-                return calCtxIsEventDone(_ctx, _event);
+                if (!isUnused())
+                {
+                    CALresult result = calCtxIsEventDone(_ctx, _event);
+                    if (result != CAL_RESULT_PENDING)
+                    {
+                        reset();
+                        return result;
+                    }
+                }
+                return CAL_RESULT_BAD_HANDLE;
             }
         }
     }
