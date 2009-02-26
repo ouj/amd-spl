@@ -32,7 +32,7 @@ namespace amdspl
     //! This function should be the first function call of the amd-spl
     //! library. (Note: currently this function does nothing)
     //////////////////////////////////////////////////////////////////////////
-    SPL_ERROR AmdSpl::InitializeSPL(DEVICE_LIST_ITEM *devices, unsigned short numDevices, int defaultDeviceIdx)
+    SPL_RESULT AmdSpl::InitializeSPL(DEVICE_LIST_ITEM *devices, unsigned short numDevices, int defaultDeviceIdx)
     {
         if (!devices)
         {
@@ -68,7 +68,7 @@ namespace amdspl
     //! This function should be the first function call of the amd-spl
     //! library. (Note: currently this function does nothing)
     //////////////////////////////////////////////////////////////////////////
-    SPL_ERROR AmdSpl::CleanupSPL()
+    SPL_RESULT AmdSpl::CleanupSPL()
     {
         Runtime::destroy();
         return SPL_RESULT_OK;

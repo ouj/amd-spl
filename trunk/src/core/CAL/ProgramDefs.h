@@ -1,6 +1,10 @@
 #ifndef _PROGRAM_DEFS_H_
 #define _PROGRAM_DEFS_H_
 
+#ifdef _WIN32
+#pragma warning(disable : 4996)
+#endif
+
 #include <assert.h>
 namespace amdspl
 {

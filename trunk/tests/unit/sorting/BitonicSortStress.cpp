@@ -19,9 +19,9 @@ static void TestPtrSortStress(const vector<T> &arrayi)
 
         timer.Reset();
         timer.Start();
-        bool res = amdspl::sorting::BitonicSort::sort(&vec[0], size);
+        SPL_RESULT res = amdspl::sorting::BitonicSort::sort(&vec[0], size);
         timer.Stop();
-        if (res)
+        if (res == SPL_RESULT_OK)
         {
             printf("Time: %.10lf\n", timer.GetElapsedTime());
         }
@@ -42,9 +42,9 @@ static void TestPtrSortStress<double>(const vector<double> &arrayi)
 
         timer.Reset();
         timer.Start();
-        bool res = amdspl::sorting::BitonicSort::sort(&vec[0], size);
+        SPL_RESULT res = amdspl::sorting::BitonicSort::sort(&vec[0], size);
         timer.Stop();
-        if (res)
+        if (res == SPL_RESULT_OK)
         {
             printf("Time: %.10lf\n", timer.GetElapsedTime());
         }

@@ -34,50 +34,6 @@ namespace amdspl
         unsigned short getElementBytes(CALformat dataFormat);
 
         template<typename T>
-        struct extreme_value
-        {
-            static const T MinValue;
-            static const T MaxValue;
-        };
-
-        template<>
-        const int extreme_value<int>::MinValue = -INT_MAX;
-        const int extreme_value<int>::MaxValue = INT_MAX;
-
-        template<>
-        const int2 extreme_value<int2>::MinValue(-INT_MAX, -INT_MAX);
-        const int2 extreme_value<int2>::MaxValue(INT_MAX, INT_MAX);
-
-        template<>
-        const int4 extreme_value<int4>::MinValue(-INT_MAX, -INT_MAX, -INT_MAX, -INT_MAX);
-        const int4 extreme_value<int4>::MaxValue(INT_MAX, INT_MAX, INT_MAX, INT_MAX);
-
-        template<>
-        const uint extreme_value<uint>::MinValue = 0;
-        const uint extreme_value<uint>::MaxValue = UINT_MAX;
-
-        template<>
-        const float extreme_value<float>::MinValue = -FLT_MAX;
-        const float extreme_value<float>::MaxValue = FLT_MAX;
-
-        template<>
-        const float2 extreme_value<float2>::MinValue = (-FLT_MAX, -FLT_MAX);
-        const float2 extreme_value<float2>::MaxValue = (FLT_MAX, FLT_MAX);
-
-        template<>
-        const float4 extreme_value<float4>::MinValue = (-FLT_MAX, -FLT_MAX, -FLT_MAX, -FLT_MAX);
-        const float4 extreme_value<float4>::MaxValue = (FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX);
-
-        template<>
-        const double extreme_value<double>::MinValue = -DBL_MAX;
-        const double extreme_value<double>::MaxValue = DBL_MAX;
-
-        template<>
-        const double2 extreme_value<double2>::MinValue = (-DBL_MAX, -DBL_MAX);
-        const double2 extreme_value<double2>::MaxValue = (DBL_MAX, DBL_MAX);
-
-
-        template<typename T>
         struct type_descriptor
         {
             static const char* Name;

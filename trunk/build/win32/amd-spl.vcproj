@@ -192,50 +192,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\core\CAL\CALBase.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALBuffer.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALBufferAT.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALBufferMgr.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALConstArrayBuffer.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALConstBuffer.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALConstBufferDef.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALDevice.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALProgram.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALProgramDef.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALRuntime.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\core\CAL\ConstBuffer.h"
 						>
 					</File>
@@ -297,34 +253,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\BufferManager.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALBuffer.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALBufferAT.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALBufferMgr.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALConstArrayBuffer.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALDevice.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALProgram.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\CALRuntime.cpp"
 						>
 					</File>
 					<File
@@ -411,19 +339,11 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
-					RelativePath="..\..\src\Sorting\BitonicSortIL.h"
+					RelativePath="..\..\src\sort\BitonicSortImpl.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\Sorting\BitonicSortImpl.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\Sorting\BitonicSortImplDef.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\include\SplBitonicSort.h"
+					RelativePath="..\..\include\SplBitonicSort.h"
 					>
 				</File>
 			</Filter>
@@ -431,8 +351,26 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\src\Sorting\SplBitonicSort.cpp"
+					RelativePath="..\..\src\sort\SplBitonicSort.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>

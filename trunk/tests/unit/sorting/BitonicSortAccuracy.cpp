@@ -18,7 +18,7 @@ static void TestPtrSort(const vector<T> &arrayi)
 
         sort(svec.begin(), svec.end());
         printf("Ascend");
-        if(amdspl::sorting::BitonicSort::sort(&vec[0], size))
+        if(amdspl::sorting::BitonicSort::sort(&vec[0], size) == SPL_RESULT_OK)
         {
             for (unsigned int j = 0; j < size; j++)
             {
@@ -32,7 +32,7 @@ static void TestPtrSort(const vector<T> &arrayi)
         reverse(svec.begin(), svec.end());
         printf("Descend");
 
-        if(amdspl::sorting::BitonicSort::sort(&vec[0], size, false))
+        if(amdspl::sorting::BitonicSort::sort(&vec[0], size, false) == SPL_RESULT_OK)
         {
             for (unsigned int j = 0; j < size; j++)
             {
@@ -57,7 +57,7 @@ static void TestPtrSort<double>(const vector<double> &arrayi)
 
         sort(svec.begin(), svec.end());
         printf("Ascend");
-        if(amdspl::sorting::BitonicSort::sort(&vec[0], size))
+        if(amdspl::sorting::BitonicSort::sort(&vec[0], size) == SPL_RESULT_OK)
         {
             for (unsigned int j = 0; j < size; j++)
             {
@@ -71,7 +71,7 @@ static void TestPtrSort<double>(const vector<double> &arrayi)
         reverse(svec.begin(), svec.end());
         printf("Descend");
 
-        if(amdspl::sorting::BitonicSort::sort(&vec[0], size, false))
+        if(amdspl::sorting::BitonicSort::sort(&vec[0], size, false) == SPL_RESULT_OK)
         {
             for (unsigned int j = 0; j < size; j++)
             {
