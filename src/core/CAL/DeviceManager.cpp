@@ -95,6 +95,10 @@ namespace amdspl
             
             Device* DeviceManager::getDefaultDevice()
             {
+                if (_defaultDeviceId == -1 || _defaultDeviceId > (int)_devices.size())
+                {
+                    return NULL;
+                }
                 return _devices[_defaultDeviceId];
             }
             

@@ -1,7 +1,8 @@
 #include "cal.h"
+#include "amdspl.h"
 #include "BitonicSortTest.h"
 
-
+using namespace amdspl;
 
 bool BitonicSortTest::m_Fatal = false;
 unsigned int BitonicSortTest::Length;
@@ -16,6 +17,7 @@ unsigned int BitonicSortTest::Length;
 
 void BitonicSortTest::SetUpTestCase()
 {
+
     CALresult result;
     result = calInit();
     if (result != CAL_RESULT_OK)
@@ -33,6 +35,12 @@ void BitonicSortTest::SetUpTestCase()
         _calDeviceInfo.maxResource2DHeight;
 
     calShutdown();
+
+    DEVICE_LIST_ITEM deviceList[] = 
+    {
+        DEVICE_LIST_ITEM(0, 0)
+    };
+    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::InitializeSPL(deviceList, 1, 0));
 }
 
 bool BitonicSortTest::HasFatalFailure()
@@ -42,4 +50,5 @@ bool BitonicSortTest::HasFatalFailure()
 
 void BitonicSortTest::TearDownTestCase()
 {
+    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::CleanupSPL());
 }

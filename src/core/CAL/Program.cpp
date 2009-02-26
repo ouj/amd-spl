@@ -245,7 +245,7 @@ namespace amdspl
                 }
                 for (unsigned int idx = 0; idx < _outputBuffers.size(); idx++)
                 {
-                    _outputBuffers[idx].buffer->setInputEvent(e);
+                    _outputBuffers[idx].buffer->setOutputEvent(e);
                 }
                 if (_globalBuffer.buffer)
                 {

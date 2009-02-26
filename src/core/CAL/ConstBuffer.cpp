@@ -41,6 +41,7 @@ namespace amdspl
 
             bool ConstBuffer::sync()
             {
+                waitInputEvent();
                 CALuint pitch;
                 void* data = getPointerCPU(pitch);
                 if(!data)

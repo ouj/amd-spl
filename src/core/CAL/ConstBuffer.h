@@ -38,7 +38,7 @@ namespace amdspl
                 {
                     MAX_CONST_NUM = 64
                 };
-                std::vector<float4> _buffer;
+                std::vector<int4> _buffer;
             };
         }
     }
@@ -57,7 +57,9 @@ namespace amdspl
                 {
                     return false;
                 }
-                memcpy(&_buffer[I], data, sizeof(T));
+                T* ptr = (T*)&_buffer[I];
+                *ptr = *pVal;
+                return true;
             }
         }
     }
