@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\core\Utils;..\..\src\core\CAL;..\..\src\ILSrc;..\..\src\Common"
+				AdditionalIncludeDirectories="..\..\include;&quot;$(CALROOT)\include&quot;;..\..\src\core\Utils;..\..\src\core\CAL;..\..\src\ILSrc;..\..\src\Common"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src\include;&quot;$(CALROOT)\include&quot;;..\..\src\core\Utils;..\..\src\core\CAL;..\..\src\ILSrc;..\..\src\Common"
+				AdditionalIncludeDirectories="..\..\include;&quot;$(CALROOT)\include&quot;;..\..\src\core\Utils;..\..\src\core\CAL;..\..\src\ILSrc;..\..\src\Common"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE;"
 				RuntimeLibrary="2"
 				WarningLevel="3"
@@ -403,7 +403,7 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Sorting"
+			Name="sorting"
 			>
 			<Filter
 				Name="Header Files"
@@ -432,22 +432,6 @@
 				>
 				<File
 					RelativePath="..\..\src\Sorting\SplBitonicSort.cpp"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="ILSrc"
-			>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\src\ILSrc\ILParaInfo.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\ILSrc\ILParaList.h"
 					>
 				</File>
 			</Filter>
