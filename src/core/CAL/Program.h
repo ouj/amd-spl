@@ -46,7 +46,7 @@ namespace amdspl
                 Program(Device *device);
                 ~Program();
                 template<typename ProgInfo>
-                bool            initialize();
+                bool            initialize(const ProgInfo &progInfo);
                 virtual Event*  run(const CALdomain &domain);
                 bool            bindInput(Buffer* buffer, unsigned int idx);
                 bool            bindOutput(Buffer* buffer, unsigned int idx);

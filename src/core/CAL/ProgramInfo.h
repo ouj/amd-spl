@@ -11,10 +11,9 @@
 
 #if !defined(_PROGRAMINFO_H)
 #define _PROGRAMINFO_H
+#include <string>
 
-
-#define DCL_PROGRAM_SOURCE(ProgInfo) const char* (ProgInfo::source)
-#define DCL_PROGRAM_ID(ProgInfo) const char* (ProgInfo::programID)
+using namespace std;
 
 namespace amdspl
 {
@@ -26,6 +25,11 @@ namespace amdspl
             class ProgramInfo
             {
             public:
+                ProgramInfo(const char* ID, const char* source)
+                {
+                    this->source = source;
+                    this->Id = ID;
+                }
                 enum para
                 {
                     outputs = outputsT,
@@ -33,8 +37,34 @@ namespace amdspl
                     constants = constantsT,
                     global = globalsT
                 };
-                static const char* source;
-                static const char* programID;
+
+                inline const char* getSource() const
+                {
+                    return source.c_str();
+                }
+
+                inline const char* getID() const
+                {
+                    return Id;
+                }
+
+                ProgramInfo& replaceTkn(const char *token, const char *src)
+                {
+                    string t(token);
+                    string::size_type pos = -1;
+                    pos = source.find(t);
+
+                    if (pos != string::npos)
+                    {
+                        source.replace(pos, t.size(), src);
+                    }
+
+                    return *this;
+                };
+
+            private:
+                string source;
+                const char* Id;
             };
         }
     }

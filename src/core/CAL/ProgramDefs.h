@@ -32,7 +32,7 @@ namespace amdspl
             }
 
             template<typename ProgInfo>
-            bool Program::initialize()
+            bool Program::initialize(const ProgInfo &progInfo)
             {
                 CALdeviceinfo info = _device->getInfo();
                 CALcontext ctx = _device->getContext();
@@ -41,7 +41,7 @@ namespace amdspl
 
                 // Compiling program
                 CALobject obj;
-                result = calclCompile(&obj, CAL_LANGUAGE_IL, ProgInfo::source, info.target);
+                result = calclCompile(&obj, CAL_LANGUAGE_IL, progInfo.getSource(), info.target);
                 CHECK_CAL_RESULT_ERROR(result, "Failed to compile program\n");
 
                 // Linking program

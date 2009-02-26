@@ -27,7 +27,7 @@ namespace amdspl
                 friend class Runtime;
             public:
                 template<typename ProgInfo>
-                Program*    loadProgram(Device* device = NULL);
+                Program*    loadProgram(const ProgInfo &progInfo, Device* device = NULL);
                 void        unloadProgram(Program* program);
                 Event*      getEvent();
             protected:
@@ -48,7 +48,7 @@ namespace amdspl
         namespace cal
         {
             template<typename ProgInfo>
-            Program* ProgramManager::loadProgram(Device* device)
+            Program* ProgramManager::loadProgram(const ProgInfo &progInfo, Device* device)
             {
                 if (device == NULL)
                 {
@@ -58,7 +58,7 @@ namespace amdspl
                 }
 
                 Program *prog = new Program(device);
-                if (!prog->initialize<ProgInfo>())
+                if (!prog->initialize(progInfo))
                 {
                     SAFE_DELETE(prog);
                     return NULL;

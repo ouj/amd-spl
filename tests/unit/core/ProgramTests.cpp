@@ -7,9 +7,8 @@ using namespace amdspl::core::cal;
 
 typedef RuntimeTestFixture ProgramTests;
 
-typedef ProgramInfo<5, 3, 2, true> SampleProgram;
-DCL_PROGRAM_ID(SampleProgram) = "Sample Program Info";
-DCL_PROGRAM_SOURCE(SampleProgram) = 
+typedef ProgramInfo<5, 3, 2, true>  SampleProgram;
+static const char* _sz_sample_prog_source_ = 
 "il_ps_2_0\n"
 "dcl_output_generic o0\n"
 "dcl_output_generic o1\n"
@@ -27,28 +26,29 @@ DCL_PROGRAM_SOURCE(SampleProgram) =
 "add o0, r1, cb0[0]\n"
 "endmain\n"
 "end\n";
+static const SampleProgram sampleProg = 
+    SampleProgram("Sample Program Info", _sz_sample_prog_source_);
+
 
 TEST_F(ProgramTests, GetNameTest)
 {
-    Device* device = _deviceMgr->getDefaultDevice();
-    ASSERT_TRUE(device);
     Program *prog = 
-        ProgramTests::_progMgr->loadProgram<SampleProgram>(device);
+        ProgramTests::_progMgr->loadProgram(sampleProg);
     if(prog != NULL)
     {
-        for (unsigned int i = 0; i < SampleProgram::inputs; i++)
+        for (unsigned int i = 0; i < sampleProg.inputs; i++)
         {
             ASSERT_TRUE(prog->getInputName(i) != 0);
         }
-        for (unsigned int i = 0; i < SampleProgram::outputs; i++)
+        for (unsigned int i = 0; i < sampleProg.outputs; i++)
         {
             ASSERT_TRUE(prog->getOutputName(i) != 0);
         }
-        for (unsigned int i = 0; i < SampleProgram::constants; i++)
+        for (unsigned int i = 0; i < sampleProg.constants; i++)
         {
             ASSERT_TRUE(prog->getConstName(i) != 0);
         }
-        if (SampleProgram::global)
+        if (sampleProg.global)
         {
             ASSERT_TRUE(prog->getGlobalName() != 0);
         }
@@ -58,8 +58,7 @@ TEST_F(ProgramTests, GetNameTest)
 }
 
 typedef ProgramInfo<1, 1, 0, false> CopyProgram;
-DCL_PROGRAM_ID(CopyProgram) = "Copy Program Info";
-DCL_PROGRAM_SOURCE(CopyProgram) = 
+static const char* _sz_copy_prog_source_ = 
 "il_ps_2_0\n"
 "dcl_output_generic o0\n"
 "dcl_input_position_interp(linear_noperspective) v0.xy__\n"
@@ -67,6 +66,7 @@ DCL_PROGRAM_SOURCE(CopyProgram) =
 "sample_resource(0)_sampler(0) o0, v0.xy00\n"
 "endmain\n"
 "end\n";
+static const CopyProgram copyProgram = CopyProgram("Copy Program Info", _sz_copy_prog_source_);
 
 TEST_F(ProgramTests, BindBufferTest1)
 {
@@ -79,7 +79,7 @@ TEST_F(ProgramTests, BindBufferTest1)
     ASSERT_TRUE(buf1 != NULL);
 
     Program *prog = 
-        ProgramTests::_progMgr->loadProgram<SampleProgram>(device);
+        ProgramTests::_progMgr->loadProgram(sampleProg, device);
     if(prog != NULL)
     {
         ASSERT_TRUE(prog->bindInput(buf1, 0));
@@ -109,7 +109,7 @@ TEST_F(ProgramTests, RunProgramTest)
     buf1->readData(&buffer1[0], static_cast<unsigned long>(buffer1.size()));
 
     Program *prog = 
-        ProgramTests::_progMgr->loadProgram<CopyProgram>(device);
+        ProgramTests::_progMgr->loadProgram(copyProgram, device);
     if(prog != NULL)
     {
         ASSERT_TRUE(prog->bindInput(buf1, 0));
