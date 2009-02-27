@@ -1,15 +1,15 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Runtime.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
 #include <cassert>
 #include <stdio.h>
 
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Runtime.cpp
+//!	\date 		27:2:2009   15:51
+//!	\author		Jiawe Ou
+//!	
+//!	\brief		Contains definition of Runtime class
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "Runtime.h"
 #include "RuntimeDefs.h"
 #include "DeviceManager.h"
@@ -19,36 +19,61 @@
 
 namespace amdspl
 {
+    //////////////////////////////////////////////////////////////////////////
+    //! \brief namespace for AMD-SPL runtime classes
+    //////////////////////////////////////////////////////////////////////////
     namespace core
     {
+        //////////////////////////////////////////////////////////////////////////
+        //! \brief namespace for CAL implementation of AMD-SPL runtime
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief      The memory handler function type.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            typedef void(*MemoryHandler)();
 
-            ////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief Default handler that is used in case user has not provided any hadler
-            //! Gives a warning and throws bad_alloc exception. So the user gets opportunity 
-            //! to handle this exception in case he has not provided a callback.
+            //! \return void
             //!
-            ////////////////////////////////////////////////////////////////////////////////
+            //! \brief  This is the default handler for memory allocation error.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void defaultHandler()
             {
                 fprintf(stderr, "Failed to allocate memory.\n");
                 throw std::bad_alloc();
             }
 
-            ////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief Function to set memory handle
+            //! \param	handler The memory handler function pointer
+            //! \return	void
             //!
-            ////////////////////////////////////////////////////////////////////////////////
-            void
-                setMemoryHandle(MemoryHandler handler)
+            //! \brief	Function to set memory handle.
+            //!
+            //////////////////////////////////////////////////////////////////////////void
+            void setMemoryHandle(MemoryHandler handler)
             {
                 std::set_new_handler(handler);
             }
 
+
 			Runtime* Runtime::_runtime = 0;
+
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Runtime*
+            //!
+            //! \brief	The method to get the singleton instance pointer. When first 
+            //!         time this method is called, a new runtime instance is 
+            //!         allocated and initialized.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Runtime* Runtime::getInstance()
             {
 				if (!_runtime)
@@ -74,6 +99,20 @@ namespace amdspl
 				return _runtime;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool
+            //!
+            //! \brief	Runtime initialization method. It initialize CAL and create
+            //!         all the manager classes.When initializing CAL, Runtime will 
+            //!         check the return value of calInit(). If it returns 
+            //!         CAL_RESULT_OK, it means that CAL initialized successfully. If 
+            //!         it returns CAL_RESULT_ALREADY, it means that CAL is already 
+            //!         initialized somewhere else. In that case, _shutdownOnDestroy 
+            //!         is set to false, and the CAL will not be shutdown when the
+            //!         Runtime is destoyed.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Runtime::create()
             {
 				assert(_runtime);
@@ -128,6 +167,14 @@ SAFE_DELETE_ALL_ON_ERROR:
                 return false;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	void
+            //!
+            //! \brief	Runtime destruction method. It destroy and delete the singleton
+            //!         instance of Runtime class. 
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void Runtime::destroy()
             {
                 Runtime*& runtime = Runtime::_runtime;
@@ -138,29 +185,67 @@ SAFE_DELETE_ALL_ON_ERROR:
                 }
             }
 
+            
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	DeviceManager*
+            //!
+            //! \brief	Method to get the DeviceManager instance pointer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             DeviceManager* Runtime::getDeviceManager()
             {
 				assert(_deviceMgr);
 				return _deviceMgr;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	BufferManager*
+            //!
+            //! \brief	Method to get the BufferManager instance pointer
+            //!
+            //////////////////////////////////////////////////////////////////////////
             BufferManager* Runtime::getBufferManager()
             {
 				assert(_bufferMgr);
 				return _bufferMgr;	
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	ProgramManager*
+            //!
+            //! \brief	Method to get the ProgramManager instance pointer
+            //!
+            //////////////////////////////////////////////////////////////////////////
             ProgramManager* Runtime::getProgramManager()
             {
 				assert(_programMgr);
 				return _programMgr;
             }
             
+			//////////////////////////////////////////////////////////////////////////
+			//!
+			//! \return	Constructor
+			//!
+			//! \brief	Allocate a Runtime instance, it is a protected member, can only
+            //!         be called by Runtime::getInstance();
+			//!
+			//////////////////////////////////////////////////////////////////////////
 			Runtime::Runtime() : _programMgr(0), _bufferMgr(0), 
 				_deviceMgr(0)
             {
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Destructor
+            //!
+            //! \brief	Safely delete all the managers and call calShutdown() if 
+            //!         _shutdownOnDestroy is true.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Runtime::~Runtime()
             {
                 SAFE_DELETE(_deviceMgr);

@@ -1,14 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Buffer.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Buffer.cpp
+//!	\date 		27:2:2009   22:19
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains definition of Buffer class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "Buffer.h"
 #include "RuntimeDefs.h"
 #include <stdio.h>
@@ -20,23 +18,73 @@ namespace amdspl
     {
         namespace cal
         {
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	format Indicate the CALformat of the buffer.
+            //! \param	width  Indicate the width of the 1D/2D buffer.
+            //! \param	height  Indicate the height of 2D buffer, it should be set to
+            //!         zero for 1D buffer.
+            //! \return	Constructor
+            //!
+            //! \brief	The base constructor for Buffer classes, set all the members
+            //!         to default values.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Buffer::Buffer(CALformat format, unsigned int width, unsigned int height) : 
                     _dataFormat(format), _width(width), _height(height), _res(0), _pitch(0),
                         _inputEvent(NULL), _outputEvent(NULL)
             {
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Destructor
+            //!
+            //! \brief	Destroy the buffer, safely release the buffer's resource handle.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Buffer::~Buffer()
             {
                 if(_res)
+                {
                     calResFree(_res);
+                    _res = 0;
+                }
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool True if the buffer is initialized successful. False if
+            //!         there is an error during initialization.
+            //!
+            //! \brief	Initialize the buffer before the buffer can be used, it is a 
+            //!         virtual function, should be implemented by derived classes.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Buffer::initialize()
             {
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	ptr     The CPU address contains the data going to be transfered 
+            //!                 to the buffer.
+            //! \param	size    The size in bytes of the data  the pointer points to.
+            //! \param	defaultVal  The default value should be set to the rest of the buffer.
+            //! \return	bool    True if data transfer is succeeded. False if there is an error
+            //!                 during data transfer.
+            //!
+            //! \brief	Transfer the data from CPU memory to the buffer(maybe LocalBuffer or 
+            //!         RemoteBuffer). Sometimes the buffer is larger than the data that is 
+            //!         going to be transfered. In this case, if defaulVal is set, the method 
+            //!         will set the rest of buffer using the default value pointed by defaultVal.
+            //!
+            //! \attention It is the developers' responsibility to make sure the format and size 
+            //!            of the CPU memory that ptr points to are valid.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Buffer::readData(void *ptr, unsigned long size, void *defaultVal)
             {
                 char *cpuPtr = static_cast<char*>(ptr);
@@ -130,6 +178,20 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	ptr     The CPU address where that data in buffer will be transfered to.
+            //! \param	size    The size in bytes of the space the pointer points to.
+            //! \return	bool    True if data transfer is succeeded. False if there is an error
+            //!                 during data transfer.
+            //!
+            //! \brief	Transfer the data to CPU memory from the buffer(maybe LocalBuffer or 
+            //!         RemoteBuffer). 
+            //!
+            //! \attention It is the developers' responsibility to make sure the format and size 
+            //!            of the CPU memory that ptr points to are valid.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Buffer::writeData(void *ptr, unsigned long size)
             {
                 char *cpuPtr = static_cast<char*>(ptr);
@@ -189,6 +251,16 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	e The input Event.
+            //! \return	bool True if the input event is successfully set. False if the
+            //!           the event is invalid.
+            //!
+            //! \brief	Set the input event of the buffer. Called when the buffer is used 
+            //!         as a input buffer in a program.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Buffer::setInputEvent(Event* e)
             {
                 if (!e)
@@ -202,6 +274,16 @@ namespace amdspl
                     return false;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	e The output Event.
+            //! \return	bool True if the output event is successfully set. False if the
+            //!           the event is invalid.
+            //!
+            //! \brief	Set the output event of the buffer. Called when the buffer is used
+            //!         as a output buffer in a program.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Buffer::setOutputEvent(Event* e)
             {
                 if (!e)
@@ -215,6 +297,14 @@ namespace amdspl
                     return false;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	void
+            //!
+            //! \brief	Wait for the input event to complete. Usually called before
+            //!         using this buffer as an output buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void Buffer::waitInputEvent()
             {
                 if (!_inputEvent)
@@ -225,6 +315,14 @@ namespace amdspl
                 }
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	void
+            //!
+            //! \brief	Wait for the output event to complete. Usually called before
+            //!         using this buffer as an input buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void Buffer::waitOutputEvent()
             {
                 if (!_outputEvent)
@@ -235,16 +333,37 @@ namespace amdspl
                 }
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALresource
+            //!
+            //! \brief	Get the CAL resouce handle of the buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             CALresource Buffer::getResHandle()
             {
                 return _res;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALformat
+            //!
+            //! \brief	Get the CAL format of the buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             CALformat Buffer::getFormat()
             {
                 return _dataFormat;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	unsigned int
+            //!
+            //! \brief	Get the pitch of the buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             unsigned int Buffer::getPitch()
             {
                 if(!_pitch)
@@ -255,16 +374,38 @@ namespace amdspl
                 return _pitch;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	unsigned int
+            //!
+            //! \brief	Get the width of the buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             unsigned int Buffer::getWidth()
             {
                 return _width;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	unsigned int
+            //!
+            //! \brief	Get the height of the buffer, return 0 if it is a 1D buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             unsigned int Buffer::getHeight()
             {
                 return _height;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param[out]	pitch The pitch of the buffer will be set.
+            //! \return	void*     Return address of mapped memeory.
+            //!
+            //! \brief	Maps Buffer to a CPU addressable pointer
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void* Buffer::getPointerCPU(CALuint &pitch)
             {
                 void* bufferPtr;
@@ -279,6 +420,13 @@ namespace amdspl
                 return bufferPtr;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	void
+            //!
+            //! \brief	Frees mapped memory
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void Buffer::releasePointerCPU()
             {
                 CALresult result = calResUnmap(_res);

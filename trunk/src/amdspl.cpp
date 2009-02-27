@@ -1,14 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : AmdSpl.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		amdspl.cpp
+//!	\date 		27:2:2009   16:43
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains definition of AmdSpl.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "AmdSpl.h"
 #include "CommonDefs.h"
 #include "Runtime.h"
@@ -17,9 +15,22 @@
 
 using namespace amdspl::core::cal;
 
+//////////////////////////////////////////////////////////////////////////
+//!
+//! \brief The namespace of AMD-SPL
+//!
+///////////////////////////////////////////////////
 namespace amdspl
 {
 
+    //////////////////////////////////////////////////////////////////////////
+    //!
+    //! \return Constructor
+    //!
+    //! \brief  Initialize the DEVICE_LIST_ITEM with the device Id and Device
+    //!         handle.
+    //!
+    //////////////////////////////////////////////////////////////////////////
     DEVICE_LIST_ITEM::DEVICE_LIST_ITEM(unsigned short deviceId, CALdevice deviceHandle)
     {
         this->deviceId = deviceId;
@@ -27,10 +38,11 @@ namespace amdspl
     }
 
     //////////////////////////////////////////////////////////////////////////
-    //! \brief This the initialization function of the amd-spl library.
     //!
-    //! This function should be the first function call of the amd-spl
-    //! library. (Note: currently this function does nothing)
+    //! \brief  This the initialization function of the amd-spl library.
+    //!         This function should be the first function call of the amd-spl
+    //!         library. 
+    //!
     //////////////////////////////////////////////////////////////////////////
     SPL_RESULT AmdSpl::InitializeSPL(DEVICE_LIST_ITEM *devices, unsigned short numDevices, int defaultDeviceIdx)
     {
@@ -63,10 +75,11 @@ namespace amdspl
     }
     
     //////////////////////////////////////////////////////////////////////////
-    //! \brief This the initialization function of the amd-spl library.
     //!
-    //! This function should be the first function call of the amd-spl
-    //! library. (Note: currently this function does nothing)
+    //! \brief  This the initialization function of the AMD-SPL library.
+    //!         This function should be the last function call of the amd-spl
+    //!         library. 
+    //!
     //////////////////////////////////////////////////////////////////////////
     SPL_RESULT AmdSpl::CleanupSPL()
     {
