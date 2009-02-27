@@ -1,20 +1,17 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : DeviceManager.h
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
 #if !defined(_DEVICEMANAGER_H)
 #define _DEVICEMANAGER_H
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		DeviceManager.h
+//!	\date 		27:2:2009   22:18
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains declaration of DeviceManager class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "cal.h"
 #include <vector>
 
-// DeviceManager class is the manages all the devices.
 namespace amdspl
 {
     namespace core
@@ -22,6 +19,16 @@ namespace amdspl
         namespace cal
         {
 			class Device;
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	 This class provide interface for device management. It 
+            //!          contains factory method for Device. The object is created 
+            //!          when runtime is initialized and deleted when the runtime is 
+            //!          destroyed.
+            //!
+            //! \warning Not thread safe.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             class DeviceManager
             {
                 friend class Runtime;

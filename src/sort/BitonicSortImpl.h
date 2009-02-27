@@ -73,7 +73,7 @@ namespace amdspl
             "end\n";
 
         //////////////////////////////////////////////////////////////////////////
-        //! \brief Define IL grouping
+        // Define IL grouping
         template<typename T>
         struct bitonicSortILGroup
         {

@@ -1,22 +1,18 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Runtime.h
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
 #if !defined(_RUNTIME_H)
 #define _RUNTIME_H
-#include "cal.h"
 
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Runtime.h
+//!	\date 		27:2:2009   15:41
+//!	\author		Jiawei OU
+//!	
+//!	\brief		Contain declaration of Runtime class.
+//!
+//////////////////////////////////////////////////////////////////////////
+#include "cal.h"
 namespace amdspl
 {
-    typedef void(*MemoryHandler)();
-
     namespace core
     {
         namespace cal
@@ -24,7 +20,17 @@ namespace amdspl
 			class DeviceManager;
 			class BufferManager;
 			class ProgramManager;
-			
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	Runtime class is the core class of the SPL runtime, it manages
+            //!         the initialization and shutdown of CAL. It also manages the 
+            //!         creation and destruction of DeviceManager, BufferManager and 
+            //!         ProgramManager. It is a singleton class. It destroyed when 
+            //!         Runtime::destroy() is called or once application exits.
+            //! 
+            //! \warning Not thread safe! 
+            //!
+            //////////////////////////////////////////////////////////////////////////
             class Runtime
             {
             public:
@@ -36,16 +42,24 @@ namespace amdspl
             private:
 				Runtime();
 				~Runtime();
-
                 bool virtual create();
-                
-                DeviceManager* _deviceMgr;
-                BufferManager* _bufferMgr;
-                ProgramManager* _programMgr;
-                static Runtime* _runtime;
-                bool _shutdownOnDestroy;
-
                 friend void atExitCleanUp();
+
+                //! \brief	Pointer to the DeviceManager instance.
+                DeviceManager* _deviceMgr;
+
+                //! \brief	Pointer to the BufferManager instance.
+                BufferManager* _bufferMgr;
+
+                //! \brief	Pointer to the ProgramManager instance.
+                ProgramManager* _programMgr;
+
+                //! \brief  The singleton instance of Runtime class.
+                static Runtime* _runtime;
+
+                //! \brief  A boolean value set in initialization, indicate whether 
+                //!         then the runtime should shutdown CAL when exit.
+                bool _shutdownOnDestroy;
             };
         }
     }

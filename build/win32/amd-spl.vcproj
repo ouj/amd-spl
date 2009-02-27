@@ -399,11 +399,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\include\amdspl.h"
+			RelativePath="..\..\include\amdspl.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\include\SPLDefs.h"
+			RelativePath="..\..\include\SplDefs.h"
 			>
 		</File>
 	</Files>
