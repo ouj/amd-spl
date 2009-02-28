@@ -1,15 +1,15 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Device.h
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
 #ifndef _DEVICE_H
 #define _DEVICE_H
+
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Device.h
+//!	\date 		28:2:2009   21:56
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains declaration of Device class.
+//!
+//////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
 
@@ -19,6 +19,13 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	A abstract representation of a CAL device in the system. It 
+            //!         provides methods for device management, device information. 
+            //! \warning Not thread safe.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             class Device
             {
             public:
@@ -33,12 +40,20 @@ namespace amdspl
                 unsigned short              getId();
                 bool                        flush();
             private:
+                //! \brief	Stores the CAL handle of the device.
                 CALdevice                   _deviceHandle;
+                //! \brief	Stores the device information.
                 CALdeviceinfo               _deviceInfo;
+                //! \brief	Stores the device attributes.
                 CALdeviceattribs            _deviceAttribs;
+                //! \brief	Stores the device status.
                 CALdevicestatus             _deviceStatus;
+                //! \brief	Stores the handle of the context associated to the device.
                 CALcontext                  _context;
+                //! \brief	Stores the device ID.
                 unsigned short              _Id;
+                //! \brief	A boolean flag indicate whether the CAL device should be 
+                //!         shutdown when Device object is destroyed.
 				bool                        _shutDownOnDestroy;
             };
         }

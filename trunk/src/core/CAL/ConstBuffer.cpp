@@ -1,14 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : ConstBuffer.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		ConstBuffer.cpp
+//!	\date 		28:2:2009   21:56
+//!	\author		
+//!	
+//!	\brief		Contains definition of ConstBuffer class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "ConstBuffer.h"
 
 namespace amdspl
@@ -17,11 +15,28 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Constructor
+            //!
+            //! \brief	Construct the ConstBuffer object
+            //!
+            //////////////////////////////////////////////////////////////////////////
             ConstBuffer::ConstBuffer() : 
                 RemoteBuffer(CAL_FORMAT_FLOAT_4, MAX_CONST_NUM, 0), _buffer(MAX_CONST_NUM)
             {
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	size    The new size of the constant buffer.
+            //! \return	bool    True if the constant buffer is successfully resized.
+            //!                 False if there is an error during the resizing.
+            //!
+            //! \brief	Resize the constant buffer. The new size cannot exceeded 
+            //!         MAX_CONST_NUM.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool ConstBuffer::resize(unsigned int size)
             {
                 if (size > MAX_CONST_NUM)
@@ -34,11 +49,26 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	
+            //!
+            //! \brief	Destroy the ConstBuffer object.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             ConstBuffer::~ConstBuffer()
             {
 
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool
+            //!
+            //! \brief	Synchronize the constant values data in system memory to the
+            //!         CAL buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool ConstBuffer::sync()
             {
                 waitInputEvent();

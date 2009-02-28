@@ -27,8 +27,9 @@ namespace amdspl
             //!         zero for 1D buffer.
             //! \return	Constructor
             //!
-            //! \brief	The base constructor for Buffer classes, set all the members
-            //!         to default values.
+            //! \brief	Construct the Buffer object. Set all the members to default 
+            //!         values. The Buffer object will not be available until 
+            //!         Buffer::initialize() is called.
             //!
             //////////////////////////////////////////////////////////////////////////
             Buffer::Buffer(CALformat format, unsigned int width, unsigned int height) : 
@@ -41,7 +42,8 @@ namespace amdspl
             //!
             //! \return	Destructor
             //!
-            //! \brief	Destroy the buffer, safely release the buffer's resource handle.
+            //! \brief	Destroy the Buffer object, safely release the buffer's 
+            //!         resource handle.
             //!
             //////////////////////////////////////////////////////////////////////////
             Buffer::~Buffer()

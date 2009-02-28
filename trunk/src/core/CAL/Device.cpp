@@ -20,12 +20,36 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	id      The device ID
+            //! \param	device  he device handle if the device is initialized
+            //!                 somewhere else. NULL if the device is not 
+            //!                 initialized elsewhere.
+            //! \return	Constructor
+            //!
+            //! \brief	Construct the Device object. It will not be available until
+            //!         Device::initialize() is called. if device handle is initialize 
+            //!         somewhere else, the shutdown on destroy flag will be set to 
+            //!         false.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Device::Device(unsigned short id, CALdevice device) : 
                 _Id(id), _deviceHandle(device), _context(0), _shutDownOnDestroy(false)
             {
 
             }
-            
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Destructor
+            //!
+            //! \brief	Destroy the Device object. The context associated to the 
+            //!         device will be flushed and destroyed. If the shutdown on 
+            //!         destroy flag is set to false, the CAL device handle will 
+            //!         not be destroyed at exit.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Device::~Device()
             {
                 flush();
@@ -53,6 +77,17 @@ namespace amdspl
                 }
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool True if the device is successfully initialized.
+            //!              False if there is an error during the initialization.
+            //!
+            //! \brief	Initialize the Device object. In this method, the CAL device
+            //!         will be open if it is needed. The device information and 
+            //!         attributes will be retrieved. The context of the device will
+            //!         be created.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Device::initialize()
             {
                 CALresult result;
@@ -77,17 +112,39 @@ namespace amdspl
                 return true;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALdevice The CAL handle of the device
+            //!
+            //! \brief	Get the device handle.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             CALdevice Device::getHandle()
             {
                 assert(_deviceHandle);
                 return _deviceHandle;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	const CALdeviceinfo& Device information.
+            //!
+            //! \brief	Get the device information
+            //!
+            //////////////////////////////////////////////////////////////////////////
             const CALdeviceinfo& Device::getInfo()
             {
                 return _deviceInfo;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	const CALdevicestatus& Device status, including memory usage
+            //!               information.
+            //!
+            //! \brief	Get the device status.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             const CALdevicestatus& Device::getStatus()
             {
                 memset(&_deviceStatus, 0, sizeof(CALdevicestatus));
@@ -97,22 +154,51 @@ namespace amdspl
                 return _deviceStatus;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	const CALdeviceattribs& Device attributes.
+            //!
+            //! \brief	Get the device attributes.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             const CALdeviceattribs& Device::getAttribs()
             {
                 return _deviceAttribs;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALcontext The CAL context associated to the device
+            //!
+            //! \brief	Get the CAL context associated to the device.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             CALcontext Device::getContext()
             {
                 assert(_context);
                 return _context;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	unsigned short The device ID.
+            //!
+            //! \brief	Get the device ID
+            //!
+            //////////////////////////////////////////////////////////////////////////
             unsigned short Device::getId()
             {
                 return _Id;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool True if all the commands a successfully flushed. 
+            //!              False if an error happens.
+            //!
+            //! \brief	Flush all the commands to the device.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Device::flush()
             {
                 CALresult result = calCtxFlush(_context);

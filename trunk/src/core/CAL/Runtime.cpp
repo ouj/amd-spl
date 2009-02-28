@@ -229,8 +229,9 @@ SAFE_DELETE_ALL_ON_ERROR:
 			//!
 			//! \return	Constructor
 			//!
-			//! \brief	Allocate a Runtime instance, it is a protected member, can only
-            //!         be called by Runtime::getInstance();
+			//! \brief	Construct the Runtime instance, it is a protected member, can 
+            //!         only be called by Runtime::getInstance(); The runtime will not  
+            //!         be available until Runtime::create() is called.
 			//!
 			//////////////////////////////////////////////////////////////////////////
 			Runtime::Runtime() : _programMgr(0), _bufferMgr(0), 
@@ -242,8 +243,8 @@ SAFE_DELETE_ALL_ON_ERROR:
             //!
             //! \return	Destructor
             //!
-            //! \brief	Safely delete all the managers and call calShutdown() if 
-            //!         _shutdownOnDestroy is true.
+            //! \brief	Destroy the Runtime object. Safely delete all the managers 
+            //!         and call calShutdown() if _shutdownOnDestroy is true.
             //!
             //////////////////////////////////////////////////////////////////////////
             Runtime::~Runtime()
