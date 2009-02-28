@@ -43,7 +43,6 @@ namespace amdspl
 				Runtime();
 				~Runtime();
                 bool virtual create();
-                friend void atExitCleanUp();
 
                 //! \brief	Pointer to the DeviceManager instance.
                 DeviceManager* _deviceMgr;

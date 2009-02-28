@@ -24,9 +24,9 @@ namespace amdspl
 			//!
 			//! \return	Constructor
 			//!
-			//! \brief	Construct DeviceManager and initialize all the members to its 
-            //!         default value. But it will not be initialized until 
-            //!         DeviceManager::initialize() is called.
+			//! \brief	Construct the DeviceManager object and initialize all the  
+            //!         members to its default value. But it will not be initialized  
+            //!         until DeviceManager::initialize() is called.
 			//!
 			//////////////////////////////////////////////////////////////////////////
 			DeviceManager::DeviceManager() : _devicesNum(0), _sysDevicesNum(0), _defaultDeviceId(-1)
@@ -38,8 +38,8 @@ namespace amdspl
 			//!
 			//! \return	Destructor
 			//!
-			//! \brief	Destroy the DeviceManager. It also destroys all the devices 
-            //!         associated to it.
+			//! \brief	Destroy the DeviceManager object. It also destroys all the  
+            //!         devices assigned to it.
 			//!
 			//////////////////////////////////////////////////////////////////////////
 			DeviceManager::~DeviceManager()
@@ -115,10 +115,10 @@ namespace amdspl
             
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \return	unsigned short The number of devices associated to the 
+            //! \return	unsigned short The number of devices assigned to the 
             //!         DeviceManager.
             //!
-            //! \brief	Get the number of devices associated to the DeviceManager.
+            //! \brief	Get the number of devices assigned to the DeviceManager.
             //!
             //////////////////////////////////////////////////////////////////////////
             unsigned short DeviceManager::getDeviceNum()
@@ -142,8 +142,8 @@ namespace amdspl
             //!
             //! \param	id      The ID of the device.
             //! \return	Device* The pointer to the device with specific ID if the Device
-            //!                 is associated to the DeviceManager. NULL if the device 
-            //!                 with specific ID is not associated to the DeviceManager.
+            //!                 is assigned to the DeviceManager. NULL if the device 
+            //!                 with specific ID is not assigned to the DeviceManager.
             //!
             //! \brief	Get the Device with the specific ID.
             //!
@@ -162,7 +162,7 @@ namespace amdspl
             //!
             //! \return	Device* The default device pointer
             //!
-            //! \brief	Get the default device. NULL if there is no devices associated
+            //! \brief	Get the default device. NULL if there is no devices assigned
             //!         to the DeviceManager.
             //!
             //////////////////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@ namespace amdspl
             //!
             //! \param	id      The ID of the device.
             //! \return	bool    True if the default device is set successfully. False 
-            //!                 if the device with the specific ID is not associated
+            //!                 if the device with the specific ID is not assigned
             //!                 to the DeviceManager.
             //!
             //! \brief	Set the default device.
