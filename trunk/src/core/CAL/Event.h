@@ -19,8 +19,8 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	The abstract representation of CAL event. Contains method for
-            //!         event checking and event waiting.
+            //! \brief	Event class is an abstract representation of CAL event. 
+            //!         It contains method for event checking and event waiting.
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////

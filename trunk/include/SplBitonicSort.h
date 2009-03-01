@@ -1,13 +1,16 @@
 #ifndef _SPL_SORT_H_
 #define _SPL_SORT_H_
 
-////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
 //!
-//! \file SplBitonicSort.h
+//!	\file 		SplBitonicSort.h
+//!	\date 		1:3:2009   20:34
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains declaration of BitonicSort
 //!
-//! \brief Contains declaration of BitonicSort
-//!
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 #ifdef AMD_SPL_EXPORT
 #define SPL_EXPORT __declspec(dllexport)
@@ -30,66 +33,16 @@ namespace amdspl
         //!
         //! \class BitonicSort
         //!
-        //! \brief The class for bitonic sort.
+        //! \brief The class for Bitonic sort.
         //!
         //////////////////////////////////////////////////////////////////////////
         class SPL_EXPORT BitonicSort
         {
         public:
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \brief Sort float point values in system memory
-            //!
-            //! \param ptr The float pointer points to a continuous memory
-            //! \param size The size of the continuous memory
-            //! \param asc The boolean value indicate that whether 
-            //!         to sort the memory ascendantly
-            //!
-            //! \return Boolean value indicate whether the bitonic sort is successful
-            //!
-            //////////////////////////////////////////////////////////////////////////
+
             static SPL_RESULT sort(float *ptr, unsigned int size, bool asc = true);
-
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \brief Sort integer point values in system memory
-            //!
-            //! \param ptr The integer pointer points to a continuous memory
-            //! \param size The size of the continuous memory
-            //! \param asc The boolean value indicate that whether 
-            //!         to sort the memory ascendantly
-            //!
-            //! \return Boolean value indicate whether the bitonic sort is successful
-            //!
-            //////////////////////////////////////////////////////////////////////////
             static SPL_RESULT sort(int *ptr, unsigned int size, bool asc = true);
-
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \brief Sort unsigned integer point values in system memory
-            //!
-            //! \param ptr The unsigned integer pointer points to a continuous memory
-            //! \param size The size of the continuous memory
-            //! \param asc The boolean value indicate that whether 
-            //!         to sort the memory ascendantly
-            //!
-            //! \return Boolean value indicate whether the bitonic sort is successful
-            //!
-            //////////////////////////////////////////////////////////////////////////
             static SPL_RESULT sort(unsigned int *ptr, unsigned int size, bool asc = true);
-
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \brief Sort double point values in system memory
-            //!
-            //! \param ptr The double pointer points to a continuous memory
-            //! \param size The size of the continuous memory
-            //! \param asc The boolean value indicate that whether 
-            //!         to sort the memory ascendantly
-            //!
-            //! \return Boolean value indicate whether the bitonic sort is successful
-            //!
-            //////////////////////////////////////////////////////////////////////////
             static SPL_RESULT sort(double *ptr, unsigned int size, bool asc = true);
         };
     }

@@ -1,5 +1,14 @@
 #ifndef _AMDSPL_DEFS_H_
 #define _AMDSPL_DEFS_H_
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		SplDefs.h
+//!	\date 		1:3:2009   20:43
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Definition of AMD-SPL.
+//!
+//////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
 //!
@@ -12,7 +21,8 @@ enum SPL_RESULT
 	SPL_RESULT_ERROR,
 	SPL_RESULT_NOT_INITIALIZED,
     SPL_RESULT_INVALID_ARGUMENT,
-    SPL_RESULT_BUFFER_ERROR
+    SPL_RESULT_BUFFER_ERROR,
+    SPL_RESULT_PROGRAM_ERROR
 };
 
 #endif //_AMDSPL_DEFS_H_

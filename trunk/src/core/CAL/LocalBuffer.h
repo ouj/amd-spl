@@ -20,9 +20,9 @@ namespace amdspl
             class Device;
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	The abstract representation of CAL local buffer. Contains 
-            //!         methods for local buffer initialization and optimized data 
-            //!         transfer.
+            //! \brief	LocalBuffer class is an abstract representation of CAL local  
+            //!         buffer. It contains methods for local buffer initialization 
+            //!         and optimized data transfer.
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////

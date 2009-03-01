@@ -185,15 +185,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\include\amdspl.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\Buffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Buffer.h"
 				>
 			</File>
 			<File
@@ -201,15 +193,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\CAL\BufferManager.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\ConstBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\ConstBuffer.h"
 				>
 			</File>
 			<File
@@ -217,15 +201,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\CAL\Device.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\DeviceManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\DeviceManager.h"
 				>
 			</File>
 			<File
@@ -233,15 +209,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\CAL\Event.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\GlobalBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\GlobalBuffer.h"
 				>
 			</File>
 			<File
@@ -249,23 +217,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\CAL\LocalBuffer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\Program.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Program.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\ProgramDefs.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\ProgramInfo.h"
 				>
 			</File>
 			<File
@@ -273,27 +225,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\CAL\ProgramManager.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\RemoteBuffer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\core\CAL\RemoteBuffer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\core\CAL\Runtime.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Runtime.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\RuntimeDefs.h"
 				>
 			</File>
 			<File

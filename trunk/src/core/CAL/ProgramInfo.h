@@ -28,7 +28,7 @@ namespace amdspl
             //! \tparam globalT     Template parameter indicate whether there is a 
             //!                     global register.
             //!
-            //! \brief	Information of a IL program. 
+            //! \brief	ProgramInfo class contains information of a IL program. 
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////

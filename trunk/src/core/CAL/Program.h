@@ -31,8 +31,8 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief The buffer item object. Consist of a pointer to the Buffer 
-            //!        object and a CALmem handle. Used by Program class. 
+            //! \brief BufferItem class is consist of a pointer to the Buffer 
+            //!        object and a CALmem handle. It is used by Program class. 
             //! \warning Internal use only.
             //!
             //////////////////////////////////////////////////////////////////////////
@@ -55,10 +55,10 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	The abstract representation of CAL program. It contains 
-            //!         methods for program initialization, including compiling, 
-            //!         linking and loading. It also provides methods for buffer
-            //!         binding, program execution and event handling.
+            //! \brief	Program class is an abstract representation of CAL program.  
+            //!         It contains methods for program initialization, including  
+            //!         compiling, linking and loading. It also provides methods for 
+            //!         buffer binding, program execution and event handling.
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////

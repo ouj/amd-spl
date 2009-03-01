@@ -12,280 +12,483 @@
 #include <stdlib.h>
 #include <string.h>
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct float2
-//!
-//! \brief contains float2 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
-typedef struct float2
+namespace amdspl
 {
-    float2(float _x = 0, float _y = 0)
-        :x(_x), y(_y)
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief float2 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct float2
     {
-        
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \return	Constructor
+        //!
+        //! \brief	Construct the float2 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        float2(float _x = 0, float _y = 0)
+            :x(_x), y(_y)
+        {
 
-    operator float*()
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from float2 pointer to a pointer to float.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator float*()
+        {
+            return (float*)this;
+        }
+
+        //! \brief	X component.
+        float x;
+        //! \brief	Y component.
+        float y;
+
+    } float2;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief double2 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct double2
     {
-        return (float*)this;
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \return	Constructor
+        //!
+        //! \brief	Construct a double2 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        double2(double _x = 0, double _y = 0)
+            :x(_x), y(_y)
+        {
 
-    float x,y;
+        }
 
-} float2;
+        //! \brief	X component.
+        double x;
+        //! \brief	Y component.
+        double y;
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct double2
-//!
-//! \brief contains double2 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
+    } double2;
 
-typedef struct double2
-{
-    double2(double _x = 0, double _y = 0)
-        :x(_x), y(_y)
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief float3 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct float3
     {
-        
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \param	_z  Z component.
+        //! \return	Constructor
+        //!
+        //! \brief	Construct a float3 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        float3(float _x = 0, float _y = 0, float _z = 0)
+            :x(_x), y(_y), z(_z)
+        {
 
-    double x,y;
+        }
 
-} double2;
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from float3 pointer to a pointer to float.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator float*()
+        {
+            return (float*)this;
+        }
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct float3
-//!
-//! \brief contains float3 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
+        //! \brief	X component.
+        float x;
+        //! \brief	Y component.
+        float y;
+        //! \brief	Z component.
+        float z;
 
-typedef struct float3
-{
-    float3(float _x = 0, float _y = 0, float _z = 0)
-        :x(_x), y(_y), z(_z)
+    } float3;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief float4 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+
+    typedef struct float4
     {
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \param	_z  Z component.
+        //! \param	_w  W component.
+        //! \return	Constructor
+        //!
+        //! \brief	Construct a float4 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        float4(float _x = 0, float _y = 0, float _z = 0, float _w = 0)
+            :x(_x), y(_y), z(_z), w(_w)
+        {
 
-    }
+        }
 
-    operator float*()
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from float4 pointer to a pointer to float.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator float*()
+        {
+            return (float*)this;
+        }
+
+        //! \brief	X component.
+        float x;
+        //! \brief	Y component.
+        float y;
+        //! \brief	Z component.
+        float z;
+        //! \brief	W component.
+        float w;
+
+    } float4;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief int2 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct int2
     {
-        return (float*)this;
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \return	    Constructor.
+        //!
+        //! \brief	Construct a int2 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        int2( int _x = 0, int _y = 0 )
+            : x(_x), y(_y)
+        {
 
-    float x,y,z;
+        }
 
-} float3;
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from int2 pointer to a pointer to int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator int*()
+        {
+            return (int*)this;
+        }
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct float4
-//!
-//! \brief contains float4 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from int2 pointer to a pointer to const int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator const int*() const
+        {
+            return (const int*)this;
+        }
 
-typedef struct float4
-{
-    float4(float _x = 0, float _y = 0, float _z = 0, float _w = 0)
-        :x(_x), y(_y), z(_z), w(_w)
+        //! \brief	X component.    
+        int x;
+        //! \brief	Y component.
+        int y;
+
+    } int2;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief int3 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct int3
     {
-     
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \param	_z  Z component.
+        //! \return	    Constructor
+        //!
+        //! \brief	Construct a int3 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        int3( int _x = 0, int _y = 0, int _z = 0 )
+            : x(_x), y(_y), z(_z)
+        {
 
-    operator float*()
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from int3 pointer to a pointer to const int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator int*()
+        {
+            return (int*)this;
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from int3 pointer to a pointer to const int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator const int*() const
+        {
+            return (const int*)this;
+        }
+
+        //! \brief	X component.  
+        int x;
+        //! \brief	Y component.
+        int y;
+        //! \brief	Z component.
+        int z;
+
+    } int3;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief int4 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct int4
     {
-        return (float*)this;
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \param	_z  Z component.
+        //! \param	_w  W component.
+        //! \return	    Constructor
+        //!
+        //! \brief	Construct a int4 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        int4( int _x = 0, int _y = 0, int _z = 0, int _w = 0 )
+            : x(_x), y(_y), z(_z), w(_w)
+        {
 
-    float x,y,z,w;
+        }
 
-} float4;
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from int4 pointer to a pointer to int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator int*()
+        {
+            return (int*)this;
+        }
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct int2
-//!
-//! \brief contains int2 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from int4 pointer to a pointer to const int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator const int*() const
+        {
+            return (const int*)this;
+        }
 
-typedef struct int2
-{
-    int2( int _x = 0, int _y = 0 )
-        : x(_x), y(_y)
+        //! \brief	X component.  
+        int x;
+        //! \brief	Y component.
+        int y;
+        //! \brief	Z component.
+        int z;
+        //! \brief	W component.
+        int w;
+
+    } int4;
+
+    //////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief uint type.
+    //!
+    //////////////////////////////////////////////////////////////////////////
+    typedef unsigned int uint;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief uint2 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct uint2
     {
-    
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \return	    Constructor
+        //!
+        //! \brief	Construct a uint2 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        uint2( unsigned int _x = 0, unsigned int _y = 0 )
+            : x(_x), y(_y)
+        {
 
-    operator int*()
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from uint2 pointer to a pointer to int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator unsigned int*() 
+        {
+            return (unsigned int*)this;
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from uint2 pointer to a pointer to const int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator const unsigned int*() const
+        {
+            return (const unsigned int*)this; 
+        }
+
+        //! \brief	X component.  
+        unsigned int x;
+        //! \brief	Y component.
+        unsigned int y;
+
+    } uint2;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief uint3 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct uint3
     {
-        return (int*)this;
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \param	_z  Z component.
+        //! \return	    Constructor
+        //!
+        //! \brief	Construct a uint3 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        uint3( unsigned int _x = 0, unsigned int _y = 0, unsigned int _z = 0 )
+            : x(_x), y(_y), z(_z)
+        {
 
-    operator const int*() const
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from uint3 pointer to a pointer to int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator unsigned int*()
+        {
+            return (unsigned int*)this;
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from uint3 pointer to a pointer to const int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator const unsigned int*() const
+        {
+            return (const unsigned int*)this;
+        }
+
+        //! \brief	X component.  
+        unsigned int x;
+        //! \brief	Y component.
+        unsigned int y;
+        //! \brief	Z component.
+        unsigned int z;
+
+    } uint3;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //!
+    //! \brief uint4 type.
+    //!
+    ////////////////////////////////////////////////////////////////////////////////
+    typedef struct uint4
     {
-        return (const int*)this;
-    }
-    
-    int x, y;
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \param	_x  X component.
+        //! \param	_y  Y component.
+        //! \param	_z  Z component.
+        //! \param	_w  W component.
+        //! \return	    Constructor
+        //!
+        //! \brief	Construct a uint4 type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        uint4( unsigned int _x = 0, unsigned int _y = 0, unsigned int _z = 0, unsigned int _w = 0 )
+            : x(_x), y(_y), z(_z), w(_w)
+        {
 
-} int2;
+        }
 
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct int3
-//!
-//! \brief contains int3 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from uint4 pointer to a pointer to int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator unsigned int*()
+        {
+            return (unsigned int*)this;
+        }
 
-typedef struct int3
-{
-    int3( int _x = 0, int _y = 0, int _z = 0 )
-        : x(_x), y(_y), z(_z)
-    {
-    
-    }
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief conversion from uint4 pointer to a pointer to const int.
+        //!
+        //////////////////////////////////////////////////////////////////////////
+        operator const unsigned int*() const
+        {
+            return (const unsigned int*)this;
+        }
 
-    operator int*()
-    {
-        return (int*)this;
-    }
+        //! \brief	X component.  
+        unsigned int x;
+        //! \brief	Y component.
+        unsigned int y;
+        //! \brief	Z component.
+        unsigned int z;
+        //! \brief	X component.
+        unsigned int w;
 
-    operator const int*() const
-    {
-        return (const int*)this;
-    }
-    
-    int x, y, z;
-
-} int3;
-
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct int4
-//!
-//! \brief contains int4 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
-
-typedef struct int4
-{
-    int4( int _x = 0, int _y = 0, int _z = 0, int _w = 0 )
-        : x(_x), y(_y), z(_z), w(_w)
-    {
-    
-    }
-
-    operator int*()
-    {
-        return (int*)this;
-    }
-
-    operator const int*() const
-    {
-        return (const int*)this;
-    }
-
-    int x, y, z, w;
-
-} int4;
-
-typedef unsigned int uint;
-
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct uint2
-//!
-//! \brief contains uint2 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
-
-typedef struct uint2
-{
-    uint2( unsigned int _x = 0, unsigned int _y = 0 )
-        : x(_x), y(_y)
-    {
-    
-    }
-
-    operator unsigned int*() 
-    {
-        return (unsigned int*)this;
-    }
-
-    operator const unsigned int*() const
-    {
-        return (const unsigned int*)this; 
-    }
-
-    unsigned int x, y;
-
-} uint2;
-
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct uint3
-//!
-//! \brief contains uint3 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
-
-typedef struct uint3
-{
-    uint3( unsigned int _x = 0, unsigned int _y = 0, unsigned int _z = 0 )
-        : x(_x), y(_y), z(_z)
-    {
-
-    }
-
-    operator unsigned int*()
-    {
-        return (unsigned int*)this;
-    }
-
-    operator const unsigned int*() const
-    {
-        return (const unsigned int*)this;
-    }
-
-    unsigned int x, y, z;
-
-} uint3;
-
-////////////////////////////////////////////////////////////////////////////////
-//!
-//! \struct uint4
-//!
-//! \brief contains uint4 constructors.
-//!
-////////////////////////////////////////////////////////////////////////////////
-
-typedef struct uint4
-{
-    uint4( unsigned int _x = 0, unsigned int _y = 0, unsigned int _z = 0, unsigned int _w = 0 )
-        : x(_x), y(_y), z(_z), w(_w)
-    {
-    
-    }
-
-    operator unsigned int*()
-    {
-        return (unsigned int*)this;
-    }
-
-    operator const unsigned int*() const
-    {
-        return (const unsigned int*)this;
-    }
-
-    unsigned int x, y, z, w;
-
-} uint4;
+    } uint4;
+}
 
 #endif //VECTORDATATYPE_HPP_
