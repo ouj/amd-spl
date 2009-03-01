@@ -1,14 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : RemoteBuffer.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		RemoteBuffer.cpp
+//!	\date 		1:3:2009   15:15
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains definition of RemoteBuffer class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "RuntimeDefs.h"
 #include "RemoteBuffer.h"
 
@@ -19,12 +17,42 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	format  The CAL format of the remote buffer.
+            //! \param	width   The width of 1D/2D remote buffer.
+            //! \param	height  The height of 2D remote buffer. For 1D remote buffer,
+            //!                 this value should be set to zero.
+            //! \return	Constructor
+            //!
+            //! \brief	Construct the RemoteBuffer object. The object will not be 
+            //!         available until RemoteBuffer::initialize() is called.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             RemoteBuffer::RemoteBuffer(CALformat format, unsigned int width, unsigned int height)
                 : Buffer(format, width, height), _cachable(false)
             {
-                
             }
-            
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Destructor
+            //!
+            //! \brief	Destroy the RemoteBuffer object.
+            //!
+            //////////////////////////////////////////////////////////////////////////      
+            RemoteBuffer::~RemoteBuffer()
+            {
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool True if the remote buffer is initialized successful. 
+            //!         False if there is an error during initialization.
+            //!
+            //! \brief	Initialize the RemoteBuffer object.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool RemoteBuffer::initialize()
             {
                 DeviceManager* deviceMgr = Runtime::getInstance()->getDeviceManager();
@@ -50,7 +78,6 @@ namespace amdspl
                 }
                 return true;
             }
-            
         }
     }
 }

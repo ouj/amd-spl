@@ -316,7 +316,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\include\VectorDataType.h"
+						RelativePath="..\..\include\VectorDataType.h"
 						>
 					</File>
 				</Filter>

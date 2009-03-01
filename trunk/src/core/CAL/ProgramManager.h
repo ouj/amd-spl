@@ -57,8 +57,10 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \param	progInfo The ProgramInfo object contains source code, ID and 
-            //!                  parameter information of the program.
+            //! \tparam ProgInfo Template type of the ProgramInfo, contains program 
+            //!                  parameter information.
+            //! \param	progInfo The ProgramInfo object contains source code and 
+            //!                  program ID.
             //! \param	device   The pointer to the Device.The method will be compiled
             //!                  based on this device target and load it onto its 
             //!                  context.

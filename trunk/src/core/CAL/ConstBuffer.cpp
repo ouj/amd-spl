@@ -51,7 +51,7 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \return	
+            //! \return	Destructor
             //!
             //! \brief	Destroy the ConstBuffer object.
             //!
@@ -63,7 +63,9 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \return	bool
+            //! \return	bool True if the constant values are successfully synchronized
+            //!              to the CAL buffer. False if an error happens during 
+            //!              data synchronization.
             //!
             //! \brief	Synchronize the constant values data in system memory to the
             //!         CAL buffer.
