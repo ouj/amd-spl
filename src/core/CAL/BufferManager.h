@@ -23,7 +23,7 @@ namespace amdspl
             class ConstBuffer;
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	The BufferManager contains factory methods for LocalBuffer,
+            //! \brief	BufferManager class contains factory methods for LocalBuffer,
             //!         RemoteBuffer and GlobalBuffer. It also contains a ConstBuffer
             //!         pool, which will avoid frequently allocate and deallocate
             //!         ConstBuffer. Created when the runtime is initialized and 

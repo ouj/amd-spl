@@ -22,7 +22,7 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	An abstract representation of CAL buffer.
+            //! \brief	Buffer class is an abstract representation of CAL buffer.
             //!         Buffer class is the base class of LocalBuffer and RemoteBuffer,
             //!         it provides functionalities required for Buffer creation and
             //!         data transfer. It maintains the CAL handles, buffer type, 

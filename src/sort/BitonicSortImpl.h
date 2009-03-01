@@ -8,11 +8,17 @@
 #include <algorithm>
 
 using namespace amdspl::core::cal;
-
 namespace amdspl
 {
     namespace sorting
     {
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \tparam T Template type of the maximum/mininum values. 
+        //!
+        //! \brief Define the maximum/minimum values different types.
+        //!
+        //////////////////////////////////////////////////////////////////////////
         template<typename T>
         struct extreme_value
         {
@@ -36,8 +42,18 @@ namespace amdspl
         const double extreme_value<double>::MinValue = -DBL_MAX;
         const double extreme_value<double>::MaxValue = DBL_MAX;
 
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief ProgramInfo type of Bitonic sort IL.
+        //!
+        //////////////////////////////////////////////////////////////////////////
         typedef ProgramInfo<1, 1, 1, false> BitonicSortProgramInfo;
 
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief IL source string of Bitonic sort for types except double
+        //!
+        //////////////////////////////////////////////////////////////////////////
         static const char* _sz_bitonic_sort_prog_source_ = 
             "il_ps_2_0\n"
             "dcl_output_generic o0\n"
@@ -73,7 +89,13 @@ namespace amdspl
             "end\n";
 
         //////////////////////////////////////////////////////////////////////////
-        // Define IL grouping
+        //!
+        //! \tparam T Template type of the Bitonic sort ProgramInfo. 
+        //!
+        //! \brief The Bitonic sort ProgramInfo for ascending/descending sort of 
+        //!         specific type.
+        //!
+        //////////////////////////////////////////////////////////////////////////
         template<typename T>
         struct bitonicSortILGroup
         {
@@ -103,6 +125,11 @@ namespace amdspl
             BitonicSortProgramInfo("Unsigned Integer Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
             .replaceTkn("{SORT_OPERATOR}", "uge"); //greater or equal.
 
+        //////////////////////////////////////////////////////////////////////////
+        //!
+        //! \brief IL source string of Bitonic sort for double
+        //!
+        //////////////////////////////////////////////////////////////////////////
         static const char* _sz_bitonic_sort_prog_source_double_ = 
             "il_ps_2_0\n"
             "dcl_output_generic o0\n"
@@ -146,8 +173,22 @@ namespace amdspl
 
         //////////////////////////////////////////////////////////////////////////
         //!
-        //! \brief The entrance point of the bitonic sort, 
-        //!         seperate the implementation of AT and none-AT
+        //! \tparam The type of sorting value.
+        //!
+        //! \param	ptr     The CPU address of the array to be sort.
+        //! \param	size    The size of the array to be sort.
+        //! \param	asc     Boolean value indicate whether to sort the array 
+        //!                 in ascendant order or descendant order.
+        //! \return	SPL_RESULT  
+        //!                 SPL_RESULT_OK - if the array is sorted successfully.
+        //!                 SPL_RESULT_INVALID_ARGUMENT - if the arguments passed 
+        //!                 are invalid. 
+        //!                 SPL_RESULT_BUFFER_ERROR - if there is an error happens
+        //!                 during memory allocation or data transfer.
+        //!                 SPL_RESULT_PROGRAM_ERROR - if there is an error in 
+        //!                 program loading or execution.
+        //!
+        //! \brief The implementation of the Bitonic sort.
         //!
         //////////////////////////////////////////////////////////////////////////
         template<class T>
@@ -207,6 +248,10 @@ namespace amdspl
                     return SPL_RESULT_BUFFER_ERROR;
 
                 Program *prog = progMgr->loadProgram(asc ? bitonicSortILGroup<T>::asc : bitonicSortILGroup<T>::des, device);
+                if (!prog)
+                {
+                    return SPL_RESULT_PROGRAM_ERROR;
+                }
 
                 constBuffer->setConstant<3>(&width);
                 prog->bindConstant(constBuffer, 0);
@@ -237,7 +282,11 @@ namespace amdspl
                         constBuffer->setConstant<2>(&offset_2);
 
                         // Run the kernel on GPU
-                        prog->run(rect);
+                        Event *e = prog->run(rect);
+                        if (!e)
+                        {
+                            return SPL_RESULT_PROGRAM_ERROR;
+                        }
 
                         Buffer* tmp = buffer1;
                         buffer1 = buffer2;

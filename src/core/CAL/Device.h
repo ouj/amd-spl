@@ -21,8 +21,9 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	A abstract representation of a CAL device in the system. It 
-            //!         provides methods for device management, device information. 
+            //! \brief	Device class is an abstract representation of a CAL 
+            //!         device in the system. It provides methods for device 
+            //!         management, device information. 
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////

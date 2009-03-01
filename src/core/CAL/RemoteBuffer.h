@@ -19,8 +19,8 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	The abstract representation of CAL remote buffer. It contains 
-            //!         methods for remote buffer initialization.
+            //! \brief	RemoteBuffer class is an abstract representation of CAL remote
+            //!         buffer. It contains methods for remote buffer initialization.
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////

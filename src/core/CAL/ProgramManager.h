@@ -22,7 +22,7 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	The ProgramManager contains load and unload methods for 
+            //! \brief	ProgramManager class contains load and unload methods for 
             //!         Program. It also contains an event pool which can be used in
             //!         event management. It is created when the runtime is 
             //!         initialized and deleted when the runtime is destroyed.

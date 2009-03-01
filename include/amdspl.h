@@ -24,8 +24,9 @@ namespace amdspl
 {
     //////////////////////////////////////////////////////////////////////////
     //!
-    //! \brief The struct defines a item in device list. Used in AmdSpl::InitializeSPL
-    //!        to indicate which devices are available in AMD-SPL
+    //! \brief DEVICE_LIST_ITEM defines a item in device list. Used in 
+    //!        AmdSpl::InitializeSPL to indicate which devices are available 
+    //!        in AMD-SPL
     //!
     //////////////////////////////////////////////////////////////////////////
 	struct SPL_EXPORT DEVICE_LIST_ITEM
@@ -40,7 +41,7 @@ namespace amdspl
 
     //////////////////////////////////////////////////////////////////////////
     //!
-    //! \brief	AMD-SPL class, manages the initialization and destruction of AMD-SPL.
+    //! \brief	AmdSpl class, manages the initialization and destruction of AMD-SPL.
     //!
     //////////////////////////////////////////////////////////////////////////
     class SPL_EXPORT AmdSpl

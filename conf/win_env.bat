@@ -26,7 +26,7 @@ set BLD=u:\build\win32
 
 ::Source
 set SRC=u:\src
-set INC=u:\src\include
+set INC=u:\include
 
 ::Input
 set CINC=%CALROOT%\include

@@ -23,9 +23,10 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	An abstract representation of a CAL constant buffer used in 
-            //!         Program as a set input constants values. ConstBuffer class 
-            //!         provides methods for setting data and data synchronization.
+            //! \brief	ConstBuffer class is an abstract representation of a CAL 
+            //!         constant buffer used in Program as a set input constants 
+            //!         values. ConstBuffer class provides methods for setting data 
+            //!         and data synchronization.
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////

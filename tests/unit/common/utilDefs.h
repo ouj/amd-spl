@@ -1,4 +1,6 @@
 #include "math.h"
+
+using namespace amdspl;
 namespace util
 {
     template <class T>

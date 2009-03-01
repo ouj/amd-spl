@@ -21,8 +21,8 @@ namespace amdspl
 			class Device;
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	 This class provide interface for device management. It 
-            //!          contains factory method for Device. The object is created 
+            //! \brief	 DeviceManager class provide interface for device management. 
+            //!          It contains factory method for Device. The object is created 
             //!          when runtime is initialized and deleted when the runtime is 
             //!          destroyed.
             //!

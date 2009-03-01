@@ -19,9 +19,9 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief	The abstract representation of CAL global buffer using in 
-            //!         memory export and scatter write.Contains initialization method
-            //!         of global buffer.
+            //! \brief	GlobalBuffer class is an abstract representation of CAL global
+            //!         buffer using in memory export and scatter write.Contains 
+            //!         initialization method of global buffer.
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
