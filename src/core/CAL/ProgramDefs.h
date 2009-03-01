@@ -1,6 +1,14 @@
 #ifndef _PROGRAM_DEFS_H_
 #define _PROGRAM_DEFS_H_
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		ProgramDefs.h
+//!	\date 		1:3:2009   14:45
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains inline and template definition of Program class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #ifdef _WIN32
 #pragma warning(disable : 4996)
 #endif
@@ -12,29 +20,75 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	i       The index of the output register.
+            //! \return	CALname The CAL name of the output register.
+            //!
+            //! \brief	Get CAL name of a output register.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             inline CALname Program::getOutputName(unsigned short i) const
             {
                 assert(i <= _outputNames.size());
                 return _outputNames[i];
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	i       The index of the input register.
+            //! \return	CALname The CAL name of the input register.
+            //!
+            //! \brief	Get CAL name of a input register.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             inline CALname Program::getInputName(unsigned short i) const
             {
                 assert(i <= _inputNames.size());
                 return _inputNames[i];
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	i       The index of the constant register.
+            //! \return	CALname The CAL name of the constant register.
+            //!
+            //! \brief	Get CAL name of a constant register.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             inline CALname Program::getConstName(unsigned short i) const
             {
                 assert(i <= _constNames.size());
                 return _constNames[i];
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALname The CAL name of the global register.
+            //!
+            //! \brief	Get CAL name of a global register.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             inline CALname Program::getGlobalName() const
             {
                 return _globalName;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \tparam Template type of the ProgramInfo, contains program parameter
+            //!         information.
+            //! \param	progInfo Instance of ProgramInfo, contains program ID and 
+            //!         source
+            //! \return	bool True if the Program object is successfully initialized.
+            //!              False if the there is an error during initialization.
+            //!
+            //! \brief	Initialize the Program object. In this method, the IL source
+            //!         provided in ProgramInfo will be compiled, linked and loaded 
+            //!         onto CAL context of the device. Then, the module entry 
+            //!         function handle and all the register names are retrieved.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             template<typename ProgInfo>
             bool Program::initialize(const ProgInfo &progInfo)
             {

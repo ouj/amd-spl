@@ -1,13 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : LocalBuffer.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		LocalBuffer.cpp
+//!	\date 		1:3:2009   14:05
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains definition of LocalBuffer object.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "RuntimeDefs.h"
 #include "LocalBuffer.h"
 #include "Device.h"
@@ -19,23 +18,44 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	device  The pointer to the Device object this local buffer 
+            //!                 associated to.
+            //! \param	format  The CAL format of the local buffer.
+            //! \param	width   The width of 1D/2D local buffer.
+            //! \param	height  The height of 2D local buffer. For 1D local buffer,
+            //!                 this value should be set to zero.
+            //! \return	
+            //!
+            //! \brief	Construct the LocalBuffer object.The object will not be 
+            //!         available until LocalBuffer::initialize() is called.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             LocalBuffer::LocalBuffer(Device *device, CALformat format, unsigned int width, unsigned int height)
                 : Buffer(format, width, height), _device(device)
             {
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Destructor
+            //!
+            //! \brief	Destroy the LocalBuffer object.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             LocalBuffer::~LocalBuffer()
             {
             }
 
-            //void LocalBuffer::readData(void* ptr, unsigned int size)
-            //{
-            //}
-            //
-            //void LocalBuffer::writeData(void* ptr, unsigned int size, void* defaultVal)
-            //{
-            //}
-            
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool True if the local buffer is initialized successful. 
+            //!         False if there is an error during initialization.
+            //!
+            //! \brief	Initialize the LocalBuffer object.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool LocalBuffer::initialize()
             {
                 if (!_device)

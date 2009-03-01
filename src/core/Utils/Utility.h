@@ -5,7 +5,7 @@
 //!
 //! \file Utility.h
 //!
-//! \brief Declaration of utility class
+//! \brief Contains declaration of utility functions and classes.
 //!
 ////////////////////////////////////////////////////////////////////////////////
 

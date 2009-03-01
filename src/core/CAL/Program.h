@@ -1,17 +1,14 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Program.h
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
 #if !defined(_PROGRAM_H)
 #define _PROGRAM_H
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Program.h
+//!	\date 		1:3:2009   14:08
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains declaration of Program class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "Event.h"
 #include "Device.h"
 #include <vector>
@@ -32,19 +29,44 @@ namespace amdspl
             class ConstBuffer;
             class GlobalBuffer;
 
-            //Internal use only
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief The buffer item object. Consist of a pointer to the Buffer 
+            //!        object and a CALmem handle. Used by Program class. 
+            //! \warning Internal use only.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             struct BufferItem
             {
+                
+                //////////////////////////////////////////////////////////////////////////
+                //!
+                //! \return	Constructor.
+                //!
+                //! \brief	Construct the BufferItem object. Set all its members to 0.
+                //!
+                //////////////////////////////////////////////////////////////////////////
                 BufferItem() : buffer(NULL), mem(0) {}
+                //! \brief	The pointer to the Buffer object bound to the Program.
                 Buffer* buffer;
+                //! \brief	The CAL memory handle of the buffer.
                 CALmem  mem;
             };
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	The abstract representation of CAL program. It contains 
+            //!         methods for program initialization, including compiling, 
+            //!         linking and loading. It also provides methods for buffer
+            //!         binding, program execution and event handling.
+            //! \warning Not thread safe.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             class Program
             {
             public:
-                Program(Device *device);
-                ~Program();
+                                Program(Device *device);
+                                ~Program();
                 template<typename ProgInfo>
                 bool            initialize(const ProgInfo &progInfo);
                 virtual Event*  run(const CALdomain &domain);
@@ -67,19 +89,30 @@ namespace amdspl
                 void            syncConstBuffers(void);
                 void            setEvents(Event* e);
                 void            waitEvents(void);
+                //! \brief	The pointer to the Device object this program associated to.
                 Device*                 _device;
             private:
+                //! \brief	CAL names of input buffers.
                 vector<CALname>         _inputNames;
+                //! \brief	CAL names of output buffers.
                 vector<CALname>         _outputNames;
+                //! \brief	CAL names of constant buffers.
                 vector<CALname>         _constNames;
+                //! \brief	CAL name of a global buffer.
                 CALname                 _globalName;
 
+                //! \brief	List of input buffers bound to this program.
                 vector<BufferItem>      _inputBuffers;
+                //! \brief	List of output buffers bound to this program.
                 vector<BufferItem>      _outputBuffers;
+                //! \brief	List of constant buffers bound to this program.
                 vector<BufferItem>      _constBuffers;
+                //! \brief	global buffer bound to this program.
                 BufferItem              _globalBuffer;
 
+                //! \brief	Stores the CAL function handle of this program.
                 CALfunc                 _func;
+                //! \brief	Stores the CAL module handle of this program.
                 CALmodule               _module;
             };
         }

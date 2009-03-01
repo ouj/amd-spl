@@ -1,17 +1,14 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : GlobalBuffer.h
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
 #if !defined(_GLOBALBUFFER_H)
 #define _GLOBALBUFFER_H
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		GlobalBuffer.h
+//!	\date 		1:3:2009   13:50
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains declaration of GlobalBuffer class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "LocalBuffer.h"
 
 namespace amdspl
@@ -20,9 +17,19 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	The abstract representation of CAL global buffer using in 
+            //!         memory export and scatter write.Contains initialization method
+            //!         of global buffer.
+            //! \warning Not thread safe.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             class GlobalBuffer : public LocalBuffer
             {
                 friend class BufferManager;
+            public:
+                ~GlobalBuffer();
             protected:
                 GlobalBuffer(Device* device, CALformat format, 
                     unsigned int width, unsigned int height = 0);

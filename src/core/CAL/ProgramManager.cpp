@@ -1,14 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : ProgramManager.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		ProgramManager.cpp
+//!	\date 		1:3:2009   15:28
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains definition of ProgramManager class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "ProgramManager.h"
 #include "Program.h"
 #include "CommonDefs.h"

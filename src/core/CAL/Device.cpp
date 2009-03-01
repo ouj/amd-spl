@@ -1,14 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Device.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Device.cpp
+//!	\date 		28:2:2009   22:17
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains definition of Device class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "Device.h"
 #include "RuntimeDefs.h"
 #include <cassert>

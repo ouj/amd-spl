@@ -1,16 +1,14 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Event.h
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
 #if !defined(_EVENT_H)
 #define _EVENT_H
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Event.h
+//!	\date 		1:3:2009   13:39
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains declaration of Event class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "cal.h"
 
 namespace amdspl
@@ -19,6 +17,13 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	The abstract representation of CAL event. Contains method for
+            //!         event checking and event waiting.
+            //! \warning Not thread safe.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             class Event
             {
                 friend class Program;
@@ -33,7 +38,9 @@ namespace amdspl
                 void        waitEvent();
                 CALresult   checkEvent();
             private:
+                //! \brief	Stores the CAL event handle.
                 CALevent    _event;
+                //! \brief	Stores the CAL device context the event handle associated to.
                 CALcontext  _ctx;
             };
         }

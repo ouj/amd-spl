@@ -1,12 +1,12 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : Program.cpp
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		Program.cpp
+//!	\date 		1:3:2009   15:28
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains definition of Program class.
+//!
+//////////////////////////////////////////////////////////////////////////
 
 #include "RuntimeDefs.h"
 #include "Program.h"
@@ -17,11 +17,29 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	device The pointer to the Device object this program 
+            //!         associated to. 
+            //! \return	Constructor
+            //!
+            //! \brief	Construct the Program object. The Program object will not be
+            //!         available until Program::initialize() is called.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Program::Program(Device *device) : _device(device), _module(0), _func(0)
             {
 
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	Destructor
+            //!
+            //! \brief	Destroy the Program object, unbind all the buffers and 
+            //!         unload the program module.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Program::~Program()
             {
                 // unbind all the buffers.
@@ -36,6 +54,18 @@ namespace amdspl
                 }
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	buffer  The pointer to the input buffer to be bound
+            //! \param	idx     The index of a program input register.
+            //! \return	bool    True if the input buffer is successfully bound.
+            //!                 False if an error happens during buffer binding.
+            //!
+            //! \brief	Bind a input buffer. If another buffer is already bound to 
+            //!         this program input register, it will be unbound before the 
+            //!         new input buffer is bound.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::bindInput(Buffer* buffer, unsigned int idx)
             {
                 assert(idx <= _inputBuffers.size());
@@ -59,6 +89,18 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	buffer  The pointer to the output buffer to be bound
+            //! \param	idx     The index of a program output register.
+            //! \return	bool    True if the output buffer is successfully bound.
+            //!                 False if an error happens during buffer binding.
+            //!
+            //! \brief	Bind a output buffer. If another buffer is already bound to 
+            //!         this program output register, it will be unbound before the 
+            //!         new output buffer is bound.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::bindOutput(Buffer* buffer, unsigned int idx)
             {
                 assert(idx <= _outputBuffers.size());
@@ -82,6 +124,18 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	buffer  The pointer to the constant buffer to be bound
+            //! \param	idx     The index of a program constant register.
+            //! \return	bool    True if the constant buffer is successfully bound.
+            //!                 False if an error happens during buffer binding.
+            //!
+            //! \brief	Bind a constant buffer. If another buffer is already bound to 
+            //!         this program constant register, it will be unbound before the  
+            //!         new constant buffer is bound.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::bindConstant(ConstBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _constBuffers.size());
@@ -105,6 +159,15 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	buffer  The pointer to the global buffer to be bound
+            //! \return	bool    True if the global buffer is successfully bound.
+            //!                 False if an error happens during buffer binding.
+            //!
+            //! \brief	Bind a global buffer
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::bindGlobal(GlobalBuffer* buffer)
             {
                 unbindGlobal();
@@ -127,6 +190,15 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	idx     The index of a program input register. 
+            //! \return	bool    True if the input buffer is successfully unbound.
+            //!                 False if an error happens during buffer unbinding.
+            //!
+            //! \brief	Unbind a input buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::unbindInput(unsigned int idx)
             {
                 assert(idx <= _inputBuffers.size());
@@ -146,6 +218,15 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	idx     The index of a program output register. 
+            //! \return	bool    True if the output buffer is successfully unbound.
+            //!                 False if an error happens during buffer unbinding.
+            //!
+            //! \brief	Unbind a output buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::unbindOutput(unsigned int idx)
             {
                 assert(idx <= _outputBuffers.size());
@@ -164,6 +245,15 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	idx     The index of a program constant register. 
+            //! \return	bool    True if the constant buffer is successfully unbound.
+            //!                 False if an error happens during buffer unbinding.
+            //!
+            //! \brief	Unbind a constant buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::unbindConstant(unsigned int idx)
             {
                 assert(idx <= _constBuffers.size());
@@ -182,6 +272,14 @@ namespace amdspl
                 return true;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool    True if the global buffer is successfully unbound.
+            //!                 False if an error happens during buffer unbinding.
+            //!
+            //! \brief	Unbind a global buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::unbindGlobal()
             {
                 if (_globalBuffer.buffer != NULL)
@@ -199,6 +297,14 @@ namespace amdspl
                 return false;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool    True if the all buffers are successfully unbound.
+            //!                 False if at least one buffer failed to be unbound.
+            //!
+            //! \brief	Unbind all the buffers.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             bool Program::unbindAll()
             {
                 bool result = true;
@@ -218,6 +324,12 @@ namespace amdspl
                 return result;
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	Synchronize all the constant buffer. This method is usually 
+            //!         called before the program execution.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void Program::syncConstBuffers(void)
             {
                 for (unsigned int i = 0; i < _constBuffers.size(); i++)
@@ -233,6 +345,14 @@ namespace amdspl
                 } 
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	e       The pointer to the Event object contains the 
+            //!                 execution event.
+            //!
+            //! \brief	Set the program execution event to all bound buffers.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void Program::setEvents(Event* e)
             {
                 for (unsigned int idx = 0; idx < _constBuffers.size(); idx++)
@@ -254,9 +374,15 @@ namespace amdspl
                        
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	Wait until all events of bound buffers are finish to prevent
+            //!         data corruption. It is usually called before fuction execution.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             void Program::waitEvents()
             {
-                // Comment the const buffer and global buffer, will not be nessecary now.
+                // Comment the const buffer and global buffer, will not be necessary now.
                 //for (unsigned int idx = 0; idx < _constBuffers.size(); idx++)
                 //{
                 //    _constBuffers[idx].buffer->waitOutputEvent();
@@ -275,6 +401,17 @@ namespace amdspl
                 //}
             }
 
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	domain  The CAL domain the program will run in.
+            //! \return	Event*  The execution event of the program.
+            //!
+            //! \brief	Execute the program in the domain. Before execution, This 
+            //!         method will synchronize constant buffers and wait for all the 
+            //!         buffer events to finish. After execution, the execution event 
+            //!         will be set to all the bound buffers.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             Event* Program::run(const CALdomain &domain)
             {
                 CALevent execEvent;
@@ -294,6 +431,7 @@ namespace amdspl
                     return NULL;
                 }
 
+                // Get an event from the event pool
                 Event* e = 
                     Runtime::getInstance()->getProgramManager()->getEvent();
 

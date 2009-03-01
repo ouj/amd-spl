@@ -1,17 +1,14 @@
-//
-//
-//
-//  @ Project : AMD-SPL
-//  @ File Name : LocalBuffer.h
-//  @ Date : 2009/2/9
-//  @ Author : Jiawei Ou
-//
-//
-
-
 #if !defined(_LOCALBUFFER_H)
 #define _LOCALBUFFER_H
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		LocalBuffer.h
+//!	\date 		1:3:2009   13:58
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains declaration of LocalBuffer class.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "Buffer.h"
 
 namespace amdspl
@@ -21,17 +18,24 @@ namespace amdspl
         namespace cal
         {
             class Device;
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief	The abstract representation of CAL local buffer. Contains 
+            //!         methods for local buffer initialization and optimized data 
+            //!         transfer.
+            //! \warning Not thread safe.
+            //!
+            //////////////////////////////////////////////////////////////////////////
             class LocalBuffer : public Buffer
             {
                 friend class BufferManager;
             public:
                 ~LocalBuffer();
-                //virtual void readData(void* ptr, unsigned int size, void* defaultVal = 0);
-                //virtual void writeData(void* ptr, unsigned int size);
             protected:
                 LocalBuffer(Device* device, CALformat format, 
                     unsigned int width, unsigned int height = 0);
                 virtual bool initialize();
+                //! \brief	The pointer to the device object this local buffer associated to.
                 Device* _device;
             };
         }

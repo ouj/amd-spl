@@ -1,6 +1,14 @@
 #ifndef _AMDSPL_RUNTIMEEFS_H_
 #define _AMDSPL_RUNTIMEEFS_H_
-
+//////////////////////////////////////////////////////////////////////////
+//!
+//!	\file 		RuntimeDefs.h
+//!	\date 		1:3:2009   15:29
+//!	\author		Jiawei Ou
+//!	
+//!	\brief		Contains header files needed in AMD-SPL compilation.
+//!
+//////////////////////////////////////////////////////////////////////////
 #include "CommonDefs.h"
 #include <assert.h>
 #include <stdio.h>

@@ -24,9 +24,9 @@ namespace amdspl
             //!
             //! \brief	An abstract representation of CAL buffer.
             //!         Buffer class is the base class of LocalBuffer and RemoteBuffer,
-            //!         it provides very low level functionalities required for Buffer 
-            //!         creation and data transfer. It maintains the CAL handles, 
-            //!         buffer type, format and dimensional information of a buffer.
+            //!         it provides functionalities required for Buffer creation and
+            //!         data transfer. It maintains the CAL handles, buffer type, 
+            //!         format and dimensional information of a buffer.
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
