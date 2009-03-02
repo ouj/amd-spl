@@ -18,17 +18,21 @@ RuntimeTestFixture::~RuntimeTestFixture(void)
 
 void RuntimeTestFixture::SetUpTestCase()
 {
-    DEVICE_LIST_ITEM deviceList[] = 
-    {
-        DEVICE_LIST_ITEM(0, 0)
-    };
-    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::InitializeSPL(deviceList, 1, 0));
+    ASSERT_TRUE(Runtime::getInstance());
+    DeviceManager *devMgr = Runtime::getInstance()->getDeviceManager();
+    ASSERT_TRUE(devMgr);
 
+    unsigned int sysDevNum = devMgr->getSysDeviceNum();
+
+    for (unsigned int i = 0; i < sysDevNum; i++)
+    {
+        ASSERT_TRUE(devMgr->assignDevice(i));
+    }
 }
 
 void RuntimeTestFixture::TearDownTestCase()
 {
-    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::CleanupSPL());
+    Runtime::destroy();
 }
 
 void RuntimeTestFixture::SetUp()

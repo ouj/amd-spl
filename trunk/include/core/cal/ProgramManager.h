@@ -10,6 +10,7 @@
 //!	\brief		Contains declaration of ProgramManager class.
 //!
 //////////////////////////////////////////////////////////////////////////
+#include "SplDefs.h"
 #include "Program.h"
 #include "CommonDefs.h"
 #include <vector>
@@ -29,7 +30,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class ProgramManager
+            class SPL_EXPORT ProgramManager
             {
                 friend class Runtime;
             public:

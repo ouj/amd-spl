@@ -10,6 +10,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include "Buffer.h"
+#include "SplDefs.h"
 
 namespace amdspl
 {
@@ -24,7 +25,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class RemoteBuffer : public Buffer
+            class SPL_EXPORT RemoteBuffer : public Buffer
             {
                 friend class BufferManager;
             public:

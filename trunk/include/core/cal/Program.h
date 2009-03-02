@@ -11,6 +11,7 @@
 //////////////////////////////////////////////////////////////////////////
 #include "Event.h"
 #include "Device.h"
+#include "SplDefs.h"
 #include <vector>
 #include <utility>
 #include <stdio.h>
@@ -62,7 +63,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class Program
+            class SPL_EXPORT Program
             {
             public:
                                 Program(Device *device);

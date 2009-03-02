@@ -11,6 +11,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 
+#include "SplDefs.h"
 #include "RemoteBuffer.h"
 #include <vector>
 #include "VectorDataType.h"
@@ -30,7 +31,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class ConstBuffer : public RemoteBuffer
+            class SPL_EXPORT ConstBuffer : public RemoteBuffer
             {
                 friend class BufferManager;
             public:

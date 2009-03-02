@@ -9,6 +9,7 @@
 //!	\brief		Contains declaration of LocalBuffer class.
 //!
 //////////////////////////////////////////////////////////////////////////
+#include "SplDefs.h"
 #include "Buffer.h"
 
 namespace amdspl
@@ -26,7 +27,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class LocalBuffer : public Buffer
+            class SPL_EXPORT LocalBuffer : public Buffer
             {
                 friend class BufferManager;
             public:

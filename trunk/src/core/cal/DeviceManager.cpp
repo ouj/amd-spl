@@ -78,16 +78,16 @@ namespace amdspl
             //! \param	deviceHandle    The device handle if the device is initialized
             //!                         somewhere else. NULL if the device is not 
             //!                         initialized elsewhere.
-            //! \return	bool            True if a device is successfully added. False
-            //!                         if failed to add a device.
+            //! \return	bool            True if a device is successfully assigned. 
+            //!                         False if it failed to assigned a device.
             //!
-            //! \brief	                Add a device to the device manager. If the 
+            //! \brief	                Assign a device to the device manager. If the 
             //!                         device with specific ID is initialized 
             //!                         somewhere else the device handle of that device 
             //!                         should be provided.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool DeviceManager::addDevice(unsigned short id, CALdevice deviceHandle)
+            bool DeviceManager::assignDevice(unsigned short id, CALdevice deviceHandle)
             {
                 Device* pDevice = new Device(id, deviceHandle);
                 assert(pDevice);
@@ -210,7 +210,12 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             CALdevice* DeviceManager::getDeviceHandles()
             {
-                return &_deviceHandles[0];
+                if (_deviceHandles.size())
+                {
+                    return &_deviceHandles[0];
+                }
+                else
+                    return NULL;
             }         
         }
     }

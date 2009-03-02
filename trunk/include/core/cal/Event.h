@@ -10,6 +10,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include "cal.h"
+#include "SplDefs.h"
 
 namespace amdspl
 {
@@ -24,7 +25,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class Event
+            class SPL_EXPORT Event
             {
                 friend class Program;
                 friend class ProgramManager;
