@@ -10,6 +10,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include "cal.h"
+#include "SplDefs.h"
 #include <vector>
 
 namespace amdspl
@@ -29,11 +30,11 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class DeviceManager
+            class SPL_EXPORT DeviceManager
             {
                 friend class Runtime;
             public:
-                bool addDevice(unsigned short id = 0, CALdevice device = NULL);
+                bool assignDevice(unsigned short id = 0, CALdevice device = NULL);
                 unsigned short getDeviceNum();
                 unsigned short getSysDeviceNum();
                 Device* getDeviceByID(unsigned short id = 0);

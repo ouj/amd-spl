@@ -98,6 +98,7 @@
 			OutputDirectory="..\..\bin\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -394,10 +395,6 @@
 				</File>
 			</Filter>
 		</Filter>
-		<File
-			RelativePath="..\..\src\amdspl.cpp"
-			>
-		</File>
 		<File
 			RelativePath="..\..\include\amdspl.h"
 			>

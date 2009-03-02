@@ -11,6 +11,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include "cal.h"
+#include "SplDefs.h"
 namespace amdspl
 {
     namespace core
@@ -31,7 +32,7 @@ namespace amdspl
             //! \warning Not thread safe! 
             //!
             //////////////////////////////////////////////////////////////////////////
-            class Runtime
+            class SPL_EXPORT Runtime
             {
             public:
                 static Runtime* getInstance();

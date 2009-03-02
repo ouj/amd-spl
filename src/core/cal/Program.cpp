@@ -42,14 +42,14 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             Program::~Program()
             {
-                // unbind all the buffers.
-                unbindAll();
-
-                CALcontext ctx = _device->getContext();
-
                 // Destroy the module
                 if(_module)
                 {
+                    // unbind all the buffers.
+                    unbindAll();
+
+                    CALcontext ctx = _device->getContext();
+
                     calModuleUnload(ctx, _module);
                 }
             }

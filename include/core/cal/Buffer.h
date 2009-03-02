@@ -12,6 +12,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
+#include "SplDefs.h"
 namespace amdspl
 {
     namespace core
@@ -30,7 +31,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class Buffer
+            class SPL_EXPORT Buffer
             {
                 friend class BufferManager;
             public:

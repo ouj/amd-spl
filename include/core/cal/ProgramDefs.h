@@ -92,6 +92,11 @@ namespace amdspl
             template<typename ProgInfo>
             bool Program::initialize(const ProgInfo &progInfo)
             {
+                if (!_device)
+                {
+                    return false;
+                }
+
                 CALdeviceinfo info = _device->getInfo();
                 CALcontext ctx = _device->getContext();
 

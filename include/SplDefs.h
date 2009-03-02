@@ -25,4 +25,16 @@ enum SPL_RESULT
     SPL_RESULT_PROGRAM_ERROR
 };
 
+//  The warning disables visual studio's
+//  annoying habit of warning when using the standard set lib
+#ifdef _WIN32
+#pragma warning (disable : 4251)
+#endif
+
+#ifdef AMD_SPL_EXPORT
+#define SPL_EXPORT __declspec(dllexport)
+#else
+#define SPL_EXPORT
+#endif
+
 #endif //_AMDSPL_DEFS_H_

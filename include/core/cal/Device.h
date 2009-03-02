@@ -12,6 +12,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
+#include "SplDefs.h"
 
 namespace amdspl
 {
@@ -27,7 +28,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class Device
+            class SPL_EXPORT Device
             {
             public:
                 Device(unsigned short id, CALdevice device = 0);

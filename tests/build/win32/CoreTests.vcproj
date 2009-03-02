@@ -25,6 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="mkdir $(OutDir) | copy &quot;..\..\..\bin\amd-spl_d.dll&quot; $(OutDir)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -62,9 +63,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtestd.lib"
+				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtestd.lib amd-spl_d.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;..\..\gtest_lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;..\..\gtest_lib;..\..\..\lib\"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -105,6 +106,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="mkdir $(OutDir) | copy &quot;..\..\..\bin\amd-spl.dll&quot; $(OutDir)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -139,9 +141,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtest.lib"
+				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtest.lib amd-spl.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;&quot;..\..\gtest_lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;..\..\gtest_lib;..\..\..\lib\"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -177,66 +179,6 @@
 	<References>
 	</References>
 	<Files>
-		<Filter
-			Name="core"
-			>
-			<File
-				RelativePath="..\..\..\src\amdspl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Buffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\BufferManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\ConstBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Device.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\DeviceManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Event.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\GlobalBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\LocalBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Program.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\ProgramManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\RemoteBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\CAL\Runtime.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\core\Utils\Utility.cpp"
-				>
-			</File>
-		</Filter>
 		<Filter
 			Name="AccuracyTests"
 			>
@@ -298,10 +240,6 @@
 			</File>
 			<File
 				RelativePath="..\..\unit\core\DeviceManagerFailureTests.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\unit\core\InitCleanupFailureTests.cpp"
 				>
 			</File>
 		</Filter>

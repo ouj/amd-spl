@@ -10,6 +10,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include "cal.h"
+#include "SplDefs.h"
 #include <vector>
 
 namespace amdspl
@@ -31,7 +32,7 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class BufferManager
+            class SPL_EXPORT BufferManager
             {
                 friend class Runtime;
             public:

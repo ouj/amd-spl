@@ -58,6 +58,10 @@ namespace amdspl
                 DeviceManager* deviceMgr = Runtime::getInstance()->getDeviceManager();
                 assert(deviceMgr);
                 CALdevice* deviceHandles = deviceMgr->getDeviceHandles();
+                if (!deviceHandles)
+                {
+                    return false;
+                }
                 CALuint deviceNum = deviceMgr->getDeviceNum();
                 if (!deviceHandles || !deviceNum)
                 {

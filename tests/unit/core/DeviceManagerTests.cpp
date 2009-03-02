@@ -23,7 +23,7 @@ TEST(DeviceManagerTests, RuntimeAddDevice1Test)
     ASSERT_TRUE(_deviceMgr != NULL);
     for (int i = 0; i < _deviceMgr->getSysDeviceNum(); i++)
     {
-        ASSERT_TRUE(_deviceMgr->addDevice(i, NULL));
+        ASSERT_TRUE(_deviceMgr->assignDevice(i, NULL));
     }
     Runtime::destroy();
 }
@@ -36,7 +36,7 @@ TEST(DeviceManagerTests, RuntimeAddDevice2Test)
 
     DeviceManager* _deviceMgr = Runtime::getInstance()->getDeviceManager();
     ASSERT_TRUE(_deviceMgr != NULL);
-    ASSERT_TRUE(_deviceMgr->addDevice(0, deviceHandle));
+    ASSERT_TRUE(_deviceMgr->assignDevice(0, deviceHandle));
     Runtime::destroy();
 
     ASSERT_EQ(CAL_RESULT_OK, calDeviceClose(deviceHandle));
@@ -48,7 +48,7 @@ TEST(DeviceManagerTests, GetDeviceNumTest)
     DeviceManager* _deviceMgr = Runtime::getInstance()->getDeviceManager();
     ASSERT_TRUE(_deviceMgr != NULL);
 
-    ASSERT_TRUE(_deviceMgr->addDevice(0, NULL));
+    ASSERT_TRUE(_deviceMgr->assignDevice(0, NULL));
 
     ASSERT_EQ(1, _deviceMgr->getDeviceNum());
     Runtime::destroy();
@@ -60,7 +60,7 @@ TEST(DeviceManagerTests, GetDeviceByIDTest)
     ASSERT_TRUE(_deviceMgr != NULL);
     for (int i = 0; i < _deviceMgr->getSysDeviceNum(); i++)
     {
-        ASSERT_TRUE(_deviceMgr->addDevice(i, NULL));
+        ASSERT_TRUE(_deviceMgr->assignDevice(i, NULL));
     }
 
     Device *pDevice = _deviceMgr->getDeviceByID(0);
@@ -76,7 +76,7 @@ TEST(DeviceManagerTests, SetGetDefualtDeviceTest)
     ASSERT_TRUE(_deviceMgr != NULL);
     for (int i = 0; i < _deviceMgr->getSysDeviceNum(); i++)
     {
-        ASSERT_TRUE(_deviceMgr->addDevice(i, NULL));
+        ASSERT_TRUE(_deviceMgr->assignDevice(i, NULL));
     }
 
     ASSERT_TRUE(_deviceMgr->setDefaultDevice(0));

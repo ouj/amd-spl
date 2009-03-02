@@ -14,7 +14,6 @@ namespace util
     {
         ZERO,               // Flag to fill with zero's
         RANDOM,             // Fill method of using low order random bits
-        PREVRAND,           // Adds a random number to the previous value in the matrix for the current value
         LINEAR,             // Assigns the numbers linearly
         RLINEAR,            // Assigns the numbers in reverse linear
         ILINEAR,            // Assigns the numbers in inverse linear

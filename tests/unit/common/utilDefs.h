@@ -17,24 +17,7 @@ namespace util
         {
             for(unsigned int j = 0; j < width; ++j)
             {
-                //if (type == util::PREVRAND)
-                //{
-                //    int index = i * width + j;
-                //    if (index)
-                //    {
-                //        value(buffer[index], j, i, width, height, bound, type);
-                //        buffer[index] = buffer[index - 1] + buffer[index];
-                //    }
-                //    else
-                //    {
-                //        value(buffer[i * width + j], j, i, width, height , bound, type);
-                //    }
-                //}
-                //else
-                //{
-                    value(buffer[i * width + j], j, i, width, height, bound, type);
-                //}
-
+                value(buffer[i * width + j], j, i, width, height, bound, type);
             }
         }
     }
@@ -108,9 +91,6 @@ namespace util
         switch(type)
         {
         case RANDOM:
-            var = (T)((rand() / ((float)RAND_MAX + 1)) * bound);
-            break;
-        case PREVRAND:
             var = (T)((rand() / ((float)RAND_MAX + 1)) * bound);
             break;
         case LINEAR:

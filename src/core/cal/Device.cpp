@@ -173,7 +173,6 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             CALcontext Device::getContext()
             {
-                assert(_context);
                 return _context;
             }
             
