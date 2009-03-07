@@ -13,6 +13,9 @@
 //////////////////////////////////////////////////////////////////////////
 #include "cal.h"
 #include "SplDefs.h"
+#include "core\cal\Runtime.h"
+#include "core\cal\DeviceManager.h"
+#include "SplBitonicSort.h"
 
 
 #endif  //_AMDSPL_H
