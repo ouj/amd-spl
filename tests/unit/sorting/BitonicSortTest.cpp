@@ -3,6 +3,7 @@
 #include "BitonicSortTest.h"
 
 using namespace amdspl;
+using namespace amdspl::core::cal;
 
 bool BitonicSortTest::m_Fatal = false;
 unsigned int BitonicSortTest::Length;
@@ -17,30 +18,22 @@ unsigned int BitonicSortTest::Length;
 
 void BitonicSortTest::SetUpTestCase()
 {
+    ASSERT_TRUE(Runtime::getInstance());
+    DeviceManager *devMgr = Runtime::getInstance()->getDeviceManager();
+    ASSERT_TRUE(devMgr);
 
-    CALresult result;
-    result = calInit();
-    if (result != CAL_RESULT_OK)
+    unsigned int sysDevNum = devMgr->getSysDeviceNum();
+
+    for (unsigned int i = 0; i < sysDevNum; i++)
     {
-        SCOPED_TRACE("Failed to initial CAL");
-        m_Fatal = true;
+        ASSERT_TRUE(devMgr->assignDevice(i));
     }
-    //! \brief CALdevice info properties
-    CALdeviceinfo _calDeviceInfo;
 
-    result = calDeviceGetInfo(&_calDeviceInfo, 0);
-    TEST_LOG_CAL_RESULT(result, "Failed to get info on CAL device \n");
+    CALdeviceinfo info = devMgr->getDefaultDevice()->getInfo();
 
-    Length = _calDeviceInfo.maxResource2DWidth * 
-        _calDeviceInfo.maxResource2DHeight;
+    Length = info.maxResource2DWidth * 
+        info.maxResource2DHeight;
 
-    calShutdown();
-
-    DEVICE_LIST_ITEM deviceList[] = 
-    {
-        DEVICE_LIST_ITEM(0, 0)
-    };
-    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::InitializeSPL(deviceList, 1, 0));
 }
 
 bool BitonicSortTest::HasFatalFailure()
@@ -50,5 +43,5 @@ bool BitonicSortTest::HasFatalFailure()
 
 void BitonicSortTest::TearDownTestCase()
 {
-    ASSERT_EQ(SPL_RESULT_OK, AmdSpl::CleanupSPL());
+    Runtime::destroy();
 }
