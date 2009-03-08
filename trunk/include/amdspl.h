@@ -15,6 +15,7 @@
 #include "SplDefs.h"
 #include "core\cal\Runtime.h"
 #include "core\cal\DeviceManager.h"
+#include "core\cal\Device.h"
 #include "SplBitonicSort.h"
 
 

@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="CoreTests"
-	ProjectGUID="{CF1D0A27-48F3-44B6-B5E7-CA27878C0046}"
+	Name="SPLTests"
+	ProjectGUID="{1EF6EBF4-6269-478B-B6DA-CB44EC9B2F3B}"
 	RootNamespace="CoreTests"
 	Keyword="Win32Proj"
 	>
@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\bin"
+			OutputDirectory="..\..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="2"
@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="mkdir $(OutDir) | copy &quot;..\..\..\bin\amd-spl_d.dll&quot; $(OutDir)"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -64,6 +64,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtestd.lib amd-spl_d.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;..\..\gtest_lib;..\..\..\lib\"
 				GenerateDebugInformation="true"
@@ -97,7 +98,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\bin"
+			OutputDirectory="..\..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="2"
@@ -106,7 +107,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="mkdir $(OutDir) | copy &quot;..\..\..\bin\amd-spl.dll&quot; $(OutDir)"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -183,6 +184,10 @@
 			Name="AccuracyTests"
 			>
 			<File
+				RelativePath="..\..\unit\sorting\BitonicSortAccuracy.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\BufferManagerTests.cpp"
 				>
 			</File>
@@ -227,6 +232,10 @@
 			Name="Failure Tests"
 			>
 			<File
+				RelativePath="..\..\unit\sorting\BitonicSortFailues.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\BufferFaliureTests.cpp"
 				>
 			</File>
@@ -247,6 +256,10 @@
 			Name="StressTests"
 			>
 			<File
+				RelativePath="..\..\unit\sorting\BitonicSortStress.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\core\BufferStressTests.cpp"
 				>
 			</File>
@@ -254,6 +267,14 @@
 		<Filter
 			Name="Fixtures"
 			>
+			<File
+				RelativePath="..\..\unit\sorting\BitonicSortTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\sorting\BitonicSortTest.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\unit\core\RuntimeTestFixture.cpp"
 				>
@@ -276,6 +297,18 @@
 			</File>
 			<File
 				RelativePath="..\..\unit\common\utilDefs.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Common"
+			>
+			<File
+				RelativePath="..\..\unit\common\Perf.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\common\Perf.h"
 				>
 			</File>
 		</Filter>
