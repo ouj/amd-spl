@@ -1,5 +1,5 @@
-#ifndef _PROGRAM_DEFS_H_
-#define _PROGRAM_DEFS_H_
+#ifndef AMDSPL_PROGRAM_DEFS_H
+#define AMDSPL_PROGRAM_DEFS_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		ProgramDefs.h
@@ -179,4 +179,4 @@ namespace amdspl
     }
 }
 
-#endif //_PROGRAM_DEFS_H_
+#endif //AMDSPL_PROGRAM_DEFS_H_

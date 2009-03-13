@@ -89,7 +89,7 @@ namespace amdspl
             bool Device::initialize()
             {
                 CALresult result;
-                if (_deviceHandle == NULL)
+                if (_deviceHandle == 0)
                 {
                     _shutDownOnDestroy = true;
                     result = calDeviceOpen(&_deviceHandle, _Id);

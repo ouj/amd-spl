@@ -1,5 +1,5 @@
-#if !defined(_REMOTEBUFFER_H)
-#define _REMOTEBUFFER_H
+#ifndef AMDSPL_REMOTEBUFFER_H
+#define AMDSPL_REMOTEBUFFER_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		RemoteBuffer.h
@@ -40,4 +40,4 @@ namespace amdspl
     }
 }
 
-#endif  //_REMOTEBUFFER_H
+#endif  //AMDSPL_REMOTEBUFFER_H

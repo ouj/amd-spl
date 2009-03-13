@@ -15,7 +15,6 @@
 #include "DeviceManager.h"
 #include "BufferManager.h"
 #include "ProgramManager.h"
-#include "amdspl.h"
 
 namespace amdspl
 {

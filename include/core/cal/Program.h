@@ -1,5 +1,5 @@
-#if !defined(_PROGRAM_H)
-#define _PROGRAM_H
+#ifndef AMDSPL_PROGRAM_H
+#define AMDSPL_PROGRAM_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		Program.h
@@ -122,4 +122,4 @@ namespace amdspl
 
 #include "ProgramDefs.h"
 
-#endif  //_PROGRAM_H
+#endif  //AMDSPL_PROGRAM_H

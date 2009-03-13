@@ -1,5 +1,5 @@
-#if !defined(_RUNTIME_H)
-#define _RUNTIME_H
+#ifndef AMDSPL_RUNTIME_H
+#define AMDSPL_RUNTIME_H
 
 //////////////////////////////////////////////////////////////////////////
 //!
@@ -65,4 +65,4 @@ namespace amdspl
     }
 }
 
-#endif  //_RUNTIME_H
+#endif  //AMDSPL_RUNTIME_H

@@ -1,5 +1,5 @@
-#if !defined(_BUFFERMANAGER_H)
-#define _BUFFERMANAGER_H
+#ifndef AMDSPL_BUFFERMANAGER_H_
+#define AMDSPL_BUFFERMANAGER_H_
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		BufferManager.h
@@ -55,4 +55,4 @@ namespace amdspl
     }
 }
 
-#endif  //_BUFFERMANAGER_H
+#endif  // AMDSPL_BUFFERMANAGER_H_
