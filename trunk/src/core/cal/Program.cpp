@@ -8,7 +8,9 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 
+#include "CalCommonDefs.h"
 #include "RuntimeDefs.h"
+#include "CommonDefs.h"
 #include "Program.h"
 
 namespace amdspl

@@ -9,8 +9,8 @@
 //////////////////////////////////////////////////////////////////////////
 #include "Device.h"
 #include "RuntimeDefs.h"
-#include <cassert>
-#include <stdio.h>
+#include "CalCommonDefs.h"
+#include "CommonDefs.h"
 
 namespace amdspl
 {
