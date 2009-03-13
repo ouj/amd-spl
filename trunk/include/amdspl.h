@@ -16,10 +16,6 @@
 #include "core\cal\Runtime.h"
 #include "core\cal\DeviceManager.h"
 #include "core\cal\Device.h"
-#include "core\cal\Buffer.h"
-#include "core\cal\BufferManager.h"
-#include "core\cal\Program.h"
-#include "core\cal\ProgramManager.h"
 #include "SplBitonicSort.h"
 
 

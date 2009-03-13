@@ -9,6 +9,7 @@
 //!	\brief		Contains header files needed in AMD-SPL compilation.
 //!
 //////////////////////////////////////////////////////////////////////////
+
 #include <assert.h>
 #include <stdio.h>
 #include "core\cal\Runtime.h"
@@ -21,4 +22,7 @@
 #include "core\cal\GlobalBuffer.h"
 #include "core\cal\ConstBuffer.h"
 #include "core\cal\ProgramInfo.h"
+#include "core\cal\Event.h"
+#include "core\cal\CalCommonDefs.h"
+
 #endif //AMDSPL_RUNTIMEEFS_H
