@@ -16,7 +16,6 @@
 #include <utility>
 #include <stdio.h>
 #include "calcl.h"
-#include "CommonDefs.h"
 
 using namespace std;
 
@@ -47,7 +46,7 @@ namespace amdspl
                 //! \brief	Construct the BufferItem object. Set all its members to 0.
                 //!
                 //////////////////////////////////////////////////////////////////////////
-                BufferItem() : buffer(NULL), mem(0) {}
+                BufferItem() : buffer(0), mem(0) {}
                 //! \brief	The pointer to the Buffer object bound to the Program.
                 Buffer* buffer;
                 //! \brief	The CAL memory handle of the buffer.

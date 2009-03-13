@@ -59,37 +59,4 @@ if (!(condition)) \
     return NULL; \
 }
 
-//! \brief	Defines CALresult checking macro.
-#define CHECK_CAL_RESULT(result) \
-    if (result != CAL_RESULT_OK) \
-{ \
-    return false; \
-}
-
-//! \brief	Defines CALresult checking macro, 
-//!         log to standard error stream on error.
-#define CHECK_CAL_RESULT_ERROR(result, msg) \
-    if (result != CAL_RESULT_OK) \
-{ \
-    fprintf(stderr, (msg)); \
-    return false; \
-}
-
-//! \brief	Defines CALresult checking macro, 
-//!         log to standard error stream and return NULL on error.
-#define CHECK_CAL_RESULT_ERROR2(result, msg) \
-    if (result != CAL_RESULT_OK) \
-{ \
-    fprintf(stderr, (msg)); \
-    return NULL; \
-}
-
-//! \brief	Defines CALresult checking macro, 
-//!         log to standard error stream on error, without return value.
-#define LOG_CAL_RESULT_ERROR(result, msg) \
-    if (result != CAL_RESULT_OK) \
-{ \
-    fprintf(stderr, (msg)); \
-}
-
 #endif //_COMMONDEFS_H_

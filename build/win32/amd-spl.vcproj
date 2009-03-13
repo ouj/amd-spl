@@ -193,6 +193,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\include\core\cal\CalCommonDefs.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\include\core\cal\ConstBuffer.h"
 						>
 					</File>
@@ -309,10 +313,6 @@
 					Name="Header Files"
 					>
 					<File
-						RelativePath="..\..\src\core\Utils\CommonDefs.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\core\Utils\Utility.h"
 						>
 					</File>
@@ -376,11 +376,15 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Common"
+			Name="common"
 			>
 			<Filter
 				Name="Header Files"
 				>
+				<File
+					RelativePath="..\..\include\CommonDefs.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\src\Common\Timer.h"
 					>

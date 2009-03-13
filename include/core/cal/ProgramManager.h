@@ -12,7 +12,6 @@
 //////////////////////////////////////////////////////////////////////////
 #include "SplDefs.h"
 #include "Program.h"
-#include "CommonDefs.h"
 #include "Runtime.h"
 #include "DeviceManager.h"
 #include <vector>
@@ -89,7 +88,11 @@ namespace amdspl
                 Program *prog = new Program(device);
                 if (!prog->initialize(progInfo))
                 {
-                    SAFE_DELETE(prog);
+                    if(prog)
+                    {
+                        delete prog;
+                        prog = NULL;
+                    };
                     return NULL;
                 }
                 return prog;

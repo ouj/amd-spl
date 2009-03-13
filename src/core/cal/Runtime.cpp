@@ -10,11 +10,8 @@
 //!	\brief		Contains definition of Runtime class
 //!
 //////////////////////////////////////////////////////////////////////////
-#include "Runtime.h"
 #include "RuntimeDefs.h"
-#include "DeviceManager.h"
-#include "BufferManager.h"
-#include "ProgramManager.h"
+#include "CommonDefs.h"
 
 namespace amdspl
 {

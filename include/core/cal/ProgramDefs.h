@@ -14,6 +14,8 @@
 #endif
 
 #include <assert.h>
+#include "CalCommonDefs.h"
+
 namespace amdspl
 {
     namespace core

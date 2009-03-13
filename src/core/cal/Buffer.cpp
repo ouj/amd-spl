@@ -7,8 +7,8 @@
 //!	\brief		Contains definition of Buffer class.
 //!
 //////////////////////////////////////////////////////////////////////////
-#include "Buffer.h"
 #include "RuntimeDefs.h"
+#include "CalCommonDefs.h"
 #include <stdio.h>
 #include "Utility.h"
 
@@ -414,11 +414,7 @@ namespace amdspl
                 CALresult result = calResMap(&bufferPtr, &pitch,
                     _res, 0);
 
-                if (CAL_RESULT_OK != result)
-                {
-                    LOG_ERROR("Failed to get CPU pointer\n");
-                    return NULL;
-                }
+                CHECK_CAL_RESULT_ERROR2(result, "Failed to get CPU pointer\n");
                 return bufferPtr;
             }
 

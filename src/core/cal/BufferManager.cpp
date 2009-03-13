@@ -9,6 +9,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "RuntimeDefs.h"
+#include "CommonDefs.h"
 namespace amdspl
 {
     namespace core

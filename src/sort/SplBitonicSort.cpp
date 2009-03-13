@@ -9,8 +9,6 @@
 //////////////////////////////////////////////////////////////////////////
 #include "SplBitonicSort.h"
 #include "BitonicSortImpl.h"
-#include "cal.h"
-#include "calcl.h"
 #include <cassert>
 
 namespace amdspl
