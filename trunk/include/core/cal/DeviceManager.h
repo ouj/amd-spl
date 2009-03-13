@@ -1,5 +1,5 @@
-#if !defined(_DEVICEMANAGER_H)
-#define _DEVICEMANAGER_H
+#ifndef AMDSPL_DEVICEMANAGER_H
+#define AMDSPL_DEVICEMANAGER_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		DeviceManager.h
@@ -66,4 +66,4 @@ namespace amdspl
     }
 }
 
-#endif  //_DEVICEMANAGER_H
+#endif  //AMDSPL_DEVICEMANAGER_H

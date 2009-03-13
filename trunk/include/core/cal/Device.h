@@ -1,5 +1,5 @@
-#ifndef _DEVICE_H
-#define _DEVICE_H
+#ifndef AMDSPL_DEVICE_H
+#define AMDSPL_DEVICE_H
 
 //////////////////////////////////////////////////////////////////////////
 //!
@@ -62,4 +62,4 @@ namespace amdspl
     }
 }
 
-#endif  //_DEVICE_H
+#endif  //AMDSPL_DEVICE_H

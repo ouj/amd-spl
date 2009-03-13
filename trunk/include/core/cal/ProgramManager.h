@@ -1,5 +1,5 @@
-#if !defined(_PROGRAMMANAGER_H)
-#define _PROGRAMMANAGER_H
+#ifndef AMDSPL_PROGRAMMANAGER_H
+#define AMDSPL_PROGRAMMANAGER_H
 
 //////////////////////////////////////////////////////////////////////////
 //!
@@ -13,6 +13,8 @@
 #include "SplDefs.h"
 #include "Program.h"
 #include "CommonDefs.h"
+#include "Runtime.h"
+#include "DeviceManager.h"
 #include <vector>
 
 namespace amdspl
@@ -95,4 +97,4 @@ namespace amdspl
         }
     }
 }
-#endif  //_PROGRAMMANAGER_H
+#endif  //AMDSPL_PROGRAMMANAGER_H

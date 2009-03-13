@@ -1,5 +1,5 @@
-#if !defined(_EVENT_H)
-#define _EVENT_H
+#ifndef AMDSPL_EVENT_H
+#define AMDSPL_EVENT_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		Event.h
@@ -48,4 +48,4 @@ namespace amdspl
     }
 }
 
-#endif  //_EVENT_H
+#endif  //AMDSPL_EVENT_H

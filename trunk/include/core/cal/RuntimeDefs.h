@@ -1,5 +1,5 @@
-#ifndef _AMDSPL_RUNTIMEEFS_H_
-#define _AMDSPL_RUNTIMEEFS_H_
+#ifndef AMDSPL_RUNTIMEEFS_H
+#define AMDSPL_RUNTIMEEFS_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		RuntimeDefs.h
@@ -23,4 +23,4 @@
 #include "ConstBuffer.h"
 #include "ProgramInfo.h"
 
-#endif //_AMDSPL_RUNTIMEEFS_H_
+#endif //AMDSPL_RUNTIMEEFS_H

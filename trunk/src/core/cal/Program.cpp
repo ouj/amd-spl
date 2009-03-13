@@ -202,12 +202,12 @@ namespace amdspl
             bool Program::unbindInput(unsigned int idx)
             {
                 assert(idx <= _inputBuffers.size());
-                if (_inputBuffers[idx].buffer != NULL)
+                if (_inputBuffers[idx].buffer != 0)
                 {
                     CALname name = getInputName(idx);
                     CALcontext ctx = _device->getContext();
 
-                    CALresult result = calCtxSetMem(ctx, name, NULL);
+                    CALresult result = calCtxSetMem(ctx, name, 0);
                     CHECK_CAL_RESULT_ERROR(result, "Failed to unbind input memory\n");
 
                     // release mem handle
@@ -230,12 +230,12 @@ namespace amdspl
             bool Program::unbindOutput(unsigned int idx)
             {
                 assert(idx <= _outputBuffers.size());
-                if (_outputBuffers[idx].buffer != NULL)
+                if (_outputBuffers[idx].buffer != 0)
                 {
                     CALname name = getOutputName(idx);
                     CALcontext ctx = _device->getContext();
 
-                    CALresult result = calCtxSetMem(ctx, name, NULL);
+                    CALresult result = calCtxSetMem(ctx, name, 0);
                     CHECK_CAL_RESULT_ERROR(result, "Failed to unbind output memory\n");
 
                     // release mem handle
@@ -257,12 +257,12 @@ namespace amdspl
             bool Program::unbindConstant(unsigned int idx)
             {
                 assert(idx <= _constBuffers.size());
-                if (_constBuffers[idx].buffer != NULL)
+                if (_constBuffers[idx].buffer != 0)
                 {
                     CALname name = getConstName(idx);
                     CALcontext ctx = _device->getContext();
 
-                    CALresult result = calCtxSetMem(ctx, name, NULL);
+                    CALresult result = calCtxSetMem(ctx, name, 0);
                     CHECK_CAL_RESULT_ERROR(result, "Failed to unbind constant memory\n");
 
                     // release mem handle
@@ -282,12 +282,12 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             bool Program::unbindGlobal()
             {
-                if (_globalBuffer.buffer != NULL)
+                if (_globalBuffer.buffer != 0)
                 {
                     CALname name = getGlobalName();
                     CALcontext ctx = _device->getContext();
 
-                    CALresult result = calCtxSetMem(ctx, name, NULL);
+                    CALresult result = calCtxSetMem(ctx, name, 0);
                     CHECK_CAL_RESULT_ERROR(result, "Failed to unbind constant memory\n");
 
                     // release mem handle
@@ -428,7 +428,7 @@ namespace amdspl
                 if (result == CAL_RESULT_ERROR)
                 {
                     fprintf(stderr, "Event error!\n");
-                    return NULL;
+                    return 0;
                 }
 
                 // Get an event from the event pool

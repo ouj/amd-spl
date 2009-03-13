@@ -28,18 +28,22 @@ namespace amdspl
 
         template<>
         const int extreme_value<int>::MinValue = -INT_MAX;
+        template<>
         const int extreme_value<int>::MaxValue = INT_MAX;
 
         template<>
         const unsigned int extreme_value<unsigned int>::MinValue = 0;
+        template<>
         const unsigned int extreme_value<unsigned int>::MaxValue = UINT_MAX;
 
         template<>
         const float extreme_value<float>::MinValue = -FLT_MAX;
+        template<>
         const float extreme_value<float>::MaxValue = FLT_MAX;
 
         template<>
         const double extreme_value<double>::MinValue = -DBL_MAX;
+        template<>
         const double extreme_value<double>::MaxValue = DBL_MAX;
 
         //////////////////////////////////////////////////////////////////////////
@@ -103,24 +107,29 @@ namespace amdspl
             static const BitonicSortProgramInfo des;
         };
 
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<float>::asc = 
             BitonicSortProgramInfo("Float Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
             .replaceTkn("{SORT_OPERATOR}", "lt"); //less than.
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<float>::des = 
             BitonicSortProgramInfo("Float Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
             .replaceTkn("{SORT_OPERATOR}", "ge"); //greater or equal.
 
-
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<int>::asc = 
             BitonicSortProgramInfo("Integer Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
             .replaceTkn("{SORT_OPERATOR}", "ilt"); //less than.
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<int>::des = 
             BitonicSortProgramInfo("Integer Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
             .replaceTkn("{SORT_OPERATOR}", "ige"); //greater or equal.
-
+        
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<unsigned int>::asc = 
             BitonicSortProgramInfo("Unsigned Integer Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
             .replaceTkn("{SORT_OPERATOR}", "ult"); //less than.
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<unsigned int>::des = 
             BitonicSortProgramInfo("Unsigned Integer Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
             .replaceTkn("{SORT_OPERATOR}", "uge"); //greater or equal.
@@ -163,10 +172,12 @@ namespace amdspl
             "cmov_logical o0.xy__, r10, r8, r9\n"
             "endmain\n"
             "end\n";
-
+            
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<double>::asc = 
             BitonicSortProgramInfo("Double Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_double_)
             .replaceTkn("{SORT_OPERATOR}", "dlt"); //less than.
+        template<>
         const BitonicSortProgramInfo bitonicSortILGroup<double>::des = 
             BitonicSortProgramInfo("Double Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_double_)
             .replaceTkn("{SORT_OPERATOR}", "dge"); //greater or equal.

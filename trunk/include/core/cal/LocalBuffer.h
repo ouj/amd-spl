@@ -1,5 +1,5 @@
-#if !defined(_LOCALBUFFER_H)
-#define _LOCALBUFFER_H
+#ifndef AMDSPL_LOCALBUFFER_H
+#define AMDSPL_LOCALBUFFER_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		LocalBuffer.h

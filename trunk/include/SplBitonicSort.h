@@ -1,5 +1,5 @@
-#ifndef _SPL_SORT_H_
-#define _SPL_SORT_H_
+#ifndef AMDSPL_SORT_H_
+#define AMDSPL_SORT_H_
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -48,4 +48,4 @@ namespace amdspl
     }
 }
 
-#endif
+#endif //AMDSPL_SORT_H_

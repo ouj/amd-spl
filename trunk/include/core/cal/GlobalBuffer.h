@@ -1,5 +1,5 @@
-#if !defined(_GLOBALBUFFER_H)
-#define _GLOBALBUFFER_H
+#ifndef AMDSPL_GLOBALBUFFER_H
+#define AMDSPL_GLOBALBUFFER_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		GlobalBuffer.h
@@ -40,4 +40,4 @@ namespace amdspl
     }
 }
 
-#endif  //_GLOBALBUFFER_H
+#endif  //AMDSPL_GLOBALBUFFER_H

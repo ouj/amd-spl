@@ -1,5 +1,5 @@
-#if !defined(_CONSTBUFFER_H)
-#define _CONSTBUFFER_H
+#ifndef AMDSPL_CONSTBUFFER_H
+#define AMDSPL_CONSTBUFFER_H
 
 //////////////////////////////////////////////////////////////////////////
 //!
@@ -90,4 +90,4 @@ namespace amdspl
     }
 }
 
-#endif  //_CONSTBUFFER_H
+#endif  //AMDSPL_CONSTBUFFER_H

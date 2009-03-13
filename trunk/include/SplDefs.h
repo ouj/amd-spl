@@ -1,5 +1,5 @@
-#ifndef _AMDSPL_DEFS_H_
-#define _AMDSPL_DEFS_H_
+#ifndef AMDSPL_DEFS_H_
+#define AMDSPL_DEFS_H_
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		SplDefs.h
@@ -37,4 +37,4 @@ enum SPL_RESULT
 #define SPL_EXPORT
 #endif
 
-#endif //_AMDSPL_DEFS_H_
+#endif //AMDSPL_DEFS_H_

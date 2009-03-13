@@ -1,5 +1,5 @@
-#if !defined(_PROGRAMINFO_H)
-#define _PROGRAMINFO_H
+#ifndef AMDSPL_PROGRAMINFO_H
+#define AMDSPL_PROGRAMINFO_H
 //////////////////////////////////////////////////////////////////////////
 //!
 //!	\file 		ProgramInfo.h
