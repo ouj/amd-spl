@@ -241,11 +241,11 @@ namespace amdspl
                 unsigned int height = 
                     static_cast<unsigned int>(ceil(((double)bufferSize) / width));
 
-                Buffer* buffer1 = bufMgr->createLocalBuffer(device, utils::type_descriptor<T>::Format,
+                Buffer* buffer1 = bufMgr->createLocalBuffer(device, utils::getElementFormat<T>(),
                     width, height);
                 if (!buffer1)
                     return SPL_RESULT_BUFFER_ERROR;
-                Buffer* buffer2 = bufMgr->createLocalBuffer(device, utils::type_descriptor<T>::Format,
+                Buffer* buffer2 = bufMgr->createLocalBuffer(device, utils::getElementFormat<T>(),
                     width, height);
                 if (!buffer2)
                     return SPL_RESULT_BUFFER_ERROR;
