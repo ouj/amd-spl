@@ -5,6 +5,8 @@ MAKE=gmake
 RM=rm
 MKDIR=mkdir
 
+OUTDIR=../../bin
+
 # -----Begin user-editable area-----
 
 # -----End user-editable area-----
@@ -18,50 +20,54 @@ endif
 # Configuration: Debug
 #
 ifeq "$(CFG)" "Debug"
-OUTDIR=Debug
-OUTFILE=$(OUTDIR)/amd-spl.so
+INTERDIR=Debug
+OUTFILE=$(OUTDIR)/amd-spl_d.so
 CFG_INC=-I../../include -I../../include/core/cal \
-	-I/usr/local/amdcal/include -I../../src/core/utils 
-CFG_LIB=
+	-I../../src/core/utils -I/usr/local/atical/include 
+CFG_LIB=/usr/lib64/libamdcalrt.so /usr/lib64/libamdcalcl.so 
 CFG_OBJ=
-COMMON_OBJ=$(OUTDIR)/Timer.o $(OUTDIR)/Buffer.o \
-	$(OUTDIR)/BufferManager.o $(OUTDIR)/ConstBuffer.o $(OUTDIR)/Device.o \
-	$(OUTDIR)/DeviceManager.o $(OUTDIR)/Event.o $(OUTDIR)/GlobalBuffer.o \
-	$(OUTDIR)/LocalBuffer.o $(OUTDIR)/Program.o \
-	$(OUTDIR)/ProgramManager.o $(OUTDIR)/RemoteBuffer.o \
-	$(OUTDIR)/Runtime.o $(OUTDIR)/Utility.o $(OUTDIR)/SplBitonicSort.o 
+COMMON_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
+	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/Device.o \
+	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Event.o $(INTERDIR)/GlobalBuffer.o \
+	$(INTERDIR)/LocalBuffer.o $(INTERDIR)/Program.o \
+	$(INTERDIR)/ProgramManager.o $(INTERDIR)/RemoteBuffer.o \
+	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o 
 OBJ=$(COMMON_OBJ) $(CFG_OBJ)
-ALL_OBJ=$(OUTDIR)/Timer.o $(OUTDIR)/Buffer.o \
-	$(OUTDIR)/BufferManager.o $(OUTDIR)/ConstBuffer.o $(OUTDIR)/Device.o \
-	$(OUTDIR)/DeviceManager.o $(OUTDIR)/Event.o $(OUTDIR)/GlobalBuffer.o \
-	$(OUTDIR)/LocalBuffer.o $(OUTDIR)/Program.o \
-	$(OUTDIR)/ProgramManager.o $(OUTDIR)/RemoteBuffer.o \
-	$(OUTDIR)/Runtime.o $(OUTDIR)/Utility.o $(OUTDIR)/SplBitonicSort.o 
+ALL_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
+	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/Device.o \
+	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Event.o $(INTERDIR)/GlobalBuffer.o \
+	$(INTERDIR)/LocalBuffer.o $(INTERDIR)/Program.o \
+	$(INTERDIR)/ProgramManager.o $(INTERDIR)/RemoteBuffer.o \
+	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o \
+	/usr/lib64/libamdcalrt.so /usr/lib64/libamdcalcl.so 
 
-COMPILE=g++ -c    -g -o "$(OUTDIR)/$(*F).o" $(CFG_INC) "$<"
-LINK=g++  -g -o "$(OUTFILE)" $(OBJ) $(CFG_LIB) -shared -fPIC
+COMPILE=g++ -c -fPIC -g -o "$(INTERDIR)/$(*F).o" $(CFG_INC) "$<"
+LINK=g++  -shared -fPIC -g -o "$(OUTFILE)" $(OBJ) $(CFG_LIB)
 
 # Pattern rules
-$(OUTDIR)/%.o : ../../src/core/cal/%.cpp
+$(INTERDIR)/%.o : ../../src/core/cal/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../src/sort/%.cpp
+$(INTERDIR)/%.o : ../../src/sort/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../src/common/%.cpp
+$(INTERDIR)/%.o : ../../src/common/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../src/core/utils/%.cpp
+$(INTERDIR)/%.o : ../../src/core/utils/%.cpp
 	$(COMPILE)
 
 # Build rules
 all: $(OUTFILE)
 
-$(OUTFILE): $(OUTDIR)  $(OBJ)
+$(OUTFILE): $(OUTDIR) $(INTERDIR)  $(OBJ)
 	$(LINK)
+	
+$(OUTDIR): 
+	$(MKDIR) -p $(OUTDIR)
 
-$(OUTDIR):
-	$(MKDIR) -p "$(OUTDIR)"
+$(INTERDIR):
+	$(MKDIR) -p "$(INTERDIR)"
 
 # Rebuild this project
 rebuild: cleanall all
@@ -79,50 +85,54 @@ endif
 # Configuration: Release
 #
 ifeq "$(CFG)" "Release"
-OUTDIR=Release
+INTERDIR=Release
 OUTFILE=$(OUTDIR)/amd-spl.so
 CFG_INC=-I../../include -I../../include/core/cal \
-	-I/usr/local/amdcal/include -I../../src/core/utils 
-CFG_LIB=
+	-I../../src/core/utils -I/usr/local/atical/include 
+CFG_LIB=/usr/lib64/libamdcalrt.so /usr/lib64/libamdcalcl.so 
 CFG_OBJ=
-COMMON_OBJ=$(OUTDIR)/Timer.o $(OUTDIR)/Buffer.o \
-	$(OUTDIR)/BufferManager.o $(OUTDIR)/ConstBuffer.o $(OUTDIR)/Device.o \
-	$(OUTDIR)/DeviceManager.o $(OUTDIR)/Event.o $(OUTDIR)/GlobalBuffer.o \
-	$(OUTDIR)/LocalBuffer.o $(OUTDIR)/Program.o \
-	$(OUTDIR)/ProgramManager.o $(OUTDIR)/RemoteBuffer.o \
-	$(OUTDIR)/Runtime.o $(OUTDIR)/Utility.o $(OUTDIR)/SplBitonicSort.o 
+COMMON_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
+	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/Device.o \
+	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Event.o $(INTERDIR)/GlobalBuffer.o \
+	$(INTERDIR)/LocalBuffer.o $(INTERDIR)/Program.o \
+	$(INTERDIR)/ProgramManager.o $(INTERDIR)/RemoteBuffer.o \
+	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o 
 OBJ=$(COMMON_OBJ) $(CFG_OBJ)
-ALL_OBJ=$(OUTDIR)/Timer.o $(OUTDIR)/Buffer.o \
-	$(OUTDIR)/BufferManager.o $(OUTDIR)/ConstBuffer.o $(OUTDIR)/Device.o \
-	$(OUTDIR)/DeviceManager.o $(OUTDIR)/Event.o $(OUTDIR)/GlobalBuffer.o \
-	$(OUTDIR)/LocalBuffer.o $(OUTDIR)/Program.o \
-	$(OUTDIR)/ProgramManager.o $(OUTDIR)/RemoteBuffer.o \
-	$(OUTDIR)/Runtime.o $(OUTDIR)/Utility.o $(OUTDIR)/SplBitonicSort.o 
+ALL_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
+	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/Device.o \
+	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Event.o $(INTERDIR)/GlobalBuffer.o \
+	$(INTERDIR)/LocalBuffer.o $(INTERDIR)/Program.o \
+	$(INTERDIR)/ProgramManager.o $(INTERDIR)/RemoteBuffer.o \
+	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o \
+	/usr/lib64/libamdcalrt.so /usr/lib64/libamdcalcl.so 
 
-COMPILE=g++ -c   -o "$(OUTDIR)/$(*F).o" $(CFG_INC) "$<"
+COMPILE=g++ -c -fPIC  -o "$(INTERDIR)/$(*F).o" $(CFG_INC) "$<"
 LINK=g++  -o "$(OUTFILE)" $(OBJ) $(CFG_LIB) -shared -fPIC
 
 # Pattern rules
-$(OUTDIR)/%.o : ../../src/core/cal/%.cpp
+$(INTERDIR)/%.o : ../../src/core/cal/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../src/sort/%.cpp
+$(INTERDIR)/%.o : ../../src/sort/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../src/common/%.cpp
+$(INTERDIR)/%.o : ../../src/common/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../src/core/utils/%.cpp
+$(INTERDIR)/%.o : ../../src/core/utils/%.cpp
 	$(COMPILE)
 
 # Build rules
 all: $(OUTFILE)
 
-$(OUTFILE): $(OUTDIR)  $(OBJ)
+$(OUTFILE): $(OUTDIR) $(INTERDIR)  $(OBJ)
 	$(LINK)
+	
+$(OUTDIR): 
+	$(MKDIR) -p $(OUTDIR)
 
-$(OUTDIR):
-	$(MKDIR) -p "$(OUTDIR)"
+$(INTERDIR):
+	$(MKDIR) -p "$(INTERDIR)"
 
 # Rebuild this project
 rebuild: cleanall all

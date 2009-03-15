@@ -12,17 +12,17 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include "core\cal\Runtime.h"
-#include "core\cal\Device.h"
-#include "core\cal\DeviceManager.h"
-#include "core\cal\BufferManager.h"
-#include "core\cal\ProgramManager.h"
-#include "core\cal\LocalBuffer.h"
-#include "core\cal\RemoteBuffer.h"
-#include "core\cal\GlobalBuffer.h"
-#include "core\cal\ConstBuffer.h"
-#include "core\cal\ProgramInfo.h"
-#include "core\cal\Event.h"
-#include "core\cal\CalCommonDefs.h"
+#include "Runtime.h"
+#include "Device.h"
+#include "DeviceManager.h"
+#include "BufferManager.h"
+#include "ProgramManager.h"
+#include "LocalBuffer.h"
+#include "RemoteBuffer.h"
+#include "GlobalBuffer.h"
+#include "ConstBuffer.h"
+#include "ProgramInfo.h"
+#include "Event.h"
+#include "CalCommonDefs.h"
 
 #endif //AMDSPL_RUNTIMEEFS_H
