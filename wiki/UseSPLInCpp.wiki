@@ -1,9 +1,0 @@
-#summary Use the AMD-SPL in C++
-
-= Setup AMD-SPL in Visual Studio =
-
-== Visual Studio 2005 ==
-
-=== Include file path ===
-
-=== Library file path ===
