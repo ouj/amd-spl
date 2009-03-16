@@ -1,0 +1,23 @@
+#summary How to use SPL runtime to do GPGPU programming
+
+= Introduction =
+This document is for people who want to participate in the development of SPL or want to use SPL runtime to do their own GPGPU computing.
+
+= What is SPL runtime =
+== The Core of AMD-SPL ==
+SPL runtime is the core of AMD-SPL. It is based on CAL. AMD CAL is a low-level GPGPU programming architecture. It communicates directly to the GPU hardware. CAL has a C language interface. It is difficult to use and program. SPL runtime encapsulates AMD CAL to provide a friendly programming interface to GPGPU developer.
+The most important part of GPGPU programming is resource management. In a GPGPU program, a programmer can have more than one GPU. Each GPU has certain amount of computing power and memory. Those are the computing resource and memory resource. These resources are expressed as handles in CAL program. Programmers have to build their own data structures to maintain those handles. In SPL runtime, a set of resource management class, such as DeviceManager, BufferManager and ProgramManager is provided to help the developers to do the job.
+Most GPGPU programs have similar work flows, that is:
+  # Initialization
+  # Load kernel
+  # Allocate buffers
+  # Data transfer(CPU -> GPU)
+  # Execute kernel
+  # Data transfer(GPU -> CPU)
+  # Clean up & Destroy
+SPL runtime provide a basic work flow control of GPGPU computing. SPL runtime will also provide some optimization in some steps of the work flow.
+
+== The Goal of SPL runtime ==
+  * Overcome some limitations of Brook+
+  * Provide friendly programming interface for CAL
+  * Support the development of AMD-SPL
