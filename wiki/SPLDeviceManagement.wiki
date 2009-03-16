@@ -1,8 +1,0 @@
-#summary the device management in SPL
-
-= Introduction =
-
-Since we may provide multi-GPU based algorithm in AMD-SPL, we have to provide multi-device management in our runtime. The DeviceManager class creates and manages a set of device in the system. 
-
-= UML class diagram =
-[http://i671.photobucket.com/albums/vv74/ojavax/AMD-SPL/DeviceManagement.jpg]
