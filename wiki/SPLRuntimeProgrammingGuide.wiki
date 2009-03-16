@@ -39,33 +39,32 @@ SPL runtime provide a basic work flow control of GPGPU computing. SPL runtime wi
 == Setup the Project ==
 === Windows ===
 ==== Add Additional Include Directories ====
-  * CAL: “$(CALROOT)\include\”
-  * SPL:  “$(SPLROOT)\include\”
-  * Runtime: “$(SPLROOT)\include\core\cal”
-_Assuming $(SPLROOT) is the root folder of SPL_
-==== Add Additional Library Directories ====
-CAL: 
-|| "$(CALROOT)\lib\lh32\" || Vista 32bit ||
-|| "$(CALROOT)\lib\lh64\" || Vista 64bit ||
-|| "$(CALROOT)\lib\xp32\" || XP 32bit ||
-|| "$(CALROOT)\lib\xp64\" || XP 64bit ||
-SPL:
-|| "$(SPLROOT)\lib" ||
-_Assuming $(SPLROOT) is the root folder of SPL_
+
+_(Assuming $(SPLROOT) is the root folder of SPL)_
+|| CAL || “$(CALROOT)\include\” ||
+|| SPL || “$(SPLROOT)\include\” ||
+|| Runtime || “$(SPLROOT)\include\core\cal” ||
+
 ==== Add Additional Library Dependencies ====
 CAL: 
-|| aticalrt.lib || aticalcl.lib ||
+|| aticalrt.lib || 
+|| aticalcl.lib ||
+
 SPL:
 || amd-spl_d.lib|| Debug version ||
 || amd-spl.lib || Release version ||
+
 === Linux ===
 (...)
 
 == Header and Namespaces ==
+
 Include proper header files
 || #include “cal.h” || CAL header ||
 || #include “amdspl.h” || SPL header ||
 || #include “RuntimeDefs.h” || Runtime header ||
+
 Using namespaces
 || using namespace amdspl; ||
 || using namespace amdspl::core::cal; ||
+
