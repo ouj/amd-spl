@@ -1,7 +1,6 @@
 echo off
 
 set CLEANING=NO
-for %%i in (DOCS, Docs, docs) do if "%1" == "%%i" goto BUILDDOC
 
 for %%i in (Dbg, DBG, dbg) do if "%1" == "%%i" set CFG=DEBUG
 for %%i in (REL, rel, Rel) do if "%1" == "%%i" set CFG=RELEASE
@@ -33,10 +32,6 @@ call vcbuild /nologo %BLDORCLN% /errfile:%BUILDERR% /logfile:%BUILDERR% /useenv 
 
 if exist %BUILDERR% type %BUILDERR% > nul
 
-goto END
-
-:BUILDDOC
-doxygen %CONF%\doxygen-conf
 goto END
 
 :BADENV
