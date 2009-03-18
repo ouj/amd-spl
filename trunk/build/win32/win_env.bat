@@ -1,12 +1,22 @@
 @echo off
 
+if not "%OS%" == "Windows_NT" goto ErrSys
+
+rem detect system type
+
+
+rem detect system bit
+IF DEFINED "ProgramFiles(x86)" (set SYSTEM_BIT=64) ELSE (set SYSTEM_BIT=32)
+echo This is a %SYSTEM_BIT% bit system.
+
 rem set the project root path, choose the right path
-cd /d ..
+cd ..
+cd ..
 subst u: /d
 subst u: .
 
 rem set the compiler path, assuming the vs2005 is install in the default path of c:
-cd /d C:\Program Files\Microsoft Visual Studio 8
+IF %SYSTEM_BIT%==32 (cd /d "%ProgramFiles%\Microsoft Visual Studio 8") ELSE (cd /d %ProgramFiles(x86)%\Microsoft Visual Studio 8)
 subst x: /d
 subst x: .
 
@@ -29,8 +39,11 @@ set SRC=u:\src
 set INC=u:\include
 
 ::Input
-set CINC=%CALROOT%\include
-set CLIB=%CALROOT%\lib\lh32
+set CAL_INC=%CALROOT%include
+if exist "%CALROOT%lib\lh32" set CAL_LIB=%CALROOT%lib\lh32
+if exist "%CALROOT%lib\xp32" set CAL_LIB=%CALROOT%lib\xp32
+if exist "%CALROOT%lib\lh64" set CAL_LIB=%CALROOT%lib\lh64
+if exist "%CALROOT%lib\xp64" set CAL_LIB=%CALROOT%lib\xp64
 
 ::Output
 set SPLLIB=u:\lib\win32
@@ -46,6 +59,13 @@ set PATH=%PATH%;%TOOLS%;%SPLBIN%;%BLD%;%CONF%;%ANT_HOME%\bin;%ANT_HOME%\lib;
 set APP=amd-spl
 set CFG=debug
 
-
 cd /d %BLD%
+call amd-spl.sln
 start cmd
+goto EndOfBat
+
+:ErrSys
+echo "This script is only for Windows NT system."
+goto EndOfBat
+
+:EndOfBat
