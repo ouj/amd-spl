@@ -37,7 +37,9 @@ namespace amdspl
             public:
                 ~ConstBuffer();
                 template<unsigned int I, typename T>
-                bool setConstant(T* pVal);
+                inline bool setConstant(T* pVal);
+                template<typename T>
+                inline bool setConstant(unsigned int idx, T *pVal);
                 bool sync();
             protected:
                 ConstBuffer();
@@ -46,7 +48,7 @@ namespace amdspl
                 //! \brief	The maximum size of constant buffer.
                 enum
                 {
-                    MAX_CONST_NUM = 64
+                    MAX_CONST_NUM = 0x1000
                 };
                 //! \brief	The system memory to store the constant value
                 //!         before synchronize them to the constant buffer.
@@ -77,6 +79,17 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             template<unsigned int I, typename T>
             bool ConstBuffer::setConstant(T* pVal)
+            {
+                if (sizeof(T) > sizeof(float4))
+                {
+                    return false;
+                }
+                T* ptr = (T*)&_buffer[I];
+                *ptr = *pVal;
+                return true;
+            }
+            template<typename T>
+            inline bool ConstBuffer::setConstant(unsigned int I, T *pVal)
             {
                 if (sizeof(T) > sizeof(float4))
                 {
