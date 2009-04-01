@@ -1,7 +1,7 @@
 #ifndef _BITONIC_SORT_TEST_H_
 #define _BITONIC_SORT_TEST_H_
 
-#include "gtest\gtest.h"
+#include "gtest/gtest.h"
 #include "SplBitonicSort.h"
 
 using namespace std;

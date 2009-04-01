@@ -6,7 +6,7 @@ using namespace amdspl::core::cal;
 TEST(DeviceTests, DeviceInit1Test)
 {
     calInit();
-    Device *pDevice = new Device(0, NULL);
+    Device *pDevice = new Device(0, 0);
     ASSERT_TRUE(pDevice->initialize());
     delete pDevice;
     calShutdown();
@@ -77,7 +77,7 @@ TEST(DeviceTests, DeviceGetContextTest)
     Device *pDevice = new Device(0);
     ASSERT_TRUE(pDevice->initialize());
 
-    ASSERT_TRUE(pDevice->getContext() != NULL);
+    ASSERT_TRUE(pDevice->getContext() != 0);
 
     delete pDevice;
     calShutdown();
@@ -86,10 +86,10 @@ TEST(DeviceTests, DeviceGetContextTest)
 TEST(DeviceTests, DeviceGetHandle1Test)
 {
     calInit();
-    Device *pDevice = new Device(0, NULL);
+    Device *pDevice = new Device(0, 0);
     ASSERT_TRUE(pDevice->initialize());
 
-    ASSERT_TRUE(pDevice->getHandle() != NULL);
+    ASSERT_TRUE(pDevice->getHandle() != 0);
 
     delete pDevice;
     calShutdown();
