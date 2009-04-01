@@ -6,7 +6,7 @@ using namespace amdspl::core::cal;
 TEST(DeviceFailureTests, DeviceInitFailure1Test)
 {
     calInit();
-    Device *pDevice = new Device(-1, NULL);
+    Device *pDevice = new Device(-1, 0);
     ASSERT_FALSE(pDevice->initialize());
     delete pDevice;
     calShutdown();
