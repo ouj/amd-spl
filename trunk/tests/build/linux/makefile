@@ -9,145 +9,68 @@ MKDIR=mkdir
 
 # -----End user-editable area-----
 
-# If no configuration is specified, "Debug" will be used
-ifndef "CFG"
-CFG=Debug
-endif
+OUTDIR=../../../bin
 
-#
-# Configuration: Debug
-#
-ifeq "$(CFG)" "Debug"
-OUTDIR=Debug
+INTERDIR=InterDir
 OUTFILE=$(OUTDIR)/SPLUniTests
 CFG_INC=-I../../../include -I../../gtest_inc -I../../unit/common \
 	-I/usr/local/atical/include -I../../../include/core/cal 
-CFG_LIB=../../../bin/libamd-spl_d.so -lgtest 
+CFG_LIB=-lamd-spl -lgtest 
 CFG_OBJ=
-COMMON_OBJ=$(OUTDIR)/BitonicSortAccuracy.o \
-	$(OUTDIR)/BitonicSortFailues.o $(OUTDIR)/BitonicSortStress.o \
-	$(OUTDIR)/BitonicSortTest.o $(OUTDIR)/BufferFaliureTests.o \
-	$(OUTDIR)/BufferManagerFailureTests.o $(OUTDIR)/BufferManagerTests.o \
-	$(OUTDIR)/BufferStressTests.o $(OUTDIR)/DeviceFailureTests.o \
-	$(OUTDIR)/DeviceManagerFailureTests.o $(OUTDIR)/DeviceManagerTests.o \
-	$(OUTDIR)/DeviceTests.o $(OUTDIR)/GlobalBufferTests.o \
-	$(OUTDIR)/InitCleanupTests.o $(OUTDIR)/LocalBufferTests.o \
-	$(OUTDIR)/Perf.o $(OUTDIR)/ProgramManagerTests.o \
-	$(OUTDIR)/ProgramTests.o $(OUTDIR)/RemoteBufferTests.o \
-	$(OUTDIR)/RuntimeTestFixture.o $(OUTDIR)/RuntimeTests.o \
-	$(OUTDIR)/TestMain.o $(OUTDIR)/util.o 
+COMMON_OBJ=$(INTERDIR)/BitonicSortAccuracy.o \
+	$(INTERDIR)/BitonicSortFailues.o $(INTERDIR)/BitonicSortStress.o \
+	$(INTERDIR)/BitonicSortTest.o $(INTERDIR)/BufferFaliureTests.o \
+	$(INTERDIR)/BufferManagerFailureTests.o $(INTERDIR)/BufferManagerTests.o \
+	$(INTERDIR)/BufferStressTests.o $(INTERDIR)/DeviceFailureTests.o \
+	$(INTERDIR)/DeviceManagerFailureTests.o $(INTERDIR)/DeviceManagerTests.o \
+	$(INTERDIR)/DeviceTests.o $(INTERDIR)/GlobalBufferTests.o \
+	$(INTERDIR)/InitCleanupTests.o $(INTERDIR)/LocalBufferTests.o \
+	$(INTERDIR)/Perf.o $(INTERDIR)/ProgramManagerTests.o \
+	$(INTERDIR)/ProgramTests.o $(INTERDIR)/RemoteBufferTests.o \
+	$(INTERDIR)/RuntimeTestFixture.o $(INTERDIR)/RuntimeTests.o \
+	$(INTERDIR)/TestMain.o $(INTERDIR)/util.o 
 OBJ=$(COMMON_OBJ) $(CFG_OBJ)
-ALL_OBJ=$(OUTDIR)/BitonicSortAccuracy.o \
-	$(OUTDIR)/BitonicSortFailues.o $(OUTDIR)/BitonicSortStress.o \
-	$(OUTDIR)/BitonicSortTest.o $(OUTDIR)/BufferFaliureTests.o \
-	$(OUTDIR)/BufferManagerFailureTests.o $(OUTDIR)/BufferManagerTests.o \
-	$(OUTDIR)/BufferStressTests.o $(OUTDIR)/DeviceFailureTests.o \
-	$(OUTDIR)/DeviceManagerFailureTests.o $(OUTDIR)/DeviceManagerTests.o \
-	$(OUTDIR)/DeviceTests.o $(OUTDIR)/GlobalBufferTests.o \
-	$(OUTDIR)/InitCleanupTests.o $(OUTDIR)/LocalBufferTests.o \
-	$(OUTDIR)/Perf.o $(OUTDIR)/ProgramManagerTests.o \
-	$(OUTDIR)/ProgramTests.o $(OUTDIR)/RemoteBufferTests.o \
-	$(OUTDIR)/RuntimeTestFixture.o $(OUTDIR)/RuntimeTests.o \
-	$(OUTDIR)/TestMain.o $(OUTDIR)/util.o ../../../bin/libamd-spl_d.so 
+ALL_OBJ=$(INTERDIR)/BitonicSortAccuracy.o \
+	$(INTERDIR)/BitonicSortFailues.o $(INTERDIR)/BitonicSortStress.o \
+	$(INTERDIR)/BitonicSortTest.o $(INTERDIR)/BufferFaliureTests.o \
+	$(INTERDIR)/BufferManagerFailureTests.o $(INTERDIR)/BufferManagerTests.o \
+	$(INTERDIR)/BufferStressTests.o $(INTERDIR)/DeviceFailureTests.o \
+	$(INTERDIR)/DeviceManagerFailureTests.o $(INTERDIR)/DeviceManagerTests.o \
+	$(INTERDIR)/DeviceTests.o $(INTERDIR)/GlobalBufferTests.o \
+	$(INTERDIR)/InitCleanupTests.o $(INTERDIR)/LocalBufferTests.o \
+	$(INTERDIR)/Perf.o $(INTERDIR)/ProgramManagerTests.o \
+	$(INTERDIR)/ProgramTests.o $(INTERDIR)/RemoteBufferTests.o \
+	$(INTERDIR)/RuntimeTestFixture.o $(INTERDIR)/RuntimeTests.o \
+	$(INTERDIR)/TestMain.o $(INTERDIR)/util.o ../../../bin/libamd-spl.so 
 
-COMPILE=g++ -c    -g -o "$(OUTDIR)/$(*F).o" $(CFG_INC) "$<"
-LINK=g++  -g -o "$(OUTFILE)" $(OBJ) $(CFG_LIB)
-
-# Pattern rules
-$(OUTDIR)/%.o : ../../unit/common/%.cpp
-	$(COMPILE)
-
-$(OUTDIR)/%.o : ../../unit/sorting/%.cpp
-	$(COMPILE)
-
-$(OUTDIR)/%.o : ../../unit/core/%.cpp
-	$(COMPILE)
-
-$(OUTDIR)/%.o : ../../unit/%.cpp
-	$(COMPILE)
-
-# Build rules
-all: $(OUTFILE)
-
-$(OUTFILE): $(OUTDIR)  $(OBJ)
-	$(LINK)
-
-$(OUTDIR):
-	$(MKDIR) -p "$(OUTDIR)"
-
-# Rebuild this project
-rebuild: cleanall all
-
-# Clean this project
-clean:
-	$(RM) -f $(OUTFILE)
-	$(RM) -f $(OBJ)
-
-# Clean this project and all dependencies
-cleanall: clean
-endif
-
-#
-# Configuration: Release
-#
-ifeq "$(CFG)" "Release"
-OUTDIR=Release
-OUTFILE=$(OUTDIR)/SPLUniTests
-CFG_INC=-I../../../include -I../../gtest_inc -I../../unit/common \
-	-I/usr/local/atical/include -I../../../include/core/cal 
-CFG_LIB=../../../bin/libamd-spl.so -lgtest 
-CFG_OBJ=
-COMMON_OBJ=$(OUTDIR)/BitonicSortAccuracy.o \
-	$(OUTDIR)/BitonicSortFailues.o $(OUTDIR)/BitonicSortStress.o \
-	$(OUTDIR)/BitonicSortTest.o $(OUTDIR)/BufferFaliureTests.o \
-	$(OUTDIR)/BufferManagerFailureTests.o $(OUTDIR)/BufferManagerTests.o \
-	$(OUTDIR)/BufferStressTests.o $(OUTDIR)/DeviceFailureTests.o \
-	$(OUTDIR)/DeviceManagerFailureTests.o $(OUTDIR)/DeviceManagerTests.o \
-	$(OUTDIR)/DeviceTests.o $(OUTDIR)/GlobalBufferTests.o \
-	$(OUTDIR)/InitCleanupTests.o $(OUTDIR)/LocalBufferTests.o \
-	$(OUTDIR)/Perf.o $(OUTDIR)/ProgramManagerTests.o \
-	$(OUTDIR)/ProgramTests.o $(OUTDIR)/RemoteBufferTests.o \
-	$(OUTDIR)/RuntimeTestFixture.o $(OUTDIR)/RuntimeTests.o \
-	$(OUTDIR)/TestMain.o $(OUTDIR)/util.o 
-OBJ=$(COMMON_OBJ) $(CFG_OBJ)
-ALL_OBJ=$(OUTDIR)/BitonicSortAccuracy.o \
-	$(OUTDIR)/BitonicSortFailues.o $(OUTDIR)/BitonicSortStress.o \
-	$(OUTDIR)/BitonicSortTest.o $(OUTDIR)/BufferFaliureTests.o \
-	$(OUTDIR)/BufferManagerFailureTests.o $(OUTDIR)/BufferManagerTests.o \
-	$(OUTDIR)/BufferStressTests.o $(OUTDIR)/DeviceFailureTests.o \
-	$(OUTDIR)/DeviceManagerFailureTests.o $(OUTDIR)/DeviceManagerTests.o \
-	$(OUTDIR)/DeviceTests.o $(OUTDIR)/GlobalBufferTests.o \
-	$(OUTDIR)/InitCleanupTests.o $(OUTDIR)/LocalBufferTests.o \
-	$(OUTDIR)/Perf.o $(OUTDIR)/ProgramManagerTests.o \
-	$(OUTDIR)/ProgramTests.o $(OUTDIR)/RemoteBufferTests.o \
-	$(OUTDIR)/RuntimeTestFixture.o $(OUTDIR)/RuntimeTests.o \
-	$(OUTDIR)/TestMain.o $(OUTDIR)/util.o ../../../bin/libamd-spl.so 
-
-COMPILE=g++ -c   -o "$(OUTDIR)/$(*F).o" $(CFG_INC) "$<"
+COMPILE=g++ -c   -o "$(INTERDIR)/$(*F).o" $(CFG_INC) "$<"
 LINK=g++  -o "$(OUTFILE)" $(OBJ) $(CFG_LIB)
 
 # Pattern rules
-$(OUTDIR)/%.o : ../../unit/common/%.cpp
+$(INTERDIR)/%.o : ../../unit/common/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../unit/sorting/%.cpp
+$(INTERDIR)/%.o : ../../unit/sorting/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../unit/core/%.cpp
+$(INTERDIR)/%.o : ../../unit/core/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : ../../unit/%.cpp
+$(INTERDIR)/%.o : ../../unit/%.cpp
 	$(COMPILE)
 
 # Build rules
 all: $(OUTFILE)
 
-$(OUTFILE): $(OUTDIR)  $(OBJ)
+$(OUTFILE): $(INTERDIR)  $(OBJ) $(OUTDIR)
 	$(LINK)
 
 $(OUTDIR):
 	$(MKDIR) -p "$(OUTDIR)"
 
+$(INTERDIR):
+	$(MKDIR) -p "$(INTERDIR)"
+	
 # Rebuild this project
 rebuild: cleanall all
 
@@ -158,4 +81,3 @@ clean:
 
 # Clean this project and all dependencies
 cleanall: clean
-endif
