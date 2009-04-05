@@ -17,7 +17,7 @@ OUTFILE=$(OUTDIR)/$(OUTFILENAME)
 
 CFG_INC=-I../../include -I../../include/core/cal \
 	-I../../src/core/utils -I/usr/local/atical/include 
-CFG_LIB=-lamdcalrt -lamdcalcl
+CFG_LIB=-laticalrt -laticalcl
 CFG_OBJ=
 COMMON_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
 	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/Device.o \
