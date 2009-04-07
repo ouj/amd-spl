@@ -30,8 +30,8 @@ set INC=u:\include
 if exist "%CALROOT%include" set CAL_INC=%CALROOT%include
 if exist "%CALROOT%lib\lh32" set CAL_LIB=%CALROOT%lib\lh32
 if exist "%CALROOT%lib\xp32" set CAL_LIB=%CALROOT%lib\xp32
-if not defined "CAL_LIB" goto ErrIncLib
-if not defined "CAL_INC" goto ErrIncLib
+if not defined CAL_LIB goto ErrIncLib
+if not defined CAL_INC goto ErrIncLib
 
 ::Output
 set SPLLIB=u:\lib
