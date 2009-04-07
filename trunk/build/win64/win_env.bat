@@ -8,8 +8,9 @@ cd ..
 subst u: /d
 subst u: .
 
-IF EXIST "%ProgramFiles%\Microsoft Visual Studio 8\VC\vcvarsall.bat" (@call "%ProgramFiles%\Microsoft Visual Studio 8\VC\vcvarsall.bat" x86)
-IF EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio 8\VC\vcvarsall.bat" (@call "%ProgramFiles(x86)%\Microsoft Visual Studio 8\VC\vcvarsall.bat" x86)
+rem set the compiler path, assuming the vs2005 is install in the default path of c:
+IF EXIST "%ProgramFiles%\Microsoft Visual Studio 8\VC\vcvarsall.bat" (@call "%ProgramFiles%\Microsoft Visual Studio 8\VC\vcvarsall.bat" x64)
+IF EXIST "%ProgramFiles(x86)%\Microsoft Visual Studio 8\VC\vcvarsall.bat" (@call "%ProgramFiles(x86)%\Microsoft Visual Studio 8\VC\vcvarsall.bat" x64)
 
 rem set the env variable
 ::============================================
@@ -20,7 +21,7 @@ set CONF=u:\conf
 set TOOLS=u:\tools\bin
 
 :: Build Directory
-set BLD=u:\build\win32
+set BLD=u:\build\win64
 
 ::Source
 set SRC=u:\src
@@ -28,8 +29,8 @@ set INC=u:\include
 
 ::Input
 if exist "%CALROOT%include" set CAL_INC=%CALROOT%include
-if exist "%CALROOT%lib\lh32" set CAL_LIB=%CALROOT%lib\lh32
-if exist "%CALROOT%lib\xp32" set CAL_LIB=%CALROOT%lib\xp32
+if exist "%CALROOT%lib\lh64" set CAL_LIB=%CALROOT%lib\lh64
+if exist "%CALROOT%lib\xp64" set CAL_LIB=%CALROOT%lib\xp64
 if not defined "CAL_LIB" goto ErrIncLib
 if not defined "CAL_INC" goto ErrIncLib
 
@@ -52,13 +53,13 @@ call amd-spl.sln
 start cmd
 goto EndOfBat
 
+ErrIncLib
+PAUSE "No 64bit CAL libraries and includes"
+goto EndofBat
+
 :ErrSys
 PAUSE "This script is only for Windows NT system."
 goto EndOfBat
-
-ErrIncLib
-PAUSE "No 32bit CAL libraries and includes"
-goto EndofBat
 
 :EndOfBat
 PAUSE

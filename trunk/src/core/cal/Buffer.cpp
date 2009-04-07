@@ -151,7 +151,7 @@ namespace amdspl
                         cpuPtr += cpuRowStride;
                     }
 
-                    unsigned int remainBytes = totalBytes - (cpuPtr - static_cast<char*>(ptr));
+                    size_t remainBytes = totalBytes - (cpuPtr - static_cast<char*>(ptr));
                     if (remainBytes)
                     {
                         memcpy(gpuPtr, cpuPtr, remainBytes);
@@ -160,7 +160,7 @@ namespace amdspl
                     if (defaultBytes && defaultVal)
                     {
                         char* tmpPtr = gpuPtr + remainBytes;
-                        unsigned int remainBytesInRow = cpuRowStride - remainBytes;
+                        size_t remainBytesInRow = cpuRowStride - remainBytes;
                         while (defaultBytes)
                         {
                             if (remainBytesInRow == 0)
@@ -243,7 +243,7 @@ namespace amdspl
                         gpuPtr += gpuRowStride;
                         cpuPtr += cpuRowStride;
                     }
-                    unsigned int remainBytes = totalBytes - (cpuPtr - static_cast<char*>(ptr));
+                    size_t remainBytes = totalBytes - (cpuPtr - static_cast<char*>(ptr));
                     if (remainBytes)
                     {
                         memcpy(cpuPtr, gpuPtr, remainBytes);
