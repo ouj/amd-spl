@@ -53,11 +53,11 @@ start cmd
 goto EndOfBat
 
 :ErrSys
-PAUSE "This script is only for Windows NT system."
+echo "This script is only for Windows NT system."
 goto EndOfBat
 
-ErrIncLib
-PAUSE "No 32bit CAL libraries and includes"
+:ErrIncLib
+echo "No 32bit CAL libraries and includes"
 goto EndofBat
 
 :EndOfBat
