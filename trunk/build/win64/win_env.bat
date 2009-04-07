@@ -31,8 +31,8 @@ set INC=u:\include
 if exist "%CALROOT%include" set CAL_INC=%CALROOT%include
 if exist "%CALROOT%lib\lh64" set CAL_LIB=%CALROOT%lib\lh64
 if exist "%CALROOT%lib\xp64" set CAL_LIB=%CALROOT%lib\xp64
-if not defined "CAL_LIB" goto ErrIncLib
-if not defined "CAL_INC" goto ErrIncLib
+if not defined CAL_LIB goto ErrIncLib
+if not defined CAL_INC goto ErrIncLib
 
 ::Output
 set SPLLIB=u:\lib
@@ -53,13 +53,14 @@ call amd-spl.sln
 start cmd
 goto EndOfBat
 
-ErrIncLib
-PAUSE "No 64bit CAL libraries and includes"
+:ErrIncLib
+echo "No 64bit CAL libraries and includes"
+PAUSE
 goto EndofBat
 
 :ErrSys
-PAUSE "This script is only for Windows NT system."
+echo "This script is only for Windows NT system."
+PAUSE
 goto EndOfBat
 
 :EndOfBat
-PAUSE
