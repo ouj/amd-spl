@@ -17,18 +17,22 @@ TEST_F(AsyncDataTransferTests, LocalMemoryDMAReadWriteTest)
     if(!device)
         return;
 
-    Buffer *buf1D = 
-        _bufMgr->createLocalBuffer(device, CAL_FORMAT_INT_1, 1024, 1024);
+    CALdeviceinfo info = device->getInfo();
 
+    Buffer *buf1D = 
+        _bufMgr->createLocalBuffer(device, CAL_FORMAT_INT_1, info.maxResource2DWidth, info.maxResource2DHeight);
+
+    printf("Data size %d * %d:\n", info.maxResource2DWidth, info.maxResource2DHeight);
     if (buf1D)
     {
-        vector<int> cpuBuf(1024 * 1024);
-        vector<int> result(1024 * 1024);
-        util::initializeBuffer(cpuBuf, 1024, 1024, 1000, util::RANDOM);
+        vector<int> cpuBuf(info.maxResource2DWidth * info.maxResource2DHeight);
+        vector<int> result(cpuBuf.size());
+        util::initializeBuffer(cpuBuf, info.maxResource2DWidth, 
+            info.maxResource2DHeight, 0x10000, util::RANDOM);
 
         timer.Reset();
         timer.Start();
-        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], 1024 * 1024));
+        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], static_cast<unsigned long>(cpuBuf.size())));
         ASSERT_TRUE(buf1D->writeData(&result[0], static_cast<unsigned long>(result.size())));
         timer.Stop();
         printf("ASync Copy Time: %.10lf\t", timer.GetElapsedTime());
@@ -36,8 +40,8 @@ TEST_F(AsyncDataTransferTests, LocalMemoryDMAReadWriteTest)
 
         timer.Reset();
         timer.Start();
-        ASSERT_TRUE(buf1D->Buffer::readData(&cpuBuf[0], 1024 * 1024));
-        ASSERT_TRUE(buf1D->writeData(&result[0], static_cast<unsigned long>(result.size())));
+        ASSERT_TRUE(buf1D->Buffer::readData(&cpuBuf[0], static_cast<unsigned long>(cpuBuf.size())));
+        ASSERT_TRUE(buf1D->Buffer::writeData(&result[0], static_cast<unsigned long>(result.size())));
         timer.Stop();
         printf("Sync Copy Time: %.10lf\n", timer.GetElapsedTime());
         ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, static_cast<unsigned long>(cpuBuf.size())));

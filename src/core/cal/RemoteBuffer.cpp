@@ -71,13 +71,13 @@ namespace amdspl
                 if (_height == 0) // 1D
                 {
                     CALresult result = calResAllocRemote1D(&_res, deviceHandles, deviceNum, 
-                        _width, _dataFormat, 0);
+                        _width, _dataFormat, CAL_RESALLOC_CACHEABLE);
                     CHECK_CAL_RESULT_ERROR(result, "Failed create 1D remote buffer\n");
                 }
                 else // 2D
                 {
                     CALresult result = calResAllocRemote2D(&_res, deviceHandles, deviceNum, 
-                        _width, _height, _dataFormat, 0);
+                        _width, _height, _dataFormat, CAL_RESALLOC_CACHEABLE);
                     CHECK_CAL_RESULT_ERROR(result, "Failed create 2D remote buffer\n");
                 }
                 return true;
