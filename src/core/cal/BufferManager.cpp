@@ -101,7 +101,7 @@ namespace amdspl
             //! \param	width   The width of the 1D/2D buffer.
             //! \param	height  The height of the 2D buffer. It should be set to zero
             //!                 for 1D buffer.
-            //! \return	Buffer* The pointer to a GlobalBuffer object if it is  
+            //! \return	GlobalBuffer* The pointer to a GlobalBuffer object if it is  
             //!                 successfully allocated. NULL if there is an error 
             //!                 during global buffer creation.
             //!
@@ -109,7 +109,7 @@ namespace amdspl
             //!         dimension
             //!
             //////////////////////////////////////////////////////////////////////////
-            Buffer* BufferManager::createGlobalBuffer(Device* device, CALformat format, 
+            GlobalBuffer* BufferManager::createGlobalBuffer(Device* device, CALformat format, 
                 unsigned int width, unsigned int height)
             {
                 GlobalBuffer *globalBuf = new GlobalBuffer(device, format, width, height);

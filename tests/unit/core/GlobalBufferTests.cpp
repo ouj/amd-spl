@@ -162,3 +162,4 @@ TEST_F(GlobalBufferTests, GlobalBufferReadWriteData5Test)
     else
         FAIL();
 }
+

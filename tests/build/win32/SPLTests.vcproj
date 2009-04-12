@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtestd.lib amd-spl_d.lib"
+				AdditionalDependencies="aticalcl.lib aticalrt.lib gtestd.lib amd-spl_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;..\..\gtest_lib;..\..\..\lib\"
@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="amdcalcl.lib amdcalrt.lib gtest.lib amd-spl.lib"
+				AdditionalDependencies="aticalcl.lib aticalrt.lib gtest.lib amd-spl.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(CALROOT)\lib\lh32&quot;;..\..\gtest_lib;..\..\..\lib\"
 				GenerateDebugInformation="true"
@@ -201,6 +201,10 @@
 			</File>
 			<File
 				RelativePath="..\..\unit\core\GlobalBufferTests.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\unit\core\ILMemoryTests.cpp"
 				>
 			</File>
 			<File

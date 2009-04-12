@@ -22,6 +22,7 @@ namespace amdspl
             class Device;
             class Buffer;
             class ConstBuffer;
+            class GlobalBuffer;
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief	BufferManager class contains factory methods for LocalBuffer,
@@ -38,7 +39,7 @@ namespace amdspl
             public:
                 void destroyBuffer(Buffer* buffer);
                 Buffer* createLocalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
-                Buffer* createGlobalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
+                GlobalBuffer* createGlobalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
                 Buffer* createRemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
 
                 ConstBuffer*    getConstBuffer(unsigned int size);

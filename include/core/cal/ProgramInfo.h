@@ -14,6 +14,8 @@
 
 using namespace std;
 
+#define IL_KERNEL(...) #__VA_ARGS__ 
+
 namespace amdspl
 {
     namespace core
