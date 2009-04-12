@@ -12,6 +12,8 @@
 #include "Device.h"
 #include <stdio.h>
 
+#define DMA_TRANSFER
+
 namespace amdspl
 {
     namespace core
@@ -60,7 +62,7 @@ namespace amdspl
             {
                 if (!_device)
                     return false;
-                
+
                 CALdeviceinfo info = _device->getInfo();
                 if (_height == 0) // 1D
                 {
@@ -82,6 +84,93 @@ namespace amdspl
                         _width, _height, _dataFormat, 0);
                     CHECK_CAL_RESULT_ERROR(result, "Failed create 2D buffer\n");
                 }
+                return true;
+            }
+
+            bool LocalBuffer::readData(void *ptr, unsigned long size, void *defaultVal)
+            {
+#ifdef DMA_TRANSFER
+                BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
+                assert(bufMgr);
+
+                Buffer *hostBuf = 
+                    bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
+                if(!hostBuf)
+                {
+                    fprintf(stderr, "Failed to create host memory \n");
+                    return false;
+                }
+                if(!hostBuf->readData(ptr, size, defaultVal))
+                    return false;
+
+                CALresult result = CAL_RESULT_OK;
+                CALcontext ctx = _device->getContext();
+                assert(ctx);
+
+                // Get the memory handle
+                CALmem srcMem;
+                CALmem dstMem;
+                result = calCtxGetMem(&srcMem, ctx, hostBuf->getResHandle());
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get host memory handle \n");
+                result = calCtxGetMem(&dstMem, ctx, _res);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get local memory handle \n");
+
+                Event* e = 
+                    Runtime::getInstance()->getProgramManager()->getEvent();
+
+                CALevent memcpyEvent;
+                result = calMemCopy(&memcpyEvent, ctx, srcMem, dstMem, 0);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to do DMA transfer.\n");
+                e->set(memcpyEvent, ctx);
+                e->waitEvent();
+                bufMgr->destroyBuffer(hostBuf);
+#else
+                Buffer::readData(ptr, size, defaultVal);
+#endif // DMA_TRANSFER
+                return true;
+            }
+
+            bool LocalBuffer::writeData(void *ptr, unsigned long size)
+            {
+#ifdef DMA_TRANSFER
+                BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
+                assert(bufMgr);
+
+                Buffer *hostBuf = 
+                    bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
+                if(!hostBuf)
+                {
+                    fprintf(stderr, "Failed to create host memory \n");
+                    return false;
+                }
+
+                CALresult result = CAL_RESULT_OK;
+                CALcontext ctx = _device->getContext();
+                assert(ctx);
+
+                // Get the memory handle
+                CALmem srcMem;
+                CALmem dstMem;
+                result = calCtxGetMem(&dstMem, ctx, hostBuf->getResHandle());
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get host memory handle \n");
+                result = calCtxGetMem(&srcMem, ctx, _res);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get local memory handle \n");
+
+                Event* e = 
+                    Runtime::getInstance()->getProgramManager()->getEvent();
+
+                CALevent memcpyEvent;
+                result = calMemCopy(&memcpyEvent, ctx, srcMem, dstMem, 0);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to do DMA transfer.\n");
+                e->set(memcpyEvent, ctx);
+                e->waitEvent();
+                if(!hostBuf->writeData(ptr, size))
+                    return false;
+
+                bufMgr->destroyBuffer(hostBuf);
+#else
+                Buffer::writeData(ptr, size);
+#endif // DMA_TRANSFER
                 return true;
             }
         }
