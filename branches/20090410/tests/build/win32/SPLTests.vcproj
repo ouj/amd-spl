@@ -184,6 +184,10 @@
 			Name="AccuracyTests"
 			>
 			<File
+				RelativePath="..\..\unit\core\AsyncDataTransferTests.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\unit\sorting\BitonicSortAccuracy.cpp"
 				>
 			</File>

@@ -18,7 +18,6 @@ namespace amdspl
     {
         namespace cal
         {
-
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \param	format Indicate the CALformat of the buffer.
