@@ -54,11 +54,13 @@ goto EndOfBat
 
 :ErrSys
 echo "This script is only for Windows NT system."
+PAUSE
 goto EndOfBat
 
 :ErrIncLib
 echo "No 32bit CAL libraries and includes"
+PAUSE
 goto EndofBat
 
 :EndOfBat
-PAUSE
+
