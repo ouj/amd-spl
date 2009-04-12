@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project name="amd-spl" basedir="." default="rebuild">
+  
+  <!--  all properties are in build.properties --> 
+  <property file="build.properties" /> 
+
+  <!-- clean and init -->
+  <target name="clean" depends="">
+      <delete dir="${root.dir}"/>
+      <delete dir="${release.dir}"/>
+  </target>
+
+  <target name="init" depends="clean">
+    <mkdir dir="${root.dir}"/>
+    <mkdir dir="${obj.dir}"/>
+    <mkdir dir="${include.dir}"/>
+    <mkdir dir="${release.os.dir}"/>
+  </target>
+
+  <!-- get source code from svn server -->
+  <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpath="svnant.jar" />
+  <target name="svn" depends="">
+    <svn>
+      <checkout url="${amdspl.latest.url}" revision="HEAD" destPath="${src.dir}" />
+    </svn>
+  </target>
+
+  <!-- compile source code -->  
+  <typedef resource="net/sf/antcontrib/cpptasks/antlib.xml" classpath="cpptasks.jar" />
+  <target name="pre-compile">
+    <copy todir="${include.dir}" flatten="true">
+        <fileset dir="${src.dir}/src" includes="**/*.h"/>
+    </copy>      
+  </target>
+  <target name="compile" depends="pre-compile">
+    <!-- compile amd-spl -->  
+    <cc debug="${build.debug}" link="shared" outfile="${release.os.dir}/${amdspl.name}" objdir="${obj.dir}" rebuild="${build.rebuild}">
+      <compiler name="${compiler.name}"/>
+      <fileset dir="${src.dir}/src" includes="**/*.cpp"/>
+      <includepath location="${include.dir}"/>
+      <includepath location="${cal.include.dir}"/>
+      <linker name="${compiler.name}">
+          <fileset dir="${cal.library.dir}" includes="**/*.lib"/>
+      </linker>
+    </cc>
+    <!-- compile amd-spl unit test-->  
+    <!-- compile amd-spl sample-->
+  </target>
+
+  <!-- run tests -->
+  <target name="test" depends=""/>
+
+  <!-- archive package -->
+  <target name="archive" depends=""/>
+
+  <!-- deploy package -->
+  <target name="deploy" depends=""/>
+
+  <!-- entrance -->
+  <target name="rebuild" depends="init, svn, compile, test, archive, deploy"/>
+
+</project>
+
