@@ -404,7 +404,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\include\SplDefs.h"
+			RelativePath="..\..\include\spldefs.h"
 			>
 		</File>
 	</Files>

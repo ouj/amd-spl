@@ -160,10 +160,22 @@ namespace amdspl
             ConstBuffer* BufferManager::getConstBuffer(unsigned int size)
             {
                 ConstBuffer *constBuf;
-                if (_constBufferPool.size())
+                CONST_BUF_SIZE cbsize;
+                if (size > 4096)
+                    return NULL;
+                else if (size > 1024)
+                    cbsize = CB4096;
+                else if (size > 256)
+                    cbsize = CB1024;
+                else if (size > 64)
+                    cbsize = CB256;
+                else
+                    cbsize = CB64;
+
+                if (_constBufferPools[cbsize].size())
                 {
-                    constBuf = _constBufferPool.back();
-                    _constBufferPool.pop_back();
+                    constBuf = _constBufferPools[cbsize].back();
+                    _constBufferPools[cbsize].pop_back();
                 }
                 else
                 {
@@ -174,14 +186,12 @@ namespace amdspl
                         return NULL;
                     }
                 }
-
                 if(!constBuf->resize(size))
                 {
                     // you break the rule, you get nothing;
-                    _constBufferPool.push_back(constBuf);
+                    _constBufferPools[cbsize].push_back(constBuf);
                     return NULL;
                 }
-
                 return constBuf;
             }
 
@@ -197,7 +207,23 @@ namespace amdspl
             {
                 if (constBuf)
                 {
-                    _constBufferPool.push_back(constBuf);
+                    CONST_BUF_SIZE cbsize;
+                    unsigned int size = constBuf->getWidth();
+                    if (size > 4096)
+                    {
+                        fprintf(stderr, "Error Constant buffer size.");
+                        assert(false);
+                        return;
+                    }
+                    else if (size > 1024)
+                        cbsize = CB4096;
+                    else if (size > 256)
+                        cbsize = CB1024;
+                    else if (size > 64)
+                        cbsize = CB256;
+                    else
+                        cbsize = CB64;
+                    _constBufferPools[cbsize].push_back(constBuf);
                 }
             }
         }

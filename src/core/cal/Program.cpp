@@ -397,10 +397,11 @@ namespace amdspl
                 {
                     _outputBuffers[idx].buffer->waitInputEvent();
                 }
-                //if (_globalBuffer.buffer)
-                //{
-                //    _globalBuffer.buffer->waitInputEvent(e);
-                //}
+                if (_globalBuffer.buffer)
+                {
+                    // global buffer maybe input too.
+                    _globalBuffer.buffer->waitInputEvent();
+                }
             }
 
             //////////////////////////////////////////////////////////////////////////
@@ -426,6 +427,7 @@ namespace amdspl
                 CALresult result = calCtxRunProgram(&execEvent, ctx, _func, &domain);
                 CHECK_CAL_RESULT_ERROR2(result, "Failed to execute program!\n");
 
+                // Force a dispatch of kernel to the device.
                 result = calCtxIsEventDone(ctx, execEvent);
                 if (result == CAL_RESULT_ERROR)
                 {
@@ -438,7 +440,6 @@ namespace amdspl
                     Runtime::getInstance()->getProgramManager()->getEvent();
 
                 e->set(execEvent, ctx);
-
                 setEvents(e);
 
                 return e;
