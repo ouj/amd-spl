@@ -68,7 +68,7 @@ namespace amdspl
             //!         new input buffer is bound.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool Program::bindInput(Buffer* buffer, unsigned int idx)
+            bool Program::bindInput(IBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _inputBuffers.size());
                 unbindInput(idx);
@@ -103,7 +103,7 @@ namespace amdspl
             //!         new output buffer is bound.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool Program::bindOutput(Buffer* buffer, unsigned int idx)
+            bool Program::bindOutput(IBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _outputBuffers.size());
                 unbindOutput(idx);
@@ -170,7 +170,7 @@ namespace amdspl
             //! \brief	Bind a global buffer
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool Program::bindGlobal(GlobalBuffer* buffer)
+            bool Program::bindGlobal(IBuffer* buffer)
             {
                 unbindGlobal();
 

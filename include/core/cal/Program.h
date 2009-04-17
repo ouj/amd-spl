@@ -25,9 +25,9 @@ namespace amdspl
     {
         namespace cal
         {
-            class Buffer;
+            class IBuffer;
             class ConstBuffer;
-            class GlobalBuffer;
+            class IGlobalBuffer;
 
             //////////////////////////////////////////////////////////////////////////
             //!
@@ -48,7 +48,7 @@ namespace amdspl
                 //////////////////////////////////////////////////////////////////////////
                 BufferItem() : buffer(0), mem(0) {}
                 //! \brief	The pointer to the Buffer object bound to the Program.
-                Buffer* buffer;
+                IBuffer* buffer;
                 //! \brief	The CAL memory handle of the buffer.
                 CALmem  mem;
             };
@@ -70,10 +70,10 @@ namespace amdspl
                 template<typename ProgInfo>
                 bool            initialize(const ProgInfo &progInfo);
                 virtual Event*  run(const CALdomain &domain);
-                bool            bindInput(Buffer* buffer, unsigned int idx);
-                bool            bindOutput(Buffer* buffer, unsigned int idx);
+                bool            bindInput(IBuffer* buffer, unsigned int idx);
+                bool            bindOutput(IBuffer* buffer, unsigned int idx);
                 bool            bindConstant(ConstBuffer* buffer, unsigned int idx);
-                bool            bindGlobal(GlobalBuffer* buffer);
+                bool            bindGlobal(IBuffer* buffer);
 
                 bool            unbindInput(unsigned int idx);
                 bool            unbindOutput(unsigned int idx);

@@ -31,10 +31,8 @@ namespace amdspl
             public:
                 ~RemoteBuffer();
             protected:
-                RemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
+                RemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0, unsigned int flag = 0);
                 virtual bool initialize();
-                //! \brief	Boolean value indicate whether the remote buffer is CPU cache-able.
-                bool _cachable;
             };
         }
     }

@@ -34,8 +34,9 @@ namespace amdspl
             //!         available until LocalBuffer::initialize() is called.
             //!
             //////////////////////////////////////////////////////////////////////////
-            LocalBuffer::LocalBuffer(Device *device, CALformat format, unsigned int width, unsigned int height)
-                : Buffer(format, width, height), _device(device)
+            LocalBuffer::LocalBuffer(Device *device, CALformat format, unsigned int width, 
+                unsigned int height, unsigned int flag)
+                : Buffer(format, width, height, flag), _device(device)
             {
             }
 
@@ -71,7 +72,7 @@ namespace amdspl
                         return false;
                     }
                     CALresult result = calResAllocLocal1D(&_res, _device->getHandle(), 
-                        _width, _dataFormat, 0);
+                        _width, _dataFormat, _flag);
                     CHECK_CAL_RESULT_ERROR(result, "Failed create 1D buffer\n");
                 }
                 else // 2D
@@ -81,7 +82,7 @@ namespace amdspl
                         return false;
                     }
                     CALresult result = calResAllocLocal2D(&_res, _device->getHandle(), 
-                        _width, _height, _dataFormat, 0);
+                        _width, _height, _dataFormat, _flag);
                     CHECK_CAL_RESULT_ERROR(result, "Failed create 2D buffer\n");
                 }
                 return true;
