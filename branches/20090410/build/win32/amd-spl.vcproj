@@ -213,7 +213,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\include\core\cal\GlobalBuffer.h"
+						RelativePath="..\..\include\core\cal\IBuffer.h"
 						>
 					</File>
 					<File
@@ -274,10 +274,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\Event.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\core\CAL\GlobalBuffer.cpp"
 						>
 					</File>
 					<File

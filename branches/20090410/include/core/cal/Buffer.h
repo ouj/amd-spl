@@ -13,6 +13,7 @@
 
 #include "cal.h"
 #include "SplDefs.h"
+#include "IBuffer.h"
 namespace amdspl
 {
     namespace core
@@ -31,25 +32,28 @@ namespace amdspl
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            class SPL_EXPORT Buffer
+            class SPL_EXPORT Buffer : public IBuffer
             {
                 friend class BufferManager;
             public:
                 virtual         ~Buffer();
                 virtual bool    readData(void *ptr, unsigned long size, void *defaultVal = 0);
                 virtual bool    writeData(void *ptr, unsigned long size);
-                CALresource     getResHandle();
-                CALformat       getFormat();
-                unsigned int    getPitch();
-                unsigned int    getWidth();
-                unsigned int    getHeight();
+                inline CALresource  getResHandle();
+                inline CALformat    getFormat();
+                inline unsigned int getWidth();
+                inline unsigned int getHeight();
 
+                unsigned int    getPitch();
                 bool            setInputEvent(Event* e);
                 bool            setOutputEvent(Event* e);
                 void            waitInputEvent();
                 void            waitOutputEvent();
+
+                inline bool     isGlobal();
             protected:
-                                Buffer(CALformat format, unsigned int width, unsigned int height = 0);
+                                Buffer(CALformat format, unsigned int width, 
+                                    unsigned int height = 0, unsigned int flag = 0);
                 virtual bool    initialize();
                 void*           getPointerCPU(CALuint &pitch);
                 void            releasePointerCPU();
@@ -70,7 +74,70 @@ namespace amdspl
                 Event*          _inputEvent;
                 //! \brief	Store the output event of the buffer.
                 Event*          _outputEvent;
+                //! \brief	Buffer initialization flag
+                unsigned int    _flag;
             };
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALresource
+            //!
+            //! \brief	Get the CAL resouce handle of the buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            CALresource Buffer::getResHandle()
+            {
+                return _res;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALformat
+            //!
+            //! \brief	Get the CAL format of the buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            CALformat Buffer::getFormat()
+            {
+                return _dataFormat;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	unsigned int
+            //!
+            //! \brief	Get the width of the buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            unsigned int Buffer::getWidth()
+            {
+                return _width;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	unsigned int
+            //!
+            //! \brief	Get the height of the buffer, return 0 if it is a 1D buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            unsigned int Buffer::getHeight()
+            {
+                return _height;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	bool boolean value indicate whether this buffer is a global 
+            //!         buffer.
+            //!
+            //! \brief	Check if the buffer is a global buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            bool Buffer::isGlobal()
+            {
+                return _flag || CAL_RESALLOC_GLOBAL_BUFFER;
+            }
         }
     }
 }

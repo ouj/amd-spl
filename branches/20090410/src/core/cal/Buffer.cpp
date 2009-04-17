@@ -31,9 +31,9 @@ namespace amdspl
             //!         Buffer::initialize() is called.
             //!
             //////////////////////////////////////////////////////////////////////////
-            Buffer::Buffer(CALformat format, unsigned int width, unsigned int height) : 
+            Buffer::Buffer(CALformat format, unsigned int width, unsigned int height, unsigned int flag) : 
                     _dataFormat(format), _width(width), _height(height), _res(0), _pitch(0),
-                        _inputEvent(NULL), _outputEvent(NULL)
+                    _flag(flag), _inputEvent(NULL), _outputEvent(NULL)
             {
             }
 
@@ -337,29 +337,7 @@ namespace amdspl
                 }
             }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	CALresource
-            //!
-            //! \brief	Get the CAL resouce handle of the buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            CALresource Buffer::getResHandle()
-            {
-                return _res;
-            }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	CALformat
-            //!
-            //! \brief	Get the CAL format of the buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            CALformat Buffer::getFormat()
-            {
-                return _dataFormat;
-            }
 
             //////////////////////////////////////////////////////////////////////////
             //!
@@ -378,29 +356,7 @@ namespace amdspl
                 return _pitch;
             }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	unsigned int
-            //!
-            //! \brief	Get the width of the buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            unsigned int Buffer::getWidth()
-            {
-                return _width;
-            }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	unsigned int
-            //!
-            //! \brief	Get the height of the buffer, return 0 if it is a 1D buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            unsigned int Buffer::getHeight()
-            {
-                return _height;
-            }
 
             //////////////////////////////////////////////////////////////////////////
             //!

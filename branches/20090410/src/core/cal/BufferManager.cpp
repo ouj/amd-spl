@@ -74,6 +74,7 @@ namespace amdspl
             //! \param	width   The width of the 1D/2D buffer.
             //! \param	height  The height of the 2D buffer. It should be set to zero
             //!                 for 1D buffer.
+            //! \param  flag    The buffer initialization flag.
             //! \return	Buffer* The pointer to a LocalBuffer object if it is  
             //!                 successfully allocated. NULL if there is an error 
             //!                 during local buffer creation.
@@ -83,9 +84,10 @@ namespace amdspl
             //!
             //////////////////////////////////////////////////////////////////////////
             Buffer* BufferManager::createLocalBuffer(Device* device, CALformat format, 
-                unsigned int width, unsigned int height)
+                unsigned int width, unsigned int height, unsigned int flag)
             {
-                LocalBuffer *localBuf = new LocalBuffer(device, format, width, height);
+                LocalBuffer *localBuf = 
+                    new LocalBuffer(device, format, width, height, flag);
                 if (!localBuf->initialize())
                 {
                     SAFE_DELETE(localBuf);
@@ -94,32 +96,6 @@ namespace amdspl
                 return localBuf;
             }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \param	device  The device where the GlobalBuffer will be located.
-            //! \param	format  The CAL format of the GlobalBuffer.
-            //! \param	width   The width of the 1D/2D buffer.
-            //! \param	height  The height of the 2D buffer. It should be set to zero
-            //!                 for 1D buffer.
-            //! \return	GlobalBuffer* The pointer to a GlobalBuffer object if it is  
-            //!                 successfully allocated. NULL if there is an error 
-            //!                 during global buffer creation.
-            //!
-            //! \brief	Create a GlobalBuffer object with specific CAL format and 
-            //!         dimension
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            GlobalBuffer* BufferManager::createGlobalBuffer(Device* device, CALformat format, 
-                unsigned int width, unsigned int height)
-            {
-                GlobalBuffer *globalBuf = new GlobalBuffer(device, format, width, height);
-                if (!globalBuf->initialize())
-                {
-                    SAFE_DELETE(globalBuf);
-                    return NULL;
-                }
-                return globalBuf;
-            }
 
             //////////////////////////////////////////////////////////////////////////
             //!
@@ -127,6 +103,7 @@ namespace amdspl
             //! \param	width   The width of the 1D/2D buffer.
             //! \param	height  The height of the 2D buffer. It should be set to zero
             //!                 for 1D buffer.
+            //! \param  flag    The buffer initialization flag.
             //! \return	Buffer* The pointer to a RemoteBuffer object if it is 
             //!                 successfully allocated. NULL if there is an error 
             //!                 during remote buffer creation.
@@ -136,9 +113,9 @@ namespace amdspl
             //!
             //////////////////////////////////////////////////////////////////////////
             Buffer* BufferManager::createRemoteBuffer(CALformat format, unsigned int width, 
-                unsigned int height)
+                unsigned int height, unsigned int flag)
             {
-                RemoteBuffer *remoteBuf = new RemoteBuffer(format, width, height);
+                RemoteBuffer *remoteBuf = new RemoteBuffer(format, width, height, flag);
                 if (!remoteBuf->initialize())
                 {
                     SAFE_DELETE(remoteBuf);
