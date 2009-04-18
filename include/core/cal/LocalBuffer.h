@@ -34,8 +34,10 @@ namespace amdspl
                 ~LocalBuffer();
             protected:
                 LocalBuffer(Device* device, CALformat format, 
-                    unsigned int width, unsigned int height = 0);
-                virtual bool initialize();
+                    unsigned int width, unsigned int height = 0, unsigned int flag = 0);
+                virtual bool    initialize();
+                virtual bool    readData(void *ptr, unsigned long size, void *defaultVal = 0);
+                virtual bool    writeData(void *ptr, unsigned long size);
                 //! \brief	The pointer to the device object this local buffer associated to.
                 Device* _device;
             };

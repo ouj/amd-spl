@@ -68,7 +68,7 @@ namespace amdspl
             //!         new input buffer is bound.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool Program::bindInput(Buffer* buffer, unsigned int idx)
+            bool Program::bindInput(IBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _inputBuffers.size());
                 unbindInput(idx);
@@ -103,7 +103,7 @@ namespace amdspl
             //!         new output buffer is bound.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool Program::bindOutput(Buffer* buffer, unsigned int idx)
+            bool Program::bindOutput(IBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _outputBuffers.size());
                 unbindOutput(idx);
@@ -170,7 +170,7 @@ namespace amdspl
             //! \brief	Bind a global buffer
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool Program::bindGlobal(GlobalBuffer* buffer)
+            bool Program::bindGlobal(IBuffer* buffer)
             {
                 unbindGlobal();
 
@@ -397,10 +397,11 @@ namespace amdspl
                 {
                     _outputBuffers[idx].buffer->waitInputEvent();
                 }
-                //if (_globalBuffer.buffer)
-                //{
-                //    _globalBuffer.buffer->waitInputEvent(e);
-                //}
+                if (_globalBuffer.buffer)
+                {
+                    // global buffer maybe input too.
+                    _globalBuffer.buffer->waitInputEvent();
+                }
             }
 
             //////////////////////////////////////////////////////////////////////////
@@ -426,6 +427,7 @@ namespace amdspl
                 CALresult result = calCtxRunProgram(&execEvent, ctx, _func, &domain);
                 CHECK_CAL_RESULT_ERROR2(result, "Failed to execute program!\n");
 
+                // Force a dispatch of kernel to the device.
                 result = calCtxIsEventDone(ctx, execEvent);
                 if (result == CAL_RESULT_ERROR)
                 {
@@ -438,7 +440,6 @@ namespace amdspl
                     Runtime::getInstance()->getProgramManager()->getEvent();
 
                 e->set(execEvent, ctx);
-
                 setEvents(e);
 
                 return e;

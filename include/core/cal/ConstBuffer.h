@@ -48,11 +48,13 @@ namespace amdspl
                 //! \brief	The maximum size of constant buffer.
                 enum
                 {
-                    MAX_CONST_NUM = 0x1000
+                    MAX_CONST_NUM = 4096 // CAL supported max size constant buffer.
                 };
                 //! \brief	The system memory to store the constant value
                 //!         before synchronize them to the constant buffer.
-                std::vector<int4> _buffer;
+                std::vector<int4>   _buffer;
+                //! \brief	The modification flag of constant buffer.
+                bool                isModified;
             };
         }
     }
@@ -86,6 +88,7 @@ namespace amdspl
                 }
                 T* ptr = (T*)&_buffer[I];
                 *ptr = *pVal;
+                isModified = true;
                 return true;
             }
             template<typename T>
@@ -97,6 +100,7 @@ namespace amdspl
                 }
                 T* ptr = (T*)&_buffer[I];
                 *ptr = *pVal;
+                isModified = true;
                 return true;
             }
         }

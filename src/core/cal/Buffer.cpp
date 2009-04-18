@@ -18,7 +18,6 @@ namespace amdspl
     {
         namespace cal
         {
-
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \param	format Indicate the CALformat of the buffer.
@@ -32,9 +31,9 @@ namespace amdspl
             //!         Buffer::initialize() is called.
             //!
             //////////////////////////////////////////////////////////////////////////
-            Buffer::Buffer(CALformat format, unsigned int width, unsigned int height) : 
+            Buffer::Buffer(CALformat format, unsigned int width, unsigned int height, unsigned int flag) : 
                     _dataFormat(format), _width(width), _height(height), _res(0), _pitch(0),
-                        _inputEvent(NULL), _outputEvent(NULL)
+                    _flag(flag), _inputEvent(NULL), _outputEvent(NULL)
             {
             }
 
@@ -71,20 +70,23 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \param	ptr     The CPU address contains the data going to be transfered 
-            //!                 to the buffer.
+            //! \param	ptr     The CPU address contains the data going to be 
+            //!                 transfered to the buffer.
             //! \param	size    The size in bytes of the data  the pointer points to.
-            //! \param	defaultVal  The default value should be set to the rest of the buffer.
-            //! \return	bool    True if data transfer is succeeded. False if there is an error
-            //!                 during data transfer.
+            //! \param	defaultVal  The default value should be set to the rest of the 
+            //!                     buffer.
+            //! \return	bool    True if data transfer is succeeded. False if there is 
+            //!                 an error during data transfer.
             //!
-            //! \brief	Transfer the data from CPU memory to the buffer(maybe LocalBuffer or 
-            //!         RemoteBuffer). Sometimes the buffer is larger than the data that is 
-            //!         going to be transfered. In this case, if defaulVal is set, the method 
-            //!         will set the rest of buffer using the default value pointed by defaultVal.
+            //! \brief	Synchronized data transfer from CPU memory to the SPL Buffer 
+            //!         Sometimes the buffer is larger than the data that is going to 
+            //!         be transfered. In this case, if defaulVal is set, the method 
+            //!         will set the rest of buffer using the default value pointed by 
+            //!         defaultVal.
             //!
-            //! \attention It is the developers' responsibility to make sure the format and size 
-            //!            of the CPU memory that ptr points to are valid.
+            //! \attention  It is the developers' responsibility to make sure the  
+            //!             format and size of the CPU memory that ptr points to are 
+            //!             valid.
             //!
             //////////////////////////////////////////////////////////////////////////
             bool Buffer::readData(void *ptr, unsigned long size, void *defaultVal)
@@ -182,16 +184,16 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \param	ptr     The CPU address where that data in buffer will be transfered to.
+            //! \param	ptr     The CPU address where that data in buffer will be 
+            //!                 transfered to.
             //! \param	size    The size in bytes of the space the pointer points to.
-            //! \return	bool    True if data transfer is succeeded. False if there is an error
-            //!                 during data transfer.
+            //! \return	bool    True if data transfer is succeeded. False if there is 
+            //!                 an error during data transfer.
             //!
-            //! \brief	Transfer the data to CPU memory from the buffer(maybe LocalBuffer or 
-            //!         RemoteBuffer). 
+            //! \brief	Synchronized data transfer from SPL Buffer to CPU memory. 
             //!
-            //! \attention It is the developers' responsibility to make sure the format and size 
-            //!            of the CPU memory that ptr points to are valid.
+            //! \attention It is the developers' responsibility to make sure the format 
+            //!            and size of the CPU memory that ptr points to are valid.
             //!
             //////////////////////////////////////////////////////////////////////////
             bool Buffer::writeData(void *ptr, unsigned long size)
@@ -335,29 +337,7 @@ namespace amdspl
                 }
             }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	CALresource
-            //!
-            //! \brief	Get the CAL resouce handle of the buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            CALresource Buffer::getResHandle()
-            {
-                return _res;
-            }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	CALformat
-            //!
-            //! \brief	Get the CAL format of the buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            CALformat Buffer::getFormat()
-            {
-                return _dataFormat;
-            }
 
             //////////////////////////////////////////////////////////////////////////
             //!
@@ -376,29 +356,7 @@ namespace amdspl
                 return _pitch;
             }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	unsigned int
-            //!
-            //! \brief	Get the width of the buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            unsigned int Buffer::getWidth()
-            {
-                return _width;
-            }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \return	unsigned int
-            //!
-            //! \brief	Get the height of the buffer, return 0 if it is a 1D buffer.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            unsigned int Buffer::getHeight()
-            {
-                return _height;
-            }
 
             //////////////////////////////////////////////////////////////////////////
             //!

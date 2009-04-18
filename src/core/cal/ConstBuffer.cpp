@@ -25,6 +25,7 @@ namespace amdspl
             ConstBuffer::ConstBuffer() : 
                 RemoteBuffer(CAL_FORMAT_FLOAT_4, MAX_CONST_NUM, 0), _buffer(MAX_CONST_NUM)
             {
+                isModified = false;
             }
 
             //////////////////////////////////////////////////////////////////////////
@@ -46,6 +47,8 @@ namespace amdspl
                 }
 
                 _buffer.resize(size);
+                isModified = false;
+
                 return true;
             }
 
@@ -73,15 +76,18 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             bool ConstBuffer::sync()
             {
-                waitInputEvent();
-                CALuint pitch;
-                void* data = getPointerCPU(pitch);
-                if(!data)
+                if (isModified)
                 {
-                    return false;
+                    waitInputEvent();
+                    CALuint pitch;
+                    void* data = getPointerCPU(pitch);
+                    if(!data)
+                    {
+                        return false;
+                    }
+                    memcpy(data, &_buffer[0], _buffer.size() * sizeof(float4));
+                    releasePointerCPU();
                 }
-                memcpy(data, &_buffer[0], _buffer.size() * sizeof(float4));
-                releasePointerCPU();
                 return true;
             }
         }
