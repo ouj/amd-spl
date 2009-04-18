@@ -92,7 +92,7 @@ TEST_F(BufferManagerTests, Create1DGlobalBufferTest)
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
     Buffer *buf = 
-        BufferManagerTests::_bufMgr->createGlobalBuffer(device, CAL_FORMAT_FLOAT_4, 1024);
+        BufferManagerTests::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_4, 1024, 0, CAL_RESALLOC_GLOBAL_BUFFER);
 
     ASSERT_TRUE(buf != NULL);
     _bufMgr->destroyBuffer(buf);
@@ -103,7 +103,7 @@ TEST_F(BufferManagerTests, Create2DGlobalBuffer1Test)
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
     Buffer *buf = 
-        BufferManagerTests::_bufMgr->createGlobalBuffer(device, CAL_FORMAT_FLOAT_1, 1024, 1);
+        BufferManagerTests::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_1, 1024, 1, CAL_RESALLOC_GLOBAL_BUFFER);
 
     ASSERT_TRUE(buf != NULL);
     _bufMgr->destroyBuffer(buf);
@@ -115,11 +115,46 @@ TEST_F(BufferManagerTests, Create2DGlobalBuffer2Test)
     Device* device = _deviceMgr->getDefaultDevice();
     ASSERT_TRUE(device);
     Buffer *buf = 
-        BufferManagerTests::_bufMgr->createGlobalBuffer(device, CAL_FORMAT_INT_1, 1024, 512);
+        BufferManagerTests::_bufMgr->createLocalBuffer(device, CAL_FORMAT_INT_1, 1024, 512, CAL_RESALLOC_GLOBAL_BUFFER);
 
     ASSERT_TRUE(buf != NULL);
     _bufMgr->destroyBuffer(buf);
 }
+
+TEST_F(BufferManagerTests, Create1DRemoteGlobalBufferTest)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(device);
+    Buffer *buf = 
+        BufferManagerTests::_bufMgr->createRemoteBuffer(CAL_FORMAT_FLOAT_4, 1024, 0, CAL_RESALLOC_GLOBAL_BUFFER);
+
+    ASSERT_TRUE(buf != NULL);
+    _bufMgr->destroyBuffer(buf);
+}
+
+TEST_F(BufferManagerTests, Create2DRemoteGlobalBuffer1Test)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(device);
+    Buffer *buf = 
+        BufferManagerTests::_bufMgr->createRemoteBuffer(CAL_FORMAT_FLOAT_1, 1024, 1, CAL_RESALLOC_GLOBAL_BUFFER);
+
+    ASSERT_TRUE(buf != NULL);
+    _bufMgr->destroyBuffer(buf);
+}
+
+
+TEST_F(BufferManagerTests, Create2DRemoteGlobalBuffer2Test)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    ASSERT_TRUE(device);
+    Buffer *buf = 
+        BufferManagerTests::_bufMgr->createRemoteBuffer(CAL_FORMAT_INT_1, 1024, 512, CAL_RESALLOC_GLOBAL_BUFFER);
+
+    ASSERT_TRUE(buf != NULL);
+    _bufMgr->destroyBuffer(buf);
+}
+
 
 
 TEST_F(BufferManagerTests, GetConstBufferTest1)

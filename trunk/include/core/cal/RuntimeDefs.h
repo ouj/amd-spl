@@ -19,7 +19,6 @@
 #include "ProgramManager.h"
 #include "LocalBuffer.h"
 #include "RemoteBuffer.h"
-#include "GlobalBuffer.h"
 #include "ConstBuffer.h"
 #include "ProgramInfo.h"
 #include "Event.h"

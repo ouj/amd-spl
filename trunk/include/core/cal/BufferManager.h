@@ -19,10 +19,17 @@ namespace amdspl
     {
         namespace cal
         {
+            enum CONST_BUF_SIZE
+            {
+                CB64,
+                CB256,
+                CB1024,
+                CB4096,
+                CONST_BUF_SIZE_NUM
+            };
             class Device;
             class Buffer;
             class ConstBuffer;
-            class GlobalBuffer;
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief	BufferManager class contains factory methods for LocalBuffer,
@@ -37,11 +44,11 @@ namespace amdspl
             {
                 friend class Runtime;
             public:
-                void destroyBuffer(Buffer* buffer);
-                Buffer* createLocalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
-                GlobalBuffer* createGlobalBuffer(Device* device, CALformat format, unsigned int width, unsigned int height = 0);
-                Buffer* createRemoteBuffer(CALformat format, unsigned int width, unsigned int height = 0);
-
+                void            destroyBuffer(Buffer* buffer);
+                Buffer*         createLocalBuffer(Device* device, CALformat format, 
+                                                  unsigned int width, unsigned int height = 0, unsigned int flag = 0);
+                Buffer*         createRemoteBuffer(CALformat format, unsigned int width, 
+                                                    unsigned int height = 0, unsigned int flag = 0);
                 ConstBuffer*    getConstBuffer(unsigned int size);
                 void            releaseConstBuffer(ConstBuffer *constBuf);
             protected:
@@ -50,7 +57,7 @@ namespace amdspl
                 bool initialize();
             private:
                 //! \brief	The constant buffer pool.
-                std::vector<ConstBuffer*> _constBufferPool;
+                std::vector<ConstBuffer*>   _constBufferPools[CONST_BUF_SIZE_NUM];
             };
         }
     }
