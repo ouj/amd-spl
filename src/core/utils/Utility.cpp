@@ -82,28 +82,61 @@ namespace amdspl
         {
             switch(dataFormat)
             {
-            case CAL_FORMAT_FLOAT_1:
-                return sizeof(float);
-            case CAL_FORMAT_UINT_1:
-                return sizeof(unsigned int);
-            case CAL_FORMAT_INT_1:
+            case CAL_FORMAT_UNORM_INT8_1:
+            case CAL_FORMAT_SNORM_INT8_1:
+            case CAL_FORMAT_UNSIGNED_INT8_1:
+            case CAL_FORMAT_SIGNED_INT8_1:
+                return sizeof(char);
+            case CAL_FORMAT_UNORM_INT8_2:
+            case CAL_FORMAT_SNORM_INT8_2:
+            case CAL_FORMAT_UNSIGNED_INT8_2:
+            case CAL_FORMAT_SIGNED_INT8_2:
+                return sizeof(char) * 2;
+            case CAL_FORMAT_UNORM_INT8_4:
+            case CAL_FORMAT_SNORM_INT8_4:
+            case CAL_FORMAT_UNSIGNED_INT8_4:
+            case CAL_FORMAT_SIGNED_INT8_4:
+                return sizeof(char) * 4;
+            case CAL_FORMAT_UNORM_INT16_1:
+            case CAL_FORMAT_SNORM_INT16_1:
+            case CAL_FORMAT_UNSIGNED_INT16_1:
+            case CAL_FORMAT_SIGNED_INT16_1:
+                return sizeof(short);
+            case CAL_FORMAT_UNORM_INT16_2:
+            case CAL_FORMAT_SNORM_INT16_2:
+            case CAL_FORMAT_UNSIGNED_INT16_2:
+            case CAL_FORMAT_SIGNED_INT16_2:
+                return sizeof(short) * 2;
+            case CAL_FORMAT_UNORM_INT16_4:
+            case CAL_FORMAT_SNORM_INT16_4:
+            case CAL_FORMAT_UNSIGNED_INT16_4:
+            case CAL_FORMAT_SIGNED_INT16_4:
+                return sizeof(short) * 4;
+            case CAL_FORMAT_UNORM_INT32_1:
+            case CAL_FORMAT_SNORM_INT32_1:
+            case CAL_FORMAT_UNSIGNED_INT32_1:
+            case CAL_FORMAT_SIGNED_INT32_1:
                 return sizeof(int);
-            case CAL_FORMAT_DOUBLE_1:
-                return sizeof(double);
-            case CAL_FORMAT_FLOAT_2:
+            case CAL_FORMAT_UNORM_INT32_2:
+            case CAL_FORMAT_SNORM_INT32_2:
+            case CAL_FORMAT_UNSIGNED_INT32_2:
+            case CAL_FORMAT_SIGNED_INT32_2:
+                return sizeof(int) * 2;
+            case CAL_FORMAT_UNORM_INT32_4:
+            case CAL_FORMAT_SNORM_INT32_4:
+            case CAL_FORMAT_UNSIGNED_INT32_4:
+            case CAL_FORMAT_SIGNED_INT32_4:
+                return sizeof(int) * 4;
+            case CAL_FORMAT_FLOAT32_1:
+                return sizeof(float);
+            case CAL_FORMAT_FLOAT32_2:
                 return sizeof(float2);
-            case CAL_FORMAT_UINT_2:
-                return sizeof(uint2);
-            case CAL_FORMAT_INT_2:
-                return sizeof(int2);
-            case CAL_FORMAT_DOUBLE_2:
-                return sizeof(double2);
-            case CAL_FORMAT_FLOAT_4:
+            case CAL_FORMAT_FLOAT32_4:
                 return sizeof(float4);
-            case CAL_FORMAT_UINT_4:
-                return sizeof(uint4);
-            case CAL_FORMAT_INT_4:
-                return sizeof(int4);
+            case CAL_FORMAT_FLOAT64_1:
+                return sizeof(double);
+            case CAL_FORMAT_FLOAT64_2:
+                return sizeof(double2);
             default:
                 return 0;
             }
