@@ -49,6 +49,8 @@ namespace amdspl
                 //////////////////////////////////////////////////////////////////////////
                 ProgramInfo(const char* ID, const char* source)
                 {
+                    assert(ID);
+                    assert(source);
                     this->source = source;
                     this->Id = ID;
                 }

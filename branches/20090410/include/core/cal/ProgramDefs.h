@@ -105,7 +105,8 @@ namespace amdspl
                 CALresult result;
 
                 // Compiling program
-                CALobject obj;
+                CALobject obj = 0;
+                assert(progInfo.getSource());
                 result = calclCompile(&obj, CAL_LANGUAGE_IL, progInfo.getSource(), info.target);
                 CHECK_CAL_RESULT_ERROR(result, "Failed to compile program\n");
 
