@@ -174,6 +174,13 @@ namespace amdspl
             {
                 unbindGlobal();
 
+                assert(buffer->isGlobal());
+                if (!buffer->isGlobal())
+                {
+                    LOG_COMMON_ERROR("Cannot bind buffer which is not global to global name\n");
+                    return false;
+                }
+
                 CALname name = getGlobalName();
                 CALcontext ctx = _device->getContext();
                 CALresource res = buffer->getResHandle();
