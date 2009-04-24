@@ -123,8 +123,9 @@ namespace amdspl
                     bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
                 if(!hostBuf)
                 {
-                    fprintf(stderr, "Failed to create host memory \n");
-                    return false;
+                    // fall back to normal routine.
+                    LOG_COMMON_ERROR("Failed to create host memory, fall back to normal rountine\n");
+                    return Buffer::readData(ptr, size, defaultVal);
                 }
                 if(!hostBuf->readData(ptr, size, defaultVal))
                     return false;
@@ -208,8 +209,9 @@ namespace amdspl
                     bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
                 if(!hostBuf)
                 {
-                    fprintf(stderr, "Failed to create host memory \n");
-                    return false;
+                    // Fall back to normal routine.
+                    LOG_COMMON_ERROR("Failed to create host memory, fall back to normal rountine\n");
+                    return Buffer::writeData(ptr, size);
                 }
 
                 Program *program = progMgr->loadProgram(copyKernel, _device);

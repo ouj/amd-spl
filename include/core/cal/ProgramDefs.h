@@ -24,6 +24,30 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
+            //! \return	Device* Pointer to the device of the program.
+            //!
+            //! \brief	Get the device of the program.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            inline Device* Program::getDevice() const
+            {
+                return _device;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CALfunc The handle of IL function.
+            //!
+            //! \brief	Get CAL IL function handle.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            inline CALfunc Program::getFunction() const
+            {
+                return _func;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
             //! \param	i       The index of the output register.
             //! \return	CALname The CAL name of the output register.
             //!
@@ -105,7 +129,8 @@ namespace amdspl
                 CALresult result;
 
                 // Compiling program
-                CALobject obj;
+                CALobject obj = 0;
+                assert(progInfo.getSource());
                 result = calclCompile(&obj, CAL_LANGUAGE_IL, progInfo.getSource(), info.target);
                 CHECK_CAL_RESULT_ERROR(result, "Failed to compile program\n");
 
