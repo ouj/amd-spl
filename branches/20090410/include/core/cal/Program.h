@@ -81,6 +81,8 @@ namespace amdspl
                 bool            unbindGlobal();
                 bool            unbindAll();
 
+                inline Device*  getDevice() const;
+                inline CALfunc  getFunction() const;
                 inline CALname  getOutputName(unsigned short i) const;
                 inline CALname  getInputName(unsigned short i) const;
                 inline CALname  getConstName(unsigned short i) const;
