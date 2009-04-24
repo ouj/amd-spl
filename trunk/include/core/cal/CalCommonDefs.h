@@ -43,4 +43,11 @@
     fprintf(stderr, (msg)); \
 }
 
+//! \brief	Defines common error log macro, 
+//!         log to standard error stream on error.
+#define LOG_COMMON_ERROR(msg) \
+{ \
+    fprintf(stderr, (msg)); \
+}
+
 #endif //AMDSPL_CAL_COMMONDEFS_H
