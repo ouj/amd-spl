@@ -20,7 +20,7 @@ TEST_F(AsyncDataTransferTests, LocalMemoryDMAReadWriteTest)
     CALdeviceinfo info = device->getInfo();
 
     Buffer *buf1D = 
-        _bufMgr->createLocalBuffer(device, CAL_FORMAT_INT_1, info.maxResource2DWidth, info.maxResource2DHeight);
+        _bufMgr->createLocalBuffer(device, CAL_FORMAT_INT_1, info.maxResource2DWidth, info.maxResource2DHeight, 0);
 
     printf("Data size %d * %d:\n", info.maxResource2DWidth, info.maxResource2DHeight);
     if (buf1D)

@@ -27,7 +27,7 @@ namespace util
     {
         assert(size <= buffer1.size() && size <= buffer2.size());
         int nequal = 0;
-        for (unsigned int i = 0; i < buffer1.size(); ++i)
+        for (unsigned int i = 0; i < size; ++i)
         {
             if (!(compare(buffer1[i], buffer2[i])))
             {
