@@ -225,7 +225,7 @@ namespace amdspl
                 //bytes in the cpu buffer
                 unsigned int totalBytes = size * elementStride;
 
-                if (totalBytes < bufferBytes)
+                if (bufferBytes < totalBytes)
                 {
                     return false;
                 }
