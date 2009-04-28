@@ -123,6 +123,7 @@ namespace amdspl
                 if(!hostBuf)
                 {
                     // failed..-_-, try again using uncachable memory.
+                    LOG_COMMON_ERROR("Failed to create cachable host memory, try uncachable\n");
                     Buffer *hostBuf = 
                         bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
                 }
@@ -217,6 +218,7 @@ namespace amdspl
                 if(!hostBuf)
                 {
                     // failed..-_-, try again using uncachable memory.
+                    LOG_COMMON_ERROR("Failed to create cachable host memory, try uncachable\n");
                     Buffer *hostBuf = 
                         bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
                 }
