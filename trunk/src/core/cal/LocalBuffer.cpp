@@ -93,8 +93,6 @@ namespace amdspl
             //! \param	ptr     The CPU address contains the data going to be 
             //!                 transfered to the buffer.
             //! \param	size    The size in bytes of the data  the pointer points to.
-            //! \param	defaultVal  The default value should be set to the rest of the 
-            //!                     buffer.
             //! \return	bool    True if data transfer is succeeded. False if there is 
             //!                 an error during data transfer.
             //!
@@ -109,7 +107,7 @@ namespace amdspl
             //!             valid.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool LocalBuffer::readData(void *ptr, unsigned long size, void *defaultVal)
+            bool LocalBuffer::readData(void *ptr, unsigned long size)
             {
                 if (!ptr)
                     return false;
@@ -119,15 +117,23 @@ namespace amdspl
                 BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
                 assert(bufMgr);
 
+                // Try to get cachable resource
                 Buffer *hostBuf = 
-                    bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
+                    bufMgr->createRemoteBuffer(_dataFormat, _width, _height, CAL_RESALLOC_CACHEABLE);
                 if(!hostBuf)
                 {
-                    // fall back to normal routine.
-                    LOG_COMMON_ERROR("Failed to create host memory, fall back to normal rountine\n");
-                    return Buffer::readData(ptr, size, defaultVal);
+                    // failed..-_-, try again using uncachable memory.
+                    Buffer *hostBuf = 
+                        bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
                 }
-                if(!hostBuf->readData(ptr, size, defaultVal))
+                if(!hostBuf)
+                {
+
+                    // failed again..x_x, fall back to normal routine.
+                    LOG_COMMON_ERROR("Failed to create host memory, fall back to normal rountine\n");
+                    return Buffer::readData(ptr, size);
+                }
+                if(!hostBuf->readData(ptr, size))
                     return false;
 
                 CALresult result = CAL_RESULT_OK;
@@ -205,8 +211,15 @@ namespace amdspl
                 ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
                 assert(progMgr);
 
+                // Try to get cachable resource
                 Buffer *hostBuf = 
-                    bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
+                    bufMgr->createRemoteBuffer(_dataFormat, _width, _height, CAL_RESALLOC_CACHEABLE);
+                if(!hostBuf)
+                {
+                    // failed..-_-, try again using uncachable memory.
+                    Buffer *hostBuf = 
+                        bufMgr->createRemoteBuffer(_dataFormat, _width, _height);
+                }
                 if(!hostBuf)
                 {
                     // Fall back to normal routine.

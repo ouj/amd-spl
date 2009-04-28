@@ -73,8 +73,6 @@ namespace amdspl
             //! \param	ptr     The CPU address contains the data going to be 
             //!                 transfered to the buffer.
             //! \param	size    The size in bytes of the data  the pointer points to.
-            //! \param	defaultVal  The default value should be set to the rest of the 
-            //!                     buffer.
             //! \return	bool    True if data transfer is succeeded. False if there is 
             //!                 an error during data transfer.
             //!
@@ -89,7 +87,7 @@ namespace amdspl
             //!             valid.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool Buffer::readData(void *ptr, unsigned long size, void *defaultVal)
+            bool Buffer::readData(void *ptr, unsigned long size)
             {
                 char *cpuPtr = static_cast<char*>(ptr);
                 if (!cpuPtr)
@@ -132,16 +130,6 @@ namespace amdspl
                 if (cpuRowStride == gpuRowStride)
                 {
                     memcpy(gpuPtr, cpuPtr, totalBytes);
-                    if (defaultBytes && defaultVal)
-                    {
-                        gpuPtr += totalBytes;
-                        while (defaultBytes)
-                        {
-                            memcpy(gpuPtr, defaultVal, elementStride);
-                            gpuPtr += elementStride;
-                            defaultBytes -= elementStride;
-                        }
-                    }
                 }
                 else
                 {
@@ -157,25 +145,6 @@ namespace amdspl
                     if (remainBytes)
                     {
                         memcpy(gpuPtr, cpuPtr, remainBytes);
-                    }
-
-                    if (defaultBytes && defaultVal)
-                    {
-                        char* tmpPtr = gpuPtr + remainBytes;
-                        size_t remainBytesInRow = cpuRowStride - remainBytes;
-                        while (defaultBytes)
-                        {
-                            if (remainBytesInRow == 0)
-                            {
-                                remainBytesInRow = cpuRowStride;
-                                gpuPtr += gpuRowStride;
-                                tmpPtr = gpuPtr;
-                            }
-                            memcpy(tmpPtr, defaultVal, elementStride);
-                            tmpPtr += elementStride;
-                            remainBytesInRow -= elementStride;
-                            defaultBytes -= elementStride;
-                        }
                     }
                 }
                 releasePointerCPU();

@@ -255,7 +255,7 @@ namespace amdspl
                     return SPL_RESULT_BUFFER_ERROR;
 
                 T extremeValue = asc ? extreme_value<T>::MaxValue : extreme_value<T>::MinValue;
-                if(!buffer1->readData(ptr, size, &extremeValue))
+                if(!buffer1->readData(ptr, size))
                     return SPL_RESULT_BUFFER_ERROR;
 
                 Program *prog = progMgr->loadProgram(asc ? bitonicSortILGroup<T>::asc : bitonicSortILGroup<T>::des, device);
