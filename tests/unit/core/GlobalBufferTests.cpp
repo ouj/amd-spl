@@ -134,33 +134,6 @@ TEST_F(GlobalBufferTests, GlobalBufferReadWriteData3Test)
 }
 
 
-TEST_F(GlobalBufferTests, GlobalBufferReadWriteData5Test)
-{
-    Device* device = _deviceMgr->getDefaultDevice();
-    if(!device)
-        return;
-
-    Buffer *buf1D = 
-        RuntimeTestFixture::_bufMgr->createLocalBuffer(device, CAL_FORMAT_INT_1, 1024, 1024, CAL_RESALLOC_GLOBAL_BUFFER);
-
-    if (buf1D)
-    {
-        vector<int> cpuBuf(1024 * 1024, 123321);
-        util::initializeBuffer(cpuBuf, 120, 10, 1000, util::RANDOM);
-
-        int defaultVal = 123321;
-        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], 1200, &defaultVal));
-        vector<int> result(1024 * 1024);
-        ASSERT_TRUE(buf1D->writeData(&result[0], (unsigned long)result.size()));
-
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));
-
-        _bufMgr->destroyBuffer(buf1D);
-    }
-    else
-        FAIL();
-}
-
 TEST_F(GlobalBufferTests, GlobalRemoteBufferTypeCastTest)
 {
     Device* device = _deviceMgr->getDefaultDevice();
@@ -277,34 +250,6 @@ TEST_F(GlobalBufferTests, GlobalRemoteBufferReadWriteData3Test)
         ASSERT_TRUE(buf1D->readData(&cpuBuf[0], (unsigned long)cpuBuf.size()));
         vector<double2> result;
         result.resize(width * height);
-        ASSERT_TRUE(buf1D->writeData(&result[0], (unsigned long)result.size()));
-
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));
-
-        _bufMgr->destroyBuffer(buf1D);
-    }
-    else
-        FAIL();
-}
-
-
-TEST_F(GlobalBufferTests, GlobalRemoteBufferReadWriteData5Test)
-{
-    Device* device = _deviceMgr->getDefaultDevice();
-    if(!device)
-        return;
-
-    Buffer *buf1D = 
-        RuntimeTestFixture::_bufMgr->createRemoteBuffer(CAL_FORMAT_INT_1, 1024, 1024, CAL_RESALLOC_GLOBAL_BUFFER);
-
-    if (buf1D)
-    {
-        vector<int> cpuBuf(1024 * 1024, 123321);
-        util::initializeBuffer(cpuBuf, 120, 10, 1000, util::RANDOM);
-
-        int defaultVal = 123321;
-        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], 1200, &defaultVal));
-        vector<int> result(1024 * 1024);
         ASSERT_TRUE(buf1D->writeData(&result[0], (unsigned long)result.size()));
 
         ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));

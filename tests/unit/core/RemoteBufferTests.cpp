@@ -116,26 +116,3 @@ TEST_F(RemoteBufferTests, RemoteBufferReadWriteData3Test)
         FAIL();
 }
 
-
-TEST_F(RemoteBufferTests, RemoteBufferReadWriteData5Test)
-{
-    Buffer *buf1D = 
-        RuntimeTestFixture::_bufMgr->createRemoteBuffer(CAL_FORMAT_INT_1, 1024, 1024);
-
-    if (buf1D)
-    {
-        vector<int> cpuBuf(1024 * 1024, 123321);
-        util::initializeBuffer(cpuBuf, 120, 10, 1000, util::RANDOM);
-
-        int defaultVal = 123321;
-        ASSERT_TRUE(buf1D->readData(&cpuBuf[0], 1200, &defaultVal));
-        vector<int> result(1024 * 1024);
-        ASSERT_TRUE(buf1D->writeData(&result[0], (unsigned long)result.size()));
-
-        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, (unsigned long)cpuBuf.size()));
-
-        _bufMgr->destroyBuffer(buf1D);
-    }
-    else
-        FAIL();
-}
