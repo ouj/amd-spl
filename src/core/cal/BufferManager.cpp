@@ -124,6 +124,35 @@ namespace amdspl
                 return remoteBuf;
             }
 
+			//////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	device  The device where the PinnedBuffer will be located.
+            //! \param	format  The CAL format of the PinnedBuffer.
+            //! \param	width   The width of the 1D/2D buffer.
+            //! \param	height  The height of the 2D buffer. It should be set to zero
+            //!                 for 1D buffer.
+            //! \param  flag    The buffer initialization flag.
+            //! \return	Buffer* The pointer to a PinnedBuffer object if it is  
+            //!                 successfully allocated. NULL if there is an error 
+            //!                 during local buffer creation.
+            //!
+            //! \brief	Create a PinnedBuffer object with specific CAL format and 
+            //!         dimension
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            Buffer* BufferManager::createPinnedBuffer(Device* device, CALformat format, 
+                unsigned int width, unsigned int height, void *userMem, unsigned int flag)
+            {
+                PinnedBuffer *pinnedBuf = 
+                    new PinnedBuffer(device, format, width, height, userMem);
+                if (!pinnedBuf->initialize())
+                {
+                    SAFE_DELETE(pinnedBuf);
+                    return NULL;
+                }
+                return pinnedBuf;
+            }
+
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \param	size            The size of the constant buffer.
