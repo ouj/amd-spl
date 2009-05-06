@@ -255,6 +255,80 @@ namespace amdspl
                 bufMgr->destroyBuffer(hostBuf);
                 return true;
             }
+
+			//////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief Define Program information type for copy kernel. Internal use
+            //!         only.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            typedef ProgramInfo<1, 1, 0, false>  PinnedCopyProgram;
+            //! \brief	Copy kernel source string. Static object, internal use only.
+            static const char* _sz_pinned_copy_source_ = IL_KERNEL(
+                il_ps_2_0
+                dcl_input_position_interp(linear_noperspective) v0.xy__
+                dcl_output_generic o0
+                dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
+                sample_resource(0)_sampler(0) o0, v0.xy
+                endmain
+                end
+                );
+            //! \brief	Pinned Copy Kernel ProgramInfo object. Static object, internal use only.
+            static PinnedCopyProgram pinnedCopyKernel = 
+                PinnedCopyProgram("Pinned Copy Kernel", _sz_pinned_copy_source_);
+
+			//////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	ptr     The CPU address where that data in buffer will be 
+            //!                 transfered to.
+            //! \param	size    The size in bytes of the space the pointer points to.
+            //! \return	bool    True if data transfer is succeeded. False if there is 
+            //!                 an error during data transfer.
+            //!
+            //! \brief	Synchronized data transfer from GPU local memory to CPU memory.
+            //!         Instead of DMA, copy kernel and pinned memory are used to have the peak 
+            //!         performance.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+			bool LocalBuffer::writePinnedData(void *userMem) {
+
+				BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
+                assert(bufMgr);
+                ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
+                assert(progMgr);
+
+                Buffer *pinnedBuf = 
+                    bufMgr->createPinnedBuffer(_device, _dataFormat, _width, _height, userMem);
+
+				if(!pinnedBuf)
+				{
+					LOG_COMMON_ERROR("calResCreate2D failed when writing back\n");
+					return false;
+				}
+
+				Program *program = progMgr->loadProgram(pinnedCopyKernel, _device);
+                assert(program);
+
+                if(!program->bindInput(this, 0))
+                {
+                    assert(false);
+                    return false;
+                };
+                if(!program->bindOutput(pinnedBuf, 0))
+                {
+                    assert(false);
+                    return false;
+                };
+
+                CALdomain domain = {0, 0, _width, (_height ? _height : 1)};
+                Event* e = program->run(domain);
+                assert(e);
+                e->waitEvent();
+
+                progMgr->unloadProgram(program);
+                bufMgr->destroyBuffer(pinnedBuf);
+                return true;
+			}
         }
     }
 }
