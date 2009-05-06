@@ -290,15 +290,23 @@ namespace amdspl
             //!         performance.
             //!
             //////////////////////////////////////////////////////////////////////////
-			bool LocalBuffer::writePinnedData(void *userMem) {
+			bool LocalBuffer::writePinnedData(void *userMem, unsigned long size) {
+
+				//TODO: only float 4 is supported now
+				unsigned int width = _width * 4;
+				if(size<_height*width*sizeof(float)) {
+					LOG_COMMON_ERROR("calResCreate2D failed when writing back\n");
+					return false;
+				}
 
 				BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
                 assert(bufMgr);
                 ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
                 assert(progMgr);
 
+				
                 Buffer *pinnedBuf = 
-                    bufMgr->createPinnedBuffer(_device, _dataFormat, _width, _height, userMem);
+                    bufMgr->createPinnedBuffer(_device, _dataFormat, width, _height, userMem);
 
 				if(!pinnedBuf)
 				{

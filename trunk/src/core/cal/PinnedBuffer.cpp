@@ -90,7 +90,7 @@ namespace amdspl
 				if(result!= CAL_RESULT_OK)
 				{
 					LOG_COMMON_ERROR("calResCreate2D failed. \n");
-					return true;
+					return false;
 				}
                 return true;
             }
