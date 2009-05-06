@@ -12,6 +12,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "cal.h"
+#include "cal_ext.h"
 #include "SplDefs.h"
 #include "IBuffer.h"
 namespace amdspl
