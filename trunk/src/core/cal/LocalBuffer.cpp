@@ -256,6 +256,57 @@ namespace amdspl
                 return true;
             }
 
+
+			bool LocalBuffer::readPinnedData(void *userMem, unsigned long size) {
+
+				//pinned memory format should be the same as the format of local memory
+
+				BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
+                assert(bufMgr);
+                ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
+                assert(progMgr);
+
+                Buffer *pinnedBuf = 
+                    bufMgr->createPinnedBuffer(_device, _dataFormat, _width, _height, userMem);
+
+				if(!pinnedBuf)
+				{
+					LOG_COMMON_ERROR("calResCreate2D failed when writing back\n");
+					return false;
+				}
+
+				CALcontext ctx = _device->getContext();
+                assert(ctx);
+
+				CALresult result;
+                // Get the memory handle
+                CALmem srcMem;
+                CALmem dstMem;
+                result = calCtxGetMem(&srcMem, ctx, pinnedBuf->getResHandle());
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get host memory handle \n");
+                result = calCtxGetMem(&dstMem, ctx, _res);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get local memory handle \n");
+
+				CALevent memcpyEvent;
+                result = calMemCopy(&memcpyEvent, ctx, srcMem, dstMem, 0);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to do DMA transfer.\n");
+
+				int counter = 0;
+				while(calCtxIsEventDone(ctx, memcpyEvent) == CAL_RESULT_PENDING) 
+				{
+					counter++;
+				}
+
+				calCtxReleaseMem(ctx, srcMem);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to release host memory handle \n");
+                calCtxReleaseMem(ctx, dstMem);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to release local memory handle \n");
+                bufMgr->destroyBuffer(pinnedBuf);
+
+				return true;
+
+			}
+
 			//////////////////////////////////////////////////////////////////////////
             //!
             //! \brief Define Program information type for copy kernel. Internal use
@@ -269,7 +320,7 @@ namespace amdspl
                 dcl_input_position_interp(linear_noperspective) v0.xy__
                 dcl_output_generic o0
                 dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
-                sample_resource(0)_sampler(0) o0, v0.xy
+                sample_resource(0)_sampler(0) o0, v0.xy00
                 endmain
                 end
                 );
@@ -293,20 +344,21 @@ namespace amdspl
 			bool LocalBuffer::writePinnedData(void *userMem, unsigned long size) {
 
 				//TODO: only float 4 is supported now
-				unsigned int width = _width * 4;
-				if(size<_height*width*sizeof(float)) {
+				/*
+				unsigned int height = _height * 4;
+				if(size<height*_width*sizeof(float)) {
 					LOG_COMMON_ERROR("calResCreate2D failed when writing back\n");
 					return false;
 				}
+				*/
 
 				BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
                 assert(bufMgr);
                 ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
                 assert(progMgr);
 
-				
                 Buffer *pinnedBuf = 
-                    bufMgr->createPinnedBuffer(_device, _dataFormat, width, _height, userMem);
+                    bufMgr->createPinnedBuffer(_device, _dataFormat, _width, _height, userMem);
 
 				if(!pinnedBuf)
 				{

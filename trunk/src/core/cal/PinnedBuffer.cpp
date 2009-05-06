@@ -83,9 +83,11 @@ namespace amdspl
 				}
 
 				//TODO: now use float1 as default
-				unsigned int size = sizeof(float) * _width * _height;
+				unsigned int size = sizeof(float) * _width * _height * 4;
 				CALresult result = calResCreate2D(&_res, _device->getHandle(), (CALvoid*)_mem, 
-							_width, _height, CAL_FORMAT_FLOAT_1, CALuint(size), 0);
+							_width, _height, _dataFormat, CALuint(size), 0);
+				/*CALresult result = calResCreate2D(&_res, _device->getHandle(), (CALvoid*)_mem, 
+							1024, 1024, CAL_FORMAT_FLOAT_1, CALuint(1024), 0);*/
 
 				if(result!= CAL_RESULT_OK)
 				{
