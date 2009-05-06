@@ -36,6 +36,7 @@ namespace amdspl
                 LocalBuffer(Device* device, CALformat format, 
                     unsigned int width, unsigned int height = 0, unsigned int flag = 0);
                 virtual bool    initialize();
+				virtual bool	   writePinnedData(void *userMem);
                 virtual bool    readData(void *ptr, unsigned long size);
                 virtual bool    writeData(void *ptr, unsigned long size);
                 //! \brief	The pointer to the device object this local buffer associated to.
