@@ -34,7 +34,7 @@ namespace amdspl
             protected:
                 PinnedBuffer(Device *device, CALformat format, unsigned int width, unsigned int height, void *userMem);
                 virtual bool	   initialize();
-				virtual bool    readData(void *ptr, unsigned long size, void *defaultVal = 0);
+				virtual bool    readData(void *ptr, unsigned long size);
                 virtual bool    writeData(void *ptr, unsigned long size);
 				//! \brief	The pointer to the device object this local buffer associated to.
                 Device* _device;
