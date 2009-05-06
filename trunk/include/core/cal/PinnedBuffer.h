@@ -18,7 +18,7 @@ namespace amdspl
     {
         namespace cal
         {
-			PFNCALRESCREATE2D calResCreate2D = 0;
+			static PFNCALRESCREATE2D calResCreate2D = 0;
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief	RemoteBuffer class is an abstract representation of CAL remote
