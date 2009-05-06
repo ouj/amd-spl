@@ -57,6 +57,18 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             bool PinnedBuffer::initialize()
             {
+				#ifdef ATI_OS_VISTA 
+				if(((uintptr_t)_mem) & (0xfff)) {
+					LOG_COMMON_ERROR("memory should be aligned!");
+					return false;
+				}
+				#else
+				if(((uintptr_t)_mem) & (0xff)) {
+					LOG_COMMON_ERROR("memory should be aligned!");
+					return false;
+				}
+				#endif
+
 				if(!calResCreate2D) {
 					if( calExtGetProc((CALextproc*)&calResCreate2D, CAL_EXT_RES_CREATE, "calResCreate2D") != CAL_RESULT_OK )
 					{
