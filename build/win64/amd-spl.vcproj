@@ -223,6 +223,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\include\core\cal\PinnedBuffer.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\include\core\cal\Program.h"
 						>
 					</File>
@@ -280,6 +284,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\LocalBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\cal\PinnedBuffer.cpp"
 						>
 					</File>
 					<File

@@ -27,11 +27,12 @@ COMMON_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
 	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o 
 OBJ=$(COMMON_OBJ) $(CFG_OBJ)
 ALL_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
-	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/Device.o \
+	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o 	$(INTERDIR)/Device.o \
 	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Event.o \
 	$(INTERDIR)/LocalBuffer.o $(INTERDIR)/Program.o \
 	$(INTERDIR)/ProgramManager.o $(INTERDIR)/RemoteBuffer.o \
-	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o
+	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o 
+	$(INTERDIR)/SplBitonicSort.o $(INTERDIR)/PinnedBuffer.o
 
 COMPILE=g++ -c -fPIC  -o "$(INTERDIR)/$(*F).o" $(CFG_INC) "$<"
 LINK=g++  -o "$(OUTFILE)" $(OBJ) $(CFG_LIB) -shared -fPIC
