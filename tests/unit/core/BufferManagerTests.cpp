@@ -177,3 +177,65 @@ TEST_F(BufferManagerTests, GetConstBufferTest2)
     _bufMgr->releaseConstBuffer(buf1);
     _bufMgr->releaseConstBuffer(buf3);
 }
+
+TEST_F(BufferManagerTests, BufferCopyTest1)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    if(!device)
+        return;
+
+    Buffer *srcBuf = 
+        RuntimeTestFixture::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_2, 1024);
+    Buffer *dstBuf = 
+        RuntimeTestFixture::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_2, 1024);
+
+    if (srcBuf && dstBuf)
+    {
+        vector<float2> cpuBuf(1024);
+        vector<float2> result(1024);
+        util::initializeBuffer(cpuBuf, 1024, 0, 1000, util::RANDOM);
+
+        ASSERT_TRUE(srcBuf->readData(&cpuBuf[0], static_cast<unsigned long>(cpuBuf.size())));
+
+        _bufMgr->copy(srcBuf, dstBuf, device);
+
+        ASSERT_TRUE(dstBuf->writeData(&result[0], static_cast<unsigned long>(result.size())));
+        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, static_cast<unsigned long>(cpuBuf.size())));
+
+        _bufMgr->destroyBuffer(srcBuf);
+        _bufMgr->destroyBuffer(dstBuf);
+    }
+    else
+        FAIL();
+}
+
+TEST_F(BufferManagerTests, BufferCopyTest2)
+{
+    Device* device = _deviceMgr->getDefaultDevice();
+    if(!device)
+        return;
+
+    Buffer *srcBuf = 
+        RuntimeTestFixture::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_4, 1024, 512);
+    Buffer *dstBuf = 
+        RuntimeTestFixture::_bufMgr->createLocalBuffer(device, CAL_FORMAT_FLOAT_4, 1024, 512);
+
+    if (srcBuf && dstBuf)
+    {
+        vector<float4> cpuBuf(1024 * 512);
+        vector<float4> result(1024 * 512);
+        util::initializeBuffer(cpuBuf, 1024, 512, 1000, util::RANDOM);
+
+        ASSERT_TRUE(srcBuf->readData(&cpuBuf[0], static_cast<unsigned long>(cpuBuf.size())));
+
+        _bufMgr->copy(srcBuf, dstBuf, device);
+
+        ASSERT_TRUE(dstBuf->writeData(&result[0], static_cast<unsigned long>(result.size())));
+        ASSERT_EQ(0, util::compareBuffers(cpuBuf, result, static_cast<unsigned long>(cpuBuf.size())));
+
+        _bufMgr->destroyBuffer(srcBuf);
+        _bufMgr->destroyBuffer(dstBuf);
+    }
+    else
+        FAIL();
+}
