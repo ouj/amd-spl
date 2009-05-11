@@ -30,6 +30,7 @@ namespace amdspl
             class Device;
             class Buffer;
             class ConstBuffer;
+            class Event;
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief	BufferManager class contains factory methods for LocalBuffer,
@@ -45,7 +46,7 @@ namespace amdspl
                 friend class Runtime;
             public:
                 void            destroyBuffer(Buffer* buffer);
-                bool            copy(Buffer* src, Buffer* dst, Device *device = 0);
+                Event*          copy(Buffer* src, Buffer* dst, Device *device = 0);
                 Buffer*         createLocalBuffer(Device* device, CALformat format, 
                                                   unsigned int width, unsigned int height = 0, unsigned int flag = 0);
                 Buffer*         createRemoteBuffer(CALformat format, unsigned int width, 

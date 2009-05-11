@@ -7,7 +7,6 @@ using namespace amdspl::core::cal;
 
 typedef RuntimeTestFixture ProgramTests;
 
-typedef ProgramInfo<5, 3, 2, true>  SampleProgram;
 static const char* _sz_sample_prog_source_ = 
 "il_ps_2_0\n"
 "dcl_output_generic o0\n"
@@ -26,8 +25,8 @@ static const char* _sz_sample_prog_source_ =
 "add o0, r1, cb0[0]\n"
 "endmain\n"
 "end\n";
-static const SampleProgram sampleProg = 
-    SampleProgram("Sample Program Info", _sz_sample_prog_source_);
+static const ProgramInfo sampleProg = 
+    ProgramInfo("Sample Program Info", _sz_sample_prog_source_).outputs(5).inputs(3).constants(2).hasGlobal();
 
 
 TEST_F(ProgramTests, GetNameTest)
@@ -36,19 +35,19 @@ TEST_F(ProgramTests, GetNameTest)
         ProgramTests::_progMgr->loadProgram(sampleProg);
     if(prog != NULL)
     {
-        for (unsigned int i = 0; i < sampleProg.inputs; i++)
+        for (unsigned int i = 0; i < sampleProg._inputs; i++)
         {
             ASSERT_TRUE(prog->getInputName(i) != 0);
         }
-        for (unsigned int i = 0; i < sampleProg.outputs; i++)
+        for (unsigned int i = 0; i < sampleProg._outputs; i++)
         {
             ASSERT_TRUE(prog->getOutputName(i) != 0);
         }
-        for (unsigned int i = 0; i < sampleProg.constants; i++)
+        for (unsigned int i = 0; i < sampleProg._constants; i++)
         {
             ASSERT_TRUE(prog->getConstName(i) != 0);
         }
-        if (sampleProg.global)
+        if (sampleProg._global)
         {
             ASSERT_TRUE(prog->getGlobalName() != 0);
         }
@@ -57,7 +56,6 @@ TEST_F(ProgramTests, GetNameTest)
     _progMgr->unloadProgram(prog);
 }
 
-typedef ProgramInfo<1, 1, 0, false> CopyProgram;
 static const char* _sz_copy_prog_source_ = 
 "il_ps_2_0\n"
 "dcl_output_generic o0\n"
@@ -66,7 +64,8 @@ static const char* _sz_copy_prog_source_ =
 "sample_resource(0)_sampler(0) o0, v0.xy00\n"
 "endmain\n"
 "end\n";
-static const CopyProgram copyProgram = CopyProgram("Copy Program Info", _sz_copy_prog_source_);
+static const ProgramInfo copyProgram = 
+ProgramInfo("Copy Program Info", _sz_copy_prog_source_).outputs(1).inputs(1);
 
 TEST_F(ProgramTests, BindBufferTest1)
 {
@@ -115,8 +114,10 @@ TEST_F(ProgramTests, RunProgramTest)
         ASSERT_TRUE(prog->bindInput(buf1, 0));
         ASSERT_TRUE(prog->bindOutput(buf2, 0));
 
-        CALdomain domain = {0, 0, 1024, 1};
-        Event *e = prog->run(domain);
+        prog->setExeInfo(
+            ProgExeInfo(uint4(0, 0, 1024, 1))
+            );
+        Event *e = prog->run();
         ASSERT_TRUE(e != NULL);
         e->waitEvent();
 

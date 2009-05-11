@@ -7,7 +7,9 @@
 //!	\brief		Contains definition of Program class.
 //!
 //////////////////////////////////////////////////////////////////////////
-
+#ifdef _WIN32
+#pragma warning(disable : 4996)
+#endif
 #include "CalCommonDefs.h"
 #include "RuntimeDefs.h"
 #include "CommonDefs.h"
@@ -58,6 +60,106 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
+            //! \param	progInfo Instance of ProgramInfo, contains program parameter
+            //!         information, program ID and source
+            //! \return	bool True if the Program object is successfully initialized.
+            //!              False if the there is an error during initialization.
+            //!
+            //! \brief	Initialize the Program object. In this method, the IL source
+            //!         provided in ProgramInfo will be compiled, linked and loaded 
+            //!         onto CAL context of the device. Then, the module entry 
+            //!         function handle and all the register names are retrieved.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            bool Program::initialize(const ProgramInfo &progInfo)
+            {
+                if (!_device)
+                {
+                    return false;
+                }
+
+                CALdeviceinfo info = _device->getInfo();
+                CALcontext ctx = _device->getContext();
+
+                CALresult result;
+
+                // Compiling program
+                CALobject obj = 0;
+                assert(progInfo.getSource());
+                result = calclCompile(&obj, CAL_LANGUAGE_IL, progInfo.getSource(), info.target);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to compile program\n");
+
+                // Linking program
+                CALimage image;
+                result = calclLink(&image, &obj, 1);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to create image\n");
+                calclFreeObject(obj);
+
+                // Load program
+                result = calModuleLoad(&_module, ctx, image);
+                CHECK_CAL_RESULT_ERROR(result, "Failed to load module\n");
+                calclFreeImage(image);
+
+                // Get function handle
+                result = calModuleGetEntry(&_func, ctx, _module, "main");
+                CHECK_CAL_RESULT_ERROR(result, "Failed to get function handle\n");
+
+                char symbolStr[16];
+                // Get constant name handle
+                for(unsigned int i = 0; i < progInfo._constants; ++i)
+                {
+                    CALname name = 0;
+                    sprintf(symbolStr, "cb%d", i);
+                    result = calModuleGetName(&name, ctx, _module, symbolStr);
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for constants\n");
+
+                    _constNames.push_back(name);
+                }
+
+
+                // Get all the input name handles
+                for(unsigned int i = 0; i < progInfo._inputs; ++i)
+                {
+                    CALname name = 0;
+                    sprintf(symbolStr, "i%d", i);
+                    result = calModuleGetName(&name, ctx, _module, symbolStr);
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for input stream\n");
+
+                    _inputNames.push_back(name);
+                }
+
+                // Get all the output name handles
+                for(unsigned int i = 0; i < progInfo._outputs; ++i)
+                {
+                    CALname name = 0;
+                    sprintf(symbolStr, "o%d", i);
+                    result = calModuleGetName(&name, ctx, _module, symbolStr);
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for output stream\n");
+
+                    _outputNames.push_back(name);
+                }
+
+                // Get name handle for scatter stream
+                if(progInfo._global != 0)
+                {
+                    CALname name = 0;
+                    result = calModuleGetName(&name, ctx, _module, "g[]");
+                    CHECK_CAL_RESULT_ERROR(result, "Failed to get name handle for global stream\n");
+
+                    _globalName = name;
+                }
+
+                // Initialize Buffer
+                _constBuffers.resize(progInfo._constants);
+                _inputBuffers.resize(progInfo._inputs);
+                _outputBuffers.resize(progInfo._outputs);
+                _globalBuffer = BufferItem();
+
+                return true;
+            }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
             //! \param	buffer  The pointer to the input buffer to be bound
             //! \param	idx     The index of a program input register.
             //! \return	bool    True if the input buffer is successfully bound.
@@ -71,6 +173,11 @@ namespace amdspl
             bool Program::bindInput(IBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _inputBuffers.size());
+                if (idx > _inputBuffers.size())
+                {
+                    LOG_ERROR("Input buffer out of range.\n");
+                    return false;
+                }
                 unbindInput(idx);
 
                 CALname name = getInputName(idx);
@@ -106,6 +213,11 @@ namespace amdspl
             bool Program::bindOutput(IBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _outputBuffers.size());
+                if (idx > _outputBuffers.size())
+                {
+                    LOG_ERROR("Output buffer out of range.\n");
+                    return false;
+                }
                 unbindOutput(idx);
 
                 CALname name = getOutputName(idx);
@@ -141,6 +253,11 @@ namespace amdspl
             bool Program::bindConstant(ConstBuffer* buffer, unsigned int idx)
             {
                 assert(idx <= _constBuffers.size());
+                if (idx > _constBuffers.size())
+                {
+                    LOG_ERROR("Constant buffer out of range.\n");
+                    return false;
+                }
                 unbindConstant(idx);
 
                 CALname name = getConstName(idx);
@@ -172,6 +289,12 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             bool Program::bindGlobal(IBuffer* buffer)
             {
+                if (!getGlobalName())
+                {
+                    LOG_ERROR("No global buffer.\n");
+                    return false;
+                }
+ 
                 unbindGlobal();
 
                 assert(buffer->isGlobal());
@@ -211,6 +334,10 @@ namespace amdspl
             bool Program::unbindInput(unsigned int idx)
             {
                 assert(idx <= _inputBuffers.size());
+                if (idx > _inputBuffers.size())
+                {
+                    return false;
+                }
                 if (_inputBuffers[idx].buffer != 0)
                 {
                     CALname name = getInputName(idx);
@@ -239,6 +366,10 @@ namespace amdspl
             bool Program::unbindOutput(unsigned int idx)
             {
                 assert(idx <= _outputBuffers.size());
+                if (idx > _outputBuffers.size())
+                {
+                    return false;
+                }
                 if (_outputBuffers[idx].buffer != 0)
                 {
                     CALname name = getOutputName(idx);
@@ -266,6 +397,10 @@ namespace amdspl
             bool Program::unbindConstant(unsigned int idx)
             {
                 assert(idx <= _constBuffers.size());
+                if (idx > _constBuffers.size())
+                {
+                    return false;
+                }
                 if (_constBuffers[idx].buffer != 0)
                 {
                     CALname name = getConstName(idx);
@@ -380,7 +515,6 @@ namespace amdspl
                 {
                     _globalBuffer.buffer->setOutputEvent(e);   
                 }
-                       
             }
 
             //////////////////////////////////////////////////////////////////////////
@@ -409,47 +543,6 @@ namespace amdspl
                     // global buffer maybe input too.
                     _globalBuffer.buffer->waitInputEvent();
                 }
-            }
-
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \param	domain  The CAL domain the program will run in.
-            //! \return	Event*  The execution event of the program.
-            //!
-            //! \brief	Execute the program in the domain. Before execution, This 
-            //!         method will synchronize constant buffers and wait for all the 
-            //!         buffer events to finish. After execution, the execution event 
-            //!         will be set to all the bound buffers.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            Event* Program::run(const CALdomain &domain)
-            {
-                CALevent execEvent;
-                CALcontext ctx = _device->getContext();
-
-                syncConstBuffers();
-
-                waitEvents();
-
-                CALresult result = calCtxRunProgram(&execEvent, ctx, _func, &domain);
-                CHECK_CAL_RESULT_ERROR2(result, "Failed to execute program!\n");
-
-                // Force a dispatch of kernel to the device.
-                result = calCtxIsEventDone(ctx, execEvent);
-                if (result == CAL_RESULT_ERROR)
-                {
-                    fprintf(stderr, "Event error!\n");
-                    return 0;
-                }
-
-                // Get an event from the event pool
-                Event* e = 
-                    Runtime::getInstance()->getProgramManager()->getEvent();
-
-                e->set(execEvent, ctx);
-                setEvents(e);
-
-                return e;
             }
         }
     }

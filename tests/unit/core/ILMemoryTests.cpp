@@ -7,15 +7,14 @@ using namespace amdspl::core::cal;
 
 typedef RuntimeTestFixture ILMemoryTest;
 
-typedef ProgramInfo<0, 0, 0, true>  GlobalMemoryProgram;
 static const char* _sz_global_prog_source_ = IL_KERNEL(
     il_ps_2_0
     endmain
     end
 );
 
-static const GlobalMemoryProgram globalProg = 
-GlobalMemoryProgram("Global Memory Program Info", _sz_global_prog_source_);
+static const ProgramInfo globalProg = 
+ProgramInfo("Global Memory Program Info", _sz_global_prog_source_).hasGlobal();
 
 TEST_F(ILMemoryTest, GlobalMemoryTest)
 {

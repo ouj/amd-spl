@@ -22,6 +22,8 @@
 #include "PinnedBuffer.h"
 #include "ConstBuffer.h"
 #include "ProgramInfo.h"
+#include "GeneralProgram.h"
+#include "ComputeProgram.h"
 #include "Event.h"
 #include "CalCommonDefs.h"
 

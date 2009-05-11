@@ -199,6 +199,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\include\core\cal\ComputeProgram.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\include\core\cal\ConstBuffer.h"
 						>
 					</File>
@@ -215,6 +219,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\include\core\cal\GeneralProgram.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\include\core\cal\IBuffer.h"
 						>
 					</File>
@@ -228,10 +236,6 @@
 					</File>
 					<File
 						RelativePath="..\..\include\core\cal\Program.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\include\core\cal\ProgramDefs.h"
 						>
 					</File>
 					<File
@@ -267,6 +271,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\cal\ComputeProgram.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\ConstBuffer.cpp"
 						>
 					</File>
@@ -280,6 +288,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\Event.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\cal\GeneralProgram.cpp"
 						>
 					</File>
 					<File

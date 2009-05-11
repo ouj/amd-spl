@@ -2,7 +2,7 @@
 //!
 //!	\file 		LocalBuffer.cpp
 //!	\date 		1:3:2009   14:05
-//!	\author		Jiawei Ou
+//!	\author		Jiawei Ou, Shawn Zhou
 //!	
 //!	\brief		Contains definition of LocalBuffer object.
 //!
@@ -170,27 +170,6 @@ namespace amdspl
 
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief Define Program information type for copy kernel. Internal use
-            //!         only.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            typedef ProgramInfo<1, 1, 0, false>  CopyKernelProgram;
-            //! \brief	Copy kernel source string. Static object, internal use only.
-            static const char* _sz_copy_kernel_source_ = IL_KERNEL(
-                il_ps_2_0
-                dcl_input_position_interp(linear_noperspective) v0.xy__
-                dcl_output_generic o0
-                dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
-                sample_resource(0)_sampler(0) o0, v0.xy00
-                endmain
-                end
-                );
-            //! \brief	Copy kernel ProgramInfo object. Static object, internal use only.
-            static CopyKernelProgram copyKernel = 
-                CopyKernelProgram("Copy Kernel", _sz_copy_kernel_source_);
-
-            //////////////////////////////////////////////////////////////////////////
-            //!
             //! \param	ptr     The CPU address where that data in buffer will be 
             //!                 transfered to.
             //! \param	size    The size in bytes of the space the pointer points to.
@@ -209,8 +188,6 @@ namespace amdspl
 
                 BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
                 assert(bufMgr);
-                ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
-                assert(progMgr);
 
                 // Try to get cachable resource
                 Buffer *hostBuf = 
@@ -229,29 +206,11 @@ namespace amdspl
                     return Buffer::writeData(ptr, size);
                 }
 
-                Program *program = progMgr->loadProgram(copyKernel, _device);
-                assert(program);
-
-                if(!program->bindInput(this, 0))
-                {
-                    assert(false);
-                    return false;
-                };
-                if(!program->bindOutput(hostBuf, 0))
-                {
-                    assert(false);
-                    return false;
-                };
-
-                CALdomain domain = {0, 0, _width, (_height ? _height : 1)};
-                Event* e = program->run(domain);
-                assert(e);
-                e->waitEvent();
+                Event* e = bufMgr->copy(this, hostBuf, this->_device);
 
                 if(!hostBuf->writeData(ptr, size))
                     return false;
 
-                progMgr->unloadProgram(program);
                 bufMgr->destroyBuffer(hostBuf);
                 return true;
             }
@@ -309,27 +268,6 @@ namespace amdspl
 
 			//////////////////////////////////////////////////////////////////////////
             //!
-            //! \brief Define Program information type for copy kernel. Internal use
-            //!         only.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            typedef ProgramInfo<1, 1, 0, false>  PinnedCopyProgram;
-            //! \brief	Copy kernel source string. Static object, internal use only.
-            static const char* _sz_pinned_copy_source_ = IL_KERNEL(
-                il_ps_2_0
-                dcl_input_position_interp(linear_noperspective) v0.xy__
-                dcl_output_generic o0
-                dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
-                sample_resource(0)_sampler(0) o0, v0.xy00
-                endmain
-                end
-                );
-            //! \brief	Pinned Copy Kernel ProgramInfo object. Static object, internal use only.
-            static PinnedCopyProgram pinnedCopyKernel = 
-                PinnedCopyProgram("Pinned Copy Kernel", _sz_pinned_copy_source_);
-
-			//////////////////////////////////////////////////////////////////////////
-            //!
             //! \param	ptr     The CPU address where that data in buffer will be 
             //!                 transfered to.
             //! \param	size    The size in bytes of the space the pointer points to.
@@ -354,8 +292,6 @@ namespace amdspl
 
 				BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
                 assert(bufMgr);
-                ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
-                assert(progMgr);
 
                 Buffer *pinnedBuf = 
                     bufMgr->createPinnedBuffer(_device, _dataFormat, _width, _height, userMem);
@@ -366,26 +302,13 @@ namespace amdspl
 					return false;
 				}
 
-				Program *program = progMgr->loadProgram(pinnedCopyKernel, _device);
-                assert(program);
-
-                if(!program->bindInput(this, 0))
-                {
-                    assert(false);
-                    return false;
-                };
-                if(!program->bindOutput(pinnedBuf, 0))
-                {
-                    assert(false);
-                    return false;
-                };
-
-                CALdomain domain = {0, 0, _width, (_height ? _height : 1)};
-                Event* e = program->run(domain);
+				Event* e = bufMgr->copy(this, pinnedBuf, this->_device);
                 assert(e);
-                e->waitEvent();
-
-                progMgr->unloadProgram(program);
+                if (e)
+                {
+                    e->waitEvent();
+                }
+                
                 bufMgr->destroyBuffer(pinnedBuf);
                 return true;
 			}
