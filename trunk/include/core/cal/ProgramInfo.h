@@ -11,6 +11,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include <string>
+#include <assert.h>
 
 using namespace std;
 
@@ -24,19 +25,13 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
-            //! \tparam outputsT    Template parameter of output register number.
-            //! \tparam inputsT     Template parameter of input register number.
-            //! \tparam constantsT  Template parameter of constant register number.
-            //! \tparam globalT     Template parameter indicate whether there is a 
-            //!                     global register.
-            //!
             //! \brief	ProgramInfo class contains information of a IL program. 
             //! \warning Not thread safe.
             //!
             //////////////////////////////////////////////////////////////////////////
-            template <int outputsT, int inputsT = 0, int constantsT = 0, bool globalsT = false> 
             class ProgramInfo
             {
+                friend class Program;
             public:
                 //////////////////////////////////////////////////////////////////////////
                 //!
@@ -53,25 +48,19 @@ namespace amdspl
                     assert(source);
                     this->source = source;
                     this->Id = ID;
+
+                    _outputs = 0;
+                    _inputs = 0;
+                    _constants = 0;
+                    _global = false;
+                    _isCS = false;
                 }
 
-                //////////////////////////////////////////////////////////////////////////
-                //!
-                //! \brief  Parameter information of the program. These enumerate values
-                //!         are initialized by template parameter in compile-time.
-                //!
-                //////////////////////////////////////////////////////////////////////////
-                enum para
-                {
-                    //! \brief	output register number.
-                    outputs = outputsT,
-                    //! \brief	input register number.
-                    inputs = inputsT,
-                    //! \brief	constant register number.
-                    constants = constantsT,
-                    //! \brief	boolean value indicate whether there is a global buffer.
-                    global = globalsT
-                };
+                unsigned int _outputs;
+                unsigned int _inputs;
+                unsigned int _constants;
+                bool         _global;
+                bool         _isCS; 
 
                 //////////////////////////////////////////////////////////////////////////
                 //!
@@ -113,14 +102,41 @@ namespace amdspl
                     string t(token);
                     string::size_type pos = -1;
                     pos = source.find(t);
-
                     if (pos != string::npos)
                     {
                         source.replace(pos, t.size(), src);
                     }
-
                     return *this;
                 };
+
+                inline ProgramInfo& outputs(unsigned int outputs = 0)
+                {
+                    _outputs = outputs;
+                    return *this;
+                };
+
+                inline ProgramInfo& inputs(unsigned int inputs = 0)
+                {
+                    _inputs = inputs;
+                    return *this;
+                };
+
+                inline ProgramInfo& constants(unsigned int constants = 0)
+                {
+                    _constants = constants;
+                    return *this;
+                };
+
+                inline ProgramInfo& hasGlobal()
+                {
+                    _global = true;
+                    return *this;
+                };
+
+                inline ProgramInfo& isCompute()
+                {
+                    _isCS = true;
+                }
 
             private:
                 //! \brief	Stores the source string of the IL program.

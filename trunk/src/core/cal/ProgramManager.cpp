@@ -8,6 +8,10 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include "ProgramManager.h"
+#include "Runtime.h"
+#include "DeviceManager.h"
+#include "GeneralProgram.h"
+#include "ComputeProgram.h"
 #include "Program.h"
 #include "CommonDefs.h"
 
@@ -17,6 +21,49 @@ namespace amdspl
     {
         namespace cal
         {
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	progInfo The ProgramInfo object contains parameter information,
+            //!                  source code and program ID.
+            //! \param	device   The pointer to the Device.The method will be compiled
+            //!                  based on this device target and load it onto its 
+            //!                  context.
+            //! \return	Program* The pointer to the Program object if the program is
+            //!                  successfully loaded. NULL is there is an error during
+            //!                  loading the program.
+            //!
+            //! \brief	Compile the program base on the device target and load it onto 
+            //!         the corresponding device context. The program information is 
+            //!         provided in a ProgramInfo object.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            Program* ProgramManager::loadProgram(const ProgramInfo &progInfo, Device* device)
+            {
+                if (device == NULL)
+                {
+                    // use the default device;
+                    device = 
+                        Runtime::getInstance()->getDeviceManager()->getDefaultDevice();
+                }
+
+                Program *prog = NULL;
+                if (progInfo._isCS)
+                    prog = new ComputeProgram(device);
+                else
+                    prog = new GeneralProgram(device);
+                
+                if (!prog->initialize(progInfo))
+                {
+                    if(prog)
+                    {
+                        delete prog;
+                        prog = NULL;
+                    };
+                    return NULL;
+                }
+                return prog;
+            }
+
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \param	program Pointer of the Program object to unload.

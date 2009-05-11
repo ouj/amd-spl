@@ -4,7 +4,7 @@
 //!
 //!	\file 		LocalBuffer.h
 //!	\date 		1:3:2009   13:58
-//!	\author		Jiawei Ou
+//!	\author		Jiawei Ou, Shawn Zhou
 //!	
 //!	\brief		Contains declaration of LocalBuffer class.
 //!

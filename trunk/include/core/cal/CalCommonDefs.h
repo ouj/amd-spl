@@ -9,6 +9,7 @@
 //!	\brief		Contains macros needed in AMD-SPL compilation.
 //!
 //////////////////////////////////////////////////////////////////////////
+#include "CommonDefs.h"
 
 //! \brief	Defines CALresult checking macro.
 #define CHECK_CAL_RESULT(result) \

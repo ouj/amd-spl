@@ -233,13 +233,6 @@ namespace amdspl
                 }
             }
 
-            //////////////////////////////////////////////////////////////////////////
-            //!
-            //! \brief Define Program information type for copy kernel. Internal use
-            //!         only.
-            //!
-            //////////////////////////////////////////////////////////////////////////
-            typedef ProgramInfo<1, 1, 0, false>  CopyKernelProgram;
             //! \brief	Copy kernel source string. Static object, internal use only.
             static const char* _sz_copy_kernel_source_ = IL_KERNEL(
                 il_ps_2_0
@@ -251,16 +244,15 @@ namespace amdspl
                 end
                 );
             //! \brief	Copy kernel ProgramInfo object. Static object, internal use only.
-            static CopyKernelProgram copyKernel = 
-                CopyKernelProgram("Copy Kernel", _sz_copy_kernel_source_);
+            static ProgramInfo copyKernel = 
+                ProgramInfo("Copy Kernel", _sz_copy_kernel_source_).outputs(1).inputs(1);
 
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \param	src The source buffer.
             //! \param	dst The destination buffer.
             //! \param	device The device copy kernel used.
-            //! \return	bool True if the copy is succeeded. False if the copy is 
-            //!              failed
+            //! \return	bool The event of copy kernel.
             //!
             //! \brief	Copy the content of source buffer to the dst buffer. The 
             //!         buffers' format are required to be the same and the src 
@@ -268,17 +260,17 @@ namespace amdspl
             //!         domain is set to be the size of destination buffer.
             //!
             //////////////////////////////////////////////////////////////////////////
-            bool BufferManager::copy(Buffer* src, Buffer* dst, Device *device)
+            Event* BufferManager::copy(Buffer* src, Buffer* dst, Device *device)
             {
                 if(src->getFormat() != dst->getFormat())
                 {
                     LOG_ERROR("Source buffer format is different from the destination buffer format.\n");
-                    return false;
+                    return 0;
                 }
                 if (dst->getWidth() > src->getWidth() || dst->getHeight() > src->getHeight())
                 {
                     LOG_ERROR("Source buffer is smaller than the destination buffer");
-                    return false;
+                    return 0;
                 }
                 ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
                 assert(progMgr);
@@ -294,16 +286,22 @@ namespace amdspl
                 if(!program->bindInput(src, 0))
                 {
                     assert(false);
-                    return false;
+                    progMgr->unloadProgram(program);
+                    return 0;
                 };
                 if(!program->bindOutput(dst, 0))
                 {
                     assert(false);
-                    return false;
+                    progMgr->unloadProgram(program);
+                    return 0;
                 };
 
-                CALdomain domain = {0, 0, dst->getWidth(), dst->getHeight() ? dst->getHeight() : 1};
-                Event *e = program->run(domain);
+
+                program->setExeInfo(
+                    ProgExeInfo(uint4(0, 0, dst->getWidth(), dst->getHeight() ? dst->getHeight() : 1))
+                    );
+
+                Event *e = program->run();
                 assert(e);
                 if (!e)
                 {
@@ -312,7 +310,7 @@ namespace amdspl
                 }
 
                 progMgr->unloadProgram(program);
-                return true;
+                return e;
             }
         }
     }

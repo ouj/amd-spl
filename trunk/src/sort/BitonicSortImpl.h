@@ -46,12 +46,6 @@ namespace amdspl
         template<>
         const double extreme_value<double>::MaxValue = DBL_MAX;
 
-        //////////////////////////////////////////////////////////////////////////
-        //!
-        //! \brief ProgramInfo type of Bitonic sort IL.
-        //!
-        //////////////////////////////////////////////////////////////////////////
-        typedef ProgramInfo<1, 1, 1, false> BitonicSortProgramInfo;
 
         //////////////////////////////////////////////////////////////////////////
         //!
@@ -103,36 +97,36 @@ namespace amdspl
         template<typename T>
         struct bitonicSortILGroup
         {
-            static const BitonicSortProgramInfo asc;
-            static const BitonicSortProgramInfo des;
+            static const ProgramInfo asc;
+            static const ProgramInfo des;
         };
 
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<float>::asc = 
-            BitonicSortProgramInfo("Float Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
-            .replaceTkn("{SORT_OPERATOR}", "lt"); //less than.
+        const ProgramInfo bitonicSortILGroup<float>::asc = 
+            ProgramInfo("Float Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
+            .replaceTkn("{SORT_OPERATOR}", "lt").outputs(1).inputs(1).constants(1); //less than.
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<float>::des = 
-            BitonicSortProgramInfo("Float Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
-            .replaceTkn("{SORT_OPERATOR}", "ge"); //greater or equal.
+        const ProgramInfo bitonicSortILGroup<float>::des = 
+            ProgramInfo("Float Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
+            .replaceTkn("{SORT_OPERATOR}", "ge").outputs(1).inputs(1).constants(1); //greater or equal.
 
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<int>::asc = 
-            BitonicSortProgramInfo("Integer Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
-            .replaceTkn("{SORT_OPERATOR}", "ilt"); //less than.
+        const ProgramInfo bitonicSortILGroup<int>::asc = 
+            ProgramInfo("Integer Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
+            .replaceTkn("{SORT_OPERATOR}", "ilt").outputs(1).inputs(1).constants(1); //less than.
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<int>::des = 
-            BitonicSortProgramInfo("Integer Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
-            .replaceTkn("{SORT_OPERATOR}", "ige"); //greater or equal.
+        const ProgramInfo bitonicSortILGroup<int>::des = 
+            ProgramInfo("Integer Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
+            .replaceTkn("{SORT_OPERATOR}", "ige").outputs(1).inputs(1).constants(1); //greater or equal.
         
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<unsigned int>::asc = 
-            BitonicSortProgramInfo("Unsigned Integer Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
-            .replaceTkn("{SORT_OPERATOR}", "ult"); //less than.
+        const ProgramInfo bitonicSortILGroup<unsigned int>::asc = 
+            ProgramInfo("Unsigned Integer Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
+            .replaceTkn("{SORT_OPERATOR}", "ult").outputs(1).inputs(1).constants(1); //less than.
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<unsigned int>::des = 
-            BitonicSortProgramInfo("Unsigned Integer Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
-            .replaceTkn("{SORT_OPERATOR}", "uge"); //greater or equal.
+        const ProgramInfo bitonicSortILGroup<unsigned int>::des = 
+            ProgramInfo("Unsigned Integer Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_)
+            .replaceTkn("{SORT_OPERATOR}", "uge").outputs(1).inputs(1).constants(1); //greater or equal.
 
         //////////////////////////////////////////////////////////////////////////
         //!
@@ -174,13 +168,13 @@ namespace amdspl
             "end\n";
             
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<double>::asc = 
-            BitonicSortProgramInfo("Double Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_double_)
-            .replaceTkn("{SORT_OPERATOR}", "dlt"); //less than.
+        const ProgramInfo bitonicSortILGroup<double>::asc = 
+            ProgramInfo("Double Ascend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_double_)
+            .replaceTkn("{SORT_OPERATOR}", "dlt").outputs(1).inputs(1).constants(1); //less than.
         template<>
-        const BitonicSortProgramInfo bitonicSortILGroup<double>::des = 
-            BitonicSortProgramInfo("Double Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_double_)
-            .replaceTkn("{SORT_OPERATOR}", "dge"); //greater or equal.
+        const ProgramInfo bitonicSortILGroup<double>::des = 
+            ProgramInfo("Double Descend Bitonic Sort Program Info", _sz_bitonic_sort_prog_source_double_)
+            .replaceTkn("{SORT_OPERATOR}", "dge").outputs(1).inputs(1).constants(1); //greater or equal.
 
         //////////////////////////////////////////////////////////////////////////
         //!
@@ -267,7 +261,9 @@ namespace amdspl
                 constBuffer->setConstant<3>(&width);
                 prog->bindConstant(constBuffer, 0);
 
-                CALdomain rect = {0, 0, width, height};
+                prog->setExeInfo(
+                    ProgExeInfo(uint4(0, 0, width, height))
+                    );
                 for(unsigned int _stage = 1; _stage <= _lgArraySize; _stage++)
                 {
                     unsigned int step = 0;
@@ -293,7 +289,7 @@ namespace amdspl
                         constBuffer->setConstant<2>(&offset_2);
 
                         // Run the kernel on GPU
-                        Event *e = prog->run(rect);
+                        Event *e = prog->run();
                         if (!e)
                         {
                             return SPL_RESULT_PROGRAM_ERROR;

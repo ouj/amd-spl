@@ -7,18 +7,16 @@ using namespace amdspl::core::cal;
 
 typedef RuntimeTestFixture ProgramManagerTests;
 
-typedef ProgramInfo<1, 2, 3, false> TestProgramInfo;
 static const char *TestProgramSource = 
 "This is a test source file, I am not going to compile it.\n";
-static const TestProgramInfo testProgInfo = 
-    TestProgramInfo("Test Program Info",TestProgramSource);
+static const ProgramInfo testProgInfo = 
+    ProgramInfo("Test Program Info",TestProgramSource).outputs(1).inputs(2).constants(3);
 
-static const TestProgramInfo testRepProgInfo = 
-    TestProgramInfo("Test Replacement Program Info",TestProgramSource)
+static const ProgramInfo testRepProgInfo = 
+    ProgramInfo("Test Replacement Program Info",TestProgramSource)
     .replaceTkn("test", "replacement test")
-    .replaceTkn("compile", "run");
+    .replaceTkn("compile", "run").outputs(1).inputs(2).constants(3);
 
-typedef ProgramInfo<1, 1, 1, true> SampleProgram;
 static const char* _sz_sample_prog_source_ = 
 "il_ps_2_0\n"
 "dcl_output_generic o0\n"
@@ -30,15 +28,15 @@ static const char* _sz_sample_prog_source_ =
 "add o0, r1, cb0[0]\n"
 "endmain\n"
 "end\n";
-static const SampleProgram sampleProgram = 
-    SampleProgram("Sample Program Info", _sz_sample_prog_source_);
+static const ProgramInfo sampleProgram = 
+    ProgramInfo("Sample Program Info", _sz_sample_prog_source_).outputs(1).inputs(1).constants(1);
 
 TEST_F(ProgramManagerTests, ProgramInfoTest)
 {
-    ASSERT_EQ(1, testProgInfo.outputs);
-    ASSERT_EQ(2, testProgInfo.inputs);
-    ASSERT_EQ(3, testProgInfo.constants);
-    ASSERT_EQ(0, testProgInfo.global);
+    ASSERT_EQ(1, testProgInfo._outputs);
+    ASSERT_EQ(2, testProgInfo._inputs);
+    ASSERT_EQ(3, testProgInfo._constants);
+    ASSERT_EQ(false, testProgInfo._global);
 
     ASSERT_STREQ("This is a test source file, I am not going to compile it.\n", testProgInfo.getSource());
     ASSERT_STREQ("Test Program Info" ,testProgInfo.getID());
