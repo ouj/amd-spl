@@ -45,11 +45,12 @@ namespace amdspl
                 friend class Runtime;
             public:
                 void            destroyBuffer(Buffer* buffer);
+                bool            copy(Buffer* src, Buffer* dst, Device *device = 0);
                 Buffer*         createLocalBuffer(Device* device, CALformat format, 
                                                   unsigned int width, unsigned int height = 0, unsigned int flag = 0);
                 Buffer*         createRemoteBuffer(CALformat format, unsigned int width, 
                                                     unsigned int height = 0, unsigned int flag = 0);
-				Buffer*		   createPinnedBuffer(Device* device, CALformat format, 
+				Buffer*         createPinnedBuffer(Device* device, CALformat format, 
 													unsigned int width, unsigned int height, void *userMem, unsigned int flag = 0);
                 ConstBuffer*    getConstBuffer(unsigned int size);
                 void            releaseConstBuffer(ConstBuffer *constBuf);

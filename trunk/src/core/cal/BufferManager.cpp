@@ -232,6 +232,88 @@ namespace amdspl
                     _constBufferPools[cbsize].push_back(constBuf);
                 }
             }
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief Define Program information type for copy kernel. Internal use
+            //!         only.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            typedef ProgramInfo<1, 1, 0, false>  CopyKernelProgram;
+            //! \brief	Copy kernel source string. Static object, internal use only.
+            static const char* _sz_copy_kernel_source_ = IL_KERNEL(
+                il_ps_2_0
+                dcl_input_position_interp(linear_noperspective) v0.xy__
+                dcl_output_generic o0
+                dcl_resource_id(0)_type(2d,unnorm)_fmtx(float)_fmty(float)_fmtz(float)_fmtw(float)
+                sample_resource(0)_sampler(0) o0, v0.xy00
+                endmain
+                end
+                );
+            //! \brief	Copy kernel ProgramInfo object. Static object, internal use only.
+            static CopyKernelProgram copyKernel = 
+                CopyKernelProgram("Copy Kernel", _sz_copy_kernel_source_);
+
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \param	src The source buffer.
+            //! \param	dst The destination buffer.
+            //! \param	device The device copy kernel used.
+            //! \return	bool True if the copy is succeeded. False if the copy is 
+            //!              failed
+            //!
+            //! \brief	Copy the content of source buffer to the dst buffer. The 
+            //!         buffers' format are required to be the same and the src 
+            //!         size is not smaller than the destination buffer. The copy
+            //!         domain is set to be the size of destination buffer.
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            bool BufferManager::copy(Buffer* src, Buffer* dst, Device *device)
+            {
+                if(src->getFormat() != dst->getFormat())
+                {
+                    LOG_ERROR("Source buffer format is different from the destination buffer format.\n");
+                    return false;
+                }
+                if (dst->getWidth() > src->getWidth() || dst->getHeight() > src->getHeight())
+                {
+                    LOG_ERROR("Source buffer is smaller than the destination buffer");
+                    return false;
+                }
+                ProgramManager* progMgr = Runtime::getInstance()->getProgramManager();
+                assert(progMgr);
+
+                if (!device)
+                {
+                    device = Runtime::getInstance()->getDeviceManager()->getDefaultDevice();
+                }
+
+                Program *program = progMgr->loadProgram(copyKernel, device);
+                assert(program);
+
+                if(!program->bindInput(src, 0))
+                {
+                    assert(false);
+                    return false;
+                };
+                if(!program->bindOutput(dst, 0))
+                {
+                    assert(false);
+                    return false;
+                };
+
+                CALdomain domain = {0, 0, dst->getWidth(), dst->getHeight() ? dst->getHeight() : 1};
+                Event *e = program->run(domain);
+                assert(e);
+                if (!e)
+                {
+                    LOG_ERROR("Failed to execute copy kernel.\n");
+                    return false;
+                }
+
+                progMgr->unloadProgram(program);
+                return true;
+            }
         }
     }
 }
