@@ -35,6 +35,42 @@ namespace amdspl
             public:
                 //////////////////////////////////////////////////////////////////////////
                 //!
+                //! \return	Constructor
+                //!
+                //! \brief	Construct the ProgramInfo object.(Default Constructor)
+                //!
+                //////////////////////////////////////////////////////////////////////////
+                ProgramInfo(void)
+                {
+                    _outputs = 0;
+                    _inputs = 0;
+                    _constants = 0;
+                    _global = false;
+                    _isCS = false;
+                }
+
+                //////////////////////////////////////////////////////////////////////////
+                //!
+                //! \param	pi ProgramInfo object to be copied.
+                //! \return	Constructor
+                //!
+                //! \brief	Copy construct the ProgramInfo object.
+                //!
+                //////////////////////////////////////////////////////////////////////////
+                ProgramInfo(const ProgramInfo& pi)
+                {
+                    _outputs = pi._outputs;
+                    _inputs = pi._inputs;
+                    _constants = pi._constants;
+                    _global = pi._global;
+                    _isCS = pi._isCS;
+
+                    Id = pi.Id;
+                    source = pi.source;
+                }
+
+                //////////////////////////////////////////////////////////////////////////
+                //!
                 //! \param	ID      The program ID string.
                 //! \param	source  The program source string.
                 //! \return	Constructor
@@ -83,7 +119,7 @@ namespace amdspl
                 //////////////////////////////////////////////////////////////////////////
                 inline const char* getID() const
                 {
-                    return Id;
+                    return Id.c_str();
                 }
 
                 //////////////////////////////////////////////////////////////////////////
@@ -136,13 +172,14 @@ namespace amdspl
                 inline ProgramInfo& isCompute()
                 {
                     _isCS = true;
+                    return *this;
                 }
 
             private:
                 //! \brief	Stores the source string of the IL program.
                 string source;
                 //! \brief	Stores the program ID string.
-                const char* Id;
+                string Id;
             };
         }
     }
