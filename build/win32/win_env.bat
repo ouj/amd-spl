@@ -48,7 +48,6 @@ set APP=amd-spl
 set CFG=debug
 
 cd /d %BLD%
-call amd-spl.sln
 start cmd
 goto EndOfBat
 

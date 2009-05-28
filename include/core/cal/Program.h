@@ -39,16 +39,22 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             union SPL_EXPORT ProgExeInfo
             {
+                ProgExeInfo(void) : domain(), gridBlock(), gridSize()
+                {
+                }
+
                 ProgExeInfo(uint4 domain)
                 {
                     this->domain = domain;
                 };
+
                 ProgExeInfo(CALuint flags, uint3 gridBlock, uint3 gridSize)
                 {
                     this->flags = flags;
                     this->gridBlock = gridBlock;
                     this->gridSize = gridSize;
                 };
+
                 struct  
                 {
                     uint4   domain;
