@@ -149,7 +149,14 @@ namespace amdspl
                 _programMgr = new ProgramManager();
                 if (!_programMgr->initialize())
                 {
-                    LOG_ERROR("Failed to initialize buffer manager\n");
+                    LOG_ERROR("Failed to initialize program manager\n");
+                    goto SAFE_DELETE_ALL_ON_ERROR;
+                }
+
+                _counterMgr = new CounterManager();
+                if (!_counterMgr->initialize())
+                {
+                    LOG_ERROR("Failed to initialize counter manager\n");
                     goto SAFE_DELETE_ALL_ON_ERROR;
                 }
 
@@ -159,7 +166,7 @@ SAFE_DELETE_ALL_ON_ERROR:
                 SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_bufferMgr);
                 SAFE_DELETE(_deviceMgr);
-                
+                SAFE_DELETE(_counterMgr);
                 return false;
             }
             
@@ -221,6 +228,19 @@ SAFE_DELETE_ALL_ON_ERROR:
 				return _programMgr;
             }
             
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \return	CounterManager*
+            //!
+            //! \brief	Method to get the CounterManager instance pointer
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            CounterManager* Runtime::getCounterManager()
+            {
+				assert(_counterMgr);
+				return _counterMgr;
+            }
+
 			//////////////////////////////////////////////////////////////////////////
 			//!
 			//! \return	Constructor
