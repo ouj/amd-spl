@@ -21,6 +21,7 @@ namespace amdspl
 			class DeviceManager;
 			class BufferManager;
 			class ProgramManager;
+            class CounterManager;
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief	Runtime class is the core class of the SPL runtime, it manages
@@ -40,6 +41,7 @@ namespace amdspl
                 DeviceManager* getDeviceManager();
                 BufferManager* getBufferManager();
                 ProgramManager* getProgramManager();
+                CounterManager* getCounterManager();
             private:
 				Runtime();
 				~Runtime();
@@ -54,6 +56,8 @@ namespace amdspl
                 //! \brief	Pointer to the ProgramManager instance.
                 ProgramManager* _programMgr;
 
+                //! \brief	Pointer to the CounterManager instance.
+                CounterManager* _counterMgr;
                 //! \brief  The singleton instance of Runtime class.
                 static Runtime* _runtime;
 

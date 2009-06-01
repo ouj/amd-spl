@@ -17,6 +17,7 @@
 #include "DeviceManager.h"
 #include "BufferManager.h"
 #include "ProgramManager.h"
+#include "CounterManager.h"
 #include "LocalBuffer.h"
 #include "RemoteBuffer.h"
 #include "PinnedBuffer.h"
