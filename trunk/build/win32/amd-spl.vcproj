@@ -208,6 +208,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\include\core\cal\CounterManager.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\include\core\cal\Device.h"
 						>
 					</File>
@@ -229,6 +233,10 @@
 					</File>
 					<File
 						RelativePath="..\..\include\core\cal\LocalBuffer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\include\core\cal\PerfCounter.h"
 						>
 					</File>
 					<File
@@ -280,6 +288,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\core\cal\CounterManager.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\core\CAL\Device.cpp"
 						>
 					</File>
@@ -297,6 +309,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\core\CAL\LocalBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\core\cal\PerfCounter.cpp"
 						>
 					</File>
 					<File

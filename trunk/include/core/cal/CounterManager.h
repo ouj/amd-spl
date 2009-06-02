@@ -7,7 +7,6 @@
 #include "cal_ext_counter.h"
 #include "Device.h"
 #include "SplDefs.h"
-#include "SPLCounter.h"
 
 namespace amdspl
 {
@@ -16,16 +15,15 @@ namespace amdspl
         namespace cal
         {
             class Device;
-            class SPLCounter;
+            class PerfCounter;
             class SPL_EXPORT CounterManager 
             {
-                //friend class Runtime;
-                public:
-                    CounterManager();
-                    ~CounterManager();
-                    bool initialize();
-                    SPLCounter *createGPUCounter(Device *device);
-                    bool destroyGPUCounter(SPLCounter *counter);
+            public:
+                CounterManager();
+                ~CounterManager();
+                bool initialize();
+                PerfCounter *createGPUCounter(Device *device);
+                bool destroyGPUCounter(PerfCounter *counter);
             };
         }
     }

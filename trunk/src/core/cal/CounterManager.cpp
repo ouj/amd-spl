@@ -1,5 +1,7 @@
 #include "CounterManager.h"
+#include "PerfCounter.h"
 #include "CommonDefs.h"
+#include "RuntimeDefs.h"
 
 namespace amdspl
 {
@@ -7,7 +9,7 @@ namespace amdspl
     {
         namespace cal
         {
-            
+
             PFNCALCTXDESTROYCOUNTER calCtxDestroyCounterExt;
             PFNCALCTXBEGINCOUNTER   calCtxBeginCounterExt;
             PFNCALCTXENDCOUNTER     calCtxEndCounterExt;
@@ -16,7 +18,7 @@ namespace amdspl
 
             CounterManager::CounterManager() 
             {
-              
+
             }
 
             CounterManager::~CounterManager()
@@ -34,7 +36,7 @@ namespace amdspl
                     LOG_ERROR("CAL do not support counters.\n");
                     return false;
                 }
-                    
+
                 if (calExtGetProc((CALextproc*)&calCtxCreateCounterExt, (CALextid)CAL_EXT_COUNTERS, "calCtxCreateCounter"))
                 {
                     LOG_ERROR("calCtxCreateCounter is not supported\n");
@@ -46,13 +48,13 @@ namespace amdspl
                     LOG_ERROR("calCtxDestroyCounter is not supported\n");
                     return false;
                 }
-                
+
                 if (calExtGetProc((CALextproc*)&calCtxBeginCounterExt, (CALextid)CAL_EXT_COUNTERS, "calCtxBeginCounter"))
                 {
                     LOG_ERROR("calCtxBeginCounter is not supported\n");
                     return false;
                 }
-                
+
                 if (calExtGetProc((CALextproc*)&calCtxEndCounterExt, (CALextid)CAL_EXT_COUNTERS, "calCtxEndCounter"))
                 {
                     LOG_ERROR("calCtxEndCounter is not supported\n");
@@ -67,15 +69,27 @@ namespace amdspl
                 return true;
             }
 
-            SPLCounter *CounterManager::createGPUCounter(Device *device)
+            PerfCounter *CounterManager::createGPUCounter(Device *device)
             {
-                SPLCounter *gpu_counter = new SPLCounter(device);
+                assert(device);
+                if (!device)
+                {
+                    return NULL;
+                }
+                PerfCounter *gpu_counter = new PerfCounter(device);
+                if (gpu_counter)
+                {
+                    if (!gpu_counter->initialize())
+                    {
+                        SAFE_DELETE(gpu_counter);
+                    }
+                }
                 return gpu_counter;
             }
 
-            bool CounterManager::destroyGPUCounter(SPLCounter *counter)
+            bool CounterManager::destroyGPUCounter(PerfCounter *counter)
             {
-                delete counter;
+                SAFE_DELETE(counter);
                 return true;
             }
         }
