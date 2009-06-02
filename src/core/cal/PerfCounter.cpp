@@ -1,5 +1,5 @@
 #include "RuntimeDefs.h"
-#include "SPLCounter.h"
+#include "PerfCounter.h"
 #include "CommonDefs.h"
 
 namespace amdspl
@@ -14,20 +14,32 @@ namespace amdspl
             extern PFNCALCTXGETCOUNTER     calCtxGetCounterExt;
             extern PFNCALCTXCREATECOUNTER  calCtxCreateCounterExt;
 
-            SPLCounter::SPLCounter(Device *device) : _device(device)
+            PerfCounter::PerfCounter(Device *device) : _device(device)
             {
-                if (calCtxCreateCounterExt(&_idleCounter, device->getContext() , CAL_COUNTER_IDLE) != CAL_RESULT_OK)
-                {
-                    LOG_ERROR("IDLE Counter is not supported\n");
-                }
-
-                if (calCtxCreateCounterExt(&_cacheCounter, device->getContext(), CAL_COUNTER_INPUT_CACHE_HIT_RATE) != CAL_RESULT_OK)
-                {
-                    LOG_ERROR("CACHE Counter is not supported\n");
-                }
             }
 
-            SPLCounter::~SPLCounter()
+            bool PerfCounter::initialize()
+            {
+                if (!_device)
+                {
+                    return false;
+                }
+
+                if (calCtxCreateCounterExt(&_idleCounter, _device->getContext() , CAL_COUNTER_IDLE) != CAL_RESULT_OK)
+                {
+                    LOG_ERROR("IDLE Counter is not supported\n");
+                    return false;
+                }
+
+                if (calCtxCreateCounterExt(&_cacheCounter, _device->getContext(), CAL_COUNTER_INPUT_CACHE_HIT_RATE) != CAL_RESULT_OK)
+                {
+                    LOG_ERROR("CACHE Counter is not supported\n");
+                    return false;
+                }
+                return true;
+            }
+
+            PerfCounter::~PerfCounter()
             {
                 Device *device = this->getDeviceHandle();
                 if (calCtxDestroyCounterExt(device->getContext(), _idleCounter) != CAL_RESULT_OK)
@@ -41,13 +53,13 @@ namespace amdspl
                 }
             }
 
-            bool SPLCounter::reset()
+            bool PerfCounter::reset()
             {
                 LOG_ERROR("reset is not supported now!\n");
                 return false;
             }
 
-            bool SPLCounter::start()
+            bool PerfCounter::start()
             {
                 if (calCtxBeginCounterExt(_device->getContext(), _idleCounter) != CAL_RESULT_OK)
                 {
@@ -64,7 +76,7 @@ namespace amdspl
                 return true;
             }
 
-            bool SPLCounter::stop()
+            bool PerfCounter::stop()
             {
                 if (calCtxEndCounterExt(_device->getContext(), _idleCounter) != CAL_RESULT_OK)
                 {
@@ -81,7 +93,7 @@ namespace amdspl
                 return true;
             }
 
-            void SPLCounter::printCounter()
+            void PerfCounter::printCounter()
             {
                 CALfloat idlePercentage = 0.0f;
                 CALfloat cachePercentage = 0.0f;
@@ -96,7 +108,7 @@ namespace amdspl
                 printf("SIMD idel percentage : %1.4f, cache hit percentage : %1.4f", idlePercentage, cachePercentage);
             }
 
-            Device *SPLCounter::getDeviceHandle() {
+            Device *PerfCounter::getDeviceHandle() {
                 return _device;
             }
         }
