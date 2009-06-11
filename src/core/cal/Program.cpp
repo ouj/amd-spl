@@ -513,6 +513,7 @@ namespace amdspl
                 }
                 if (_globalBuffer.buffer)
                 {
+                    _globalBuffer.buffer->setInputEvent(e); 
                     _globalBuffer.buffer->setOutputEvent(e);   
                 }
             }
@@ -520,7 +521,7 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief	Wait until all events of bound buffers are finish to prevent
-            //!         data corruption. It is usually called before fuction execution.
+            //!         data corruption. It is usually called before function execution.
             //!
             //////////////////////////////////////////////////////////////////////////
             void Program::waitEvents()
@@ -541,6 +542,7 @@ namespace amdspl
                 if (_globalBuffer.buffer)
                 {
                     // global buffer maybe input too.
+                    _globalBuffer.buffer->waitOutputEvent();
                     _globalBuffer.buffer->waitInputEvent();
                 }
             }
