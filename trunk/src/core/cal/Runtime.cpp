@@ -163,8 +163,8 @@ namespace amdspl
 				return true;
 
 SAFE_DELETE_ALL_ON_ERROR:
-                SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_bufferMgr);
+                SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_deviceMgr);
                 SAFE_DELETE(_counterMgr);
                 return false;
@@ -266,9 +266,10 @@ SAFE_DELETE_ALL_ON_ERROR:
             Runtime::~Runtime()
             {
                 SAFE_DELETE(_deviceMgr);
-                SAFE_DELETE(_programMgr);
                 SAFE_DELETE(_bufferMgr);
-
+                SAFE_DELETE(_programMgr);
+                SAFE_DELETE(_counterMgr);
+                
                 // Finally, shutdown the CAL
                 if (_shutdownOnDestroy)
                 {
