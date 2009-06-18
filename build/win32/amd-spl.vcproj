@@ -39,7 +39,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(INC)&quot;;&quot;$(CALROOT)\include&quot;;&quot;$(SRC)\core\Utils&quot;;&quot;$(INC)\core\cal&quot;;&quot;$(SRC)\Common&quot;"
+				AdditionalIncludeDirectories="&quot;$(CALROOT)\include&quot;;..\..\include;..\..\src\core\Utils;..\..\include\core\cal;..\..\src\Common"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;_DEBUG;_CONSOLE;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
