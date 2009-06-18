@@ -12,6 +12,7 @@
 //////////////////////////////////////////////////////////////////////////
 #include "SplDefs.h"
 #include "ProgramInfo.h"
+#include "Program.h"
 
 #include <vector>
 
