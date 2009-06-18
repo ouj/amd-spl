@@ -28,43 +28,22 @@ namespace amdspl
     {
         namespace cal
         {
+
+
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief      ProgExeInfo class contains the execution information of
-            //!             a program. For general program, it is cal domain. For
-            //!             compute program, it is execution grid information.
+            //!             a program.
             //!	
             //!	\author     Jiawei Ou
             //!
             //////////////////////////////////////////////////////////////////////////
-            union SPL_EXPORT ProgExeInfo
+            class SPL_EXPORT ProgExeInfo
             {
-                ProgExeInfo(void) : domain(), gridBlock(), gridSize()
+            public:
+                ProgExeInfo(void)
                 {
                 }
-
-                ProgExeInfo(uint4 domain)
-                {
-                    this->domain = domain;
-                };
-
-                ProgExeInfo(CALuint flags, uint3 gridBlock, uint3 gridSize)
-                {
-                    this->flags = flags;
-                    this->gridBlock = gridBlock;
-                    this->gridSize = gridSize;
-                };
-
-                struct  
-                {
-                    uint4   domain;
-                };
-                struct  
-                {
-                    CALuint flags;
-                    uint3   gridBlock;
-                    uint3   gridSize;
-                };
             };
 
             class IBuffer;

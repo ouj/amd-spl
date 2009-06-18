@@ -43,14 +43,15 @@ namespace amdspl
 
             void ComputeProgram::setExeInfo(const ProgExeInfo &exeInfo)
             {
+                const ComputeProgExeInfo cs_exeInfo = static_cast<const ComputeProgExeInfo&>(exeInfo);
                 _pg.func = _func;
-                _pg.flags = exeInfo.flags;
-                _pg.gridBlock.width = exeInfo.gridBlock.x;
-                _pg.gridBlock.height = exeInfo.gridBlock.y;
-                _pg.gridBlock.depth = exeInfo.gridBlock.z;
-                _pg.gridSize.width = exeInfo.gridSize.x;
-                _pg.gridSize.height = exeInfo.gridSize.y;
-                _pg.gridSize.depth = exeInfo.gridSize.z;
+                _pg.flags = cs_exeInfo.flags;
+                _pg.gridBlock.width = cs_exeInfo.gridBlock.x;
+                _pg.gridBlock.height = cs_exeInfo.gridBlock.y;
+                _pg.gridBlock.depth = cs_exeInfo.gridBlock.z;
+                _pg.gridSize.width = cs_exeInfo.gridSize.x;
+                _pg.gridSize.height = cs_exeInfo.gridSize.y;
+                _pg.gridSize.depth = cs_exeInfo.gridSize.z;
             }
 
             Event* ComputeProgram::run()
