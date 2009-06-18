@@ -19,22 +19,14 @@ CFG_INC=-I../../include -I../../include/core/cal \
 	-I../../src/core/utils -I/usr/local/atical/include 
 CFG_LIB=-laticalrt -laticalcl
 CFG_OBJ=
-COMMON_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
-	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/Device.o \
-	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Event.o $(INTERDIR)/GlobalBuffer.o \
-	$(INTERDIR)/LocalBuffer.o $(INTERDIR)/Program.o \
-	$(INTERDIR)/ProgramManager.o $(INTERDIR)/RemoteBuffer.o \
-	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o \
-	$(INTERDIR)/GeneralProgram.o $(INTERDIR)/ComputeProgram.o
+COMMON_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Runtime.o \
+	$(INTERDIR)/BufferManager.o $(INTERDIR)/Buffer.o $(INTERDIR)/ConstBuffer.o $(INTERDIR)/LocalBuffer.o $(INTERDIR)/RemoteBuffer.o $(INTERDIR)/PinnedBuffer.o \
+	$(INTERDIR)/ProgramManager.o $(INTERDIR)/Program.o $(INTERDIR)/GeneralProgram.o $(INTERDIR)/ComputeProgram.o \
+	$(INTERDIR)/CounterManager.o $(INTERDIR)/PerfCounter.o \
+	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Device.o $(INTERDIR)/Event.o \
+	$(INTERDIR)/Utility.o $(INTERDIR)/SplBitonicSort.o \
+	 
 OBJ=$(COMMON_OBJ) $(CFG_OBJ)
-ALL_OBJ=$(INTERDIR)/Timer.o $(INTERDIR)/Buffer.o \
-	$(INTERDIR)/BufferManager.o $(INTERDIR)/ConstBuffer.o 	$(INTERDIR)/Device.o \
-	$(INTERDIR)/DeviceManager.o $(INTERDIR)/Event.o \
-	$(INTERDIR)/LocalBuffer.o $(INTERDIR)/Program.o \
-	$(INTERDIR)/ProgramManager.o $(INTERDIR)/RemoteBuffer.o \
-	$(INTERDIR)/Runtime.o $(INTERDIR)/Utility.o \
-	$(INTERDIR)/SplBitonicSort.o $(INTERDIR)/PinnedBuffer.o \
-	$(INTERDIR)/GeneralProgram.o $(INTERDIR)/ComputeProgram.o
 
 COMPILE=g++ -c -fPIC  -o "$(INTERDIR)/$(*F).o" $(CFG_INC) "$<"
 LINK=g++  -o "$(OUTFILE)" $(OBJ) $(CFG_LIB) -shared -fPIC
