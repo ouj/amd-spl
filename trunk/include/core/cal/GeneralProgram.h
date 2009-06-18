@@ -20,6 +20,24 @@ namespace amdspl
         {
             //////////////////////////////////////////////////////////////////////////
             //!
+            //! \brief     GeneralProgExeInfo class contains the 
+            //!             execution information (cal domain) of a program.
+            //!	
+            //!	\author     Jiawei Ou
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            class SPL_EXPORT GeneralProgExeInfo : public ProgExeInfo
+            {
+            public:
+                uint4   domain;
+
+                GeneralProgExeInfo(uint4 domain)
+                {
+                    this->domain = domain;
+                };
+            };
+            //////////////////////////////////////////////////////////////////////////
+            //!
             //! \brief      GeneralProgram is derived from Program class. It contains
             //!             execution logic of ps style Program.
             //! \warning    Not Thread Safe

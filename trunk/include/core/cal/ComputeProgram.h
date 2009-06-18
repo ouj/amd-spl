@@ -18,6 +18,29 @@ namespace amdspl
     {
         namespace cal
         {
+            
+            //////////////////////////////////////////////////////////////////////////
+            //!
+            //! \brief      ComputeProgExeInfo class contains the 
+            //!execution information (execution grid) of a program.
+            //!	
+            //!	\author     Jiawei Ou
+            //!
+            //////////////////////////////////////////////////////////////////////////
+            class SPL_EXPORT ComputeProgExeInfo : public ProgExeInfo
+            {
+            public:
+                CALuint   flags;
+                uint3   gridBlock;
+                uint3   gridSize;
+
+                ComputeProgExeInfo(CALuint flags, uint3 gridBlock, uint3 gridSize)
+                {
+                    this->flags = flags;
+                    this->gridBlock = gridBlock;
+                    this->gridSize = gridSize;
+                };
+            };
             //////////////////////////////////////////////////////////////////////////
             //!
             //! \brief      GeneralProgram is derived from Program class. It contains

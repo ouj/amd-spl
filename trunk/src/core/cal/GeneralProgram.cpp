@@ -55,10 +55,11 @@ namespace amdspl
             //////////////////////////////////////////////////////////////////////////
             void GeneralProgram::setExeInfo(const ProgExeInfo &exeInfo)
             {
-                domain.x = exeInfo.domain.x;
-                domain.y = exeInfo.domain.y;
-                domain.width = exeInfo.domain.z;
-                domain.height = exeInfo.domain.w;
+                const GeneralProgExeInfo ps_exeInfo = static_cast<const GeneralProgExeInfo&>(exeInfo);
+                domain.x = ps_exeInfo.domain.x;
+                domain.y = ps_exeInfo.domain.y;
+                domain.width = ps_exeInfo.domain.z;
+                domain.height = ps_exeInfo.domain.w;
             }
 
             //////////////////////////////////////////////////////////////////////////

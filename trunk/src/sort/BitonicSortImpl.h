@@ -262,7 +262,7 @@ namespace amdspl
                 prog->bindConstant(constBuffer, 0);
 
                 prog->setExeInfo(
-                    ProgExeInfo(uint4(0, 0, width, height))
+                    GeneralProgExeInfo(uint4(0, 0, width, height))
                     );
                 for(unsigned int _stage = 1; _stage <= _lgArraySize; _stage++)
                 {

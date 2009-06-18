@@ -298,7 +298,7 @@ namespace amdspl
 
 
                 program->setExeInfo(
-                    ProgExeInfo(uint4(0, 0, dst->getWidth(), dst->getHeight() ? dst->getHeight() : 1))
+                    GeneralProgExeInfo(uint4(0, 0, dst->getWidth(), dst->getHeight() ? dst->getHeight() : 1))
                     );
 
                 Event *e = program->run();
