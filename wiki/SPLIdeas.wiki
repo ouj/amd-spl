@@ -1,0 +1,19 @@
+#summary One-sentence summary of this page.
+#labels Phase-Requirements,Improvement-Ideas
+
+= Introduction =
+
+this page describes the ideas of improving SPL for better performance and usablity.
+
+
+= Details =
+
+1, Dynamic Data Transfer:
+There are 3 ways to transfer data from main memory to GPU local memory
+  * 1, Alloc Remote Buffer using CAL API, copying user data to remote buffer, then DMA to GPU local memory
+  * 2, Alloc Pinned Buffer using CAL API extension, put data to an aligned user memory chunk, then DMA to GPU local memory
+  * 3, Mapping GPU local memory to a main memory address, then put user data using this address pointer.
+
+
+2, bind resource improvement
+When we create a res, just get its memory handle immediately, which may cause some latency at runtime. When binding the res to a program, what we only need to do is set this memory handle to a memory name which is using in the IL program. the later operation is always fast at runtime.
