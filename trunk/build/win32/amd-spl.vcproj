@@ -122,7 +122,7 @@
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;$(INC)&quot;;&quot;$(CALROOT)\include&quot;;&quot;$(SRC)\core\Utils&quot;;&quot;$(INC)\core\cal&quot;;&quot;$(SRC)\Common&quot;"
+				AdditionalIncludeDirectories="&quot;$(CALROOT)\include&quot;;..\..\include;..\..\src\core\Utils;..\..\include\core\cal;..\..\src\Common"
 				PreprocessorDefinitions="AMD_SPL_EXPORT;NDEBUG;_CONSOLE;"
 				RuntimeLibrary="2"
 				WarningLevel="3"
