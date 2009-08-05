@@ -65,7 +65,7 @@ namespace amdspl
                     return false;
 
                 CALdeviceinfo info = _device->getInfo();
-                if (_height == 0) // 1D
+                if (_height == 0 || _height == 1) // 1D
                 {
                     if (_width > info.maxResource1DWidth)
                     {
@@ -185,6 +185,8 @@ namespace amdspl
             {
                 if (!ptr)
                     return false;
+
+				waitOutputEvent();
 
                 BufferManager* bufMgr = Runtime::getInstance()->getBufferManager();
                 assert(bufMgr);
