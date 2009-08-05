@@ -16,7 +16,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
@@ -96,7 +96,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -447,6 +447,38 @@
 				>
 				<File
 					RelativePath="..\..\src\Common\Timer.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="fft"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\src\fft\il\fft_il.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\fft\il\ifft_il.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\fft\il\preprocess_il.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\include\SplFFT.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\src\fft\SplFFT.cpp"
 					>
 				</File>
 			</Filter>

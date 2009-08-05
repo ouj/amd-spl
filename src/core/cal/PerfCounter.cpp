@@ -105,7 +105,7 @@ namespace amdspl
                 {
                     LOG_ERROR("Can NOT CACHE Counter value\n");
                 }
-                printf("SIMD idel percentage : %1.4f, cache hit percentage : %1.4f", idlePercentage, cachePercentage);
+                printf("SIMD idle percentage : %1.4f, cache hit percentage : %1.4f\n", idlePercentage, cachePercentage);
             }
 
             Device *PerfCounter::getDeviceHandle() {

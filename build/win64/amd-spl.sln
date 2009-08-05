@@ -1,8 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B08E94DA-BD29-4377-ACB7-DD4876865123}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "amd-spl", "amd-spl.vcproj", "{C5BAC133-6111-477D-BA55-269A2B5A5C20}"
 EndProject
 Global
@@ -13,8 +11,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Debug|x64.ActiveCfg = Debug|x64
 		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Debug|x64.Build.0 = Debug|x64
-		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|x64.ActiveCfg = Debug|x64
-		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|x64.Build.0 = Debug|x64
+		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|x64.ActiveCfg = Release|x64
+		{C5BAC133-6111-477D-BA55-269A2B5A5C20}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
