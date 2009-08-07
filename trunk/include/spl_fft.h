@@ -53,7 +53,7 @@ splfftResult splfftDestroy(splfftHandle plan);
 splfftResult splfftMalloc(void ** pptr, size_t bytes);
 splfftResult splfftFree(void * ptr);
 
-splfftResult splfftMemcpy(void * dst, void * src, size_t bytes, splMemcpyType type, splfftHandle plan);
+splfftResult splfftMemcpy(void * dst, void * src, size_t bytes, splMemcpyType type);
 
 splfftResult splfftExecute(splfftHandle plan, void * idata, void * odata, int direction);
 
