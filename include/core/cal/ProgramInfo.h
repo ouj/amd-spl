@@ -10,6 +10,7 @@
 //!             ProgramInfo class.
 //!
 //////////////////////////////////////////////////////////////////////////
+#include <stdio.h>
 #include <string>
 #include <assert.h>
 #include "SplDefs.h"
