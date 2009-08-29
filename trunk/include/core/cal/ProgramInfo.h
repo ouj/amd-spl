@@ -12,10 +12,13 @@
 //////////////////////////////////////////////////////////////////////////
 #include <string>
 #include <assert.h>
+#include "SplDefs.h"
+#include "CommonDefs.h"
 
 using namespace std;
 
 #define IL_KERNEL(...) #__VA_ARGS__ 
+#define MAX_SOURCE_LENGTH (1024 * 1024 * 2)
 
 namespace amdspl
 {
@@ -82,7 +85,33 @@ namespace amdspl
                 {
                     assert(ID);
                     assert(source);
-                    this->source = source;
+                    if (strncmp(source, "file://", 7)==0) {
+                        FILE * fp;
+                        fopen_s(&fp, source + 7, "rb");
+                        if (!fp) {
+                            LOG_ERROR("File open error.");
+                            assert(fp);
+                        }
+
+                        long len; 
+                        char * buf;
+                        fseek(fp, 0, SEEK_END); //go to end
+                        len = ftell(fp); //get position at end (length)
+                        fseek(fp, 0, SEEK_SET); //go to beg.
+
+                        if (len > MAX_SOURCE_LENGTH) {
+                            LOG_ERROR("Size exceeded maximum.");
+                            assert(0);
+                        }
+                        buf = (char *)malloc(len); //malloc buffer
+                        fread(buf, len, 1, fp); //read into buffer
+                        fclose(fp);
+
+                        this->source = buf;
+                        free(buf);
+                    }else{
+                        this->source = source;
+                    }
                     this->Id = ID;
 
                     _outputs = 0;

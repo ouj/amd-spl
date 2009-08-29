@@ -63,7 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="aticalcl64.lib aticalrt64.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="&quot;$(CAL_LIB)&quot;"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)/lib/lh64&quot;"
 				GenerateDebugInformation="true"
 				ImportLibrary="..\..\lib\$(TargetName).lib"
 				TargetMachine="17"
@@ -141,7 +141,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="aticalcl64.lib aticalrt64.lib"
-				AdditionalLibraryDirectories="&quot;$(CAL_LIB)&quot;"
+				AdditionalLibraryDirectories="&quot;$(CALROOT)/lib/lh64&quot;"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				ImportLibrary="..\..\lib\$(TargetName).lib"

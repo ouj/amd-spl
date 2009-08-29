@@ -12,7 +12,7 @@
 //!
 //////////////////////////////////////////////////////////////////////////
 #include "cal.h"
-#include "spldefs.h"
+#include "SplDefs.h"
 #include "core/cal/Runtime.h"
 #include "core/cal/DeviceManager.h"
 #include "core/cal/Device.h"
