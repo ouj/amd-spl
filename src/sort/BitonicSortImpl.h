@@ -6,6 +6,7 @@
 #include <cmath>
 #include "RuntimeDefs.h"
 #include <algorithm>
+#include <limits.h>
 
 using namespace amdspl::core::cal;
 namespace amdspl

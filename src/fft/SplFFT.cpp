@@ -284,7 +284,7 @@ namespace amdspl
             if (_fftProgX.size()<3 || !_fftProgX[0])
                 return SPL_RESULT_PROGRAM_ERROR;
 
-            amdspl::utils::Timer timerc;
+            //amdspl::utils::Timer timerc;
 	        const unsigned int paddedSize = _nx * _batch / 2;
 
 	        uint4 transParam[2];
@@ -306,13 +306,13 @@ namespace amdspl
 	        _fftProg->bindGlobal(gBuf);
             _fftProg->setExeInfo(*_exeInfoX[1]);
 
-	        timerc.Start();
+	        //timerc.Start();
             Event *e = _fftProg->run();
             if (!e) {
                 return SPL_RESULT_PROGRAM_ERROR;
             }
 	        e->waitEvent();
-	        timerc.Stop();
+	        //timerc.Stop();
 
             getTransParam(_nx, 1, transParam);
 	        dataOutput(odata, gBuf, 2, transParam);
@@ -322,7 +322,7 @@ namespace amdspl
 	        _fftProg->unbindAll();
 	        _bufMgr->destroyBuffer(gBuf);
 
-            printf("  FFT Time: %lf\n", timerc.GetElapsedTime());
+            //printf("  FFT Time: %lf\n", timerc.GetElapsedTime());
 
             return SPL_RESULT_OK;
         }
