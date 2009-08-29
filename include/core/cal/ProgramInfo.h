@@ -90,7 +90,11 @@ namespace amdspl
                     assert(source);
                     if (strncmp(source, "file://", 7)==0) {
                         FILE * fp;
+#if _WIN32
                         fopen_s(&fp, source + 7, "rb");
+#else
+                        fp = fopen(source + 7, "rb");
+#endif
                         if (!fp) {
                             LOG_ERROR("File open error.");
                             assert(fp);
